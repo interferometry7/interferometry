@@ -7,7 +7,7 @@ using rab1;
 
 public delegate void ImageProcessed(Bitmap resultBitmap);
 public delegate void ImageProcessedForOpenGL(List<Point3D> points);
-
+//  ATAN
 namespace rab1
 {
     public class FazaClass
