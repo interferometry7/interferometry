@@ -51,22 +51,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Canon.Eos.Framework">
-      <HintPath>.\Canon.Eos.Framework.dll</HintPath>
+      <HintPath>libs\Canon.Eos.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV, Version=2.1.0.793, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Emgu.CV.dll</HintPath>
+    <Reference Include="Emgu.CV">
+      <HintPath>libs\Emgu.CV.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.UI, Version=2.1.0.793, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Emgu.CV.UI.dll</HintPath>
+    <Reference Include="Emgu.CV.UI">
+      <HintPath>libs\Emgu.CV.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.Util, Version=2.1.0.793, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Emgu.Util.dll</HintPath>
+    <Reference Include="Emgu.Util">
+      <HintPath>libs\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="HayLibrary">
-      <HintPath>..\..\..\..\Haydukov\Library\HayLibrary\bin\Debug\HayLibrary.dll</HintPath>
+      <HintPath>libs\HayLibrary.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="OpenTK.GLControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />

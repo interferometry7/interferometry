@@ -37,6 +37,7 @@
             this.phaseShift3 = new System.Windows.Forms.TextBox();
             this.phaseShift4 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.sineParameterSaveButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
@@ -124,13 +125,24 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.sineParameterSaveButton);
             this.panel1.Controls.Add(this.numberOfSin2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.numberOfSin1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(253, 45);
+            this.panel1.Size = new System.Drawing.Size(380, 45);
             this.panel1.TabIndex = 8;
+            // 
+            // sineParameterSaveButton
+            // 
+            this.sineParameterSaveButton.Location = new System.Drawing.Point(243, 5);
+            this.sineParameterSaveButton.Name = "sineParameterSaveButton";
+            this.sineParameterSaveButton.Size = new System.Drawing.Size(116, 32);
+            this.sineParameterSaveButton.TabIndex = 4;
+            this.sineParameterSaveButton.Text = "сохранить";
+            this.sineParameterSaveButton.UseVisualStyleBackColor = true;
+            this.sineParameterSaveButton.Click += new System.EventHandler(this.sineParameterSaveButton_Click);
             // 
             // panel2
             // 
@@ -320,5 +332,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.Button sineParameterSaveButton;
     }
 }
