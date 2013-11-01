@@ -82,7 +82,7 @@ namespace rab1
             }
             else if (stripType == 3)
             {
-                SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, pc1);
+                SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift1Value, stripOrientation, pc1);
             }
 
             pc1.Invalidate();
@@ -111,7 +111,7 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void imageTaken(Image newImage)
         {
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             imageNumber++;
 
@@ -138,7 +138,7 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift2Value, stripOrientation, pc1);
                     }
                 }
                 else if (imageNumber == 2)
@@ -153,7 +153,7 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift3Value, stripOrientation, pc1);
                     }
                 }
                 else if (imageNumber == 3)
@@ -168,7 +168,7 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift4Value, stripOrientation, pc1);
                     }
                 }
                 else if (imageNumber == 4)
@@ -183,7 +183,7 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift1Value, stripOrientation, pc1);
                     }
                 }
                 else if (imageNumber == 5)
@@ -198,7 +198,7 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift2Value, stripOrientation, pc1);
                     }
                 }
                 else if (imageNumber == 6)
@@ -213,7 +213,7 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift3Value, stripOrientation, pc1);
                     }
                 }
                 else if (imageNumber == 7)
@@ -228,14 +228,14 @@ namespace rab1
                     }
                     else if (stripType == 3)
                     {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation, pc1);
+                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift4Value, stripOrientation, pc1);
                     }
                 }
 
                 pc1.Invalidate();
                 pc1.Update();
 
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
 
 
                 ShooterSingleton.getImage();

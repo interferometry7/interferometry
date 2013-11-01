@@ -1331,7 +1331,7 @@ namespace rab1
         private void filt_Click(object sender, EventArgs e)
         {
             if (tb1_filt.Text != "") k_filt = Convert.ToInt32(tb1_filt.Text);
-            FiltrClass.Filt_121(pictureBox01, progressBar1, k_filt);
+            FiltrClass.Filt_121(pictureBox01, k_filt);
             //Razmer(w1, h1);
             f_filt.Close();
         }
@@ -1343,7 +1343,7 @@ namespace rab1
         private void filt_median_Click(object sender, EventArgs e)
         {
             if (tb1_filt.Text != "") k_filt = Convert.ToInt32(tb1_filt.Text);
-            FiltrClass.Filt_Mediana(pictureBox01, progressBar1, k_filt);
+            FiltrClass.Filt_Mediana(pictureBox01, k_filt);
             f_filt.Close();
         }
 

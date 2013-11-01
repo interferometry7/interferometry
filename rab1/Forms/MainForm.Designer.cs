@@ -39,7 +39,6 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.pictureBox01 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton14 = new System.Windows.Forms.RadioButton();
@@ -233,26 +232,18 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.progressBar1);
             this.panel1.Controls.Add(this.pictureBox01);
             this.panel1.Location = new System.Drawing.Point(12, 104);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 602);
             this.panel1.TabIndex = 33;
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(8, 3);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(367, 24);
-            this.progressBar1.TabIndex = 56;
-            // 
             // pictureBox01
             // 
             this.pictureBox01.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.pictureBox01.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox01.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox01.Location = new System.Drawing.Point(8, 33);
+            this.pictureBox01.Location = new System.Drawing.Point(8, 26);
             this.pictureBox01.Name = "pictureBox01";
             this.pictureBox01.Size = new System.Drawing.Size(766, 554);
             this.pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1006,7 +997,6 @@
         private System.Windows.Forms.ToolStripMenuItem Фильтр;
         private System.Windows.Forms.ToolStripMenuItem сглаживаниеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
-        private System.Windows.Forms.ProgressBar progressBar1;
        
       
     }

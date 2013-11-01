@@ -11,11 +11,17 @@ namespace rab1
     public class FiltrClass
     {
         // -------------------------------------------------------------------------------------------- Фильтрация 121
-        public static void Filt_121(PictureBox pictureBox01,  ProgressBar progressBar1, int k_filt)
-        {            
-            int r1 = 0;
+        public static void Filt_121(PictureBox pictureBox01, int k_filt)
+        {
+            if (pictureBox01.Image == null)
+            {
+                MessageBox.Show("Изображение пустое");
+                return; 
+            }
+
+            int r1;
             int k = k_filt;
-            int k_cntr = 1;
+            int k_cntr;
 
             int w1 = pictureBox01.Image.Width;
             int h1 = pictureBox01.Image.Height;
@@ -30,11 +36,11 @@ namespace rab1
             Bitmap bmp2 = new Bitmap(w1, h1);
 
             Color c;
-            progressBar1.Visible = true;
-            progressBar1.Minimum = 1;
-            progressBar1.Maximum = w1;
-            progressBar1.Value = 1;
-            progressBar1.Step = 1;
+
+            int all = w1 + h1;
+            int done = 0;
+            PopupProgressBar.show();
+
             for (int i = 0; i < w1; i++)
             {
                 for (int j = 0; j < h1; j++) { c = bmp1.GetPixel(i, j); k_x[j] = (int)((double)(c.R + c.G + c.B) / 3); }
@@ -49,10 +55,11 @@ namespace rab1
                     if (k_cntr == 1) r1 = k_x[j]; else r1 = k_x1[j];
                     bmp2.SetPixel(i, j, Color.FromArgb(r1, r1, r1));
                 }
-                progressBar1.PerformStep();
+
+                done++;
+                PopupProgressBar.setProgress(done, all);
             }
-            progressBar1.Maximum = h1;
-           progressBar1.Value = 1;
+
             for (int j = 0; j < h1; j++)
             {
                 for (int i = 0; i < w1; i++) { c = bmp2.GetPixel(i, j); k_x[i] = (int)((double)(c.R + c.G + c.B) / 3); }
@@ -67,11 +74,14 @@ namespace rab1
                     if (k_cntr == 1) r1 = k_x[i]; else r1 = k_x1[i];
                     bmp1.SetPixel(i, j, Color.FromArgb(r1, r1, r1));
                 }
-                 progressBar1.PerformStep();
+
+                done++;
+                PopupProgressBar.setProgress(done, all);
             }           
-            pictureBox01.Size = new System.Drawing.Size(w1, h1);
+            pictureBox01.Size = new Size(w1, h1);
             pictureBox01.Image = bmp1;
-             progressBar1.Value = 1;
+
+            PopupProgressBar.close();
         }
  // -------------------------------------------------------------------------------------------------- Медианная фильтрация
        static int[] f_x = new int[100];
@@ -90,8 +100,14 @@ namespace rab1
             return s;
          }
 
-       public static void Filt_Mediana(PictureBox pictureBox01, ProgressBar progressBar1, int k_filt)
-       {          
+       public static void Filt_Mediana(PictureBox pictureBox01, int k_filt)
+       {
+           if (pictureBox01.Image == null)
+           {
+               MessageBox.Show("Изображение пустое");
+               return;
+           }
+
            int s = 0;
            int k = k_filt;
            int k2 = k / 2;
@@ -103,15 +119,14 @@ namespace rab1
            Bitmap bmp2 = new Bitmap(w1, h1);
 
            Color c;
-           progressBar1.Visible = true;
-           progressBar1.Minimum = 1;
-           progressBar1.Maximum = w1;
-           progressBar1.Value = 1;
-           progressBar1.Step = 1;
 
            int max = w1; if (h1 > max) max = h1;
            int[] k_x1 = new int[max];
            int[] k_x2 = new int[max];
+
+           int all = w1 + h1;
+           int done = 0;
+           PopupProgressBar.show();
 
            for (int i = 0; i < w1; i++)
            {
@@ -122,11 +137,11 @@ namespace rab1
                    k_x2[j] = filt_median(k);
                }
                for (int j = 0; j < h1 - k; j++) { s = k_x2[j]; bmp2.SetPixel(i, j + k2, Color.FromArgb(s, s, s)); }
-               progressBar1.PerformStep();
+
+               done++;
+               PopupProgressBar.setProgress(done, all);
            }
 
-           progressBar1.Value = 1;
-           progressBar1.Maximum = h1;
            for (int j = 0; j < h1; j++)
            {
                for (int i = 0; i < w1; i++) { c = bmp1.GetPixel(i, j); k_x1[i] = (c.R + c.G + c.B) / 3; }
@@ -136,10 +151,14 @@ namespace rab1
                    k_x2[i] = filt_median(k);
                }
                for (int i = 0; i < w1 - k; i++) { s = k_x2[i]; bmp2.SetPixel(i + k2, j, Color.FromArgb(s, s, s)); }
-               progressBar1.PerformStep();
+
+               done++;
+               PopupProgressBar.setProgress(done, all);
            }
-           pictureBox01.Size = new System.Drawing.Size(w1, h1);
+           pictureBox01.Size = new Size(w1, h1);
            pictureBox01.Image = bmp2;
+
+           PopupProgressBar.close();
        }
 
 

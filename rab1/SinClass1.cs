@@ -125,8 +125,11 @@ namespace rab1
             ((Bitmap)pc1.Image).UnlockBits(bitmapData);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void drawDitheredLines(double N_sin, double f1, int max_x, int max_y, int XY, PictureBox pc1)
+        public static void drawDitheredLines(double N_sin, double f1, int XY, PictureBox pc1)
         {
+            int max_x = pc1.Width;
+            int max_y = pc1.Height;
+
             BitmapData bitmapData = ImageProcessor.getBitmapData((Bitmap)pc1.Image);
             byte r;
             double nx = max_x + 1;
