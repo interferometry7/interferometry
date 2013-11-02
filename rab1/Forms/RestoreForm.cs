@@ -31,6 +31,7 @@ namespace rab1.Forms
         {
             InitializeComponent();
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void RestoreForm_Shown(object sender, EventArgs e)
         {
@@ -38,14 +39,20 @@ namespace rab1.Forms
             {
                 phaseMapImage.Image = imageToEdit;
             }
+            else
+            {
+                return;
+            }
 
             Bitmap newBitmap = new Bitmap(phaseMapImage.Image.Width, phaseMapImage.Image.Height);
             BitmapData imageData = ImageProcessor.getBitmapData(newBitmap);
-            BitmapData imageData2 = ImageProcessor.getBitmapData((Bitmap)phaseMapImage.Image);
+            BitmapData imageData2 = ImageProcessor.getBitmapData((Bitmap) phaseMapImage.Image);
 
-            for (int x = 0; x < phaseMapImage.Image.Width; x++)
+            //for (int x = 0; x < phaseMapImage.Image.Width; x++)
+            for (int y = 0; y < phaseMapImage.Image.Height; y++)
             {
-                for (int y = 0; y < phaseMapImage.Image.Height; y++)
+                //for (int y = 0; y < phaseMapImage.Image.Height; y++)
+                for (int x = 0; x < phaseMapImage.Image.Width; x++)
                 {
                     Color currentColor = ImageProcessor.getPixel(x, y, imageData2);
 
@@ -56,11 +63,12 @@ namespace rab1.Forms
                 }
             }
 
-            ((Bitmap)phaseMapImage.Image).UnlockBits(imageData2);
+            ((Bitmap) phaseMapImage.Image).UnlockBits(imageData2);
             (newBitmap).UnlockBits(imageData);
 
             rightImage.Image = newBitmap;
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void phaseMapImage_Click(object sender, EventArgs e)
         {
@@ -70,10 +78,11 @@ namespace rab1.Forms
                 return;
             }
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void rightImage_MouseDown(object sender, MouseEventArgs e)
         {
-            Color pointColor = ((Bitmap)rightImage.Image).GetPixel(e.X, e.Y);
+            Color pointColor = ((Bitmap) rightImage.Image).GetPixel(e.X, e.Y);
             if (pointColor.ToArgb() == Color.Red.ToArgb())
             {
                 return;
@@ -103,14 +112,6 @@ namespace rab1.Forms
                 }
             }
 
-            
-            
-
-
-
-
-
-
             ImageProcessor.floodImage(e.X, e.Y, colorToFill, rightImage.Image, true, Color.Red);
             rightImage.Invalidate();
             rightImage.Update();
@@ -118,7 +119,7 @@ namespace rab1.Forms
 
             newList = new List<Point>();
 
-            BitmapData imageData = ImageProcessor.getBitmapData((Bitmap)rightImage.Image);
+            BitmapData imageData = ImageProcessor.getBitmapData((Bitmap) rightImage.Image);
 
             for (int x = 0; x < phaseMapImage.Image.Width; x++)
             {
@@ -133,7 +134,7 @@ namespace rab1.Forms
                 }
             }
 
-            ((Bitmap)rightImage.Image).UnlockBits(imageData);
+            ((Bitmap) rightImage.Image).UnlockBits(imageData);
 
 
             if (found == true)
@@ -147,22 +148,23 @@ namespace rab1.Forms
             chooseForm.userChoosedNumber += newNumber;
             chooseForm.ShowDialog();
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void newNumber(int newNumber)
         {
-            if(numberAndPointCorrespondence.ContainsKey(newNumber))
+            if (numberAndPointCorrespondence.ContainsKey(newNumber))
             {
                 List<Point> existedList = numberAndPointCorrespondence[newNumber];
                 existedList.AddRange(newList);
 
-                BitmapData imageData = ImageProcessor.getBitmapData((Bitmap)rightImage.Image);
+                BitmapData imageData = ImageProcessor.getBitmapData((Bitmap) rightImage.Image);
 
-                foreach(Point currentPoint in existedList)
+                foreach (Point currentPoint in existedList)
                 {
                     ImageProcessor.setPixel(imageData, currentPoint.X, currentPoint.Y, colorToFill);
                 }
 
-                ((Bitmap)rightImage.Image).UnlockBits(imageData);
+                ((Bitmap) rightImage.Image).UnlockBits(imageData);
 
                 rightImage.Invalidate();
                 rightImage.Update();
@@ -181,13 +183,14 @@ namespace rab1.Forms
                 numberAndColorCorrespondence.Add(newNumber, colorToFill);
             }
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private Color generateNewColor()
         {
             Random random = new Random();
             bool win = true;
 
-            for (; ; )
+            for (;;)
             {
                 Color newColor = Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
 
@@ -196,7 +199,7 @@ namespace rab1.Forms
                     continue;
                 }
 
-                BitmapData imageData = ImageProcessor.getBitmapData((Bitmap)rightImage.Image);
+                BitmapData imageData = ImageProcessor.getBitmapData((Bitmap) rightImage.Image);
 
                 for (int x = 0; x < rightImage.Image.Width; x++)
                 {
@@ -212,7 +215,7 @@ namespace rab1.Forms
                     }
                 }
 
-                ((Bitmap)rightImage.Image).UnlockBits(imageData);
+                ((Bitmap) rightImage.Image).UnlockBits(imageData);
 
                 if (win == true)
                 {
@@ -220,11 +223,12 @@ namespace rab1.Forms
                 }
             }
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void buildButton_Click(object sender, EventArgs e)
         {
-            Bitmap areasImage = (Bitmap)rightImage.Image;
-            Bitmap intensityImage = (Bitmap)phaseMapImage.Image;
+            Bitmap areasImage = (Bitmap) rightImage.Image;
+            Bitmap intensityImage = (Bitmap) phaseMapImage.Image;
 
             BitmapData areasImageData = ImageProcessor.getBitmapData(areasImage);
             BitmapData intensityImageData = ImageProcessor.getBitmapData(intensityImage);
@@ -232,13 +236,6 @@ namespace rab1.Forms
             List<Point3D> pointsList = new List<Point3D>();
             int maxColorIntensity = 0;
             int minColorIntensity = 100000;
-
-            var somePlane = getPlaneParams(pointsList);
-            //var somePlane = new Pi_Class1.Plane();
-            somePlane.a = 0.04;
-            somePlane.b = 0.001369;
-            somePlane.c = -0.116;
-            somePlane.d = 1;
 
             for (int x = 0; x < areasImage.Width; x++)
             {
@@ -257,7 +254,7 @@ namespace rab1.Forms
                     }
 
                     Color currentIntensity = ImageProcessor.getPixel(x, y, intensityImageData);
-                    double additionalZcomponent = 255 * currentLineNumber;
+                    double additionalZcomponent = 255*currentLineNumber;
 
                     double currentColorIntencity = currentIntensity.R;
 
@@ -265,42 +262,51 @@ namespace rab1.Forms
 
                     if (maxColorIntensity < currentColorIntencity)
                     {
-                        maxColorIntensity = (int)currentColorIntencity;
+                        maxColorIntensity = (int) currentColorIntencity;
                     }
 
                     if ((minColorIntensity > currentColorIntencity) && (currentColorIntencity != 0))
                     {
-                        minColorIntensity = (int)currentColorIntencity;
+                        minColorIntensity = (int) currentColorIntencity;
                     }
 
-                    if ((int)(currentColorIntencity) != 0)
+                    if ((int) (currentColorIntencity) != 0)
                     {
-                        Point3D newPoint = new Point3D(y, x, (int)(currentColorIntencity));
+                        Point3D newPoint = new Point3D(y, x, (int) (currentColorIntencity));
                         pointsList.Add(newPoint);
                     }
                 }
             }
+
+            var somePlane = getPlaneParams(pointsList);
+            /*var somePlane = new Pi_Class1.Plane();
+            somePlane.a = 0.04;
+            somePlane.b = 0.001369;
+            somePlane.c = -0.116;
+            somePlane.d = 1;*/
 
             OpenGLForm newForm = new OpenGLForm();
             List<Point3D> result = new List<Point3D>();
 
             foreach (Point3D currentPoint in pointsList)
             {
-                double planeZ = ((somePlane.a * currentPoint.x) + (somePlane.b * currentPoint.y) + somePlane.d) / (somePlane.c);
-               
+                double planeZ = (somePlane.a*currentPoint.x) + (somePlane.b*currentPoint.y) + somePlane.c;
+
                 //newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, -(int)planeZ));
 
                 //newForm.addPoint(currentPoint);
 
-                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, (int)Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ)), Color.RoyalBlue));
+                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y,
+                                             (int) Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ)),
+                                             Color.RoyalBlue));
 
                 //result.Add(new Point3D(currentPoint.x, currentPoint.y, (int)Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ))));
             }
 
             newForm.Show();
 
-            ((Bitmap)rightImage.Image).UnlockBits(areasImageData);
-            ((Bitmap)phaseMapImage.Image).UnlockBits(intensityImageData);
+            ((Bitmap) rightImage.Image).UnlockBits(areasImageData);
+            ((Bitmap) phaseMapImage.Image).UnlockBits(intensityImageData);
 
 
             Bitmap resultBitmap = new Bitmap(phaseMapImage.Image.Width, phaseMapImage.Image.Height);
@@ -321,18 +327,24 @@ namespace rab1.Forms
             }
 
             int abs = maxColorIntensity - minColorIntensity;
-            double ratio = abs / 255.0;
+            double ratio = abs/255.0;
 
             foreach (Point3D currentPoint in pointsList)
             {
-                var scaledValue = (int)(Math.Abs(currentPoint.z) / ratio) - 1;
+                var scaledValue = (int) (Math.Abs(currentPoint.z)/ratio) - 1;
 
                 if (scaledValue > 255)
                 {
                     scaledValue = 255;
                 }
 
-                ImageProcessor.setPixel(imageData, currentPoint.y, currentPoint.x, Color.FromArgb(scaledValue, scaledValue, scaledValue));
+                if (scaledValue < 0)
+                {
+                    scaledValue = 0;
+                }
+
+                ImageProcessor.setPixel(imageData, currentPoint.y, currentPoint.x,
+                                        Color.FromArgb(scaledValue, scaledValue, scaledValue));
             }
 
             resultBitmap.UnlockBits(imageData);
@@ -358,37 +370,42 @@ namespace rab1.Forms
             }
 
             abs = maxColorIntensity - minColorIntensity;
-            ratio = abs / 255.0;
+            ratio = abs/255.0;
             foreach (Point3D currentPoint in result)
             {
-                int scaledValue = (int) (Math.Abs(currentPoint.z) / ratio);
-                ImageProcessor.setPixel(imageData, currentPoint.y, currentPoint.x, Color.FromArgb(scaledValue, scaledValue, scaledValue));
+                int scaledValue = (int) (Math.Abs(currentPoint.z)/ratio);
+                ImageProcessor.setPixel(imageData, currentPoint.y, currentPoint.x,
+                                        Color.FromArgb(scaledValue, scaledValue, scaledValue));
             }
 
             resultBitmap.UnlockBits(imageData);
             imageRestored(resultBitmap, ratio);
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void RestoreForm_SizeChanged(object sender, EventArgs e)
         {
             relayout();
         }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void relayout()
         {
             panel1.Size = new Size(this.Size.Width/2, this.Size.Height - 100);
 
-            this.panel2.Location = new Point(this.panel1.Location.X + this.panel1.Size.Width + 10, this.panel2.Location.Y);
-            this.panel2.Size = new Size(this.Size.Width / 2 - 50, this.Size.Height - 100);
+            this.panel2.Location = new Point(this.panel1.Location.X + this.panel1.Size.Width + 10,
+                                             this.panel2.Location.Y);
+            this.panel2.Size = new Size(this.Size.Width/2 - 50, this.Size.Height - 100);
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public Pi_Class1.Plane getPlaneParams(List<Point3D> pointsOfPlane)
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Pi_Class1.Plane getPlaneParams(List<Point3D> pointsOfPlane)
         {
             /*int a = 1;
             int b = 2;
@@ -407,7 +424,7 @@ namespace rab1.Forms
 
             var result = new Pi_Class1.Plane();
 
-            var initMatrix = new double[pointsOfPlane.Count(), 4];
+            var initMatrix = new double[pointsOfPlane.Count(),4];
 
             for (int j = 0; j < pointsOfPlane.Count(); j++)
             {
@@ -415,11 +432,11 @@ namespace rab1.Forms
                 {
                     if (i == 0)
                     {
-                        initMatrix[j, i] = pointsOfPlane[j].x;            
+                        initMatrix[j, i] = pointsOfPlane[j].x;
                     }
                     else if (i == 1)
                     {
-                        initMatrix[j, i] = pointsOfPlane[j].y;  
+                        initMatrix[j, i] = pointsOfPlane[j].y;
                     }
                     else if (i == 2)
                     {
@@ -434,12 +451,12 @@ namespace rab1.Forms
 
             var initialMatrix = new RealMatrix(initMatrix);
             var transposedMatrix = initialMatrix.GetTransposedMatrix();
-            var multMatrix = transposedMatrix * initialMatrix;
+            var multMatrix = transposedMatrix*initialMatrix;
 
             double deter = multMatrix.GetDeterminant();
             //RealMatrix conjMatrix = multMatrix.GetAlgebraicalComplement()
 
-            var complementData = new double[4, 4];
+            var complementData = new double[4,4];
             for (int j = 0; j < 4; j++)
             {
                 for (int i = 0; i < 4; i++)
@@ -451,16 +468,16 @@ namespace rab1.Forms
             var complementMatrix = new RealMatrix(complementData);
 
             RealMatrix transposedMatrix2 = complementMatrix.GetTransposedMatrix();
-            RealMatrix obrMatrix = transposedMatrix2 * (1.0 / deter);
+            RealMatrix obrMatrix = transposedMatrix2*(1.0/deter);
 
-            var onesVector = new double[4, 1];
+            var onesVector = new double[4,1];
             onesVector[0, 0] = 1;
             onesVector[1, 0] = 1;
             onesVector[2, 0] = 1;
             onesVector[3, 0] = 1;
 
             var onesMatrix = new RealMatrix(onesVector);
-            RealMatrix resultMatrix = obrMatrix * onesMatrix;
+            RealMatrix resultMatrix = obrMatrix*onesMatrix;
 
             double[,] resultData = resultMatrix.GetDataArray();
             result.a = resultData[0, 0];
@@ -488,6 +505,6 @@ namespace rab1.Forms
 
             return result;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
+
 }

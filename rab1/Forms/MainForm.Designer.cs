@@ -39,6 +39,7 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox01 = new rab1.CustomPictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton14 = new System.Windows.Forms.RadioButton();
             this.radioButton10 = new System.Windows.Forms.RadioButton();
@@ -98,8 +99,9 @@
             this.imageHeight = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.pictureBox01 = new rab1.CustomPictureBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -115,7 +117,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
@@ -237,6 +238,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 602);
             this.panel1.TabIndex = 33;
+            // 
+            // pictureBox01
+            // 
+            this.pictureBox01.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox01.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.pictureBox01.Location = new System.Drawing.Point(19, 16);
+            this.pictureBox01.Name = "pictureBox01";
+            this.pictureBox01.Size = new System.Drawing.Size(748, 566);
+            this.pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox01.TabIndex = 5;
+            this.pictureBox01.TabStop = false;
+            this.pictureBox01.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
+            this.pictureBox01.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
+            this.pictureBox01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
             // 
             // groupBox1
             // 
@@ -830,11 +845,11 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(671, 56);
+            this.button4.Location = new System.Drawing.Point(671, 66);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 54;
-            this.button4.Text = "button4";
+            this.button4.Text = "2Pi";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
@@ -851,24 +866,21 @@
             this.pictureBox11.TabStop = false;
             this.pictureBox11.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox11_MouseClick);
             // 
-            // pictureBox01
+            // button5
             // 
-            this.pictureBox01.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox01.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox01.Location = new System.Drawing.Point(19, 16);
-            this.pictureBox01.Name = "pictureBox01";
-            this.pictureBox01.Size = new System.Drawing.Size(748, 566);
-            this.pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox01.TabIndex = 5;
-            this.pictureBox01.TabStop = false;
-            this.pictureBox01.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
-            this.pictureBox01.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
-            this.pictureBox01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
+            this.button5.Location = new System.Drawing.Point(752, 56);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 42);
+            this.button5.TabIndex = 56;
+            this.button5.Text = "Вычитание плоскости";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(981, 850);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.imageHeight);
@@ -897,6 +909,7 @@
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -916,7 +929,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -996,6 +1008,7 @@
         private System.Windows.Forms.ToolStripMenuItem сглаживаниеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
         private CustomPictureBox pictureBox01;
+        private System.Windows.Forms.Button button5;
        
       
     }

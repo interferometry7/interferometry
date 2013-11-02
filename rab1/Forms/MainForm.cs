@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -1235,11 +1236,13 @@ namespace rab1
             List<Point> startPoints = new List<Point>();
             List<Point> endPoints = new List<Point>();
 
-            for (int x = 0; x < copyOfImage.Width; x++)
+            //for (int x = 0; x < copyOfImage.Width; x++)
+            for (int y = 0; y < copyOfImage.Height; y++)
             {
                 List<Point> tempBorders = new List<Point>();
 
-                for (int y = 0; y < copyOfImage.Height; y++)
+                //for (int y = 0; y < copyOfImage.Height; y++)
+                for (int x = 0; x < copyOfImage.Width; x++)
                 {
                     Color currentColor = ImageProcessor.getPixel(x, y, imageData);
 
@@ -1258,7 +1261,7 @@ namespace rab1
                             }
                         }
 
-                        if ((Math.Abs(closestPoint.Y - newBorderPoint.Y) > 1) && ((Math.Abs(closestPoint.Y - newBorderPoint.Y) < 20)))
+                        if ((Math.Abs(closestPoint.X - newBorderPoint.X) > 1) && ((Math.Abs(closestPoint.X - newBorderPoint.X) < 20)))
                         {
                             startPoints.Add(closestPoint);
                             endPoints.Add(newBorderPoint);
@@ -1380,8 +1383,97 @@ namespace rab1
             f_filt.Show();
 
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Image targetImage = pictureBox01.Image;
+            List<Point3D> pointsList = new List<Point3D>();
 
-            
+            for (int i = 0; i < targetImage.Width; i++)
+            {
+                for (int j = 0; j < targetImage.Height; j++)
+                {
+                    Color currentColor = ((Bitmap)(targetImage)).GetPixel(i, j);
+                    int currentIntencity = currentColor.R;
+                    Point3D newPoint = new Point3D(i, j, currentIntencity);
+
+                    if (newPoint.z != 0)
+                    {
+                        pointsList.Add(newPoint);
+                    }
+                }
+            }
+
+            var somePlane = RestoreForm.getPlaneParams(pointsList);
+            /*somePlane.a = 0.04;
+            somePlane.b = 0.001369;
+            somePlane.c = -0.116;*/
+
+            OpenGLForm newForm = new OpenGLForm();
+            List<Point3D> result = new List<Point3D>();
+
+            int[][] pointsForFile = new int[targetImage.Width][];
+
+            for (int i = 0; i < targetImage.Width; i++)
+            {
+                pointsForFile[i] = new int[targetImage.Height];
+            }
+
+
+            foreach (Point3D currentPoint in pointsList)
+            {
+                double planeZ = (somePlane.a * currentPoint.x) + (somePlane.b * currentPoint.y) + somePlane.c;
+
+                //newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, -(int)planeZ));
+
+                //newForm.addPoint(currentPoint);
+
+                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, (int)(currentPoint.z - planeZ), Color.RoyalBlue));
+
+
+                pointsForFile[currentPoint.x][currentPoint.y] = (int)Math.Abs(Math.Abs((int)(currentPoint.z - planeZ)) - Math.Abs(planeZ));
+
+                //result.Add(new Point3D(currentPoint.x, currentPoint.y, (int)Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ))));
+            }
+
+
+
+            newForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void writeToFile(int[][] pointsForWriting, int width, int height) //выгрузка
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog(); //создали диалог
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK) //если нажата ОК
+            {
+                String fileName = saveFileDialog1.FileName; //взяли имя из диалога
+
+                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate); //создаём поток
+                System.IO.BinaryWriter w = new System.IO.BinaryWriter(fs); //создаём записывальщик
+
+                /////////////// От чего до чего Шаг /////////////////////
+                int StartX = 0; // Начальный X
+                int FinishX = width; // Конечный X
+                int StartY = 0; // Начальный Y
+                int FinishY = height; // Конечный Y
+                int Step = 1; // Шаг
+                /////////////////////////////////////////////////////////
+
+                w.Write((int)(FinishX - StartX) / Step); //запись количества значений по X
+                w.Write((int)(FinishY - StartY) / Step); //запись количества значений по Y
+
+
+                for (int y = StartY; y < FinishY; y += Step) //внешний цикл по Y
+                {
+                    for (int x = StartX; x < FinishX; x += Step) //внутренний цикл по X //получается построчная запись
+                    {
+                        w.Write(pointsForWriting[x][y]); //запиcываем посчитанное значение
+                    }
+                }
+                w.Close(); //закрываем записывальщик
+                fs.Close(); //закрываем поток
+            }
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
