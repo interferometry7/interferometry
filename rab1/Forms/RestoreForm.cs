@@ -233,19 +233,12 @@ namespace rab1.Forms
             int maxColorIntensity = 0;
             int minColorIntensity = 100000;
 
-            //var somePlane = getPlaneParams(pointsList);
-            var somePlane = new Pi_Class1.Plane();
-            somePlane.a = 0.000023888348386256014;
-            somePlane.b = -0.00000030605791592613019;
-            somePlane.c = -0.0000047370353095202745;
-            somePlane.d = 0.00018888266329119749;
-
-            int[][] pointsForFile = new int[areasImage.Width][];
-
-            for (int i = 0; i < areasImage.Width; i++)
-            {
-                pointsForFile[i] = new int[areasImage.Height];
-            }
+            var somePlane = getPlaneParams(pointsList);
+            //var somePlane = new Pi_Class1.Plane();
+            somePlane.a = 0.04;
+            somePlane.b = 0.001369;
+            somePlane.c = -0.116;
+            somePlane.d = 1;
 
             for (int x = 0; x < areasImage.Width; x++)
             {
@@ -284,20 +277,9 @@ namespace rab1.Forms
                     {
                         Point3D newPoint = new Point3D(y, x, (int)(currentColorIntencity));
                         pointsList.Add(newPoint);
-
-                        double planeZ = ((somePlane.a * newPoint.x) + (somePlane.b * newPoint.y) + somePlane.d) / (somePlane.c);
-
-                        pointsForFile[x][y] = (int)Math.Abs(Math.Abs(newPoint.z) - Math.Abs(planeZ));
-                    }
-                    else
-                    {
-                        pointsForFile[x][y] = 500000;
                     }
                 }
             }
-
-            writeToFile(pointsForFile, areasImage.Width, areasImage.Height);
-
 
             OpenGLForm newForm = new OpenGLForm();
             List<Point3D> result = new List<Point3D>();
@@ -321,7 +303,7 @@ namespace rab1.Forms
             ((Bitmap)phaseMapImage.Image).UnlockBits(intensityImageData);
 
 
-            /*Bitmap resultBitmap = new Bitmap(phaseMapImage.Image.Width, phaseMapImage.Image.Height);
+            Bitmap resultBitmap = new Bitmap(phaseMapImage.Image.Width, phaseMapImage.Image.Height);
 
             BitmapData imageData = ImageProcessor.getBitmapData(resultBitmap);
 
@@ -344,6 +326,12 @@ namespace rab1.Forms
             foreach (Point3D currentPoint in pointsList)
             {
                 var scaledValue = (int)(Math.Abs(currentPoint.z) / ratio) - 1;
+
+                if (scaledValue > 255)
+                {
+                    scaledValue = 255;
+                }
+
                 ImageProcessor.setPixel(imageData, currentPoint.y, currentPoint.x, Color.FromArgb(scaledValue, scaledValue, scaledValue));
             }
 
@@ -378,7 +366,7 @@ namespace rab1.Forms
             }
 
             resultBitmap.UnlockBits(imageData);
-            imageRestored(resultBitmap, ratio);*/
+            imageRestored(resultBitmap, ratio);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void RestoreForm_SizeChanged(object sender, EventArgs e)
@@ -499,40 +487,6 @@ namespace rab1.Forms
             }*/
 
             return result;
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void writeToFile(int[][] pointsForWriting, int width, int height) //выгрузка
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog(); //создали диалог
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) //если нажата ОК
-            {
-                String fileName = saveFileDialog1.FileName; //взяли имя из диалога
-
-                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate); //создаём поток
-                System.IO.BinaryWriter w = new System.IO.BinaryWriter(fs); //создаём записывальщик
-
-                /////////////// От чего до чего Шаг /////////////////////
-                int StartX = 0;    // Начальный X
-                int FinishX = width; // Конечный X
-                int StartY = 0;    // Начальный Y
-                int FinishY = height; // Конечный Y
-                int Step = 1;    // Шаг
-                /////////////////////////////////////////////////////////
-
-                w.Write((int)(FinishX - StartX) / Step);  //запись количества значений по X
-                w.Write((int)(FinishY - StartY) / Step);  //запись количества значений по Y
-
-                
-                for (int y = StartY; y < FinishY; y += Step) //внешний цикл по Y
-                {
-                    for (int x = StartX; x < FinishX; x += Step) //внутренний цикл по X //получается построчная запись
-                    {
-                        w.Write(pointsForWriting[x][y]); //запиcываем посчитанное значение
-                    }
-                }
-                w.Close(); //закрываем записывальщик
-                fs.Close(); //закрываем поток
-            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
