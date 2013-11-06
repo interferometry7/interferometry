@@ -1474,6 +1474,16 @@ namespace rab1
                 fs.Close(); //закрываем поток
             }
         }
+
+        private void PRMTRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

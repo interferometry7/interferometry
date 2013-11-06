@@ -39,7 +39,6 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox01 = new rab1.CustomPictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton14 = new System.Windows.Forms.RadioButton();
             this.radioButton10 = new System.Windows.Forms.RadioButton();
@@ -100,8 +99,25 @@
             this.button4 = new System.Windows.Forms.Button();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.button5 = new System.Windows.Forms.Button();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.radioButton18 = new System.Windows.Forms.RadioButton();
+            this.radioButton19 = new System.Windows.Forms.RadioButton();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBox01 = new rab1.CustomPictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -117,12 +133,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(914, 36);
+            this.button3.Location = new System.Drawing.Point(1027, 36);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(55, 28);
             this.button3.TabIndex = 5;
@@ -145,7 +165,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(6, 93);
+            this.radioButton2.Location = new System.Drawing.Point(7, 70);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(14, 13);
             this.radioButton2.TabIndex = 22;
@@ -156,7 +176,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(6, 165);
+            this.radioButton3.Location = new System.Drawing.Point(9, 128);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(14, 13);
             this.radioButton3.TabIndex = 23;
@@ -167,7 +187,7 @@
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(5, 222);
+            this.radioButton4.Location = new System.Drawing.Point(7, 179);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(14, 13);
             this.radioButton4.TabIndex = 24;
@@ -178,7 +198,7 @@
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(6, 306);
+            this.radioButton5.Location = new System.Drawing.Point(9, 235);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(14, 13);
             this.radioButton5.TabIndex = 25;
@@ -189,7 +209,7 @@
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(6, 379);
+            this.radioButton6.Location = new System.Drawing.Point(9, 287);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(14, 13);
             this.radioButton6.TabIndex = 26;
@@ -200,7 +220,7 @@
             // radioButton7
             // 
             this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(6, 451);
+            this.radioButton7.Location = new System.Drawing.Point(9, 341);
             this.radioButton7.Name = "radioButton7";
             this.radioButton7.Size = new System.Drawing.Size(14, 13);
             this.radioButton7.TabIndex = 27;
@@ -211,7 +231,7 @@
             // radioButton8
             // 
             this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(6, 522);
+            this.radioButton8.Location = new System.Drawing.Point(9, 399);
             this.radioButton8.Name = "radioButton8";
             this.radioButton8.Size = new System.Drawing.Size(14, 13);
             this.radioButton8.TabIndex = 28;
@@ -222,7 +242,7 @@
             // button12
             // 
             this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button12.Location = new System.Drawing.Point(857, 36);
+            this.button12.Location = new System.Drawing.Point(970, 36);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(51, 28);
             this.button12.TabIndex = 30;
@@ -236,26 +256,15 @@
             this.panel1.Controls.Add(this.pictureBox01);
             this.panel1.Location = new System.Drawing.Point(12, 104);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 602);
+            this.panel1.Size = new System.Drawing.Size(822, 622);
             this.panel1.TabIndex = 33;
-            // 
-            // pictureBox01
-            // 
-            this.pictureBox01.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox01.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox01.Location = new System.Drawing.Point(19, 16);
-            this.pictureBox01.Name = "pictureBox01";
-            this.pictureBox01.Size = new System.Drawing.Size(748, 566);
-            this.pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox01.TabIndex = 5;
-            this.pictureBox01.TabStop = false;
-            this.pictureBox01.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
-            this.pictureBox01.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
-            this.pictureBox01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.radioButton14);
             this.groupBox1.Controls.Add(this.radioButton10);
             this.groupBox1.Controls.Add(this.radioButton9);
@@ -275,16 +284,16 @@
             this.groupBox1.Controls.Add(this.radioButton6);
             this.groupBox1.Controls.Add(this.radioButton8);
             this.groupBox1.Controls.Add(this.radioButton7);
-            this.groupBox1.Location = new System.Drawing.Point(857, 64);
+            this.groupBox1.Location = new System.Drawing.Point(970, 104);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(32, 782);
+            this.groupBox1.Size = new System.Drawing.Size(32, 602);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             // 
             // radioButton14
             // 
             this.radioButton14.AutoSize = true;
-            this.radioButton14.Location = new System.Drawing.Point(9, 743);
+            this.radioButton14.Location = new System.Drawing.Point(10, 558);
             this.radioButton14.Name = "radioButton14";
             this.radioButton14.Size = new System.Drawing.Size(14, 13);
             this.radioButton14.TabIndex = 56;
@@ -295,7 +304,7 @@
             // radioButton10
             // 
             this.radioButton10.AutoSize = true;
-            this.radioButton10.Location = new System.Drawing.Point(7, 675);
+            this.radioButton10.Location = new System.Drawing.Point(11, 505);
             this.radioButton10.Name = "radioButton10";
             this.radioButton10.Size = new System.Drawing.Size(14, 13);
             this.radioButton10.TabIndex = 37;
@@ -306,7 +315,7 @@
             // radioButton9
             // 
             this.radioButton9.AutoSize = true;
-            this.radioButton9.Location = new System.Drawing.Point(7, 609);
+            this.radioButton9.Location = new System.Drawing.Point(9, 451);
             this.radioButton9.Name = "radioButton9";
             this.radioButton9.Size = new System.Drawing.Size(14, 13);
             this.radioButton9.TabIndex = 36;
@@ -317,7 +326,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 542);
+            this.label14.Location = new System.Drawing.Point(10, 415);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(13, 13);
             this.label14.TabIndex = 35;
@@ -326,7 +335,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 471);
+            this.label13.Location = new System.Drawing.Point(10, 357);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(13, 13);
             this.label13.TabIndex = 34;
@@ -335,7 +344,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(8, 399);
+            this.label12.Location = new System.Drawing.Point(10, 306);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(13, 13);
             this.label12.TabIndex = 33;
@@ -344,7 +353,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 326);
+            this.label11.Location = new System.Drawing.Point(8, 252);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(13, 13);
             this.label11.TabIndex = 32;
@@ -353,7 +362,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 252);
+            this.label10.Location = new System.Drawing.Point(8, 204);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(13, 13);
             this.label10.TabIndex = 31;
@@ -362,7 +371,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 188);
+            this.label9.Location = new System.Drawing.Point(8, 150);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(13, 13);
             this.label9.TabIndex = 30;
@@ -371,7 +380,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 115);
+            this.label8.Location = new System.Drawing.Point(8, 94);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(13, 13);
             this.label8.TabIndex = 29;
@@ -391,11 +400,12 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.фазаToolStripMenuItem,
-            this.cameraToolStripMenuItem,
-            this.Фильтр});
+            this.toolStripMenuItem1,
+            this.Фильтр,
+            this.cameraToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(981, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1094, 24);
             this.menuStrip1.TabIndex = 42;
             this.menuStrip1.Text = "Файл";
             // 
@@ -407,34 +417,34 @@
             this.SAVEToolStripMenuItem,
             this.сохранить8КадровToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ZGRToolStripMenuItem
             // 
             this.ZGRToolStripMenuItem.Name = "ZGRToolStripMenuItem";
-            this.ZGRToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.ZGRToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.ZGRToolStripMenuItem.Text = "Загрузить";
             this.ZGRToolStripMenuItem.Click += new System.EventHandler(this.ZGRToolStripMenuItem_Click);
             // 
             // Save8ToolStripMenuItem
             // 
             this.Save8ToolStripMenuItem.Name = "Save8ToolStripMenuItem";
-            this.Save8ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.Save8ToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.Save8ToolStripMenuItem.Text = "Загрузить 8 (1...8)";
             this.Save8ToolStripMenuItem.Click += new System.EventHandler(this.Save8ToolStripMenuItem_Click);
             // 
             // SAVEToolStripMenuItem
             // 
             this.SAVEToolStripMenuItem.Name = "SAVEToolStripMenuItem";
-            this.SAVEToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.SAVEToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.SAVEToolStripMenuItem.Text = "Сохранить";
             this.SAVEToolStripMenuItem.Click += new System.EventHandler(this.SAVEToolStripMenuItem_Click);
             // 
             // сохранить8КадровToolStripMenuItem
             // 
             this.сохранить8КадровToolStripMenuItem.Name = "сохранить8КадровToolStripMenuItem";
-            this.сохранить8КадровToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.сохранить8КадровToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.сохранить8КадровToolStripMenuItem.Text = "Сохранить 8 кадров";
             this.сохранить8КадровToolStripMenuItem.Click += new System.EventHandler(this.сохранить8КадровToolStripMenuItem_Click);
             // 
@@ -443,7 +453,7 @@
             this.фазаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aTANToolStripMenuItem});
             this.фазаToolStripMenuItem.Name = "фазаToolStripMenuItem";
-            this.фазаToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.фазаToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.фазаToolStripMenuItem.Text = "Фаза";
             // 
             // aTANToolStripMenuItem
@@ -457,54 +467,55 @@
             this.таблицаToolStripMenuItem,
             this.таблица2ToolStripMenuItem});
             this.aTANToolStripMenuItem.Name = "aTANToolStripMenuItem";
-            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.aTANToolStripMenuItem.Text = "ATAN";
             // 
             // PRMTRToolStripMenuItem
             // 
             this.PRMTRToolStripMenuItem.Name = "PRMTRToolStripMenuItem";
-            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.PRMTRToolStripMenuItem.Text = "Параметры";
+            this.PRMTRToolStripMenuItem.Click += new System.EventHandler(this.PRMTRToolStripMenuItem_Click);
             // 
             // aTAN123ToolStripMenuItem
             // 
             this.aTAN123ToolStripMenuItem.Name = "aTAN123ToolStripMenuItem";
-            this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.aTAN123ToolStripMenuItem.Text = "ATAN2";
             this.aTAN123ToolStripMenuItem.Click += new System.EventHandler(this.aTAN123ToolStripMenuItem_Click_1);
             // 
             // aTANRGBToolStripMenuItem
             // 
             this.aTANRGBToolStripMenuItem.Name = "aTANRGBToolStripMenuItem";
-            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.aTANRGBToolStripMenuItem.Text = "ATAN2 RGB";
             this.aTANRGBToolStripMenuItem.Click += new System.EventHandler(this.aTANRGBToolStripMenuItem_Click_1);
             // 
             // aTAN2123GraphToolStripMenuItem
             // 
             this.aTAN2123GraphToolStripMenuItem.Name = "aTAN2123GraphToolStripMenuItem";
-            this.aTAN2123GraphToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.aTAN2123GraphToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.aTAN2123GraphToolStripMenuItem.Text = "ATAN2 123 Graph";
             this.aTAN2123GraphToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123GraphToolStripMenuItem_Click);
             // 
             // aTAN2123456ToolStripMenuItem
             // 
             this.aTAN2123456ToolStripMenuItem.Name = "aTAN2123456ToolStripMenuItem";
-            this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.aTAN2123456ToolStripMenuItem.Text = "ATAN2 1234 5678";
             this.aTAN2123456ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123456ToolStripMenuItem_Click);
             // 
             // таблицаToolStripMenuItem
             // 
             this.таблицаToolStripMenuItem.Name = "таблицаToolStripMenuItem";
-            this.таблицаToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.таблицаToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.таблицаToolStripMenuItem.Text = "Таблица";
             this.таблицаToolStripMenuItem.Click += new System.EventHandler(this.таблицаToolStripMenuItem_Click);
             // 
             // таблица2ToolStripMenuItem
             // 
             this.таблица2ToolStripMenuItem.Name = "таблица2ToolStripMenuItem";
-            this.таблица2ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.таблица2ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.таблица2ToolStripMenuItem.Text = "Таблица 2";
             this.таблица2ToolStripMenuItem.Click += new System.EventHandler(this.таблица2ToolStripMenuItem_Click);
             // 
@@ -513,7 +524,7 @@
             this.cameraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.canon500DToolStripMenuItem});
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.cameraToolStripMenuItem.Text = "Камера";
             // 
             // canon500DToolStripMenuItem
@@ -522,20 +533,20 @@
             this.сделатьСнимокToolStripMenuItem,
             this.Cadr8ToolStripMenuItem});
             this.canon500DToolStripMenuItem.Name = "canon500DToolStripMenuItem";
-            this.canon500DToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.canon500DToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.canon500DToolStripMenuItem.Text = "Canon 500D";
             // 
             // сделатьСнимокToolStripMenuItem
             // 
             this.сделатьСнимокToolStripMenuItem.Name = "сделатьСнимокToolStripMenuItem";
-            this.сделатьСнимокToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.сделатьСнимокToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.сделатьСнимокToolStripMenuItem.Text = "Сделать снимок";
             this.сделатьСнимокToolStripMenuItem.Click += new System.EventHandler(this.captureImage);
             // 
             // Cadr8ToolStripMenuItem
             // 
             this.Cadr8ToolStripMenuItem.Name = "Cadr8ToolStripMenuItem";
-            this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.Cadr8ToolStripMenuItem.Text = "2 серии Sin";
             this.Cadr8ToolStripMenuItem.Click += new System.EventHandler(this.Cadr8ToolStripMenuItem_Click);
             // 
@@ -545,20 +556,20 @@
             this.сглаживаниеToolStripMenuItem,
             this.медианныйToolStripMenuItem});
             this.Фильтр.Name = "Фильтр";
-            this.Фильтр.Size = new System.Drawing.Size(60, 20);
+            this.Фильтр.Size = new System.Drawing.Size(57, 20);
             this.Фильтр.Text = "Фильтр";
             // 
             // сглаживаниеToolStripMenuItem
             // 
             this.сглаживаниеToolStripMenuItem.Name = "сглаживаниеToolStripMenuItem";
-            this.сглаживаниеToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.сглаживаниеToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.сглаживаниеToolStripMenuItem.Text = "Сглаживание";
             this.сглаживаниеToolStripMenuItem.Click += new System.EventHandler(this.сглаживаниеToolStripMenuItem_Click);
             // 
             // медианныйToolStripMenuItem
             // 
             this.медианныйToolStripMenuItem.Name = "медианныйToolStripMenuItem";
-            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.медианныйToolStripMenuItem.Text = "Медианный";
             this.медианныйToolStripMenuItem.Click += new System.EventHandler(this.медианныйToolStripMenuItem_Click);
             // 
@@ -568,9 +579,9 @@
             this.pictureBox8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox8.Location = new System.Drawing.Point(895, 566);
+            this.pictureBox8.Location = new System.Drawing.Point(1008, 489);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox8.Size = new System.Drawing.Size(48, 48);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox8.TabIndex = 46;
             this.pictureBox8.TabStop = false;
@@ -582,9 +593,9 @@
             this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox7.Location = new System.Drawing.Point(895, 490);
+            this.pictureBox7.Location = new System.Drawing.Point(1008, 435);
             this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox7.Size = new System.Drawing.Size(48, 48);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox7.TabIndex = 45;
             this.pictureBox7.TabStop = false;
@@ -596,9 +607,9 @@
             this.pictureBox6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox6.Location = new System.Drawing.Point(895, 420);
+            this.pictureBox6.Location = new System.Drawing.Point(1008, 381);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox6.Size = new System.Drawing.Size(48, 48);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
@@ -610,9 +621,9 @@
             this.pictureBox5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox5.Location = new System.Drawing.Point(895, 350);
+            this.pictureBox5.Location = new System.Drawing.Point(1008, 327);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox5.Size = new System.Drawing.Size(48, 48);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox5.TabIndex = 5;
             this.pictureBox5.TabStop = false;
@@ -624,9 +635,9 @@
             this.pictureBox4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox4.Location = new System.Drawing.Point(895, 280);
+            this.pictureBox4.Location = new System.Drawing.Point(1008, 273);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox4.Size = new System.Drawing.Size(48, 48);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 5;
             this.pictureBox4.TabStop = false;
@@ -638,9 +649,9 @@
             this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox3.Location = new System.Drawing.Point(895, 210);
+            this.pictureBox3.Location = new System.Drawing.Point(1008, 219);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox3.Size = new System.Drawing.Size(48, 48);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 44;
             this.pictureBox3.TabStop = false;
@@ -652,9 +663,9 @@
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox2.Location = new System.Drawing.Point(895, 140);
+            this.pictureBox2.Location = new System.Drawing.Point(1008, 163);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox2.Size = new System.Drawing.Size(48, 48);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 43;
             this.pictureBox2.TabStop = false;
@@ -666,9 +677,9 @@
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox1.Location = new System.Drawing.Point(895, 70);
+            this.pictureBox1.Location = new System.Drawing.Point(1008, 109);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -804,9 +815,9 @@
             this.pictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox9.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox9.Location = new System.Drawing.Point(895, 642);
+            this.pictureBox9.Location = new System.Drawing.Point(1008, 543);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox9.Size = new System.Drawing.Size(48, 48);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox9.TabIndex = 50;
             this.pictureBox9.TabStop = false;
@@ -817,9 +828,9 @@
             this.pictureBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox10.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox10.Location = new System.Drawing.Point(895, 712);
+            this.pictureBox10.Location = new System.Drawing.Point(1008, 597);
             this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox10.Size = new System.Drawing.Size(48, 48);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox10.TabIndex = 51;
             this.pictureBox10.TabStop = false;
@@ -858,9 +869,9 @@
             this.pictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox11.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox11.Location = new System.Drawing.Point(895, 782);
+            this.pictureBox11.Location = new System.Drawing.Point(1008, 658);
             this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox11.Size = new System.Drawing.Size(48, 48);
             this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox11.TabIndex = 55;
             this.pictureBox11.TabStop = false;
@@ -876,10 +887,197 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // pictureBox12
+            // 
+            this.pictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox12.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox12.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox12.Location = new System.Drawing.Point(900, 109);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox12.TabIndex = 57;
+            this.pictureBox12.TabStop = false;
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox13.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox13.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox13.Location = new System.Drawing.Point(900, 163);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox13.TabIndex = 6;
+            this.pictureBox13.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Controls.Add(this.label18);
+            this.groupBox2.Controls.Add(this.radioButton18);
+            this.groupBox2.Controls.Add(this.radioButton19);
+            this.groupBox2.Location = new System.Drawing.Point(862, 104);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(32, 120);
+            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabStop = false;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(7, 94);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(13, 13);
+            this.label17.TabIndex = 29;
+            this.label17.Text = "2";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 40);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(13, 13);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "1";
+            // 
+            // radioButton18
+            // 
+            this.radioButton18.AutoSize = true;
+            this.radioButton18.Checked = true;
+            this.radioButton18.Location = new System.Drawing.Point(6, 19);
+            this.radioButton18.Name = "radioButton18";
+            this.radioButton18.Size = new System.Drawing.Size(14, 13);
+            this.radioButton18.TabIndex = 21;
+            this.radioButton18.TabStop = true;
+            this.radioButton18.UseVisualStyleBackColor = true;
+            // 
+            // radioButton19
+            // 
+            this.radioButton19.AutoSize = true;
+            this.radioButton19.Location = new System.Drawing.Point(6, 70);
+            this.radioButton19.Name = "radioButton19";
+            this.radioButton19.Size = new System.Drawing.Size(14, 13);
+            this.radioButton19.TabIndex = 22;
+            this.radioButton19.TabStop = true;
+            this.radioButton19.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(909, 90);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(39, 13);
+            this.label20.TabIndex = 58;
+            this.label20.Text = "double";
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(1024, 90);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(18, 13);
+            this.label21.TabIndex = 59;
+            this.label21.Text = "int";
+            // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Location = new System.Drawing.Point(893, 37);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(55, 28);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "<-";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(33, 20);
+            this.toolStripMenuItem1.Text = "2pi";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem8,
+            this.toolStripMenuItem9});
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(101, 22);
+            this.toolStripMenuItem2.Text = "ATAN";
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(125, 22);
+            this.toolStripMenuItem8.Text = "Таблица";
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(125, 22);
+            this.toolStripMenuItem9.Text = "Таблица 2";
+            this.toolStripMenuItem9.Click += new System.EventHandler(this.toolStripMenuItem9_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 467);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 60;
+            this.label3.Text = "9";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 521);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 13);
+            this.label4.TabIndex = 61;
+            this.label4.Text = "10";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 574);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 13);
+            this.label5.TabIndex = 62;
+            this.label5.Text = "11";
+            // 
+            // pictureBox01
+            // 
+            this.pictureBox01.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox01.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox01.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.pictureBox01.Location = new System.Drawing.Point(8, 5);
+            this.pictureBox01.Name = "pictureBox01";
+            this.pictureBox01.Size = new System.Drawing.Size(800, 600);
+            this.pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox01.TabIndex = 5;
+            this.pictureBox01.TabStop = false;
+            this.pictureBox01.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
+            this.pictureBox01.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
+            this.pictureBox01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(981, 850);
+            this.ClientSize = new System.Drawing.Size(1094, 735);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.pictureBox13);
+            this.Controls.Add(this.pictureBox12);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.button4);
@@ -904,12 +1102,11 @@
             this.Controls.Add(this.pictureBox1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Я изменил заголовок";
+            this.Text = "Изменил размер окошек";
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -929,6 +1126,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1009,6 +1211,23 @@
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
         private CustomPictureBox pictureBox01;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.RadioButton radioButton18;
+        private System.Windows.Forms.RadioButton radioButton19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
        
       
     }
