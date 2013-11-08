@@ -1,23 +1,63 @@
 ﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
+
 
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
+using rab1;
+
+//public delegate void ImageProcessed(Bitmap resultBitmap);
+//public delegate void ImageProcessedForOpenGL(List<Point3D> points);
+
 
 namespace rab1
 {
     public class FiltrClass
     {
+        //public static event ImageProcessed imageProcessed;
+        public static void Transp(PictureBox pictureBox01)
+        {
+            if (pictureBox01.Image == null) { MessageBox.Show("Изображение пустое"); return; }
+
+            int w1 = pictureBox01.Image.Width;
+            int h1 = pictureBox01.Image.Height;
+          
+            Color c1;
+            Bitmap bmp1 = new Bitmap(pictureBox01.Image, w1, h1);
+            Bitmap bmp2 = new Bitmap(h1, w1);
+
+           
+            BitmapData data1 = ImageProcessor.getBitmapData(bmp1);
+            BitmapData data2 = ImageProcessor.getBitmapData(bmp2);
+           // c1 = ImageProcessor.getPixel(i, j, data1);
+           // ImageProcessor.setPixel(data5, i, j, Color.FromArgb(r, r, r));
+           // bmp5.UnlockBits(data5);
+
+            int all = w1;
+            int done = 0; 
+            PopupProgressBar.show();
+            for (int j = 0; j < h1; j++)
+            {
+               for (int i = 0; i < w1; i++)
+               {
+                   c1 = ImageProcessor.getPixel(i, j, data1);  // c1 = bmp1.GetPixel(i, j);                 
+                   ImageProcessor.setPixel(data2, j, i, c1);   // bmp2.SetPixel(j, i, c1);
+               }
+               done++; PopupProgressBar.setProgress(done, all);
+            }
+           pictureBox01.Image = bmp2;
+           bmp1.UnlockBits(data1);
+           bmp2.UnlockBits(data2);
+           PopupProgressBar.close();
+       }
+
+    
+        
         // -------------------------------------------------------------------------------------------- Фильтрация 121
         public static void Filt_121(PictureBox pictureBox01, int k_filt)
         {
-            if (pictureBox01.Image == null)
-            {
-                MessageBox.Show("Изображение пустое");
-                return; 
-            }
+            if (pictureBox01.Image == null) {  MessageBox.Show("Изображение пустое");  return; }
 
             int r1;
             int k = k_filt;
@@ -161,7 +201,7 @@ namespace rab1
            PopupProgressBar.close();
        }
 
-
+//---------------------------------------------------------------------------------------------------------------------- Собель
        public static void Filt_Sobel(PictureBox pictureBox01, int k_filt)
        {
            //if (tb1_filt.Text != "") k_filt = Convert.ToInt32(tb1_filt.Text);
@@ -226,7 +266,7 @@ namespace rab1
            pictureBox01.Image = bmp2;
            MessageBox.Show("Max =" + max + "Min =" + min);
        }
-
+       //---------------------------------------------------------------------------------------------------------------------- B/W
        public static void Filt_BW(PictureBox pictureBox01, int k_filt)
        {
            int k = k_filt;

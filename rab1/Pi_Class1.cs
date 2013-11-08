@@ -372,23 +372,27 @@ namespace rab1
             f_sin.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        //           Построение таблицы
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void Graph_China2(Image[] img, PictureBox pictureBox01, int Diag, Point p, int x0_end, int x1_end, int y0_end, int y1_end, int rb, int pr_obr, PictureBox firstImage, PictureBox secondImage)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
 
-            f_sin = new Form();
+            f_sin = new Form();                                      // Подготовительные операции для открытия окна таблицы
             f_sin.Size = new Size(max_x + 8, max_y + 8);
             f_sin.StartPosition = FormStartPosition.Manual;
             f_sin.Location = p;
 
-            pc1 = new PictureBox();
+            pc1 = new PictureBox();                              
             pc1.BackColor = Color.White;
             pc1.Location = new System.Drawing.Point(0, 8);
             pc1.Size = new Size(max_x, max_y);
             pc1.SizeMode = PictureBoxSizeMode.StretchImage;
             pc1.BorderStyle = BorderStyle.Fixed3D;
-            pc1.Image = new Bitmap(max_x + 8, max_y + 8);
+            pc1.Image = new Bitmap(max_x + 8, max_y + 8);       
 
             for (int i = 0; i < pc1.Image.Width; i++)
             {
@@ -400,7 +404,6 @@ namespace rab1
 
             //Bitmap btmBack = new Bitmap(max_x + 8, max_y + 8);      //изображение          
             Graphics grBack = Graphics.FromImage(pc1.Image);
-
            // pc1.BackgroundImage = btmBack;
 
 
@@ -412,6 +415,11 @@ namespace rab1
             Pen p4 = new Pen(Color.Gold, 1);
             Pen p5 = new Pen(Color.Yellow, 1);
             Font font = new Font("Arial", 16, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            //--------------------------------------------------------------------------------------------------------------- 
+            //
+            //             Отрисовка основных диагоналей в таблице
+            //
+            //---------------------------------------------------------------------------------------------------------------                                                                
 
             grBack.DrawLine(p1, x0, y0, x0, hh * scale + y0);
             grBack.DrawLine(p1, x0, hh * scale + y0, 2 * w1 * scale + x0, hh * scale + y0);
@@ -424,7 +432,7 @@ namespace rab1
             string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
             s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
             // ----------------------------------------------------------------------------------------------------------------
-            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                                              // Массив для расшифровки
+            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                      // Массив для расшифровки
 
             Int32 A = Diag * Math.Max(n1, n2);
             Int32 pf;
@@ -487,6 +495,10 @@ namespace rab1
             }
 
             //--------------------------------------------------------------------------------------------------------------- 
+            //
+            //                  Заполнение таблицы
+            //
+            //--------------------------------------------------------------------------------------------------------------- 
             int r, g, b;
             int w = img[0].Width;
             int h = img[0].Height;
@@ -511,12 +523,13 @@ namespace rab1
 
             if ((x0_end < x1_end) && (y0_end < y1_end)) { xx0 = x0_end; xx1 = x1_end; yy0 = y0_end; yy1 = y1_end; }
 
-            Int32 count = 0;
-            if (rb == 1)
-            {// ------------- По фигуре из 3 квадрата
+            Int64 count = 0;
+            double fn1 = (double)((n1 - 1) / 255); 
+            double fn2 = (double)((n2 - 1) / 255); 
+            if (rb == 1)                                                                            // ------------- По фигуре из 11 кадра
+            {
                 for (int i = xx0; i < xx1; i++)
                 {
-
                     for (int j = yy0; j < yy1; j++)
                     {
                         c1 = bmp3.GetPixel(i, j);
@@ -524,15 +537,11 @@ namespace rab1
                         else
                         {
                             ims3[j] = 1;
-                            //c = bmp1.GetPixel(i, j); 
-                            c = ImageProcessor.getPixel(i, j, bmp1Data);
-                            r = c.R; 
-                            ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
+                            c = ImageProcessor.getPixel(i, j, bmp1Data);              //c = bmp1.GetPixel(i, j); 
+                            r = c.R;  ims1[j] = (int)((double)(r * fn1));  //(b2)
 
-                            //c = bmp2.GetPixel(i, j); 
-                            c = ImageProcessor.getPixel(i, j, bmp2Data);
-                            r = c.R; 
-                            ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1) 
+                            c = ImageProcessor.getPixel(i, j, bmp2Data);              //c = bmp2.GetPixel(i, j); 
+                            r = c.R;  ims2[j] = (int)((double)(r * fn2));  //(b1) 
                         }
 
                     }
@@ -545,8 +554,8 @@ namespace rab1
             }
 
 
-            if (rb == 0)
-            {// --------- По квадратной области
+            if (rb == 0)                                                                              // --------- По квадратной области
+            {
                 for (int i = xx0; i < xx1; i++)
                 {
 
@@ -1150,6 +1159,10 @@ namespace rab1
             China(sN1, sN2);           // Вычисление формулы
             Graph_China(img, pictureBox01, Diag, p,  x0_end, x1_end, y0_end, y1_end, rb, pr_obr);                          // Построение таблицы
         }
+        
+        
+        
+        
         public static void pi2_frml2(Image[] img, PictureBox pictureBox01, string sN1, string sN2, int Diag, Point p, int x0_end, int x1_end, int y0_end, int y1_end, int rb, int pr_obr, PictureBox firstImage, PictureBox secondImage)
         {
             China(sN1, sN2);           // Вычисление формулы

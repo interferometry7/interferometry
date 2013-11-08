@@ -19,12 +19,12 @@ namespace rab1
     public partial class Form1 : Form
     {
         Image[] img = new Image[11];
+        double[,] Float_Image1 = new double[512, 512];
+        double[,] Float_Image2 = new double[512, 512];
 
         Double Gamma = 1.0;                      // Гамма коррекция
 
-
         TextBox tb1, tb2, tb3, tb4;   
-        
         
         double N_sin  = 167;                          // число синусоид 1
         double N2_sin = 241;                          // число синусоид 2
@@ -46,7 +46,7 @@ namespace rab1
 
        
       
-        string string_dialog = "D:\\Студенты\\Эксперимент";       
+        string string_dialog = "D:\\Студенты\\Эксперимент\\Photo";       
         int regImage = 0;                            // Номер изображения (0-7)
 
         int pr_obr = 10;
@@ -124,11 +124,21 @@ namespace rab1
             if (rb == radioButton9) { regImage = 8; }
             if (rb == radioButton10) { regImage = 9; }
             if (rb == radioButton14) { regImage = 10; }
+            if (rb == radioButton18) { regImage = 12; }
+            if (rb == radioButton19) { regImage = 13; }
 
-            if (img[regImage] != null)
+            if (regImage < 12)
             {
-                imageWidth.Text = img[regImage].Width.ToString();
-                imageHeight.Text = img[regImage].Height.ToString();
+                if (img[regImage] != null)
+                {
+                    imageWidth.Text = img[regImage].Width.ToString();
+                    imageHeight.Text = img[regImage].Height.ToString();
+                }
+            }
+            else
+            {
+                imageWidth.Text  =  Float_Image1.GetLength(0).ToString();
+                imageHeight.Text = Float_Image1.GetLength(1).ToString();
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,52 +146,7 @@ namespace rab1
         {
             applyScaleModeToPicturebox();
 
-            /*if (reg_image == 0)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox1.Image);
-            }
-            if (reg_image == 1)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox2.Image);
-            }
-            if (reg_image == 2)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox3.Image);
-            }
-            if (reg_image == 3)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox4.Image);
-            }
-            if (reg_image == 4)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox5.Image);
-            }
-            if (reg_image == 5)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox6.Image);
-            }
-            if (reg_image == 6)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox7.Image);
-            }
-            if (reg_image == 7)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox8.Image);
-            }
-            if (reg_image == 8)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox9.Image);
-            }
-            if (reg_image == 9)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox10.Image);
-            }
-            if (reg_image == 10)
-            {
-                pictureBox01.Image = new Bitmap(this.pictureBox11.Image);
-            }*/
-
-            if (regImage == 0)
+           if (regImage == 0)
             {
                 pictureBox01.Image = this.pictureBox1.Image;
                 currentScaleRatio = 1;
@@ -239,6 +204,26 @@ namespace rab1
 
             applyScaleModeToPicturebox();
         }
+
+//----------------------------------------------------------------  <- Double
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            applyScaleModeToPicturebox();
+
+            if (regImage == 12)
+            {
+                pictureBox01.Image = this.pictureBox12.Image;
+                currentScaleRatio = 1;
+            }
+            if (regImage == 13)
+            {
+                pictureBox01.Image = this.pictureBox13.Image;
+                currentScaleRatio = 1;
+            }
+           
+            applyScaleModeToPicturebox();
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button12_Click(object sender, EventArgs e)
         {
@@ -276,16 +261,16 @@ namespace rab1
                     img[i] = pictureBox01.Image;               
                     switch (i)
                     {
-                        case 0: pictureBox1.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox1.Image; break;
-                        case 1: pictureBox2.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox2.Image; break;
-                        case 2: pictureBox3.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox3.Image; break;
-                        case 3: pictureBox4.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox4.Image; break;
-                        case 4: pictureBox5.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox5.Image; break;
-                        case 5: pictureBox6.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox6.Image; break;
-                        case 6: pictureBox7.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox7.Image; break;
-                        case 7: pictureBox8.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox8.Image; break;
-                        case 8: pictureBox9.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox9.Image; break;
-                        case 9: pictureBox10.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox10.Image; break;
+                        case 0:  pictureBox1.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox1.Image;  break;
+                        case 1:  pictureBox2.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox2.Image;  break;
+                        case 2:  pictureBox3.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox3.Image;  break;
+                        case 3:  pictureBox4.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox4.Image;  break;
+                        case 4:  pictureBox5.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox5.Image;  break;
+                        case 5:  pictureBox6.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox6.Image;  break;
+                        case 6:  pictureBox7.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox7.Image;  break;
+                        case 7:  pictureBox8.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox8.Image;  break;
+                        case 8:  pictureBox9.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox9.Image;  break;
+                        case 9:  pictureBox10.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox10.Image; break;
                         case 10: pictureBox11.Image = Image.FromFile(dialog1.FileName); img[i] = pictureBox11.Image; break;
                     }
                                 
@@ -303,9 +288,47 @@ namespace rab1
         private void pictureBox6_MouseClick(object sender, MouseEventArgs e)   { ZGR_File(5); }
         private void pictureBox7_MouseClick(object sender, MouseEventArgs e)   { ZGR_File(6); }
         private void pictureBox8_MouseClick(object sender, MouseEventArgs e)   { ZGR_File(7); }
-        private void pictureBox9_MouseClick(object sender, MouseEventArgs e) { ZGR_File(8); }
-        private void pictureBox10_MouseClick(object sender, MouseEventArgs e) { ZGR_File(9); }
-        private void pictureBox11_MouseClick(object sender, MouseEventArgs e) { ZGR_File(10); }
+        private void pictureBox9_MouseClick(object sender, MouseEventArgs e)   { ZGR_File(8); }
+        private void pictureBox10_MouseClick(object sender, MouseEventArgs e)  { ZGR_File(9); }
+        private void pictureBox11_MouseClick(object sender, MouseEventArgs e)  { ZGR_File(10);}
+
+
+        private void pictureBox12_Click(object sender, EventArgs e) { ZGR_File_Double(0); }
+
+        private void pictureBox13_Click(object sender, EventArgs e) { ZGR_File_Double(1); }
+//--------------------------------------------------------------------------------------------------------------------------------------------------      
+        private void ZGR_File_Double(int i)   
+        {
+            //double[,] Float_Image1;
+
+            int w1 = Float_Image1.GetLength(0);
+            int h1 = Float_Image1.GetLength(1);
+            int c=0;
+           // double pi2 = Math.PI * 2;
+           // r = (int)((fz * 255) / pi2);
+
+            Bitmap bmp2 = new Bitmap(w1, h1);
+            for (int x = 0; x < w1; x++)
+            {
+               for (int y = 0; y < h1; y++)
+                {
+                    switch (i)
+                    {
+                        case 0: c = (int)(Float_Image1[x, y]); break;
+                        case 1: c = (int)(Float_Image2[x, y]); break;
+                    }             
+                  
+                    bmp2.SetPixel(x, y, Color.FromArgb(c, c, c));
+                }
+            }
+            switch (i)
+            {
+                case 0:  pictureBox12.Image = bmp2;  break;
+                case 1:  pictureBox13.Image = bmp2;  break;
+            }
+
+         
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void ZGRToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -607,7 +630,7 @@ namespace rab1
             rb3 = new CheckBox();                                                  // ----------   CheckBox rb3;
             rb3.Location = new System.Drawing.Point(22, 160);
             rb3.Size = new System.Drawing.Size(120, 18);
-            rb3.Text = "По форме 3 кадра";
+            rb3.Text = "По форме 11 кадра";
             rb3.Checked = true;
 
             Button b1 = new Button();
@@ -650,19 +673,14 @@ namespace rab1
             Pi_Class1.pi2_frml(img, pictureBox01, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void aTAN123ToolStripMenuItem_Click_1(object sender, EventArgs e)         // -------- ATAN2 1,2,3
+        private void aTAN123ToolStripMenuItem_Click_1(object sender, EventArgs e)         // -------- ATAN2 1,2,3,4
         {
             double[] fz = new double[4];
             fz[0] = N_fz; 
             fz[1] = N_fz2;
             fz[2] = N_fz3;
             fz[3] = N_fz4;
-            int n = 3;
-
-            if (fz[3] != 0)
-            { 
-                n = 4;
-            }
+            int n = 3;  if (fz[3] != 0) { n = 4; }
 
 
 
@@ -722,6 +740,32 @@ namespace rab1
 
            FazaClass.ATAN_123(img, pictureBox10, n, fz, Gamma);    
         }
+//--------------------------------------------------------------------------------------------------------------  ATAN2 double
+        private void aTAN2123412567813ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double[] fz = new double[4];
+            fz[0] = N_fz;
+            fz[1] = N_fz2;
+            fz[2] = N_fz3;
+            fz[3] = N_fz4;
+            int n = 3; if (fz[3] != 0) { n = 4; }
+                         
+            img[0] = pictureBox1.Image;
+            img[1] = pictureBox2.Image;
+            img[2] = pictureBox3.Image;
+            img[3] = pictureBox4.Image;
+
+            FazaClass.ATAN_1234(ref Float_Image1, img, pictureBox12, n, fz, Gamma);
+
+            img[0] = pictureBox5.Image;
+            img[1] = pictureBox6.Image;
+            img[2] = pictureBox7.Image;
+            img[3] = pictureBox8.Image;
+
+            FazaClass.ATAN_1234(ref Float_Image2, img, pictureBox13, n, fz, Gamma);  
+        }
+
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void aTANRGBToolStripMenuItem_Click_1(object sender, EventArgs e)        // -------- ATAN2 RGB
         { 
@@ -1201,9 +1245,9 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void pi2_Click2(object sender, EventArgs e)
         {
-            img[0] = pictureBox1.Image;
-            img[1] = pictureBox2.Image;
-            img[2] = pictureBox3.Image;
+            img[0] = pictureBox9.Image;                // 1 фаза
+            img[1] = pictureBox10.Image;               // 2 фаза
+            img[2] = pictureBox11.Image;               // 3 ограничение по контуру
             img[3] = pictureBox4.Image;
 
             int rb_int = 0;
@@ -1211,7 +1255,7 @@ namespace rab1
             strN1 = tb1.Text;
             strN2 = tb2.Text;
             if (tb3.Text != "") NDiag = Convert.ToInt32(tb3.Text);
-            N_sin = Convert.ToDouble(tb1.Text);
+            N_sin  = Convert.ToDouble(tb1.Text);
             N2_sin = Convert.ToDouble(tb2.Text);
             pr_obr = Convert.ToInt32(tb4.Text);
             if (rb3.Checked) rb_int = 1; else rb_int = 0;                                                // По форме 3 кадра
@@ -1383,6 +1427,12 @@ namespace rab1
             f_filt.Show();
 
         }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Транспонирование
+        private void транспонированиеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FiltrClass.Transp(pictureBox01);
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button5_Click(object sender, EventArgs e)
         {
@@ -1484,6 +1534,12 @@ namespace rab1
         {
 
         }
+
+       
+     
+       
+      
+       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
