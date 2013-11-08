@@ -1,4 +1,4 @@
-﻿namespace rab1
+﻿namespace rab1.Forms
 {
     partial class Form1
     {
@@ -116,7 +116,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.транспонированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox01 = new rab1.CustomPictureBox();
+            this.mainPictureBox = new rab1.CustomPictureBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -136,7 +136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
@@ -253,7 +253,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.pictureBox01);
+            this.panel1.Controls.Add(this.mainPictureBox);
             this.panel1.Location = new System.Drawing.Point(12, 104);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(822, 622);
@@ -545,7 +545,6 @@
             this.PRMTRToolStripMenuItem.Name = "PRMTRToolStripMenuItem";
             this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.PRMTRToolStripMenuItem.Text = "Параметры";
-            this.PRMTRToolStripMenuItem.Click += new System.EventHandler(this.PRMTRToolStripMenuItem_Click);
             // 
             // aTAN2123412567813ToolStripMenuItem
             // 
@@ -1058,20 +1057,20 @@
             this.транспонированиеToolStripMenuItem.Text = "Транспонирование";
             this.транспонированиеToolStripMenuItem.Click += new System.EventHandler(this.транспонированиеToolStripMenuItem_Click);
             // 
-            // pictureBox01
+            // mainPictureBox
             // 
-            this.pictureBox01.BackColor = System.Drawing.Color.LightGray;
-            this.pictureBox01.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox01.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox01.Location = new System.Drawing.Point(8, 5);
-            this.pictureBox01.Name = "pictureBox01";
-            this.pictureBox01.Size = new System.Drawing.Size(800, 600);
-            this.pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox01.TabIndex = 5;
-            this.pictureBox01.TabStop = false;
-            this.pictureBox01.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
-            this.pictureBox01.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
-            this.pictureBox01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
+            this.mainPictureBox.BackColor = System.Drawing.Color.LightGray;
+            this.mainPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mainPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainPictureBox.Location = new System.Drawing.Point(8, 5);
+            this.mainPictureBox.Name = "mainPictureBox";
+            this.mainPictureBox.Size = new System.Drawing.Size(800, 600);
+            this.mainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.mainPictureBox.TabIndex = 5;
+            this.mainPictureBox.TabStop = false;
+            this.mainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
+            this.mainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
+            this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
             // 
             // Form1
             // 
@@ -1135,7 +1134,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox01)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1214,7 +1213,7 @@
         private System.Windows.Forms.ToolStripMenuItem Фильтр;
         private System.Windows.Forms.ToolStripMenuItem сглаживаниеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
-        private CustomPictureBox pictureBox01;
+        private CustomPictureBox mainPictureBox;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.PictureBox pictureBox12;
         private System.Windows.Forms.PictureBox pictureBox13;

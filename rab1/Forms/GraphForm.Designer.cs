@@ -92,7 +92,7 @@
             this.Controls.Add(this.vc);
             this.Controls.Add(this.hc);
             this.Name = "GraphForm";
-            this.Text = "Form2";
+            this.Text = "FiltrationForm";
             this.Resize += new System.EventHandler(this.GraphForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.hc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vc)).EndInit();

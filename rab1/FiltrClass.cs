@@ -51,28 +51,28 @@ namespace rab1
            bmp2.UnlockBits(data2);
            PopupProgressBar.close();
        }
-
-    
-        
         // -------------------------------------------------------------------------------------------- Фильтрация 121
-        public static void Filt_121(PictureBox pictureBox01, int k_filt)
+        public static Image Filt_121(Image image, int k_filt)
         {
-            if (pictureBox01.Image == null) {  MessageBox.Show("Изображение пустое");  return; }
+            if (image == null)
+            {
+                MessageBox.Show("Изображение пустое"); 
+                return null;
+            }
 
             int r1;
             int k = k_filt;
             int k_cntr;
 
-            int w1 = pictureBox01.Image.Width;
-            int h1 = pictureBox01.Image.Height;
+            int w1 = image.Width;
+            int h1 = image.Height;
 
             int max = w1; if (h1 > max) max = h1;
 
             int[] k_x = new int[max];
             int[] k_x1 = new int[max];
 
-            //Bitmap bmp1 = new Bitmap(Form1.SelfRef.pictureBox01.Image, w1, h1);
-            Bitmap bmp1 = new Bitmap(pictureBox01.Image, w1, h1);
+            Bitmap bmp1 = new Bitmap(image, w1, h1);
             Bitmap bmp2 = new Bitmap(w1, h1);
 
             Color c;
@@ -118,10 +118,9 @@ namespace rab1
                 done++;
                 PopupProgressBar.setProgress(done, all);
             }           
-            pictureBox01.Size = new Size(w1, h1);
-            pictureBox01.Image = bmp1;
 
             PopupProgressBar.close();
+            return bmp1;
         }
  // -------------------------------------------------------------------------------------------------- Медианная фильтрация
        static int[] f_x = new int[100];
@@ -140,22 +139,22 @@ namespace rab1
             return s;
          }
 
-       public static void Filt_Mediana(PictureBox pictureBox01, int k_filt)
+       public static Image Filt_Mediana(Image image, int k_filt)
        {
-           if (pictureBox01.Image == null)
+           if (image == null)
            {
                MessageBox.Show("Изображение пустое");
-               return;
+               return null;
            }
 
            int s = 0;
            int k = k_filt;
            int k2 = k / 2;
 
-           int w1 = pictureBox01.Image.Width;
-           int h1 = pictureBox01.Image.Height;
+           int w1 = image.Width;
+           int h1 = image.Height;
 
-           Bitmap bmp1 = new Bitmap(pictureBox01.Image, w1, h1);
+           Bitmap bmp1 = new Bitmap(image, w1, h1);
            Bitmap bmp2 = new Bitmap(w1, h1);
 
            Color c;
@@ -195,10 +194,9 @@ namespace rab1
                done++;
                PopupProgressBar.setProgress(done, all);
            }
-           pictureBox01.Size = new Size(w1, h1);
-           pictureBox01.Image = bmp2;
 
            PopupProgressBar.close();
+           return bmp2;
        }
 
 //---------------------------------------------------------------------------------------------------------------------- Собель

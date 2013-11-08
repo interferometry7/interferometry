@@ -31,7 +31,7 @@ namespace rab1
         private static void createForm()
         {
             progressBarForm = new Form();
-            progressBarForm.Size = new Size(400, 80);
+            progressBarForm.Size = new Size(400, 90);
             progressBarForm.FormBorderStyle = FormBorderStyle.FixedDialog;
             progressBarForm.Closing += progressBarClosed;
 

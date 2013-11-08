@@ -401,7 +401,7 @@ namespace rab1
             }
             
             int x, y;
-            double fw = (int)w11;
+            double fw = w11;
             fw = fw / (max1-min1);
             Bitmap bmp5 = new Bitmap(w11, h11);
             BitmapData data5 = ImageProcessor.getBitmapData(bmp5);

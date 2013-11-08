@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Threading;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
-using rab1.Forms;
+using System.Threading;
+using System.Windows.Forms;
 
-namespace rab1
+namespace rab1.Forms
 {
     public delegate void FunctionPointer(object sender, EventArgs eventArgs);
 
@@ -36,10 +31,6 @@ namespace rab1
         
         CheckBox rb3;
 
-
-        Form f_filt;                             // Для Фильтрации
-        TextBox tb1_filt, tb2_filt, tb3_filt;
-        int k_filt = 1;
 
         int x0_end = 0, y0_end = 0;
         int x1_end = 0, y1_end = 0;
@@ -86,7 +77,7 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void pictureBox3_MouseClick(object sender, MouseEventArgs e)
         {
-            if (pictureBox01.Image == null)
+            if (mainPictureBox.Image == null)
             {
                 return;
             }
@@ -95,14 +86,14 @@ namespace rab1
             {
                 if (cursorMode == 2)
                 {
-                     ImageProcessor.floodImage(e.X, e.Y, Color.Black, pictureBox01.Image);
+                     ImageProcessor.floodImage(e.X, e.Y, Color.Black, mainPictureBox.Image);
                 }
 
                 return;
             }
             else 
             {
-                ImageHelper.drawGraph(pictureBox01.Image, e.X, e.Y, currentScaleRatio);
+                ImageHelper.drawGraph(mainPictureBox.Image, e.X, e.Y, currentScaleRatio);
             }
 
         }
@@ -148,57 +139,57 @@ namespace rab1
 
            if (regImage == 0)
             {
-                pictureBox01.Image = this.pictureBox1.Image;
+                mainPictureBox.Image = this.pictureBox1.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 1)
             {
-                pictureBox01.Image = this.pictureBox2.Image;
+                mainPictureBox.Image = this.pictureBox2.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 2)
             {
-                pictureBox01.Image = this.pictureBox3.Image;
+                mainPictureBox.Image = this.pictureBox3.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 3)
             {
-                pictureBox01.Image = this.pictureBox4.Image;
+                mainPictureBox.Image = this.pictureBox4.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 4)
             {
-                pictureBox01.Image = this.pictureBox5.Image;
+                mainPictureBox.Image = this.pictureBox5.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 5)
             {
-                pictureBox01.Image = this.pictureBox6.Image;
+                mainPictureBox.Image = this.pictureBox6.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 6)
             {
-                pictureBox01.Image = this.pictureBox7.Image;
+                mainPictureBox.Image = this.pictureBox7.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 7)
             {
-                pictureBox01.Image = this.pictureBox8.Image;
+                mainPictureBox.Image = this.pictureBox8.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 8)
             {
-                pictureBox01.Image = this.pictureBox9.Image;
+                mainPictureBox.Image = this.pictureBox9.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 9)
             {
-                pictureBox01.Image = this.pictureBox10.Image;
+                mainPictureBox.Image = this.pictureBox10.Image;
                 currentScaleRatio = initialScaleRatio;
             }
             if (regImage == 10)
             {
-                pictureBox01.Image = this.pictureBox11.Image;
+                mainPictureBox.Image = this.pictureBox11.Image;
                 currentScaleRatio = afterRemovingScaleRatio;
             }
 
@@ -213,12 +204,12 @@ namespace rab1
 
             if (regImage == 12)
             {
-                pictureBox01.Image = this.pictureBox12.Image;
+                mainPictureBox.Image = this.pictureBox12.Image;
                 currentScaleRatio = 1;
             }
             if (regImage == 13)
             {
-                pictureBox01.Image = this.pictureBox13.Image;
+                mainPictureBox.Image = this.pictureBox13.Image;
                 currentScaleRatio = 1;
             }
            
@@ -228,7 +219,7 @@ namespace rab1
         private void button12_Click(object sender, EventArgs e)
         {
             {              
-                img[regImage] = pictureBox01.Image;
+                img[regImage] = mainPictureBox.Image;
                
                 switch (regImage)
                 {
@@ -258,7 +249,7 @@ namespace rab1
                     dialog1.InitialDirectory = dialog1.FileName;
                     string_dialog = dialog1.FileName;
 
-                    img[i] = pictureBox01.Image;               
+                    img[i] = mainPictureBox.Image;               
                     switch (i)
                     {
                         case 0:  pictureBox1.Image  = Image.FromFile(dialog1.FileName); img[i] = pictureBox1.Image;  break;
@@ -299,13 +290,9 @@ namespace rab1
 //--------------------------------------------------------------------------------------------------------------------------------------------------      
         private void ZGR_File_Double(int i)   
         {
-            //double[,] Float_Image1;
-
             int w1 = Float_Image1.GetLength(0);
             int h1 = Float_Image1.GetLength(1);
             int c=0;
-           // double pi2 = Math.PI * 2;
-           // r = (int)((fz * 255) / pi2);
 
             Bitmap bmp2 = new Bitmap(w1, h1);
             for (int x = 0; x < w1; x++)
@@ -326,8 +313,6 @@ namespace rab1
                 case 0:  pictureBox12.Image = bmp2;  break;
                 case 1:  pictureBox13.Image = bmp2;  break;
             }
-
-         
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void ZGRToolStripMenuItem_Click(object sender, EventArgs e)
@@ -342,12 +327,12 @@ namespace rab1
                     dialog1.InitialDirectory = dialog1.FileName;
                     string_dialog = dialog1.FileName;
                     
-                    pictureBox01.Image = Image.FromFile(dialog1.FileName);
+                    mainPictureBox.Image = Image.FromFile(dialog1.FileName);
 
-                    int w1 = pictureBox01.Image.Width;
-                    int h1 = pictureBox01.Image.Height;
-                    pictureBox01.Size = new Size(w1, h1);
-                    pictureBox01.Show();
+                    int w1 = mainPictureBox.Image.Width;
+                    int h1 = mainPictureBox.Image.Height;
+                    mainPictureBox.Size = new Size(w1, h1);
+                    mainPictureBox.Show();
                                                                         // Вывод размера
                 }
                 catch (Exception ex) { MessageBox.Show("Ошибка " + ex.Message); }
@@ -356,7 +341,6 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private string SaveString(string string_dialog, int k)
         {
-               
                 string strk = k.ToString();
 
                 string string_rab = string_dialog;
@@ -364,7 +348,6 @@ namespace rab1
                
 
                 return string_rab;
-
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Save8ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -400,12 +383,6 @@ namespace rab1
                         imageWidth.Text = img[regImage].Width.ToString();
                         imageHeight.Text = img[regImage].Height.ToString();
                     }
-
-
-
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
 
                     if ((pictureBox1.Image.Size.Equals(pictureBox2.Image.Size))
                         && (pictureBox1.Image.Size.Equals(pictureBox3.Image.Size))
@@ -461,7 +438,7 @@ namespace rab1
             {
                 try
                 {
-                    pictureBox01.Image.Save(dialog1.FileName);
+                    mainPictureBox.Image.Save(dialog1.FileName);
                     dialog1.InitialDirectory = dialog1.FileName;
                     string_dialog = dialog1.FileName;
                                                
@@ -483,21 +460,21 @@ namespace rab1
                 try
                 {
                     Bitmap newBitmap = new Bitmap(pictureBox1.Image);
-                    newBitmap.Save(dialog1.FileName + "1.bmp", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "1.bmp", ImageFormat.Jpeg);
                     dialog1.InitialDirectory = dialog1.FileName;
                     string_dialog = dialog1.FileName;
 
                     newBitmap = new Bitmap(pictureBox2.Image);
-                    newBitmap.Save(dialog1.FileName + "2.bmp", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "2.bmp", ImageFormat.Jpeg);
 
                     newBitmap = new Bitmap(pictureBox3.Image);
-                    newBitmap.Save(dialog1.FileName + "3.bmp", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "3.bmp", ImageFormat.Jpeg);
 
                     newBitmap = new Bitmap(pictureBox4.Image);
-                    newBitmap.Save(dialog1.FileName + "4.bmp", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "4.bmp", ImageFormat.Jpeg);
 
                     newBitmap = new Bitmap(pictureBox5.Image);
-                    newBitmap.Save(dialog1.FileName + "5.bmp", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "5.bmp", ImageFormat.Jpeg);
 
                     newBitmap = new Bitmap(pictureBox6.Image);
                     newBitmap.Save(dialog1.FileName + "6.bmp", ImageFormat.Jpeg);
@@ -518,60 +495,6 @@ namespace rab1
             }      
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void SumDialog(EventHandler functionPointer, int S, int S1,int S2)
-        {
-            int max_x = 170, max_y = 100;
-
-            f_filt = new Form();
-            f_filt.Size = new Size(max_x, max_y + 36);
-            f_filt.StartPosition = FormStartPosition.Manual;
-            Point p = this.Location;
-            p.Offset(200, 105);
-            f_filt.Location = p;
-           
-             tb1_filt = new TextBox();
-             tb1_filt.Location = new System.Drawing.Point(8, 30);
-             tb1_filt.Size = new System.Drawing.Size(20, 20);
-             tb1_filt.Text = S1.ToString();
-
-            Label label1 = new Label();
-            label1.Location = new System.Drawing.Point(35, 30);
-            label1.Size = new System.Drawing.Size(20, 20);
-            label1.Text = " + ";
-
-            tb2_filt = new TextBox();
-            tb2_filt.Location = new System.Drawing.Point(60, 30);
-            tb2_filt.Size = new System.Drawing.Size(20, 20);
-            tb2_filt.Text = S2.ToString();
-
-            Label label2 = new Label();
-            label2.Location = new System.Drawing.Point(85, 30);
-            label2.Size = new System.Drawing.Size(30, 20);
-            label2.Text = " => ";
-
-            tb3_filt = new TextBox();
-            tb3_filt.Location = new System.Drawing.Point(120, 30);
-            tb3_filt.Size = new System.Drawing.Size(20, 20);
-            tb3_filt.Text = S.ToString();
-
-            Button b1 = new Button();
-            b1.Location = new System.Drawing.Point(8, 60);
-            b1.Text = "ok";
-            b1.Size = new System.Drawing.Size(140, 30);
-            b1.Click += new System.EventHandler(functionPointer);
-
-            f_filt.Controls.Add(label1);
-            f_filt.Controls.Add(label2);
-            f_filt.Controls.Add(tb1_filt);
-            f_filt.Controls.Add(tb2_filt);
-            f_filt.Controls.Add(tb3_filt);
-            f_filt.Controls.Add(b1);
-
-            f_filt.Show();
-        }     
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void DIALOG_CHINA(EventHandler functionPointer)
         {
             int max_x = 220, max_y = 260;
@@ -583,8 +506,8 @@ namespace rab1
             newForm.Location = p;
 
             Label label1 = new Label();
-            label1.Location = new System.Drawing.Point(4, 10);
-            label1.Size = new System.Drawing.Size(120, 20);
+            label1.Location = new Point(4, 10);
+            label1.Size = new Size(120, 20);
             label1.Text = "Число синусоид 1:";
 
             tb1 = new TextBox
@@ -623,21 +546,21 @@ namespace rab1
             label4.Text = "Уровень обрезания (N точек) ";
 
             tb4 = new TextBox();
-            tb4.Location = new System.Drawing.Point(126, 130);
-            tb4.Size = new System.Drawing.Size(80, 8);
+            tb4.Location = new Point(126, 130);
+            tb4.Size = new Size(80, 8);
             tb4.Text = pr_obr.ToString();
 
             rb3 = new CheckBox();                                                  // ----------   CheckBox rb3;
-            rb3.Location = new System.Drawing.Point(22, 160);
-            rb3.Size = new System.Drawing.Size(120, 18);
+            rb3.Location = new Point(22, 160);
+            rb3.Size = new Size(120, 18);
             rb3.Text = "По форме 11 кадра";
             rb3.Checked = true;
 
             Button b1 = new Button();
-            b1.Location = new System.Drawing.Point(8, 190);
+            b1.Location = new Point(8, 190);
             b1.Text = "ok";
-            b1.Size = new System.Drawing.Size(160, 30);
-            b1.Click += new System.EventHandler(functionPointer);
+            b1.Size = new Size(160, 30);
+            b1.Click += functionPointer;
 
 
             newForm.Controls.Add(label1);
@@ -670,7 +593,7 @@ namespace rab1
             N2_sin = Convert.ToDouble(tb2.Text);
             pr_obr = Convert.ToInt32(tb4.Text);
             if (rb3.Checked) rb_int = 1; else rb_int = 0;                                                // По форме 3 кадра
-            Pi_Class1.pi2_frml(img, pictureBox01, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr);
+            Pi_Class1.pi2_frml(img, mainPictureBox, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void aTAN123ToolStripMenuItem_Click_1(object sender, EventArgs e)         // -------- ATAN2 1,2,3,4
@@ -682,19 +605,6 @@ namespace rab1
             fz[3] = N_fz4;
             int n = 3;  if (fz[3] != 0) { n = 4; }
 
-
-
-            /*Form firstForm = new Form();
-            firsPictureBox = new CustomPictureBox();
-            firsPictureBox.BackColor = Color.White;
-            firsPictureBox.Location = new System.Drawing.Point(0, 8);
-            firsPictureBox.Size = new Size(800, 600);
-            firsPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            firsPictureBox.BorderStyle = BorderStyle.Fixed3D;
-            firsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            firstForm.Controls.Add(firsPictureBox);
-            firstForm.Show();*/
-
             img[0] = pictureBox1.Image;
             img[1] = pictureBox2.Image;
             img[2] = pictureBox3.Image;
@@ -702,43 +612,12 @@ namespace rab1
 
             FazaClass.ATAN_123(img, pictureBox9, n, fz, Gamma);
 
-            /*System.Windows.Forms.SaveFileDialog dialog1 = new System.Windows.Forms.SaveFileDialog();
-            dialog1.InitialDirectory = string_dialog;
-            dialog1.Filter = "Bitmap(*.bmp)|*.bmp";
+            img[0] = pictureBox5.Image;
+            img[1] = pictureBox6.Image;
+            img[2] = pictureBox7.Image;
+            img[3] = pictureBox8.Image;
 
-            if (dialog1.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    firsPictureBox.Image.Save(dialog1.FileName);
-                    dialog1.InitialDirectory = dialog1.FileName;
-                    string_dialog = dialog1.FileName;
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(" Ошибка при записи файла " + ex.Message);
-                }
-            }*/    
-
-
-            /*Form secondForm = new Form();
-            secondPictureBox = new CustomPictureBox();
-            secondPictureBox.BackColor = Color.White;
-            secondPictureBox.Location = new System.Drawing.Point(0, 8);
-            secondPictureBox.Size = new Size(800, 600);
-            secondPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            secondPictureBox.BorderStyle = BorderStyle.Fixed3D;
-            secondPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            secondForm.Controls.Add(secondPictureBox);
-            secondForm.Show();*/
-
-           img[0] = pictureBox5.Image;
-           img[1] = pictureBox6.Image;
-           img[2] = pictureBox7.Image;
-           img[3] = pictureBox8.Image;
-
-           FazaClass.ATAN_123(img, pictureBox10, n, fz, Gamma);    
+            FazaClass.ATAN_123(img, pictureBox10, n, fz, Gamma);    
         }
 //--------------------------------------------------------------------------------------------------------------  ATAN2 double
         private void aTAN2123412567813ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -764,12 +643,10 @@ namespace rab1
 
             FazaClass.ATAN_1234(ref Float_Image2, img, pictureBox13, n, fz, Gamma);  
         }
-
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void aTANRGBToolStripMenuItem_Click_1(object sender, EventArgs e)        // -------- ATAN2 RGB
         { 
-            FazaClass.ATAN_RGB(pictureBox01); 
+            FazaClass.ATAN_RGB(mainPictureBox); 
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void aTAN2123GraphToolStripMenuItem_Click(object sender, EventArgs e)    // -------- ATAN2 эллипс
@@ -911,29 +788,24 @@ namespace rab1
                 return;
             }
             // Must be on the UI thread if we've got this far
-            OpenGLForm newForm = new OpenGLForm();
-            foreach(Point3D currentPoint in newList)
-            {
-                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, currentPoint.z));
-            }
-            newForm.Show();
+            //
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void imageProcessed(Bitmap newImage)
         {
             FazaClass.imageProcessed -= imageProcessed;
-            SetControlPropertyThreadSafe(pictureBox01, "Image", newImage);
+            SetControlPropertyThreadSafe(mainPictureBox, "Image", newImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void SetControlPropertyThreadSafe(Control control, string propertyName, object propertyValue)
         {
             if (control.InvokeRequired)
             {
-                control.Invoke(new SetControlPropertyThreadSafeDelegate(SetControlPropertyThreadSafe), new object[] { control, propertyName, propertyValue });
+                control.Invoke(new SetControlPropertyThreadSafeDelegate(SetControlPropertyThreadSafe), new[] { control, propertyName, propertyValue });
             }
             else
             {
-                control.GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue });
+                control.GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, control, new[] { propertyValue });
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1025,7 +897,7 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void pictureBox01_MouseUp(object sender, MouseEventArgs e)
         {
-            if (pictureBox01.Image == null)
+            if (mainPictureBox.Image == null)
             {
                 return;
             }
@@ -1035,12 +907,12 @@ namespace rab1
                 upPoint = new Point(e.X, e.Y);
             }
 
-            Graphics graphics = Graphics.FromImage(pictureBox01.Image);
+            Graphics graphics = Graphics.FromImage(mainPictureBox.Image);
 
             Pen p = new Pen(Color.Black, 4);
             graphics.DrawLine(p, downPoint, upPoint);
 
-            pictureBox01.Invalidate();
+            mainPictureBox.Invalidate();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Form1_SizeChanged(object sender, EventArgs e)
@@ -1056,7 +928,7 @@ namespace rab1
         private void relayout()
         {
             this.panel1.Size = new Size(this.Size.Width - 160, this.Size.Height - 150);
-            this.pictureBox01.Size = new Size(this.panel1.Size.Width - 44, this.panel1.Size.Height - 36);
+            this.mainPictureBox.Size = new Size(this.panel1.Size.Width - 44, this.panel1.Size.Height - 36);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton12_CheckedChanged(object sender, EventArgs e)
@@ -1075,15 +947,15 @@ namespace rab1
         {
             if (scaleMode == 0)
             {
-                pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+                mainPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             }
             else if (scaleMode == 1)
             {
-                pictureBox01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+                mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
             relayout();
-            pictureBox01.Invalidate();
+            mainPictureBox.Invalidate();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button1_Click(object sender, EventArgs e)
@@ -1091,11 +963,11 @@ namespace rab1
             Color pixelcolor;
             Color fillColor = Color.Black;
 
-            for(int i = 0; i < pictureBox01.Image.Size.Width; i++)
+            for(int i = 0; i < mainPictureBox.Image.Size.Width; i++)
             {
-                for (int j = 0; j < pictureBox01.Image.Size.Height; j++)
+                for (int j = 0; j < mainPictureBox.Image.Size.Height; j++)
                 {
-                    pixelcolor = ((Bitmap)(pictureBox01.Image)).GetPixel(i, j);
+                    pixelcolor = ((Bitmap)(mainPictureBox.Image)).GetPixel(i, j);
                     if (pixelcolor.ToArgb() == fillColor.ToArgb())
                     {
                         ((Bitmap)(pictureBox1.Image)).SetPixel(i, j, fillColor);
@@ -1122,17 +994,14 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button2_Click(object sender, EventArgs e)
         {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            Rectangle neededRect = ImageHelper.determineImageRect((Bitmap)pictureBox01.Image);
+            Rectangle neededRect = ImageHelper.determineImageRect((Bitmap)mainPictureBox.Image);
 
             Bitmap target = new Bitmap(neededRect.Width, neededRect.Height);
             using (Graphics g = Graphics.FromImage(target))
             {
-                g.DrawImage(pictureBox01.Image, new Rectangle(0, 0, target.Width, target.Height), neededRect, GraphicsUnit.Pixel);
+                g.DrawImage(mainPictureBox.Image, new Rectangle(0, 0, target.Width, target.Height), neededRect, GraphicsUnit.Pixel);
             }
-            pictureBox01.Image = target;
+            mainPictureBox.Image = target;
 
             if (pictureBox1.Image != null)
             {
@@ -1144,9 +1013,6 @@ namespace rab1
                 pictureBox1.Image = target;
             }
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
             if (pictureBox2.Image != null)
             {
                 target = new Bitmap(neededRect.Width, neededRect.Height);
@@ -1156,9 +1022,6 @@ namespace rab1
                 }
                 pictureBox2.Image = target;
             }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
 
             if (pictureBox3.Image != null)
             {
@@ -1170,9 +1033,6 @@ namespace rab1
                 pictureBox3.Image = target;
             }
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
             if (pictureBox4.Image != null)
             {
                 target = new Bitmap(neededRect.Width, neededRect.Height);
@@ -1182,9 +1042,6 @@ namespace rab1
                 }
                 pictureBox4.Image = target;
             }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
 
             if (pictureBox5.Image != null)
             {
@@ -1206,9 +1063,6 @@ namespace rab1
                 pictureBox6.Image = target;
             }
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
             if (pictureBox7.Image != null)
             {
                 target = new Bitmap(neededRect.Width, neededRect.Height);
@@ -1229,8 +1083,8 @@ namespace rab1
                 pictureBox8.Image = target;
             }
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            imageWidth.Text = mainPictureBox.Width.ToString();
+            imageHeight.Text = mainPictureBox.Height.ToString();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void таблицаToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1259,20 +1113,20 @@ namespace rab1
             N2_sin = Convert.ToDouble(tb2.Text);
             pr_obr = Convert.ToInt32(tb4.Text);
             if (rb3.Checked) rb_int = 1; else rb_int = 0;                                                // По форме 3 кадра
-            Pi_Class1.pi2_frml2(img, pictureBox01, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr, pictureBox9, pictureBox10);
+            Pi_Class1.pi2_frml2(img, mainPictureBox, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr, pictureBox9, pictureBox10);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button4_Click_1(object sender, EventArgs e)
         {
             List<Point> previousBorderPoints = new List<Point>();
 
-            if ((pictureBox01.Image == null) || (pictureBox1.Image == null))
+            if ((mainPictureBox.Image == null) || (pictureBox1.Image == null))
             {
                 MessageBox.Show("Сначала загрузите изображение");
                 return;
             }
 
-            Bitmap copyOfImage = new Bitmap((Bitmap)pictureBox01.Image);
+            Bitmap copyOfImage = new Bitmap((Bitmap)mainPictureBox.Image);
             BitmapData imageData = ImageProcessor.getBitmapData(copyOfImage);
             Color previousColor = Color.White;
 
@@ -1318,9 +1172,9 @@ namespace rab1
 
             BitmapData imageData2 = ImageProcessor.getBitmapData((Bitmap)pictureBox1.Image);
 
-            for (int x = 0; x < pictureBox01.Image.Width; x++)
+            for (int x = 0; x < mainPictureBox.Image.Width; x++)
             {
-                for (int y = 0; y < pictureBox01.Image.Height; y++)
+                for (int y = 0; y < mainPictureBox.Image.Height; y++)
                 {
                     Color currentColor = ImageProcessor.getPixel(x, y, imageData2);
 
@@ -1344,7 +1198,6 @@ namespace rab1
                 Pen p = new Pen(Color.Red, 1);
                 graphics.DrawLine(p, start, end);
             }
-
 
             RestoreForm restoreForm = new RestoreForm();
             restoreForm.imageRestored += restoderImageReceived;
@@ -1370,73 +1223,35 @@ namespace rab1
 
             initialScaleRatio = ratio;
         }
-// ------------------------------  Сглаживание
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void сглаживаниеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.FiltDialog(this.filt_Click);
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, mainPictureBox.Image);
+            filtrationForm.imageFiltered+= filtrationFormOnImageFiltered;
+            filtrationForm.Show();
         }
-        private void filt_Click(object sender, EventArgs e)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void filtrationFormOnImageFiltered(Image filtratedImage)
         {
-            if (tb1_filt.Text != "") k_filt = Convert.ToInt32(tb1_filt.Text);
-            FiltrClass.Filt_121(pictureBox01, k_filt);
-            //Razmer(w1, h1);
-            f_filt.Close();
+            mainPictureBox.Size = new Size(filtratedImage.Width, filtratedImage.Height);
+            mainPictureBox.Image = filtratedImage;
         }
-// -------------------------------  Медианный
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void медианныйToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.FiltDialog(this.filt_median_Click);
-        }
-        private void filt_median_Click(object sender, EventArgs e)
-        {
-            if (tb1_filt.Text != "") k_filt = Convert.ToInt32(tb1_filt.Text);
-            FiltrClass.Filt_Mediana(pictureBox01, k_filt);
-            f_filt.Close();
-        }
-
-        public void FiltDialog(EventHandler functionPointer)
-        {
-            int max_x = 120, max_y = 100;
-
-            f_filt = new Form();
-            f_filt.Size = new Size(max_x, max_y + 36);
-            f_filt.StartPosition = FormStartPosition.Manual;
-            Point p = this.Location;
-            p.Offset(40, 165);
-            f_filt.Location = p;
-
-            Label label1 = new Label();
-            label1.Location = new System.Drawing.Point(8, 10);
-            label1.Text = "k = 1,2,3 ... :";
-
-            tb1_filt = new TextBox();
-            tb1_filt.Location = new System.Drawing.Point(8, 30);
-            tb1_filt.Size = new System.Drawing.Size(60, 20);
-            tb1_filt.Text = k_filt.ToString();
-
-            Button b1 = new Button();
-            b1.Location = new System.Drawing.Point(8, 60);
-            b1.Text = "ok";
-            b1.Size = new System.Drawing.Size(100, 30);
-            b1.Click += new System.EventHandler(functionPointer);
-
-            f_filt.Controls.Add(label1);
-            f_filt.Controls.Add(tb1_filt);
-            f_filt.Controls.Add(b1);
-
-            f_filt.Show();
-
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, mainPictureBox.Image);
+            filtrationForm.imageFiltered += filtrationFormOnImageFiltered;
+            filtrationForm.Show();
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Транспонирование
         private void транспонированиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FiltrClass.Transp(pictureBox01);
+            FiltrClass.Transp(mainPictureBox);
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button5_Click(object sender, EventArgs e)
         {
-            Image targetImage = pictureBox01.Image;
+            Image targetImage = mainPictureBox.Image;
             List<Point3D> pointsList = new List<Point3D>();
 
             for (int i = 0; i < targetImage.Width; i++)
@@ -1524,22 +1339,6 @@ namespace rab1
                 fs.Close(); //закрываем поток
             }
         }
-
-        private void PRMTRToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripMenuItem9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-       
-     
-       
-      
-       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
