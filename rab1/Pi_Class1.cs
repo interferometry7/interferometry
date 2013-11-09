@@ -510,7 +510,7 @@ namespace rab1
             BitmapData bmp1Data = ImageProcessor.getBitmapData(bmp1);
             BitmapData bmp2Data = ImageProcessor.getBitmapData(bmp2);
 
-            int[,] bmp_r = new int[n2 + 3, n1 + 3];
+            int[,] bmp_r    = new int[n2 + 3, n1 + 3];
             int[,] bmp_line = new int[n2 + 3, n1 + 3];
             int[] ims1 = new int[h];
             int[] ims2 = new int[h];
@@ -584,22 +584,23 @@ namespace rab1
 
 
 
-            Int32 ib2 = 0, ib1 = 0, max_count = 0;
+            Int64 ib2 = 0, ib1 = 0, max_count = 0;                        // max_count - максимальное число попаданий
             for (ib2 = 0; ib2 < n2 - 1; ib2++)
             {
-                for (ib1 = 0; ib1 < n1 - 1; ib1++) { b = bmp_r[ib2, ib1]; if (b > max_count) max_count = b; }
+                for (ib1 = 0; ib1 < n1 - 1; ib1++) 
+                   { 
+                       b = bmp_r[ib2, ib1]; if (b > max_count) max_count = b; 
+                   }
             }
 
-            int mn1 = pr_obr;
+            Int64 mn1 = pr_obr;
 
-            int mn = (max_count) / 12;
-            int mn2 = mn1 + mn;
-            int mn3 = mn2 + mn;
+            Int64 mn = (max_count) / 12;
+            Int64 mn2 = mn1 + mn;
+            Int64 mn3 = mn2 + mn;
 
             pc1.Refresh();
             f_sin.Show();
-
-
 
 
 
