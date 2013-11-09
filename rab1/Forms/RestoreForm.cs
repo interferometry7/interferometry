@@ -148,7 +148,6 @@ namespace rab1.Forms
             chooseForm.userChoosedNumber += newNumber;
             chooseForm.ShowDialog();
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void newNumber(int newNumber)
         {
@@ -485,10 +484,10 @@ namespace rab1.Forms
             result.c = resultData[2, 0];
             result.d = resultData[3, 0];
 
-            /*result.a = result.a/result.d;
+            result.a = result.a/result.d;
             result.b = result.b / result.d;
             result.c = result.c / result.d;
-            result.d = result.d / result.d;*/
+            result.d = result.d / result.d;
 
 
 
@@ -504,6 +503,45 @@ namespace rab1.Forms
             }*/
 
             return result;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog1 = new SaveFileDialog();
+            dialog1.Filter = "Bitmap(*.bmp)|*.bmp";
+
+            if (dialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    rightImage.Image.Save(dialog1.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(" Ошибка при записи файла " + ex.Message);
+                }
+            }    
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var dialog1 = new OpenFileDialog();
+
+            if (dialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    dialog1.InitialDirectory = dialog1.FileName;
+                    rightImage.Image = Image.FromFile(dialog1.FileName);
+
+                    //int w1 = rightImage.Image.Width;
+                    //int h1 = rightImage.Image.Height;
+                    //rightImage.Size = new Size(w1, h1);
+                    //rightImage.Show();
+                    // Вывод размера
+                }
+                catch (Exception ex) { MessageBox.Show("Ошибка " + ex.Message); }
+            }
         }
     }
 

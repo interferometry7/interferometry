@@ -39,6 +39,7 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.mainPictureBox = new rab1.CustomPictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -75,18 +76,19 @@
             this.Фильтр = new System.Windows.Forms.ToolStripMenuItem();
             this.сглаживаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.медианныйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.транспонированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.canon500DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сделатьСнимокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Cadr8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new rab1.CustomPictureBox();
+            this.pictureBox7 = new rab1.CustomPictureBox();
+            this.pictureBox6 = new rab1.CustomPictureBox();
+            this.pictureBox5 = new rab1.CustomPictureBox();
+            this.pictureBox4 = new rab1.CustomPictureBox();
+            this.pictureBox3 = new rab1.CustomPictureBox();
+            this.pictureBox2 = new rab1.CustomPictureBox();
+            this.pictureBox1 = new rab1.CustomPictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -98,15 +100,15 @@
             this.radioButton13 = new System.Windows.Forms.RadioButton();
             this.radioButton12 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new rab1.CustomPictureBox();
+            this.pictureBox10 = new rab1.CustomPictureBox();
             this.imageWidth = new System.Windows.Forms.Label();
             this.imageHeight = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new rab1.CustomPictureBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.pictureBox12 = new System.Windows.Forms.PictureBox();
-            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new rab1.CustomPictureBox();
+            this.pictureBox13 = new rab1.CustomPictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -115,9 +117,9 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
-            this.транспонированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainPictureBox = new rab1.CustomPictureBox();
+            this.определениеПлоскостиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -136,7 +138,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
@@ -258,6 +259,21 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(822, 622);
             this.panel1.TabIndex = 33;
+            // 
+            // mainPictureBox
+            // 
+            this.mainPictureBox.BackColor = System.Drawing.Color.LightGray;
+            this.mainPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mainPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainPictureBox.Location = new System.Drawing.Point(8, 5);
+            this.mainPictureBox.Name = "mainPictureBox";
+            this.mainPictureBox.Size = new System.Drawing.Size(800, 600);
+            this.mainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.mainPictureBox.TabIndex = 5;
+            this.mainPictureBox.TabStop = false;
+            this.mainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
+            this.mainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
+            this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
             // 
             // groupBox1
             // 
@@ -444,34 +460,34 @@
             this.SAVEToolStripMenuItem,
             this.сохранить8КадровToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ZGRToolStripMenuItem
             // 
             this.ZGRToolStripMenuItem.Name = "ZGRToolStripMenuItem";
-            this.ZGRToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.ZGRToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.ZGRToolStripMenuItem.Text = "Загрузить";
             this.ZGRToolStripMenuItem.Click += new System.EventHandler(this.ZGRToolStripMenuItem_Click);
             // 
             // Save8ToolStripMenuItem
             // 
             this.Save8ToolStripMenuItem.Name = "Save8ToolStripMenuItem";
-            this.Save8ToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.Save8ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.Save8ToolStripMenuItem.Text = "Загрузить 8 (1...8)";
             this.Save8ToolStripMenuItem.Click += new System.EventHandler(this.Save8ToolStripMenuItem_Click);
             // 
             // SAVEToolStripMenuItem
             // 
             this.SAVEToolStripMenuItem.Name = "SAVEToolStripMenuItem";
-            this.SAVEToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.SAVEToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.SAVEToolStripMenuItem.Text = "Сохранить";
             this.SAVEToolStripMenuItem.Click += new System.EventHandler(this.SAVEToolStripMenuItem_Click);
             // 
             // сохранить8КадровToolStripMenuItem
             // 
             this.сохранить8КадровToolStripMenuItem.Name = "сохранить8КадровToolStripMenuItem";
-            this.сохранить8КадровToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.сохранить8КадровToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.сохранить8КадровToolStripMenuItem.Text = "Сохранить 8 кадров";
             this.сохранить8КадровToolStripMenuItem.Click += new System.EventHandler(this.сохранить8КадровToolStripMenuItem_Click);
             // 
@@ -480,7 +496,7 @@
             this.фазаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aTANToolStripMenuItem});
             this.фазаToolStripMenuItem.Name = "фазаToolStripMenuItem";
-            this.фазаToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.фазаToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.фазаToolStripMenuItem.Text = "Фаза";
             // 
             // aTANToolStripMenuItem
@@ -501,70 +517,71 @@
             // aTAN123ToolStripMenuItem
             // 
             this.aTAN123ToolStripMenuItem.Name = "aTAN123ToolStripMenuItem";
-            this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTAN123ToolStripMenuItem.Text = "ATAN2 1234 ->9 5678->10";
             this.aTAN123ToolStripMenuItem.Click += new System.EventHandler(this.aTAN123ToolStripMenuItem_Click_1);
             // 
             // aTANRGBToolStripMenuItem
             // 
             this.aTANRGBToolStripMenuItem.Name = "aTANRGBToolStripMenuItem";
-            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTANRGBToolStripMenuItem.Text = "ATAN2 RGB";
             this.aTANRGBToolStripMenuItem.Click += new System.EventHandler(this.aTANRGBToolStripMenuItem_Click_1);
             // 
             // aTAN2123GraphToolStripMenuItem
             // 
             this.aTAN2123GraphToolStripMenuItem.Name = "aTAN2123GraphToolStripMenuItem";
-            this.aTAN2123GraphToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.aTAN2123GraphToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTAN2123GraphToolStripMenuItem.Text = "ATAN2 123 Graph";
             this.aTAN2123GraphToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123GraphToolStripMenuItem_Click);
             // 
             // aTAN2123456ToolStripMenuItem
             // 
             this.aTAN2123456ToolStripMenuItem.Name = "aTAN2123456ToolStripMenuItem";
-            this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTAN2123456ToolStripMenuItem.Text = "ATAN2 1234 5678";
             this.aTAN2123456ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123456ToolStripMenuItem_Click);
             // 
             // таблицаToolStripMenuItem
             // 
             this.таблицаToolStripMenuItem.Name = "таблицаToolStripMenuItem";
-            this.таблицаToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.таблицаToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.таблицаToolStripMenuItem.Text = "Таблица";
             this.таблицаToolStripMenuItem.Click += new System.EventHandler(this.таблицаToolStripMenuItem_Click);
             // 
             // таблица2ToolStripMenuItem
             // 
             this.таблица2ToolStripMenuItem.Name = "таблица2ToolStripMenuItem";
-            this.таблица2ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.таблица2ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.таблица2ToolStripMenuItem.Text = "Таблица 2";
             this.таблица2ToolStripMenuItem.Click += new System.EventHandler(this.таблица2ToolStripMenuItem_Click);
             // 
             // PRMTRToolStripMenuItem
             // 
             this.PRMTRToolStripMenuItem.Name = "PRMTRToolStripMenuItem";
-            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.PRMTRToolStripMenuItem.Text = "Параметры";
             // 
             // aTAN2123412567813ToolStripMenuItem
             // 
             this.aTAN2123412567813ToolStripMenuItem.Name = "aTAN2123412567813ToolStripMenuItem";
-            this.aTAN2123412567813ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.aTAN2123412567813ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTAN2123412567813ToolStripMenuItem.Text = "ATAN2 1234->12 5678->13";
             this.aTAN2123412567813ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123412567813ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2});
+            this.toolStripMenuItem2,
+            this.определениеПлоскостиToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(33, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(35, 20);
             this.toolStripMenuItem1.Text = "2pi";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(166, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 22);
             this.toolStripMenuItem2.Text = "Таблица остатков";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.таблица2ToolStripMenuItem_Click);
             // 
@@ -575,29 +592,36 @@
             this.медианныйToolStripMenuItem,
             this.транспонированиеToolStripMenuItem});
             this.Фильтр.Name = "Фильтр";
-            this.Фильтр.Size = new System.Drawing.Size(57, 20);
+            this.Фильтр.Size = new System.Drawing.Size(60, 20);
             this.Фильтр.Text = "Фильтр";
             // 
             // сглаживаниеToolStripMenuItem
             // 
             this.сглаживаниеToolStripMenuItem.Name = "сглаживаниеToolStripMenuItem";
-            this.сглаживаниеToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.сглаживаниеToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.сглаживаниеToolStripMenuItem.Text = "Сглаживание";
             this.сглаживаниеToolStripMenuItem.Click += new System.EventHandler(this.сглаживаниеToolStripMenuItem_Click);
             // 
             // медианныйToolStripMenuItem
             // 
             this.медианныйToolStripMenuItem.Name = "медианныйToolStripMenuItem";
-            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.медианныйToolStripMenuItem.Text = "Медианный";
             this.медианныйToolStripMenuItem.Click += new System.EventHandler(this.медианныйToolStripMenuItem_Click);
+            // 
+            // транспонированиеToolStripMenuItem
+            // 
+            this.транспонированиеToolStripMenuItem.Name = "транспонированиеToolStripMenuItem";
+            this.транспонированиеToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.транспонированиеToolStripMenuItem.Text = "Транспонирование";
+            this.транспонированиеToolStripMenuItem.Click += new System.EventHandler(this.транспонированиеToolStripMenuItem_Click);
             // 
             // cameraToolStripMenuItem
             // 
             this.cameraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.canon500DToolStripMenuItem});
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.cameraToolStripMenuItem.Text = "Камера";
             // 
             // canon500DToolStripMenuItem
@@ -606,20 +630,20 @@
             this.сделатьСнимокToolStripMenuItem,
             this.Cadr8ToolStripMenuItem});
             this.canon500DToolStripMenuItem.Name = "canon500DToolStripMenuItem";
-            this.canon500DToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.canon500DToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.canon500DToolStripMenuItem.Text = "Canon 500D";
             // 
             // сделатьСнимокToolStripMenuItem
             // 
             this.сделатьСнимокToolStripMenuItem.Name = "сделатьСнимокToolStripMenuItem";
-            this.сделатьСнимокToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.сделатьСнимокToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.сделатьСнимокToolStripMenuItem.Text = "Сделать снимок";
             this.сделатьСнимокToolStripMenuItem.Click += new System.EventHandler(this.captureImage);
             // 
             // Cadr8ToolStripMenuItem
             // 
             this.Cadr8ToolStripMenuItem.Name = "Cadr8ToolStripMenuItem";
-            this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.Cadr8ToolStripMenuItem.Text = "2 серии Sin";
             this.Cadr8ToolStripMenuItem.Click += new System.EventHandler(this.Cadr8ToolStripMenuItem_Click);
             // 
@@ -1050,27 +1074,12 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // транспонированиеToolStripMenuItem
+            // определениеПлоскостиToolStripMenuItem
             // 
-            this.транспонированиеToolStripMenuItem.Name = "транспонированиеToolStripMenuItem";
-            this.транспонированиеToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.транспонированиеToolStripMenuItem.Text = "Транспонирование";
-            this.транспонированиеToolStripMenuItem.Click += new System.EventHandler(this.транспонированиеToolStripMenuItem_Click);
-            // 
-            // mainPictureBox
-            // 
-            this.mainPictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.mainPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.mainPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mainPictureBox.Location = new System.Drawing.Point(8, 5);
-            this.mainPictureBox.Name = "mainPictureBox";
-            this.mainPictureBox.Size = new System.Drawing.Size(800, 600);
-            this.mainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.mainPictureBox.TabIndex = 5;
-            this.mainPictureBox.TabStop = false;
-            this.mainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
-            this.mainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
-            this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
+            this.определениеПлоскостиToolStripMenuItem.Name = "определениеПлоскостиToolStripMenuItem";
+            this.определениеПлоскостиToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.определениеПлоскостиToolStripMenuItem.Text = "Определение плоскости";
+            this.определениеПлоскостиToolStripMenuItem.Click += new System.EventHandler(this.определениеПлоскостиToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1111,6 +1120,7 @@
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -1134,7 +1144,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1142,7 +1151,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private CustomPictureBox pictureBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
@@ -1159,13 +1168,13 @@
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ZGRToolStripMenuItem;     // Загрузить
         private System.Windows.Forms.ToolStripMenuItem SAVEToolStripMenuItem;    // Сохранить   // Очистить   // Закрыть           // Сглаживание    
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
+        private CustomPictureBox pictureBox2;
+        private CustomPictureBox pictureBox3;
+        private CustomPictureBox pictureBox4;
+        private CustomPictureBox pictureBox5;
+        private CustomPictureBox pictureBox6;
+        private CustomPictureBox pictureBox7;
+        private CustomPictureBox pictureBox8;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
@@ -1201,22 +1210,22 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem таблицаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem таблица2ToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.PictureBox pictureBox10;
+        private CustomPictureBox pictureBox9;
+        private CustomPictureBox pictureBox10;
         private System.Windows.Forms.RadioButton radioButton10;
         private System.Windows.Forms.RadioButton radioButton9;
         private System.Windows.Forms.Label imageWidth;
         private System.Windows.Forms.Label imageHeight;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.RadioButton radioButton14;
-        private System.Windows.Forms.PictureBox pictureBox11;
+        private CustomPictureBox pictureBox11;
         private System.Windows.Forms.ToolStripMenuItem Фильтр;
         private System.Windows.Forms.ToolStripMenuItem сглаживаниеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
         private CustomPictureBox mainPictureBox;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.PictureBox pictureBox12;
-        private System.Windows.Forms.PictureBox pictureBox13;
+        private CustomPictureBox pictureBox12;
+        private CustomPictureBox pictureBox13;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
@@ -1232,6 +1241,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem aTAN2123412567813ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem транспонированиеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem определениеПлоскостиToolStripMenuItem;
        
       
     }

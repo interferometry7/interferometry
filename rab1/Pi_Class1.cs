@@ -285,7 +285,6 @@ namespace rab1
             Bitmap bmp1 = new Bitmap(img[0], w, h);
             Bitmap bmp2 = new Bitmap(img[1], w, h);
             Bitmap bmp3 = new Bitmap(img[2], w, h);
-            Bitmap bmp  = new Bitmap(pictureBox01.Image, w, h);
 
             int[,] bmp_r = new int[n2+3, n1+3];
             int[,] bmp_line = new int[n2 + 3, n1 + 3];
@@ -381,30 +380,22 @@ namespace rab1
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
 
-            f_sin = new Form();                                      // Подготовительные операции для открытия окна таблицы
+            f_sin = new Form();
             f_sin.Size = new Size(max_x + 8, max_y + 8);
             f_sin.StartPosition = FormStartPosition.Manual;
             f_sin.Location = p;
 
-            pc1 = new PictureBox();                              
+            pc1 = new PictureBox();
             pc1.BackColor = Color.White;
             pc1.Location = new System.Drawing.Point(0, 8);
             pc1.Size = new Size(max_x, max_y);
             pc1.SizeMode = PictureBoxSizeMode.StretchImage;
             pc1.BorderStyle = BorderStyle.Fixed3D;
-            pc1.Image = new Bitmap(max_x + 8, max_y + 8);       
 
-            for (int i = 0; i < pc1.Image.Width; i++)
-            {
-                for (int j = 0; j < pc1.Image.Height; j++)
-                {
-                    ((Bitmap)pc1.Image).SetPixel(i, j, Color.White);
-                }
-            }
+            Bitmap btmBack = new Bitmap(max_x + 8, max_y + 8);      //изображение          
+            Graphics grBack = Graphics.FromImage(btmBack);
 
-            //Bitmap btmBack = new Bitmap(max_x + 8, max_y + 8);      //изображение          
-            Graphics grBack = Graphics.FromImage(pc1.Image);
-           // pc1.BackgroundImage = btmBack;
+            pc1.BackgroundImage = btmBack;
 
 
             f_sin.Controls.Add(pc1);
@@ -415,11 +406,8 @@ namespace rab1
             Pen p4 = new Pen(Color.Gold, 1);
             Pen p5 = new Pen(Color.Yellow, 1);
             Font font = new Font("Arial", 16, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            //--------------------------------------------------------------------------------------------------------------- 
-            //
-            //             Отрисовка основных диагоналей в таблице
-            //
-            //---------------------------------------------------------------------------------------------------------------                                                                
+            //Font font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular);
+            //Font font = new Font("Verdana", 14, FontStyle.Regular);
 
             grBack.DrawLine(p1, x0, y0, x0, hh * scale + y0);
             grBack.DrawLine(p1, x0, hh * scale + y0, 2 * w1 * scale + x0, hh * scale + y0);
@@ -427,12 +415,16 @@ namespace rab1
             grBack.DrawLine(p1, w1 * scale + x0, hh * scale + y0, w1 * scale + x0, y0);
             grBack.DrawLine(p1, w1 * scale + x0, y0, x0, y0);
 
+
+
             StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip);
+            //drawFormat.LineAlignment = StringAlignment.Near ;  //   .Center;
+            // drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
 
             string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
             s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
             // ----------------------------------------------------------------------------------------------------------------
-            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                      // Массив для расшифровки
+            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                                              // Массив для расшифровки
 
             Int32 A = Diag * Math.Max(n1, n2);
             Int32 pf;
@@ -474,6 +466,7 @@ namespace rab1
                     int bb = glbl_faze[i]; if (bb >= 0 && bb != mnx) { mxx = bb; mxx_x = i; break; }
                 }
                 if (cntr >= n1 + n2 - 1) break;
+                //MessageBox.Show(" mnx =  " + mnx.ToString() + " mxx =  " + mxx.ToString());                    
                 int m = (mxx_x - mnx_x) / 2;
                 for (int j = mnx_x; j < mnx_x + m; j++) glbl_faze1[j] = mnx;
                 for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
@@ -491,27 +484,19 @@ namespace rab1
                 {
                     mnx = bb;
                     grBack.DrawLine(p4, x0 + i * scale, y0 + hh * scale, x0, y0 + hh * scale - i * scale);
+                    //grBack.DrawLine(p4, x0 + i * scale, y0 + hh * scale, x0 + i * scale, y0 ); 
                 }
             }
 
             //--------------------------------------------------------------------------------------------------------------- 
-            //
-            //                  Заполнение таблицы
-            //
-            //--------------------------------------------------------------------------------------------------------------- 
             int r, g, b;
             int w = img[0].Width;
             int h = img[0].Height;
-            Bitmap bmp1 = (Bitmap)img[0];
-            Bitmap bmp2 = (Bitmap)img[1];
-            Bitmap bmp3 = (Bitmap)img[2];
-            Bitmap bmp = (Bitmap)pictureBox01.Image;
+            Bitmap bmp1 = new Bitmap(img[1], w, h);
+            Bitmap bmp2 = new Bitmap(img[0], w, h);
+            Bitmap bmp3 = new Bitmap(img[2], w, h);
 
-            BitmapData bmp1Data = ImageProcessor.getBitmapData(bmp1);
-            BitmapData bmp2Data = ImageProcessor.getBitmapData(bmp2);
-
-            int[,] bmp_r    = new int[n2 + 3, n1 + 3];
-            int[,] bmp_line = new int[n2 + 3, n1 + 3];
+            int[,] bmp_r = new int[n2 + 3, n1 + 3];
             int[] ims1 = new int[h];
             int[] ims2 = new int[h];
             int[] ims3 = new int[h];
@@ -523,13 +508,11 @@ namespace rab1
 
             if ((x0_end < x1_end) && (y0_end < y1_end)) { xx0 = x0_end; xx1 = x1_end; yy0 = y0_end; yy1 = y1_end; }
 
-            Int64 count = 0;
-            double fn1 = (double)((n1 - 1) / 255); 
-            double fn2 = (double)((n2 - 1) / 255); 
-            if (rb == 1)                                                                            // ------------- По фигуре из 11 кадра
-            {
+            Int32 count = 0;
+            if (rb == 1)                                             // ------------- По фигуре из 3 квадрата
                 for (int i = xx0; i < xx1; i++)
                 {
+
                     for (int j = yy0; j < yy1; j++)
                     {
                         c1 = bmp3.GetPixel(i, j);
@@ -537,11 +520,8 @@ namespace rab1
                         else
                         {
                             ims3[j] = 1;
-                            c = ImageProcessor.getPixel(i, j, bmp1Data);              //c = bmp1.GetPixel(i, j); 
-                            r = c.R;  ims1[j] = (int)((double)(r * fn1));  //(b2)
-
-                            c = ImageProcessor.getPixel(i, j, bmp2Data);              //c = bmp2.GetPixel(i, j); 
-                            r = c.R;  ims2[j] = (int)((double)(r * fn2));  //(b1) 
+                            c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
+                            c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1) 
                         }
 
                     }
@@ -551,25 +531,14 @@ namespace rab1
                         if (ims3[j] != 0) { r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++; }
                     }
                 }
-            }
-
-
-            if (rb == 0)                                                                              // --------- По квадратной области
-            {
+            if (rb == 0)                                               // --------- По квадратной области
                 for (int i = xx0; i < xx1; i++)
                 {
 
                     for (int j = yy0; j < yy1; j++)
                     {
-                        //c = bmp1.GetPixel(i, j);
-                        c = ImageProcessor.getPixel(i, j, bmp1Data);
-                        r = c.R; 
-                        ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
-
-                        //c = bmp2.GetPixel(i, j);
-                        c = ImageProcessor.getPixel(i, j, bmp2Data);
-                        r = c.R; 
-                        ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1)   
+                        c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
+                        c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1)   
                     }
 
                     for (int j = yy0; j < yy1; j++)
@@ -577,81 +546,38 @@ namespace rab1
                         r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++;
                     }
                 }
-            }
-
-            (bmp1).UnlockBits(bmp1Data);
-            (bmp2).UnlockBits(bmp2Data);
 
 
 
-            Int64 ib2 = 0, ib1 = 0, max_count = 0;                        // max_count - максимальное число попаданий
+            Int32 ib2 = 0, ib1 = 0, max_count = 0;
             for (ib2 = 0; ib2 < n2 - 1; ib2++)
             {
-                for (ib1 = 0; ib1 < n1 - 1; ib1++) 
-                   { 
-                       b = bmp_r[ib2, ib1]; if (b > max_count) max_count = b; 
-                   }
+                for (ib1 = 0; ib1 < n1 - 1; ib1++) { b = bmp_r[ib2, ib1]; if (b > max_count) max_count = b; }
             }
+            // Рисование точек по диагоналям
 
-            Int64 mn1 = pr_obr;
+            int mn1 = pr_obr;
 
-            Int64 mn = (max_count) / 12;
-            Int64 mn2 = mn1 + mn;
-            Int64 mn3 = mn2 + mn;
-
-            pc1.Refresh();
-            f_sin.Show();
-
+            int mn = (max_count) / 12;
+            int mn2 = mn1 + mn;
+            int mn3 = mn2 + mn;
+            MessageBox.Show(" count =  " + count.ToString() + " max =  " + max_count.ToString());
 
 
-            Color currentFirstColor;
-            Color currentSecondColor;
-
-
-            BitmapData data1 = ImageProcessor.getBitmapData((Bitmap)firstImage.Image);
-            BitmapData data2 = ImageProcessor.getBitmapData((Bitmap)secondImage.Image);
-
-            BitmapData resultData = ImageProcessor.getBitmapData((Bitmap)pc1.Image);
-
-            int firstCoordinate = 0;
-            int secondCoordinate = 0;
-            Color currentColor;
-            int currentColorIntence = 0;
-
-            for (int i = 0; i < firstImage.Image.Width; i++)
+            for (ib2 = 0; ib2 < n2 - 1; ib2++)
             {
-                for (int j = 0; j < firstImage.Image.Height; j++)
+                for (ib1 = 0; ib1 < n1 - 1; ib1++)
                 {
-                    currentFirstColor = ImageProcessor.getPixel(i, j, data1);
-                    currentSecondColor = ImageProcessor.getPixel(i, j, data2);
-
-                    firstCoordinate = (int)((float)currentFirstColor.R * 241.0 / (float)255) * scale;
-                    secondCoordinate = (int)((float)currentSecondColor.R * 167.0 / (float)255) * scale;
-
-                    currentColor = ImageProcessor.getPixel(x0 + firstCoordinate, y0 + secondCoordinate, resultData);
-
-                    if (currentColor.ToArgb() == Color.White.ToArgb())
+                    b = bmp_r[ib2, ib1];
+                    if (b > 0)
                     {
-                        currentColor = Color.Black;
+                        if (b > mn3) grBack.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);
+                        if (b > mn2 && b <= mn3) grBack.DrawRectangle(new Pen(Color.FromArgb(0, 0, 255)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);
+                        if (b > mn1 && b <= mn2) grBack.DrawRectangle(new Pen(Color.FromArgb(32, 32, 32)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);
+                        //if (b >  mn1)           grBack.DrawRectangle(new Pen(Color.FromArgb(32, 32, 32)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);                                
                     }
-
-                    currentColorIntence = currentColor.R;
-                    currentColorIntence++;
-
-                    if (currentColorIntence > 255)
-                    {
-                        currentColorIntence = 255;
-                    }
-
-                    ImageProcessor.setPixel(resultData, x0 + firstCoordinate, y0 + secondCoordinate, Color.FromArgb(currentColorIntence, 0, 0));
                 }
             }
-
-            ((Bitmap)firstImage.Image).UnlockBits(data1);
-            ((Bitmap)secondImage.Image).UnlockBits(data2);
-
-            ((Bitmap)pc1.Image).UnlockBits(resultData);
-
 
             pc1.Refresh();
             f_sin.Show();

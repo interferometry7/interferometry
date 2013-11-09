@@ -460,30 +460,30 @@ namespace rab1.Forms
                 try
                 {
                     Bitmap newBitmap = new Bitmap(pictureBox1.Image);
-                    newBitmap.Save(dialog1.FileName + "1.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "1.bmp", ImageFormat.Bmp);
                     dialog1.InitialDirectory = dialog1.FileName;
                     string_dialog = dialog1.FileName;
 
                     newBitmap = new Bitmap(pictureBox2.Image);
-                    newBitmap.Save(dialog1.FileName + "2.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "2.bmp", ImageFormat.Bmp);
 
                     newBitmap = new Bitmap(pictureBox3.Image);
-                    newBitmap.Save(dialog1.FileName + "3.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "3.bmp", ImageFormat.Bmp);
 
                     newBitmap = new Bitmap(pictureBox4.Image);
-                    newBitmap.Save(dialog1.FileName + "4.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "4.bmp", ImageFormat.Bmp);
 
                     newBitmap = new Bitmap(pictureBox5.Image);
-                    newBitmap.Save(dialog1.FileName + "5.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "5.bmp", ImageFormat.Bmp);
 
                     newBitmap = new Bitmap(pictureBox6.Image);
-                    newBitmap.Save(dialog1.FileName + "6.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "6.bmp", ImageFormat.Bmp);
 
                     newBitmap = new Bitmap(pictureBox7.Image);
-                    newBitmap.Save(dialog1.FileName + "7.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "7.bmp", ImageFormat.Bmp);
 
                     newBitmap = new Bitmap(pictureBox8.Image);
-                    newBitmap.Save(dialog1.FileName + "8.bmp", ImageFormat.Jpeg);
+                    newBitmap.Save(dialog1.FileName + "8.bmp", ImageFormat.Bmp);
 
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
@@ -928,7 +928,7 @@ namespace rab1.Forms
         private void relayout()
         {
             this.panel1.Size = new Size(this.Size.Width - 160, this.Size.Height - 150);
-            this.mainPictureBox.Size = new Size(this.panel1.Size.Width - 44, this.panel1.Size.Height - 36);
+            this.mainPictureBox.Size = new Size(this.panel1.Size.Width - 120, this.panel1.Size.Height - 36);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton12_CheckedChanged(object sender, EventArgs e)
@@ -1102,7 +1102,6 @@ namespace rab1.Forms
             img[0] = pictureBox9.Image;                // 1 фаза
             img[1] = pictureBox10.Image;               // 2 фаза
             img[2] = pictureBox11.Image;               // 3 ограничение по контуру
-            img[3] = pictureBox4.Image;
 
             int rb_int = 0;
             string strN1 = " ", strN2 = " ";
@@ -1159,7 +1158,7 @@ namespace rab1.Forms
                             }
                         }
 
-                        if ((Math.Abs(closestPoint.X - newBorderPoint.X) > 1) && ((Math.Abs(closestPoint.X - newBorderPoint.X) < 20)))
+                        if ((Math.Abs(closestPoint.Y - newBorderPoint.Y) >= 0) && ((Math.Abs(closestPoint.X - newBorderPoint.X) < 20)))
                         {
                             startPoints.Add(closestPoint);
                             endPoints.Add(newBorderPoint);
@@ -1251,7 +1250,7 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button5_Click(object sender, EventArgs e)
         {
-            Image targetImage = mainPictureBox.Image;
+            Image targetImage = pictureBox9.Image;
             List<Point3D> pointsList = new List<Point3D>();
 
             for (int i = 0; i < targetImage.Width; i++)
@@ -1269,75 +1268,78 @@ namespace rab1.Forms
                 }
             }
 
-            var somePlane = RestoreForm.getPlaneParams(pointsList);
-            /*somePlane.a = 0.04;
-            somePlane.b = 0.001369;
-            somePlane.c = -0.116;*/
-
-            OpenGLForm newForm = new OpenGLForm();
-            List<Point3D> result = new List<Point3D>();
-
-            int[][] pointsForFile = new int[targetImage.Width][];
+            Pi_Class1.Plane somePlane = RestoreForm.getPlaneParams(pointsList);
+            
+            subPlane(somePlane);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void subPlane(Pi_Class1.Plane somePlane)
+        {
+            Image targetImage = pictureBox9.Image;
+            List<Point3D> pointsList = new List<Point3D>();
 
             for (int i = 0; i < targetImage.Width; i++)
             {
-                pointsForFile[i] = new int[targetImage.Height];
+                for (int j = 0; j < targetImage.Height; j++)
+                {
+                    Color currentColor = ((Bitmap)(targetImage)).GetPixel(i, j);
+                    int currentIntencity = currentColor.R;
+                    Point3D newPoint = new Point3D(i, j, currentIntencity);
+
+                    if (newPoint.z != 0)
+                    {
+                        pointsList.Add(newPoint);
+                    }
+                }
             }
 
+            OpenGLForm newForm = new OpenGLForm();
 
             foreach (Point3D currentPoint in pointsList)
             {
                 double planeZ = (somePlane.a * currentPoint.x) + (somePlane.b * currentPoint.y) + somePlane.c;
+                //newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, (int)(currentPoint.z - planeZ), Color.RoyalBlue));
+                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, (int)planeZ, Color.Red));
+                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, currentPoint.z, Color.Green));
 
-                //newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, -(int)planeZ));
+                Color planeColor;
 
-                //newForm.addPoint(currentPoint);
+                if ((int)(currentPoint.z - planeZ) > 255)
+                {
+                    planeColor = Color.White;
+                }
+                else if ((int)(currentPoint.z - planeZ) < 0)
+                {
+                    planeColor = Color.Black;
+                }
+                else
+                {
+                    planeColor = Color.FromArgb((int)(currentPoint.z - planeZ), (int)(currentPoint.z - planeZ),
+                    (int)(currentPoint.z - planeZ));
+                }
 
-                newForm.addPoint(new Point3D(currentPoint.x, currentPoint.y, (int)(currentPoint.z - planeZ), Color.RoyalBlue));
-
-
-                pointsForFile[currentPoint.x][currentPoint.y] = (int)Math.Abs(Math.Abs((int)(currentPoint.z - planeZ)) - Math.Abs(planeZ));
-
-                //result.Add(new Point3D(currentPoint.x, currentPoint.y, (int)Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ))));
+                ((Bitmap)(mainPictureBox.Image)).SetPixel(currentPoint.x, currentPoint.y, planeColor);
             }
 
-
+            mainPictureBox.Invalidate();
 
             newForm.Show();
+
+
+
+            PlaneParamsForm planeParamsForm = new PlaneParamsForm(somePlane);
+            planeParamsForm.planeParamsChoosed+=PlaneParamsFormOnPlaneParamsChoosed;
+            planeParamsForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void writeToFile(int[][] pointsForWriting, int width, int height) //выгрузка
+        private void PlaneParamsFormOnPlaneParamsChoosed(Pi_Class1.Plane somePlane)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog(); //создали диалог
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) //если нажата ОК
-            {
-                String fileName = saveFileDialog1.FileName; //взяли имя из диалога
-
-                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate); //создаём поток
-                System.IO.BinaryWriter w = new System.IO.BinaryWriter(fs); //создаём записывальщик
-
-                /////////////// От чего до чего Шаг /////////////////////
-                int StartX = 0; // Начальный X
-                int FinishX = width; // Конечный X
-                int StartY = 0; // Начальный Y
-                int FinishY = height; // Конечный Y
-                int Step = 1; // Шаг
-                /////////////////////////////////////////////////////////
-
-                w.Write((int)(FinishX - StartX) / Step); //запись количества значений по X
-                w.Write((int)(FinishY - StartY) / Step); //запись количества значений по Y
-
-
-                for (int y = StartY; y < FinishY; y += Step) //внешний цикл по Y
-                {
-                    for (int x = StartX; x < FinishX; x += Step) //внутренний цикл по X //получается построчная запись
-                    {
-                        w.Write(pointsForWriting[x][y]); //запиcываем посчитанное значение
-                    }
-                }
-                w.Close(); //закрываем записывальщик
-                fs.Close(); //закрываем поток
-            }
+            subPlane(somePlane);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void определениеПлоскостиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            button5_Click(sender, e);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
