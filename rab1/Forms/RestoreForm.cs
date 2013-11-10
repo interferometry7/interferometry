@@ -68,17 +68,6 @@ namespace rab1.Forms
 
             rightImage.Image = newBitmap;
         }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void phaseMapImage_Click(object sender, EventArgs e)
-        {
-            if (phaseMapImage.Image == null)
-            {
-                MessageBox.Show("Сначала загрузите изображение");
-                return;
-            }
-        }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void rightImage_MouseDown(object sender, MouseEventArgs e)
         {
@@ -182,7 +171,6 @@ namespace rab1.Forms
                 numberAndColorCorrespondence.Add(newNumber, colorToFill);
             }
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private Color generateNewColor()
         {
@@ -222,7 +210,6 @@ namespace rab1.Forms
                 }
             }
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void buildButton_Click(object sender, EventArgs e)
         {
@@ -380,13 +367,11 @@ namespace rab1.Forms
             resultBitmap.UnlockBits(imageData);
             imageRestored(resultBitmap, ratio);
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void RestoreForm_SizeChanged(object sender, EventArgs e)
         {
             relayout();
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void relayout()
         {
@@ -396,13 +381,12 @@ namespace rab1.Forms
                                              this.panel2.Location.Y);
             this.panel2.Size = new Size(this.Size.Width/2 - 50, this.Size.Height - 100);
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
-
+        //Interface Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Pi_Class1.Plane getPlaneParams(List<Point3D> pointsOfPlane)
         {

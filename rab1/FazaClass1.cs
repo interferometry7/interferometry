@@ -260,13 +260,9 @@ namespace rab1
 
             Color c;
             int r, g, b;
-            double fz, fz1, fz2, sqrt3 = Math.Sqrt(3);
+            double fz, fz1, fz2;
             Bitmap bmp1 = new Bitmap(pictureBox01.Image, w1, h1);
             Bitmap bmp2 = new Bitmap(w1, h1);
-
-            int[] ims1 = new int[h1];
-            int[] ims2 = new int[h1];
-            int[] ims3 = new int[h1];
 
             for (int i = 0; i < w1; i++)
             {
@@ -293,7 +289,7 @@ namespace rab1
             pictureBox01.Image = bmp2;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_ATAN(Image[] img, int x0_end, int x1_end, int y0_end, int y1_end, int n, double[] fzz, double Gamma)
+        public static void Graph_ATAN(Image[] img, int n, double[] fzz, double Gamma)
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -320,10 +316,6 @@ namespace rab1
             BitmapData data4 = ImageProcessor.getBitmapData(bmp4);
 
             int x0=0, x1=w1, y0=0, y1=h1;
-            if (x0_end !=0 || x1_end !=0 || y0_end !=0 || y1_end !=0 ) 
-            { 
-                x0=x0_end; x1=x1_end;  y0=y0_end; y1=y1_end;
-            }
 
             int r;
             double fz1, fz2;

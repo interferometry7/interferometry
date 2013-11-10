@@ -123,6 +123,12 @@
     <Compile Include="Forms\FiltrationForm.Designer.cs">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TableGenerateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TableGenerateForm.Designer.cs">
+      <DependentUpon>TableGenerateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlaneParamsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FiltrationForm.resx">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TableGenerateForm.resx">
+      <DependentUpon>TableGenerateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

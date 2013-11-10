@@ -1,11 +1,6 @@
 ﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
-
 using System.Drawing;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
 
 namespace rab1
 {
@@ -17,8 +12,6 @@ namespace rab1
         static Int32 M2 = -1;
         static Int32 N1 = -1;
         static Int32 N2 = -1;
-        static Int32 n1;         
-        static Int32 n2;
         static int NMAX=1600;
         static int[] glbl_faze  = new int[NMAX];               // Номера для прослеживания полос (номера линий)
         static int[] glbl_faze1 = new int[NMAX];               // Количество добавлений b1 (Для расшифровки)
@@ -28,6 +21,9 @@ namespace rab1
         static int scale = 4;
         static int x0 = 46, y0 = 16;
         static double A=0, B=0, C=0, D=0;
+
+        static Int32 n1;
+        static Int32 n2;
 
         static Int32[,] Z;                                     // Глобальный массив результирующих фаз (Размер задается при расшифровке)
 
@@ -44,37 +40,17 @@ namespace rab1
            Int32 n0 = Math.Max(N1, N2);
            Int32 n1 = Math.Min(N1, N2);
           
-           do { Int32 n = n0 - (int)((n0 / n1) * n1); n0 = n1; n1 = n; } while (n1 != 0);
+           do { Int32 n = n0 - (n0 / n1) * n1; n0 = n1; n1 = n; } while (n1 != 0);
           
            return n0;
-
         }
 
-        private static Int32 Dot(string sN1)
-        {
-            Int32 N1, n;
-            
-
-            if (sN1.Contains("."))
-            {
-                n = sN1.IndexOf(".");
-                sN1 = sN1.Substring(0, n) + sN1.Substring(n + 1);  
-            }
-            if (sN1.Contains(","))
-            {
-                n = sN1.IndexOf(",");
-                sN1 = sN1.Substring(0, n) + sN1.Substring(n + 1);  
-            }
-            N1 = Convert.ToInt32(sN1);
-            return N1;
-        }
-
-        private static void China(string sN1, string sN2)
+        private static void China(int sN1, int sN2)
         {
             int n;
-            n1 = Dot(sN1);         // Убирает точку и запятую
-            n2 = Dot(sN2);
-            Int32 NOD = Evklid(n1, n2);   // Если NOD == 1 числа взаимно просты
+            n1 = sN1;
+            n2 = sN2;
+            Int32 NOD = Evklid(n1, n2); // Если NOD == 1 числа взаимно просты
             if (NOD != 1) { MessageBox.Show("Числа не взаимно просты"); return; }
 
             M1 = n2;
@@ -85,297 +61,12 @@ namespace rab1
             for (int i = 0; i < M2; i++) { n = (M2 * i) % n2; if (n == 1) { N2 = i; break; } } if (N2 < 0) N2 = N2 + n2;
         }
 // --------------------------------------------------------------------------------------------------------------------------- Рисование таблицы  (параметры) (b2, b1)
-        private static void Graph_Prmtr(Image[] img, int Diag, Point p)
-        {
-
-            int max_x = NMAX, max_y = 800;
-            
-            int w1 = n2, hh = n1;
-           
-            f_sin = new Form();
-            f_sin.Size = new Size(max_x + 8, max_y + 8);
-            f_sin.StartPosition = FormStartPosition.Manual;
-
-            f_sin.Location = p;
-
-            pc1 = new PictureBox();
-            pc1.BackColor = Color.White;
-            pc1.Location = new System.Drawing.Point(0, 8);
-            pc1.Size = new Size(max_x, max_y);
-            pc1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pc1.BorderStyle = BorderStyle.Fixed3D;
-
-            Bitmap btmBack = new Bitmap(max_x + 8, max_y + 8);      //изображение          
-            Graphics grBack = Graphics.FromImage(btmBack);
-
-            pc1.BackgroundImage = btmBack;
-
-
-            f_sin.Controls.Add(pc1);
-
-            Pen p1 = new Pen(Color.Black, 1);
-            Pen p2 = new Pen(Color.Red, 1);
-            Pen p3 = new Pen(Color.Blue, 1);
-            Pen p4 = new Pen(Color.Yellow, 1);
-            Font font = new Font("Arial", 16, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            //Font font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular);
-            //Font font = new Font("Verdana", 14, FontStyle.Regular);
-
-            grBack.DrawLine(p1, x0, y0, x0, hh * scale + y0);
-            grBack.DrawLine(p1, x0, hh * scale + y0, 2 * w1 * scale + x0, hh * scale + y0);
-
-            grBack.DrawLine(p1, w1 * scale + x0, hh * scale + y0, w1 * scale + x0, y0);
-            grBack.DrawLine(p1, w1 * scale + x0, y0, x0, y0);
-
-           
-
-            StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip);
-            //drawFormat.LineAlignment = StringAlignment.Near ;  //   .Center;
-            // drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
-
-            string s = n2.ToString();  grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
-                   s = n1.ToString();         grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20, drawFormat);
-                   s = M1.ToString() + "*" + N1.ToString() + " b1  + " + M2.ToString() + "*" + N2.ToString() + " b2 mod " + (n1 * n2).ToString();
-                   grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + w1 * scale + 5 * scale, y0 + 5 * scale, drawFormat);
-
-
-            
-            Int32 A = Diag * Math.Max(n1, n2);
-             Int32 pf;
-             for (int b2 = 0; b2 < n2; b2++)                                                                    // Диагонали
-             {
-                 pf = M2 * N2 * b2 % (n1 * n2);
-                 if (pf < A) 
-                 {
-                     int x1 = x0 + b2 * scale; 
-                     grBack.DrawLine(p4, x1, y0, x1 , hh * scale + y0);
-
-                     grBack.DrawLine(p2, x0 + b2 * scale, y0, x0 + b2 * scale + n1 * scale, hh * scale + y0);
-                     pf = pf / n1;     s = pf.ToString();
-                     grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + b2 * scale, y0 - 4 * scale, drawFormat);
-                 }
-             }
-             for (int b1 = 0; b1 < n1; b1++)
-             {
-                 pf = M1 * N1 * b1 % (n1 * n2);
-                 if (pf < A)
-                 {
-                     int y1 = y0 + b1 * scale;
-                     grBack.DrawLine(p4, x0, y1, x0 + w1 * scale, y1); 
-
-                     grBack.DrawLine(p3, x0, y0 + b1 * scale, x0 + n1 * scale - b1 * scale, hh * scale + y0); 
-                     pf = pf / n1; s = pf.ToString();
-                     grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 - 10 * scale, y0 + b1 * scale, drawFormat);
-                 }
-             }
-
-
-             pc1.Refresh();
-             f_sin.Show();
-
-        }
-
-      
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------ Построение таблицы
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private static void Graph_China(Image[] img, PictureBox pictureBox01, int Diag, Point p, int x0_end, int x1_end, int y0_end, int y1_end, int rb, int pr_obr)
-        {
-            int max_x = (n1+n2)*scale, max_y = 800;     
-            int w1 = n2, hh = n1;
-
-            f_sin = new Form();
-            f_sin.Size = new Size(max_x + 8, max_y + 8);
-            f_sin.StartPosition = FormStartPosition.Manual;          
-            f_sin.Location = p;
-
-            pc1 = new PictureBox();
-            pc1.BackColor = Color.White;
-            pc1.Location = new System.Drawing.Point(0, 8);
-            pc1.Size = new Size(max_x, max_y);
-            pc1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pc1.BorderStyle = BorderStyle.Fixed3D;
-
-            Bitmap btmBack = new Bitmap(max_x + 8, max_y + 8);      //изображение          
-            Graphics grBack = Graphics.FromImage(btmBack);
-            
-            pc1.BackgroundImage = btmBack;
-          
-
-            f_sin.Controls.Add(pc1);
-
-            Pen p1 = new Pen(Color.Black, 1);
-            Pen p2 = new Pen(Color.Red, 1);
-            Pen p3 = new Pen(Color.Blue, 1);
-            Pen p4 = new Pen(Color.Gold, 1);
-            Pen p5 = new Pen(Color.Yellow, 1);
-            Font font = new Font("Arial", 16, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            
-            grBack.DrawLine(p1, x0, y0, x0, hh * scale + y0);
-            grBack.DrawLine(p1, x0, hh * scale + y0, 2 * w1 * scale + x0, hh * scale + y0);
-
-            grBack.DrawLine(p1, w1 * scale + x0, hh * scale + y0, w1 * scale + x0, y0);
-            grBack.DrawLine(p1, w1 * scale + x0, y0, x0, y0);
-
-            StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip);
-
-            string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
-            s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
-// ----------------------------------------------------------------------------------------------------------------
-            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                                              // Массив для расшифровки
-                                                
-            Int32 A = Diag * Math.Max(n1, n2);
-            Int32 pf;
-            for (int b2 = 0; b2 < n2; b2++)                                                                    // Диагонали   
-            {
-                pf = M2 * N2 * b2 % (n1 * n2);
-                if (pf < A) { grBack.DrawLine(p2, x0 + b2 * scale, y0, x0 + b2 * scale + n1 * scale, hh * scale + y0);
-                              pf = pf / n1; 
-                              glbl_faze[n1 + b2] = pf;
-                              s = pf.ToString();    grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + b2 * scale, y0 - 4 * scale, drawFormat);
-                            }
-            }
-            for (int b1 = 0; b1 < n1; b1++)
-            {
-                pf = M1 * N1 * b1 % (n1 * n2);
-                if (pf < A) { grBack.DrawLine(p3, x0, y0 + b1 * scale, x0 + n1 * scale - b1 * scale, hh * scale + y0);
-                              pf = pf / n1;
-                              glbl_faze[n1 - b1] = pf;
-                              s = pf.ToString();    grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 - 10 * scale, y0 + b1 * scale, drawFormat);
-                            }
-            }
-
-            for (int i = 0; i < n1 + n2; i++)
-            {
-                int bb = glbl_faze[i];
-                if (bb >= 0) { s = bb.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + i * scale, y0 + n1*scale + 8 * scale, drawFormat); }
-            }
-
-            int mxx = 0, mxx_x = 0, mnx = 0, mnx_x = 0, cntr = 0;
-            for (;;)
-            {
-                for (int i = mnx_x; i < n1 + n2; i++)
-                {
-                    cntr = i;
-                    int bb = glbl_faze[i]; if (bb >= 0 && bb != mnx) { mxx = bb; mxx_x = i; break; }
-                }
-                if (cntr >= n1 + n2 - 1) break;                    
-               int m = (mxx_x - mnx_x) /2;
-               for (int j = mnx_x; j < mnx_x + m; j++) glbl_faze1[j] = mnx;
-               for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
-               mnx_x = mxx_x; 
-               mnx = mxx; 
-               
-            }
-
-
-            mnx = glbl_faze1[0];
-            for (int i = 0; i < n1 + n2; i++)
-            {
-                int bb = glbl_faze1[i];
-                if (bb != mnx) 
-                   { mnx = bb;
-                     grBack.DrawLine(p4, x0 + i * scale, y0 + hh * scale, x0, y0 + hh * scale - i * scale);
-                   }
-            }
-           
-//--------------------------------------------------------------------------------------------------------------- 
-            int r, g, b;
-            int w = img[0].Width;
-            int h = img[0].Height;
-            Bitmap bmp1 = new Bitmap(img[0], w, h);
-            Bitmap bmp2 = new Bitmap(img[1], w, h);
-            Bitmap bmp3 = new Bitmap(img[2], w, h);
-
-            int[,] bmp_r = new int[n2+3, n1+3];
-            int[,] bmp_line = new int[n2 + 3, n1 + 3];
-            int[] ims1 = new int[h];
-            int[] ims2 = new int[h];
-            int[] ims3 = new int[h];      
-
-            Color c, c1;
-
-            int xx0 = 0,  yy0 = 0;
-            int xx1 = w,  yy1 = h;
-
-            if ((x0_end < x1_end) && (y0_end < y1_end)) { xx0 = x0_end; xx1 = x1_end; yy0 = y0_end; yy1 = y1_end; }
-
-            Int32 count = 0;
-            if (rb == 1)                                             // ------------- По фигуре из 3 квадрата
-                for (int i = xx0; i < xx1; i++)
-                {
-                    
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                            c1 = bmp3.GetPixel(i, j);
-                            if (c1.R == 0) ims3[j] = 0; 
-                            else
-                            {
-                                ims3[j] = 1;
-                                c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
-                                c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1) 
-                            }
-                       
-                    }
-                    
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                        if (ims3[j] != 0) { r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++; }
-                    }
-                }
-            if (rb == 0)                                               // --------- По квадратной области
-                for (int i = xx0; i < xx1; i++)
-                {
-                   
-                    for (int j = yy0; j < yy1; j++)
-                    {                                          
-                            c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
-                            c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1)   
-                    }
-
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                         r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++; 
-                    }
-                }
-
-          
-
-            Int32 ib2=0, ib1=0, max_count = 0;
-             for (ib2 = 0; ib2 < n2-1; ib2++)
-              {
-                 for (ib1 = 0; ib1 < n1 - 1; ib1++) { b = bmp_r[ib2, ib1]; if (b > max_count) max_count = b; }
-              }
-            
-            int mn1 = pr_obr;
-                      
-            int mn = (max_count)/12;
-            int mn2 = mn1 + mn;
-            int mn3 = mn2 + mn;
-             MessageBox.Show(" count =  " + count.ToString() + " max =  " + max_count.ToString());
-
-
-            for (ib2 = 0; ib2 < n2-1; ib2++)
-            {
-              for ( ib1 = 0; ib1 < n1-1; ib1++)
-                    { b = bmp_r[ib2, ib1]; 
-                      if (b > 0) 
-                            {                               
-                                if (b > mn3 )            grBack.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0)), x0 + ib2 * scale , y0 + ib1 * scale, 1, 1);
-                                if (b > mn2 && b <=mn3)  grBack.DrawRectangle(new Pen(Color.FromArgb(0, 0, 255)), x0 + ib2 * scale , y0 + ib1 * scale, 1, 1);
-                                if (b > mn1 && b <=mn2)  grBack.DrawRectangle(new Pen(Color.FromArgb(32, 32, 32)), x0 + ib2 * scale , y0 + ib1 * scale, 1, 1);                                
-                           }
-                    }
-              }
-         
-            pc1.Refresh();
-            f_sin.Show();
-        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
         //           Построение таблицы
         //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_China2(Image[] img, PictureBox pictureBox01, int Diag, Point p, int x0_end, int x1_end, int y0_end, int y1_end, int rb, int pr_obr, PictureBox firstImage, PictureBox secondImage)
+        public static void Graph_China2(Image[] img, int Diag, bool rb, int pr_obr)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
@@ -383,11 +74,10 @@ namespace rab1
             f_sin = new Form();
             f_sin.Size = new Size(max_x + 8, max_y + 8);
             f_sin.StartPosition = FormStartPosition.Manual;
-            f_sin.Location = p;
 
             pc1 = new PictureBox();
             pc1.BackColor = Color.White;
-            pc1.Location = new System.Drawing.Point(0, 8);
+            pc1.Location = new Point(0, 8);
             pc1.Size = new Size(max_x, max_y);
             pc1.SizeMode = PictureBoxSizeMode.StretchImage;
             pc1.BorderStyle = BorderStyle.Fixed3D;
@@ -404,10 +94,7 @@ namespace rab1
             Pen p2 = new Pen(Color.Red, 1);
             Pen p3 = new Pen(Color.Blue, 1);
             Pen p4 = new Pen(Color.Gold, 1);
-            Pen p5 = new Pen(Color.Yellow, 1);
-            Font font = new Font("Arial", 16, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            //Font font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular);
-            //Font font = new Font("Verdana", 14, FontStyle.Regular);
+            Font font = new Font("Arial", 16, FontStyle.Regular, GraphicsUnit.Pixel);
 
             grBack.DrawLine(p1, x0, y0, x0, hh * scale + y0);
             grBack.DrawLine(p1, x0, hh * scale + y0, 2 * w1 * scale + x0, hh * scale + y0);
@@ -415,11 +102,7 @@ namespace rab1
             grBack.DrawLine(p1, w1 * scale + x0, hh * scale + y0, w1 * scale + x0, y0);
             grBack.DrawLine(p1, w1 * scale + x0, y0, x0, y0);
 
-
-
             StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip);
-            //drawFormat.LineAlignment = StringAlignment.Near ;  //   .Center;
-            // drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
 
             string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
             s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
@@ -465,8 +148,7 @@ namespace rab1
                     cntr = i;
                     int bb = glbl_faze[i]; if (bb >= 0 && bb != mnx) { mxx = bb; mxx_x = i; break; }
                 }
-                if (cntr >= n1 + n2 - 1) break;
-                //MessageBox.Show(" mnx =  " + mnx.ToString() + " mxx =  " + mxx.ToString());                    
+                if (cntr >= n1 + n2 - 1) break;                   
                 int m = (mxx_x - mnx_x) / 2;
                 for (int j = mnx_x; j < mnx_x + m; j++) glbl_faze1[j] = mnx;
                 for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
@@ -484,7 +166,6 @@ namespace rab1
                 {
                     mnx = bb;
                     grBack.DrawLine(p4, x0 + i * scale, y0 + hh * scale, x0, y0 + hh * scale - i * scale);
-                    //grBack.DrawLine(p4, x0 + i * scale, y0 + hh * scale, x0 + i * scale, y0 ); 
                 }
             }
 
@@ -506,10 +187,8 @@ namespace rab1
             int xx0 = 0, yy0 = 0;
             int xx1 = w, yy1 = h;
 
-            if ((x0_end < x1_end) && (y0_end < y1_end)) { xx0 = x0_end; xx1 = x1_end; yy0 = y0_end; yy1 = y1_end; }
-
             Int32 count = 0;
-            if (rb == 1)                                             // ------------- По фигуре из 3 квадрата
+            if (rb == true)                                             // ------------- По фигуре из 3 квадрата
                 for (int i = xx0; i < xx1; i++)
                 {
 
@@ -531,7 +210,7 @@ namespace rab1
                         if (ims3[j] != 0) { r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++; }
                     }
                 }
-            if (rb == 0)                                               // --------- По квадратной области
+            if (rb == false)                                               // --------- По квадратной области
                 for (int i = xx0; i < xx1; i++)
                 {
 
@@ -561,7 +240,7 @@ namespace rab1
             int mn = (max_count) / 12;
             int mn2 = mn1 + mn;
             int mn3 = mn2 + mn;
-            MessageBox.Show(" count =  " + count.ToString() + " max =  " + max_count.ToString());
+            MessageBox.Show(" count =  " + count + " max =  " + max_count);
 
 
             for (ib2 = 0; ib2 < n2 - 1; ib2++)
@@ -571,10 +250,9 @@ namespace rab1
                     b = bmp_r[ib2, ib1];
                     if (b > 0)
                     {
-                        if (b > mn3) grBack.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);
-                        if (b > mn2 && b <= mn3) grBack.DrawRectangle(new Pen(Color.FromArgb(0, 0, 255)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);
-                        if (b > mn1 && b <= mn2) grBack.DrawRectangle(new Pen(Color.FromArgb(32, 32, 32)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);
-                        //if (b >  mn1)           grBack.DrawRectangle(new Pen(Color.FromArgb(32, 32, 32)), x0 + ib2 * scale /*+ 2 * scale*/, y0 + ib1 * scale, 1, 1);                                
+                        if (b > mn3) grBack.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);
+                        if (b > mn2 && b <= mn3) grBack.DrawRectangle(new Pen(Color.FromArgb(0, 0, 255)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);
+                        if (b > mn1 && b <= mn2) grBack.DrawRectangle(new Pen(Color.FromArgb(32, 32, 32)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);                        
                     }
                 }
             }
@@ -1081,30 +759,16 @@ namespace rab1
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_frml(Image[] img, PictureBox pictureBox01, string sN1, string sN2, int Diag, Point p, int x0_end, int x1_end, int y0_end, int y1_end,int rb, int pr_obr)
+        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr)
         {
             China(sN1, sN2);           // Вычисление формулы
-            Graph_China(img, pictureBox01, Diag, p,  x0_end, x1_end, y0_end, y1_end, rb, pr_obr);                          // Построение таблицы
+            Graph_China2(img, Diag, rb, pr_obr);                          // Построение таблицы
         }
-        
-        
-        
-        
-        public static void pi2_frml2(Image[] img, PictureBox pictureBox01, string sN1, string sN2, int Diag, Point p, int x0_end, int x1_end, int y0_end, int y1_end, int rb, int pr_obr, PictureBox firstImage, PictureBox secondImage)
-        {
-            China(sN1, sN2);           // Вычисление формулы
-            Graph_China2(img, pictureBox01, Diag, p, x0_end, x1_end, y0_end, y1_end, rb, pr_obr, firstImage, secondImage);                          // Построение таблицы
-        }
-        public static void pi2_prmtr(Image[] img, string sN1, string sN2, int Diag, Point p)                                             // Идеальная таблица с диагоналями
-        {
-            China(sN1, sN2);              // Вычисление формулы          
-            Graph_Prmtr(img, Diag, p);    // Таблица
-              
-        }
+
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 
-        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01, int xx0, int xx1, int yy0, int yy1, string sN1, string sN2, int Diag) // Расшифровка
+        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01, int xx0, int xx1, int yy0, int yy1, int sN1, int sN2, int Diag) // Расшифровка
         {
             China(sN1, sN2);                                           // Вычисление формулы 
             int w = img[0].Width;

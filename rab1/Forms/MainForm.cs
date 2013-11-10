@@ -15,32 +15,11 @@ namespace rab1.Forms
     {
         Image[] img = new Image[11];
         double[,] Float_Image1 = new double[512, 512];
-        double[,] Float_Image2 = new double[512, 512];
-
-        Double Gamma = 1.0;                      // Гамма коррекция
-
-        TextBox tb1, tb2, tb3, tb4;   
+        double[,] Float_Image2 = new double[512, 512];  
         
-        double N_sin  = 167;                          // число синусоид 1
-        double N2_sin = 241;                          // число синусоид 2
-        int NDiag = 9;
         double N_fz = 0, N_fz2 = 90, N_fz3 = 180, N_fz4 = 270;   // начальная фаза в градусах
-
-        Form newForm;
-        Point p;
-        
-        CheckBox rb3;
-
-
-        int x0_end = 0, y0_end = 0;
-        int x1_end = 0, y1_end = 0;
-
-       
-      
-        string string_dialog = "D:\\Студенты\\Эксперимент\\Photo";       
+    
         int regImage = 0;                            // Номер изображения (0-7)
-
-        int pr_obr = 10;
 
         int cursorMode = 0;
         Point downPoint;
@@ -241,13 +220,11 @@ namespace rab1.Forms
         private void ZGR_File(int i)
         {
             OpenFileDialog dialog1 = new OpenFileDialog();
-            dialog1.InitialDirectory = string_dialog;
             if (dialog1.ShowDialog() == DialogResult.OK)
             {
                // try
                 {                    
                     dialog1.InitialDirectory = dialog1.FileName;
-                    string_dialog = dialog1.FileName;
 
                     img[i] = mainPictureBox.Image;               
                     switch (i)
@@ -317,15 +294,13 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void ZGRToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog1 = new OpenFileDialog();
-            dialog1.InitialDirectory = string_dialog;
+            OpenFileDialog dialog1 = new OpenFileDialog();
 
             if (dialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {                    
                     dialog1.InitialDirectory = dialog1.FileName;
-                    string_dialog = dialog1.FileName;
                     
                     mainPictureBox.Image = Image.FromFile(dialog1.FileName);
 
@@ -352,19 +327,16 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Save8ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog1 = new OpenFileDialog();
-            dialog1.InitialDirectory = string_dialog;
+            OpenFileDialog dialog1 = new OpenFileDialog();
 
             if (dialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    dialog1.InitialDirectory = dialog1.FileName;
-                    string_dialog = dialog1.FileName;
-                    string str = string_dialog;
                     for (int i = 0; i < 8; i++)
                     {
-                        str = SaveString(string_dialog, i + 1);
+                        String str = SaveString(dialog1.FileName, i + 1);
+
                         switch (i)
                         {
                             case 0: pictureBox1.Image = Image.FromFile(str); pictureBox1.Invalidate(); img[0] = pictureBox1.Image; break;
@@ -431,7 +403,6 @@ namespace rab1.Forms
         private void SAVEToolStripMenuItem_Click(object sender, EventArgs e)
         { 
             SaveFileDialog dialog1 = new SaveFileDialog();
-            dialog1.InitialDirectory = string_dialog;
             dialog1.Filter = "Bitmap(*.bmp)|*.bmp";
 
             if (dialog1.ShowDialog() == DialogResult.OK)
@@ -440,8 +411,6 @@ namespace rab1.Forms
                 {
                     mainPictureBox.Image.Save(dialog1.FileName);
                     dialog1.InitialDirectory = dialog1.FileName;
-                    string_dialog = dialog1.FileName;
-                                               
                 }
                 catch (Exception ex)
                 {
@@ -451,8 +420,7 @@ namespace rab1.Forms
         }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void сохранить8КадровToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog1 = new SaveFileDialog();
-            dialog1.InitialDirectory = string_dialog;
+            SaveFileDialog dialog1 = new SaveFileDialog();
             dialog1.Filter = "Bitmap(*.bmp)|*.bmp";
 
             if (dialog1.ShowDialog() == DialogResult.OK)
@@ -462,7 +430,6 @@ namespace rab1.Forms
                     Bitmap newBitmap = new Bitmap(pictureBox1.Image);
                     newBitmap.Save(dialog1.FileName + "1.bmp", ImageFormat.Bmp);
                     dialog1.InitialDirectory = dialog1.FileName;
-                    string_dialog = dialog1.FileName;
 
                     newBitmap = new Bitmap(pictureBox2.Image);
                     newBitmap.Save(dialog1.FileName + "2.bmp", ImageFormat.Bmp);
@@ -484,116 +451,12 @@ namespace rab1.Forms
 
                     newBitmap = new Bitmap(pictureBox8.Image);
                     newBitmap.Save(dialog1.FileName + "8.bmp", ImageFormat.Bmp);
-
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
                 }
                 catch (Exception ex) 
                 { 
                     MessageBox.Show(" Ошибка при записи файла " + ex.Message);
                 }
             }      
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void DIALOG_CHINA(EventHandler functionPointer)
-        {
-            int max_x = 220, max_y = 260;
-            newForm = new Form();
-            newForm.Size = new Size(max_x, max_y);
-            newForm.StartPosition = FormStartPosition.Manual;
-            p = this.Location;                // Глобальный
-            p.Offset(100, 105);
-            newForm.Location = p;
-
-            Label label1 = new Label();
-            label1.Location = new Point(4, 10);
-            label1.Size = new Size(120, 20);
-            label1.Text = "Число синусоид 1:";
-
-            tb1 = new TextBox
-                {
-                    Location = new Point(126, 10),
-                    Size = new Size(80, 8),
-                    Text = N_sin.ToString()
-                };
-
-            // Фазовый сдвиг
-            Label label2 = new Label();
-            label2.Location = new Point(4, 50);
-            label2.Size = new Size(120, 20);
-            label2.Text = "Число синусоид 2:";
-
-            tb2 = new TextBox
-                {
-                    Location = new Point(126, 50),
-                    Size = new Size(80, 8),
-                    Text = N2_sin.ToString()
-                };
-
-            Label label3 = new Label();
-            label3.Location = new Point(4, 90);
-            label3.Size = new Size(120, 20);
-            label3.Text = "Число периодов:";
-
-            tb3 = new TextBox();
-            tb3.Location = new Point(126, 90);
-            tb3.Size = new Size(80, 8);
-            tb3.Text = NDiag.ToString();
-
-            Label label4 = new Label();
-            label4.Location = new Point(4, 130);
-            label4.Size = new Size(120, 20);
-            label4.Text = "Уровень обрезания (N точек) ";
-
-            tb4 = new TextBox();
-            tb4.Location = new Point(126, 130);
-            tb4.Size = new Size(80, 8);
-            tb4.Text = pr_obr.ToString();
-
-            rb3 = new CheckBox();                                                  // ----------   CheckBox rb3;
-            rb3.Location = new Point(22, 160);
-            rb3.Size = new Size(120, 18);
-            rb3.Text = "По форме 11 кадра";
-            rb3.Checked = true;
-
-            Button b1 = new Button();
-            b1.Location = new Point(8, 190);
-            b1.Text = "ok";
-            b1.Size = new Size(160, 30);
-            b1.Click += functionPointer;
-
-
-            newForm.Controls.Add(label1);
-            newForm.Controls.Add(label2);
-            newForm.Controls.Add(label3);
-            newForm.Controls.Add(label4);
-            newForm.Controls.Add(tb1);
-            newForm.Controls.Add(tb2);
-            newForm.Controls.Add(tb3);
-            newForm.Controls.Add(tb4);
-            newForm.Controls.Add(b1);
-            newForm.Controls.Add(rb3);
-
-            newForm.Show();
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void pi2_Click(object sender, EventArgs e)
-        {
-            img[0] = pictureBox1.Image;
-            img[1] = pictureBox2.Image;
-            img[2] = pictureBox3.Image;
-            img[3] = pictureBox4.Image;
-
-            int rb_int = 0;
-            string strN1 = " ", strN2 = " ";
-            strN1 = tb1.Text;
-            strN2 = tb2.Text;
-            if (tb3.Text != "") NDiag = Convert.ToInt32(tb3.Text);
-            N_sin = Convert.ToDouble(tb1.Text);
-            N2_sin = Convert.ToDouble(tb2.Text);
-            pr_obr = Convert.ToInt32(tb4.Text);
-            if (rb3.Checked) rb_int = 1; else rb_int = 0;                                                // По форме 3 кадра
-            Pi_Class1.pi2_frml(img, mainPictureBox, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void aTAN123ToolStripMenuItem_Click_1(object sender, EventArgs e)         // -------- ATAN2 1,2,3,4
@@ -610,14 +473,14 @@ namespace rab1.Forms
             img[2] = pictureBox3.Image;
             img[3] = pictureBox4.Image;
 
-            FazaClass.ATAN_123(img, pictureBox9, n, fz, Gamma);
+            FazaClass.ATAN_123(img, pictureBox9, n, fz, 1);
 
             img[0] = pictureBox5.Image;
             img[1] = pictureBox6.Image;
             img[2] = pictureBox7.Image;
             img[3] = pictureBox8.Image;
 
-            FazaClass.ATAN_123(img, pictureBox10, n, fz, Gamma);    
+            FazaClass.ATAN_123(img, pictureBox10, n, fz, 1);    
         }
 //--------------------------------------------------------------------------------------------------------------  ATAN2 double
         private void aTAN2123412567813ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -634,14 +497,14 @@ namespace rab1.Forms
             img[2] = pictureBox3.Image;
             img[3] = pictureBox4.Image;
 
-            FazaClass.ATAN_1234(ref Float_Image1, img, pictureBox12, n, fz, Gamma);
+            FazaClass.ATAN_1234(ref Float_Image1, img, pictureBox12, n, fz, 1);
 
             img[0] = pictureBox5.Image;
             img[1] = pictureBox6.Image;
             img[2] = pictureBox7.Image;
             img[3] = pictureBox8.Image;
 
-            FazaClass.ATAN_1234(ref Float_Image2, img, pictureBox13, n, fz, Gamma);  
+            FazaClass.ATAN_1234(ref Float_Image2, img, pictureBox13, n, fz, 1);  
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void aTANRGBToolStripMenuItem_Click_1(object sender, EventArgs e)        // -------- ATAN2 RGB
@@ -681,7 +544,7 @@ namespace rab1.Forms
 
             ThreadPool.QueueUserWorkItem((obj) =>
             {
-                FazaClass.Graph_ATAN(img, x0_end, x1_end, y0_end, y1_end, n, fz, Gamma);
+                FazaClass.Graph_ATAN(img, n, fz, 1);
             });
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -733,7 +596,7 @@ namespace rab1.Forms
 
             ThreadPool.QueueUserWorkItem((obj) =>
             {
-                FazaClass.Graph_ATAN(img, x0_end, x1_end, y0_end, y1_end, n, fz, Gamma);
+                FazaClass.Graph_ATAN(img, n, fz, 1);
             });   
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -768,7 +631,7 @@ namespace rab1.Forms
 
                 ThreadPool.QueueUserWorkItem((obj) =>
                 {
-                    FazaClass.Graph_ATAN(img, x0_end, x1_end, y0_end, y1_end, n, fz, Gamma);
+                    FazaClass.Graph_ATAN(img, n, fz, 1);
                 }); 
             }
             else if (batchProcessingFlag == 1)
@@ -815,7 +678,7 @@ namespace rab1.Forms
             ShooterSingleton.getImage();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void Cadr8ToolStripMenuItem_Click(object sender, EventArgs e)  
+        private void getSeriesOfPhotos(object sender, EventArgs e)  
         {
             BackgroundImagesGeneratorForm newForm = new BackgroundImagesGeneratorForm();
             newForm.oneImageOfSeries += oneImageCaptured;
@@ -960,14 +823,13 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button1_Click(object sender, EventArgs e)
         {
-            Color pixelcolor;
             Color fillColor = Color.Black;
 
             for(int i = 0; i < mainPictureBox.Image.Size.Width; i++)
             {
                 for (int j = 0; j < mainPictureBox.Image.Size.Height; j++)
                 {
-                    pixelcolor = ((Bitmap)(mainPictureBox.Image)).GetPixel(i, j);
+                    Color pixelcolor = ((Bitmap)(mainPictureBox.Image)).GetPixel(i, j);
                     if (pixelcolor.ToArgb() == fillColor.ToArgb())
                     {
                         ((Bitmap)(pictureBox1.Image)).SetPixel(i, j, fillColor);
@@ -1087,32 +949,16 @@ namespace rab1.Forms
             imageHeight.Text = mainPictureBox.Height.ToString();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void таблицаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.DIALOG_CHINA(this.pi2_Click);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void таблица2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.DIALOG_CHINA(this.pi2_Click2);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void pi2_Click2(object sender, EventArgs e)
-        {
-            img[0] = pictureBox9.Image;                // 1 фаза
-            img[1] = pictureBox10.Image;               // 2 фаза
-            img[2] = pictureBox11.Image;               // 3 ограничение по контуру
+            Image[] imagesForTable = new Image[3];
 
-            int rb_int = 0;
-            string strN1 = " ", strN2 = " ";
-            strN1 = tb1.Text;
-            strN2 = tb2.Text;
-            if (tb3.Text != "") NDiag = Convert.ToInt32(tb3.Text);
-            N_sin  = Convert.ToDouble(tb1.Text);
-            N2_sin = Convert.ToDouble(tb2.Text);
-            pr_obr = Convert.ToInt32(tb4.Text);
-            if (rb3.Checked) rb_int = 1; else rb_int = 0;                                                // По форме 3 кадра
-            Pi_Class1.pi2_frml2(img, mainPictureBox, strN1, strN2, NDiag, p, x0_end, x1_end, y0_end, y1_end, rb_int, pr_obr, pictureBox9, pictureBox10);
+            imagesForTable[0] = pictureBox9.Image;     // 1 фаза
+            imagesForTable[1] = pictureBox10.Image;    // 2 фаза
+            imagesForTable[2] = pictureBox11.Image;    // 3 ограничение по контуру
+
+            TableGenerateForm tableGenerateForm = new TableGenerateForm(imagesForTable);
+            tableGenerateForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button4_Click_1(object sender, EventArgs e)

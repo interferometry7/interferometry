@@ -67,12 +67,11 @@
             this.aTANRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN2123GraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN2123456ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.таблицаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.таблица2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PRMTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN2123412567813ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.определениеПлоскостиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Фильтр = new System.Windows.Forms.ToolStripMenuItem();
             this.сглаживаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.медианныйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,7 +116,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
-            this.определениеПлоскостиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -506,12 +504,10 @@
             this.aTANRGBToolStripMenuItem,
             this.aTAN2123GraphToolStripMenuItem,
             this.aTAN2123456ToolStripMenuItem,
-            this.таблицаToolStripMenuItem,
-            this.таблица2ToolStripMenuItem,
             this.PRMTRToolStripMenuItem,
             this.aTAN2123412567813ToolStripMenuItem});
             this.aTANToolStripMenuItem.Name = "aTANToolStripMenuItem";
-            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.aTANToolStripMenuItem.Text = "ATAN";
             // 
             // aTAN123ToolStripMenuItem
@@ -542,20 +538,6 @@
             this.aTAN2123456ToolStripMenuItem.Text = "ATAN2 1234 5678";
             this.aTAN2123456ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123456ToolStripMenuItem_Click);
             // 
-            // таблицаToolStripMenuItem
-            // 
-            this.таблицаToolStripMenuItem.Name = "таблицаToolStripMenuItem";
-            this.таблицаToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.таблицаToolStripMenuItem.Text = "Таблица";
-            this.таблицаToolStripMenuItem.Click += new System.EventHandler(this.таблицаToolStripMenuItem_Click);
-            // 
-            // таблица2ToolStripMenuItem
-            // 
-            this.таблица2ToolStripMenuItem.Name = "таблица2ToolStripMenuItem";
-            this.таблица2ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.таблица2ToolStripMenuItem.Text = "Таблица 2";
-            this.таблица2ToolStripMenuItem.Click += new System.EventHandler(this.таблица2ToolStripMenuItem_Click);
-            // 
             // PRMTRToolStripMenuItem
             // 
             this.PRMTRToolStripMenuItem.Name = "PRMTRToolStripMenuItem";
@@ -584,6 +566,13 @@
             this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 22);
             this.toolStripMenuItem2.Text = "Таблица остатков";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.таблица2ToolStripMenuItem_Click);
+            // 
+            // определениеПлоскостиToolStripMenuItem
+            // 
+            this.определениеПлоскостиToolStripMenuItem.Name = "определениеПлоскостиToolStripMenuItem";
+            this.определениеПлоскостиToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.определениеПлоскостиToolStripMenuItem.Text = "Определение плоскости";
+            this.определениеПлоскостиToolStripMenuItem.Click += new System.EventHandler(this.определениеПлоскостиToolStripMenuItem_Click);
             // 
             // Фильтр
             // 
@@ -645,7 +634,7 @@
             this.Cadr8ToolStripMenuItem.Name = "Cadr8ToolStripMenuItem";
             this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.Cadr8ToolStripMenuItem.Text = "2 серии Sin";
-            this.Cadr8ToolStripMenuItem.Click += new System.EventHandler(this.Cadr8ToolStripMenuItem_Click);
+            this.Cadr8ToolStripMenuItem.Click += new System.EventHandler(this.getSeriesOfPhotos);
             // 
             // pictureBox8
             // 
@@ -1074,13 +1063,6 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // определениеПлоскостиToolStripMenuItem
-            // 
-            this.определениеПлоскостиToolStripMenuItem.Name = "определениеПлоскостиToolStripMenuItem";
-            this.определениеПлоскостиToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.определениеПлоскостиToolStripMenuItem.Text = "Определение плоскости";
-            this.определениеПлоскостиToolStripMenuItem.Click += new System.EventHandler(this.определениеПлоскостиToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1115,7 +1097,7 @@
             this.Controls.Add(this.pictureBox1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Изменил размер окошек";
+            this.Text = "Главное окно";
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.panel1.ResumeLayout(false);
@@ -1208,8 +1190,6 @@
         private System.Windows.Forms.RadioButton radioButton12;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ToolStripMenuItem таблицаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem таблица2ToolStripMenuItem;
         private CustomPictureBox pictureBox9;
         private CustomPictureBox pictureBox10;
         private System.Windows.Forms.RadioButton radioButton10;
