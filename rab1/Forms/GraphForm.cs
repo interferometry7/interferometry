@@ -60,7 +60,7 @@ namespace rab1
         
         }
         private void draw_chart(int w1, int h1, int[] buf, int[] bufy)
-        {
+         {
             hc.Series.Clear();
             vc.Series.Clear();
             Series ser = new Series();

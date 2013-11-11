@@ -102,6 +102,10 @@ namespace rab1
             Bitmap bmp5 = new Bitmap(w1, h1);
 
             BitmapData data5 = ImageProcessor.getBitmapData(bmp5);
+
+            int all = w1;
+            int done = 0;
+            PopupProgressBar.show();
           
             for (int i = 0; i < w1; i++)
             {
@@ -136,6 +140,7 @@ namespace rab1
                     //bmp5.SetPixel(i, j, Color.FromArgb(r, r, r));
                     ImageProcessor.setPixel(data5, i, j, Color.FromArgb(r, r, r)); 
                 }
+                done++; PopupProgressBar.setProgress(done, all);
             }
 
             ((Bitmap)img[0]).UnlockBits(data1);
@@ -146,6 +151,7 @@ namespace rab1
 
             //pictureBox01.Size = bmp5.Size;
             pictureBox01.Image = bmp5;
+            PopupProgressBar.close();
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------
         public static void ATAN_1234(ref double [,] Float_Image, Image[] img, PictureBox pictureBox01, int n, double[] fzz, double Gamma)
