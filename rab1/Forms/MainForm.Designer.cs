@@ -39,7 +39,6 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.mainPictureBox = new rab1.CustomPictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -80,14 +79,6 @@
             this.canon500DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сделатьСнимокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Cadr8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox8 = new rab1.CustomPictureBox();
-            this.pictureBox7 = new rab1.CustomPictureBox();
-            this.pictureBox6 = new rab1.CustomPictureBox();
-            this.pictureBox5 = new rab1.CustomPictureBox();
-            this.pictureBox4 = new rab1.CustomPictureBox();
-            this.pictureBox3 = new rab1.CustomPictureBox();
-            this.pictureBox2 = new rab1.CustomPictureBox();
-            this.pictureBox1 = new rab1.CustomPictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -99,15 +90,10 @@
             this.radioButton13 = new System.Windows.Forms.RadioButton();
             this.radioButton12 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox9 = new rab1.CustomPictureBox();
-            this.pictureBox10 = new rab1.CustomPictureBox();
             this.imageWidth = new System.Windows.Forms.Label();
             this.imageHeight = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.pictureBox11 = new rab1.CustomPictureBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.pictureBox12 = new rab1.CustomPictureBox();
-            this.pictureBox13 = new rab1.CustomPictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -116,10 +102,32 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
+            this.pictureBox13 = new rab1.CustomPictureBox();
+            this.pictureBox12 = new rab1.CustomPictureBox();
+            this.pictureBox11 = new rab1.CustomPictureBox();
+            this.pictureBox10 = new rab1.CustomPictureBox();
+            this.pictureBox9 = new rab1.CustomPictureBox();
+            this.pictureBox8 = new rab1.CustomPictureBox();
+            this.pictureBox7 = new rab1.CustomPictureBox();
+            this.pictureBox6 = new rab1.CustomPictureBox();
+            this.pictureBox5 = new rab1.CustomPictureBox();
+            this.pictureBox4 = new rab1.CustomPictureBox();
+            this.pictureBox3 = new rab1.CustomPictureBox();
+            this.pictureBox2 = new rab1.CustomPictureBox();
+            this.mainPictureBox = new rab1.CustomPictureBox();
+            this.pictureBox1 = new rab1.CustomPictureBox();
+            this.расшифровка2piToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -127,15 +135,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button3
@@ -257,21 +258,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(822, 622);
             this.panel1.TabIndex = 33;
-            // 
-            // mainPictureBox
-            // 
-            this.mainPictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.mainPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.mainPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mainPictureBox.Location = new System.Drawing.Point(8, 5);
-            this.mainPictureBox.Name = "mainPictureBox";
-            this.mainPictureBox.Size = new System.Drawing.Size(800, 600);
-            this.mainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.mainPictureBox.TabIndex = 5;
-            this.mainPictureBox.TabStop = false;
-            this.mainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
-            this.mainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
-            this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
             // 
             // groupBox1
             // 
@@ -458,34 +444,34 @@
             this.SAVEToolStripMenuItem,
             this.сохранить8КадровToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ZGRToolStripMenuItem
             // 
             this.ZGRToolStripMenuItem.Name = "ZGRToolStripMenuItem";
-            this.ZGRToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.ZGRToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.ZGRToolStripMenuItem.Text = "Загрузить";
             this.ZGRToolStripMenuItem.Click += new System.EventHandler(this.ZGRToolStripMenuItem_Click);
             // 
             // Save8ToolStripMenuItem
             // 
             this.Save8ToolStripMenuItem.Name = "Save8ToolStripMenuItem";
-            this.Save8ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.Save8ToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.Save8ToolStripMenuItem.Text = "Загрузить 8 (1...8)";
             this.Save8ToolStripMenuItem.Click += new System.EventHandler(this.Save8ToolStripMenuItem_Click);
             // 
             // SAVEToolStripMenuItem
             // 
             this.SAVEToolStripMenuItem.Name = "SAVEToolStripMenuItem";
-            this.SAVEToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.SAVEToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.SAVEToolStripMenuItem.Text = "Сохранить";
             this.SAVEToolStripMenuItem.Click += new System.EventHandler(this.SAVEToolStripMenuItem_Click);
             // 
             // сохранить8КадровToolStripMenuItem
             // 
             this.сохранить8КадровToolStripMenuItem.Name = "сохранить8КадровToolStripMenuItem";
-            this.сохранить8КадровToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.сохранить8КадровToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.сохранить8КадровToolStripMenuItem.Text = "Сохранить 8 кадров";
             this.сохранить8КадровToolStripMenuItem.Click += new System.EventHandler(this.сохранить8КадровToolStripMenuItem_Click);
             // 
@@ -494,7 +480,7 @@
             this.фазаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aTANToolStripMenuItem});
             this.фазаToolStripMenuItem.Name = "фазаToolStripMenuItem";
-            this.фазаToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.фазаToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.фазаToolStripMenuItem.Text = "Фаза";
             // 
             // aTANToolStripMenuItem
@@ -507,47 +493,47 @@
             this.PRMTRToolStripMenuItem,
             this.aTAN2123412567813ToolStripMenuItem});
             this.aTANToolStripMenuItem.Name = "aTANToolStripMenuItem";
-            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.aTANToolStripMenuItem.Text = "ATAN";
             // 
             // aTAN123ToolStripMenuItem
             // 
             this.aTAN123ToolStripMenuItem.Name = "aTAN123ToolStripMenuItem";
-            this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.aTAN123ToolStripMenuItem.Text = "ATAN2 1234 ->9 5678->10";
             this.aTAN123ToolStripMenuItem.Click += new System.EventHandler(this.aTAN123ToolStripMenuItem_Click_1);
             // 
             // aTANRGBToolStripMenuItem
             // 
             this.aTANRGBToolStripMenuItem.Name = "aTANRGBToolStripMenuItem";
-            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.aTANRGBToolStripMenuItem.Text = "ATAN2 RGB";
             this.aTANRGBToolStripMenuItem.Click += new System.EventHandler(this.aTANRGBToolStripMenuItem_Click_1);
             // 
             // aTAN2123GraphToolStripMenuItem
             // 
             this.aTAN2123GraphToolStripMenuItem.Name = "aTAN2123GraphToolStripMenuItem";
-            this.aTAN2123GraphToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.aTAN2123GraphToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.aTAN2123GraphToolStripMenuItem.Text = "ATAN2 123 Graph";
             this.aTAN2123GraphToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123GraphToolStripMenuItem_Click);
             // 
             // aTAN2123456ToolStripMenuItem
             // 
             this.aTAN2123456ToolStripMenuItem.Name = "aTAN2123456ToolStripMenuItem";
-            this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.aTAN2123456ToolStripMenuItem.Text = "ATAN2 1234 5678";
             this.aTAN2123456ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123456ToolStripMenuItem_Click);
             // 
             // PRMTRToolStripMenuItem
             // 
             this.PRMTRToolStripMenuItem.Name = "PRMTRToolStripMenuItem";
-            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.PRMTRToolStripMenuItem.Text = "Параметры";
             // 
             // aTAN2123412567813ToolStripMenuItem
             // 
             this.aTAN2123412567813ToolStripMenuItem.Name = "aTAN2123412567813ToolStripMenuItem";
-            this.aTAN2123412567813ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.aTAN2123412567813ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.aTAN2123412567813ToolStripMenuItem.Text = "ATAN2 1234->12 5678->13";
             this.aTAN2123412567813ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123412567813ToolStripMenuItem_Click);
             // 
@@ -555,22 +541,23 @@
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem2,
-            this.определениеПлоскостиToolStripMenuItem});
+            this.определениеПлоскостиToolStripMenuItem,
+            this.расшифровка2piToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(35, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(33, 20);
             this.toolStripMenuItem1.Text = "2pi";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(198, 22);
             this.toolStripMenuItem2.Text = "Таблица остатков";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.таблица2ToolStripMenuItem_Click);
             // 
             // определениеПлоскостиToolStripMenuItem
             // 
             this.определениеПлоскостиToolStripMenuItem.Name = "определениеПлоскостиToolStripMenuItem";
-            this.определениеПлоскостиToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.определениеПлоскостиToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.определениеПлоскостиToolStripMenuItem.Text = "Определение плоскости";
             this.определениеПлоскостиToolStripMenuItem.Click += new System.EventHandler(this.определениеПлоскостиToolStripMenuItem_Click);
             // 
@@ -581,27 +568,27 @@
             this.медианныйToolStripMenuItem,
             this.транспонированиеToolStripMenuItem});
             this.Фильтр.Name = "Фильтр";
-            this.Фильтр.Size = new System.Drawing.Size(60, 20);
+            this.Фильтр.Size = new System.Drawing.Size(57, 20);
             this.Фильтр.Text = "Фильтр";
             // 
             // сглаживаниеToolStripMenuItem
             // 
             this.сглаживаниеToolStripMenuItem.Name = "сглаживаниеToolStripMenuItem";
-            this.сглаживаниеToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.сглаживаниеToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.сглаживаниеToolStripMenuItem.Text = "Сглаживание";
             this.сглаживаниеToolStripMenuItem.Click += new System.EventHandler(this.сглаживаниеToolStripMenuItem_Click);
             // 
             // медианныйToolStripMenuItem
             // 
             this.медианныйToolStripMenuItem.Name = "медианныйToolStripMenuItem";
-            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.медианныйToolStripMenuItem.Text = "Медианный";
             this.медианныйToolStripMenuItem.Click += new System.EventHandler(this.медианныйToolStripMenuItem_Click);
             // 
             // транспонированиеToolStripMenuItem
             // 
             this.транспонированиеToolStripMenuItem.Name = "транспонированиеToolStripMenuItem";
-            this.транспонированиеToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.транспонированиеToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.транспонированиеToolStripMenuItem.Text = "Транспонирование";
             this.транспонированиеToolStripMenuItem.Click += new System.EventHandler(this.транспонированиеToolStripMenuItem_Click);
             // 
@@ -610,7 +597,7 @@
             this.cameraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.canon500DToolStripMenuItem});
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.cameraToolStripMenuItem.Text = "Камера";
             // 
             // canon500DToolStripMenuItem
@@ -619,134 +606,22 @@
             this.сделатьСнимокToolStripMenuItem,
             this.Cadr8ToolStripMenuItem});
             this.canon500DToolStripMenuItem.Name = "canon500DToolStripMenuItem";
-            this.canon500DToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.canon500DToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.canon500DToolStripMenuItem.Text = "Canon 500D";
             // 
             // сделатьСнимокToolStripMenuItem
             // 
             this.сделатьСнимокToolStripMenuItem.Name = "сделатьСнимокToolStripMenuItem";
-            this.сделатьСнимокToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.сделатьСнимокToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.сделатьСнимокToolStripMenuItem.Text = "Сделать снимок";
             this.сделатьСнимокToolStripMenuItem.Click += new System.EventHandler(this.captureImage);
             // 
             // Cadr8ToolStripMenuItem
             // 
             this.Cadr8ToolStripMenuItem.Name = "Cadr8ToolStripMenuItem";
-            this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.Cadr8ToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.Cadr8ToolStripMenuItem.Text = "2 серии Sin";
             this.Cadr8ToolStripMenuItem.Click += new System.EventHandler(this.getSeriesOfPhotos);
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox8.Location = new System.Drawing.Point(1008, 489);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox8.TabIndex = 46;
-            this.pictureBox8.TabStop = false;
-            this.pictureBox8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox8_MouseClick);
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox7.Location = new System.Drawing.Point(1008, 435);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox7.TabIndex = 45;
-            this.pictureBox7.TabStop = false;
-            this.pictureBox7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox7_MouseClick);
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox6.Location = new System.Drawing.Point(1008, 381);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 5;
-            this.pictureBox6.TabStop = false;
-            this.pictureBox6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox6_MouseClick);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox5.Location = new System.Drawing.Point(1008, 327);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 5;
-            this.pictureBox5.TabStop = false;
-            this.pictureBox5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox5_MouseClick);
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox4.Location = new System.Drawing.Point(1008, 273);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 5;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseClick);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox3.Location = new System.Drawing.Point(1008, 219);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 44;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick_1);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox2.Location = new System.Drawing.Point(1008, 163);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 43;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseClick);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox1.Location = new System.Drawing.Point(1008, 109);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // panel2
             // 
@@ -873,32 +748,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "масштаб";
             // 
-            // pictureBox9
-            // 
-            this.pictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox9.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox9.Location = new System.Drawing.Point(1008, 543);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox9.TabIndex = 50;
-            this.pictureBox9.TabStop = false;
-            this.pictureBox9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox9_MouseClick);
-            // 
-            // pictureBox10
-            // 
-            this.pictureBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox10.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox10.Location = new System.Drawing.Point(1008, 597);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox10.TabIndex = 51;
-            this.pictureBox10.TabStop = false;
-            this.pictureBox10.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox10_MouseClick);
-            // 
             // imageWidth
             // 
             this.imageWidth.AutoSize = true;
@@ -927,19 +776,6 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
-            // pictureBox11
-            // 
-            this.pictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox11.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox11.Location = new System.Drawing.Point(1008, 658);
-            this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox11.TabIndex = 55;
-            this.pictureBox11.TabStop = false;
-            this.pictureBox11.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox11_MouseClick);
-            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(752, 56);
@@ -949,34 +785,6 @@
             this.button5.Text = "Вычитание плоскости";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // pictureBox12
-            // 
-            this.pictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox12.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox12.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox12.Location = new System.Drawing.Point(900, 109);
-            this.pictureBox12.Name = "pictureBox12";
-            this.pictureBox12.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox12.TabIndex = 57;
-            this.pictureBox12.TabStop = false;
-            this.pictureBox12.Click += new System.EventHandler(this.pictureBox12_Click);
-            // 
-            // pictureBox13
-            // 
-            this.pictureBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox13.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox13.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox13.Location = new System.Drawing.Point(900, 163);
-            this.pictureBox13.Name = "pictureBox13";
-            this.pictureBox13.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox13.TabIndex = 6;
-            this.pictureBox13.TabStop = false;
-            this.pictureBox13.Click += new System.EventHandler(this.pictureBox13_Click);
             // 
             // groupBox2
             // 
@@ -1063,6 +871,207 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox13.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox13.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox13.Location = new System.Drawing.Point(900, 163);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox13.TabIndex = 6;
+            this.pictureBox13.TabStop = false;
+            this.pictureBox13.Click += new System.EventHandler(this.pictureBox13_Click);
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox12.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox12.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox12.Location = new System.Drawing.Point(900, 109);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox12.TabIndex = 57;
+            this.pictureBox12.TabStop = false;
+            this.pictureBox12.Click += new System.EventHandler(this.pictureBox12_Click);
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox11.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox11.Location = new System.Drawing.Point(1008, 658);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox11.TabIndex = 55;
+            this.pictureBox11.TabStop = false;
+            this.pictureBox11.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox11_MouseClick);
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox10.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox10.Location = new System.Drawing.Point(1008, 597);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox10.TabIndex = 51;
+            this.pictureBox10.TabStop = false;
+            this.pictureBox10.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox10_MouseClick);
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox9.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox9.Location = new System.Drawing.Point(1008, 543);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox9.TabIndex = 50;
+            this.pictureBox9.TabStop = false;
+            this.pictureBox9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox9_MouseClick);
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox8.Location = new System.Drawing.Point(1008, 489);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox8.TabIndex = 46;
+            this.pictureBox8.TabStop = false;
+            this.pictureBox8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox8_MouseClick);
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox7.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox7.Location = new System.Drawing.Point(1008, 435);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox7.TabIndex = 45;
+            this.pictureBox7.TabStop = false;
+            this.pictureBox7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox7_MouseClick);
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox6.Location = new System.Drawing.Point(1008, 381);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 5;
+            this.pictureBox6.TabStop = false;
+            this.pictureBox6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox6_MouseClick);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox5.Location = new System.Drawing.Point(1008, 327);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 5;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox5_MouseClick);
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox4.Location = new System.Drawing.Point(1008, 273);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 5;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseClick);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox3.Location = new System.Drawing.Point(1008, 219);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 44;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick_1);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox2.Location = new System.Drawing.Point(1008, 163);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 43;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseClick);
+            // 
+            // mainPictureBox
+            // 
+            this.mainPictureBox.BackColor = System.Drawing.Color.LightGray;
+            this.mainPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mainPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainPictureBox.Location = new System.Drawing.Point(8, 5);
+            this.mainPictureBox.Name = "mainPictureBox";
+            this.mainPictureBox.Size = new System.Drawing.Size(800, 600);
+            this.mainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.mainPictureBox.TabIndex = 5;
+            this.mainPictureBox.TabStop = false;
+            this.mainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseClick);
+            this.mainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseDown);
+            this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox01_MouseUp);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox1.Location = new System.Drawing.Point(1008, 109);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            // 
+            // расшифровка2piToolStripMenuItem
+            // 
+            this.расшифровка2piToolStripMenuItem.Name = "расшифровка2piToolStripMenuItem";
+            this.расшифровка2piToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.расшифровка2piToolStripMenuItem.Text = "Расшифровка 2pi";
+            this.расшифровка2piToolStripMenuItem.Click += new System.EventHandler(this.расшифровка2piToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1102,11 +1111,21 @@
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
@@ -1114,18 +1133,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1222,6 +1231,7 @@
         private System.Windows.Forms.ToolStripMenuItem aTAN2123412567813ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem транспонированиеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem определениеПлоскостиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem расшифровка2piToolStripMenuItem;
        
       
     }

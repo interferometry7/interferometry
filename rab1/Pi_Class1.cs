@@ -105,10 +105,11 @@ namespace rab1
             StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip);
 
             string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
-            s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
+                   s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
             // ----------------------------------------------------------------------------------------------------------------
-            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                                              // Массив для расшифровки
+            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                      // Одномерный массив для расшифровки
 
+// Отрисовка диагоналей
             Int32 A = Diag * Math.Max(n1, n2);
             Int32 pf;
             for (int b2 = 0; b2 < n2; b2++)                                                                    // Диагонали   
@@ -133,13 +134,13 @@ namespace rab1
                     s = pf.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 - 10 * scale, y0 + b1 * scale, drawFormat);
                 }
             }
-
+// Нумерация внизу таблицы
             for (int i = 0; i < n1 + n2; i++)
             {
                 int bb = glbl_faze[i];
                 if (bb >= 0) { s = bb.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + i * scale, y0 + n1 * scale + 8 * scale, drawFormat); }
             }
-
+//  Заполнение glbl_faze1[] - допустимые границы диапазона
             int mxx = 0, mxx_x = 0, mnx = 0, mnx_x = 0, cntr = 0;
             for (; ; )
             {
@@ -154,10 +155,8 @@ namespace rab1
                 for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
                 mnx_x = mxx_x;
                 mnx = mxx;
-
             }
-
-
+// Отрисовка границ допустимого диапазона(Gold)
             mnx = glbl_faze1[0];
             for (int i = 0; i < n1 + n2; i++)
             {
@@ -187,6 +186,9 @@ namespace rab1
 
             int xx0 = 0, yy0 = 0;
             int xx1 = w, yy1 = h;
+            double fn1 = (double)(n1 - 1) / 255;
+            double fn2 = (double)(n2 - 1) / 255;
+          
 
             int all = xx1-xx0;
             int done = 0;
@@ -201,19 +203,23 @@ namespace rab1
                     {
                         c1 = bmp3.GetPixel(i, j);
                         if (c1.R == 0) ims3[j] = 0;
-                        else
+                        else                                        // ims1[j] = (int)((double)(r * (n1 - 1)) / 255); 
                         {
                             ims3[j] = 1;
-                            c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
-                            c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1) 
+                            c = bmp1.GetPixel(i, j); r = c.R;       ims1[j] = (int)((double)(r) * fn1);  //(b2)
+                            c = bmp2.GetPixel(i, j); r = c.R;       ims2[j] = (int)((double)(r) * fn2);  //(b1) 
                         }
 
                     }
 
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                        if (ims3[j] != 0) { r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++; }
-                    }
+                    for (int j = yy0; j < yy1; j++)   
+                      { 
+                           if (ims3[j] != 0) 
+                               { r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; 
+                                 count++; 
+                               } 
+                    
+                     }
                     done++; PopupProgressBar.setProgress(done, all);
                 }
             if (rb == false)                                               // --------- По квадратной области
@@ -233,42 +239,24 @@ namespace rab1
                 }
 
             PopupProgressBar.close();
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //  Гистограмма (Распределение по значениям)
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             
-           //int mn1 = pr_obr;
-
-            //int mn = (max_count) / 12;
-            //int mn2 = mn1 + mn;
-           // int mn3 = mn2 + mn;
-            Int32 ib2 = 0, ib1 = 0, max_count = 0;
-            for (ib2 = 0; ib2 < n2 - 1; ib2++) { for (ib1 = 0; ib1 < n1 - 1; ib1++) { b = bmp_r[ib2, ib1]; if (b > max_count) max_count = b; }     }
-            int[] gstgr = new int[max_count + 1];
-            for (ib2 = 0; ib2 < n2 - 1; ib2++) { for (ib1 = 0; ib1 < n1 - 1; ib1++) { b = bmp_r[ib2, ib1]; gstgr[b]++; } }
-            MessageBox.Show(" count =  " + count + " max =  " + max_count);
-            //ImageHelper.drawGraph_Gistgr(gstgr, max_count);    // Женя нарисуй гистограмму (значения массива gstgr)
-
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Рисование точек по диагоналям
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+            int ib2 = 0, ib1 = 0, max_count = 0;
             for (ib2 = 0; ib2 < n2 - 1; ib2++)
             {
                 for (ib1 = 0; ib1 < n1 - 1; ib1++)
                 {
                     b = bmp_r[ib2, ib1];
+                    max_count = Math.Max(b, max_count);              
                     if (b > pr_obr) { grBack.DrawRectangle(new Pen(Color.FromArgb(146, 24, 47)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);  }
                 }
             }
-
+            MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
             pc1.Refresh();
             f_sin.Show();
-
-
-
-
-
 
         }
 
@@ -392,7 +380,6 @@ namespace rab1
                     b2 = (Z[i, j] - b2_min) * 255 / b2_max;
                     if (b2 < 0 || b2 > 255) b2 = 0;
                     bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));
-
                 }
             }
         }
@@ -433,7 +420,6 @@ namespace rab1
                 for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
                 mnx_x = mxx_x;
                 mnx = mxx;
-
             }
            
 
@@ -781,7 +767,7 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 
-        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01, int xx0, int xx1, int yy0, int yy1, int sN1, int sN2, int Diag) // Расшифровка
+        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01,  int sN1, int sN2, int Diag) // Расшифровка
         {
             China(sN1, sN2);                                           // Вычисление формулы 
             int w = img[0].Width;
@@ -791,7 +777,7 @@ namespace rab1
             Bitmap bmp = new Bitmap(pictureBox01.Image, w, h);
             Z = new int[w, h];
             rash_2pi(bmp, bmp1, bmp2, w, h,  Diag);     //  РАСШИФРОВКА (Заполнение Z[,])
-            Z_bmp(bmp, Z, w, h);                  //  Z -> bmp с масштабированием
+            Z_bmp(bmp, Z, w, h);                        //  Z -> bmp с масштабированием
             pictureBox01.Size = new System.Drawing.Size(w, h);
             pictureBox01.Image = bmp;
         }

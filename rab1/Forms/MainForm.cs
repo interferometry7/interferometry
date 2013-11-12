@@ -949,7 +949,7 @@ namespace rab1.Forms
             imageHeight.Text = mainPictureBox.Height.ToString();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void таблица2ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void таблица2ToolStripMenuItem_Click(object sender, EventArgs e)                                // Построение таблицы
         {
             Image[] imagesForTable = new Image[3];
 
@@ -1069,6 +1069,8 @@ namespace rab1.Forms
             initialScaleRatio = ratio;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //   Сглаживание
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void сглаживаниеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, mainPictureBox.Image);
@@ -1082,13 +1084,17 @@ namespace rab1.Forms
             mainPictureBox.Image = filtratedImage;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  медианный фильтр
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void медианныйToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, mainPictureBox.Image);
             filtrationForm.imageFiltered += filtrationFormOnImageFiltered;
             filtrationForm.Show();
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Транспонирование
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  Транспонирование
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void транспонированиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FiltrClass.Transp(mainPictureBox);
@@ -1187,6 +1193,26 @@ namespace rab1.Forms
         {
             button5_Click(sender, e);
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                  Расшифровка
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void расшифровка2piToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        
+           // this.DIALOG_CHINA(this.RSHFRT);
+           
+        }
+/*
+        private void RSHFRT(object sender, EventArgs e)
+        {
+            string strN1 = " ", strN2 = " ";
+            strN1 = tb1.Text;
+            strN2 = tb2.Text;
+            if (tb3.Text != "") NDiag = Convert.ToInt32(tb3.Text);
+            Pi_Class1.pi2_rshfr(img, pictureBox01, strN1, strN2, NDiag);
+        }
+ */
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
