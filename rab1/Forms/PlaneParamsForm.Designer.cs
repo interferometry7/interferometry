@@ -75,7 +75,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Name = "PlaneParamsForm";
-            this.Text = "Парметры плоскости";
+            this.Text = "Параметры плоскости";
             this.ResumeLayout(false);
             this.PerformLayout();
 

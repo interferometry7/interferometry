@@ -107,8 +107,8 @@ namespace rab1
             string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
                    s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
             // ----------------------------------------------------------------------------------------------------------------
-            for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                      // Одномерный массив для расшифровки
-
+           
+                   GLBL_FAZE(n1, n2, Diag);                                                         //  Заполнение glbl_faze[]  и glbl_faze1[] - допустимые границы диапазона
 // Отрисовка диагоналей
             Int32 A = Diag * Math.Max(n1, n2);
             Int32 pf;
@@ -119,7 +119,7 @@ namespace rab1
                 {
                     grBack.DrawLine(p2, x0 + b2 * scale, y0, x0 + b2 * scale + n1 * scale, hh * scale + y0);
                     pf = pf / n1;
-                    glbl_faze[n1 + b2] = pf;
+                //    glbl_faze[n1 + b2] = pf;
                     s = pf.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + b2 * scale, y0 - 4 * scale, drawFormat);
                 }
             }
@@ -130,7 +130,7 @@ namespace rab1
                 {
                     grBack.DrawLine(p3, x0, y0 + b1 * scale, x0 + n1 * scale - b1 * scale, hh * scale + y0);
                     pf = pf / n1;
-                    glbl_faze[n1 - b1] = pf;
+                //    glbl_faze[n1 - b1] = pf;
                     s = pf.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 - 10 * scale, y0 + b1 * scale, drawFormat);
                 }
             }
@@ -140,9 +140,14 @@ namespace rab1
                 int bb = glbl_faze[i];
                 if (bb >= 0) { s = bb.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + i * scale, y0 + n1 * scale + 8 * scale, drawFormat); }
             }
-//  Заполнение glbl_faze1[] - допустимые границы диапазона
-            int mxx = 0, mxx_x = 0, mnx = 0, mnx_x = 0, cntr = 0;
-            for (; ; )
+
+            
+            
+            int mxx = 0, mxx_x = 0, mnx_x = 0, cntr = 0;
+            int mnx = 0;
+/*
+           
+           for (; ; )
             {
                 for (int i = mnx_x; i < n1 + n2; i++)
                 {
@@ -156,6 +161,7 @@ namespace rab1
                 mnx_x = mxx_x;
                 mnx = mxx;
             }
+ */
 // Отрисовка границ допустимого диапазона(Gold)
             mnx = glbl_faze1[0];
             for (int i = 0; i < n1 + n2; i++)
@@ -255,6 +261,8 @@ namespace rab1
                 }
             }
             MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
+           
+
             pc1.Refresh();
             f_sin.Show();
 
@@ -361,36 +369,68 @@ namespace rab1
             A = (d1 - b1 * B - c1 * C) / a1;
             
         }
-
-        // -----------------------------------------------------------------------------------------------------------------------------------
-        static void Z_bmp( Bitmap bmp, Int32[,] Z, int w, int h)               // -------------------------- Z -> BMP
+          
+   
+// --------------------------------------------------------------------------------------------------------------------------------        
+// --------------------------------------------------------------------------------------------------------------------------------        
+// --------------------------------------------------------------------------------------------------------------------------------                
+// --------------------------------------------------------------------------------------------------------------------------------                
+// --------------------------------------------------------------------------------------------------------------------------------                
+// --------------------------------------------------------------------------------------------------------------------------------
+        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr)
         {
-            Int32 b2_min = Z[ 1,  1], b2_max = Z[ 1,  1];
-            int b2;
-            for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
+            China(sN1, sN2);           // Вычисление формулы
+            Graph_China2(img, Diag, rb, pr_obr);                          // Построение таблицы
+        }
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+        
+//-----------------------------------------------------------------------------------------------------------------------------------
+        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01, int sN1, int sN2, int Diag) // Расшифровка
+        {
+            China(sN1, sN2);                                           // Вычисление формулы 
+
+            int w = img[0].Width;
+            int h = img[0].Height;
+            Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
+            Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
+            Bitmap bmp  = new Bitmap( w, h);           // Результат
+            Z = new int[w, h];
+            rash_2pi(bmp1, bmp2, n1, n2,  Diag);        //  РАСШИФРОВКА (Заполнение Z[,])
+            Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
+            //pictureBox01.Size = new System.Drawing.Size(w, h);
+            pictureBox01.Image = bmp;
             
-            MessageBox.Show(" Max = " + b2_max.ToString() + " Min =  " + b2_min.ToString());
-            b2_max = b2_max - b2_min;             
-            if (b2_max == 0) return; 
-           
-            for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
+        }
+        // -----------------------------------------------------------------------------------------------------------------------------------           
+        // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
+        // -----------------------------------------------------------------------------------------------------------------------------------  
+        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, int n1, int n2, int Diag)
+        {
+            GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
+            int b, ib1, ib2;
+            int w = bmp1.Width;
+            int h = bmp1.Height;
+         
+            Color c;                                                 
+            for (int i = 0; i < w; i++)
             {
                 for (int j = 0; j < h; j++)
                 {
-                    b2 = (Z[i, j] - b2_min) * 255 / b2_max;
-                    if (b2 < 0 || b2 > 255) b2 = 0;
-                    bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));
+                    c = bmp1.GetPixel(i, j); b = c.R; ib1 = (int)((double)(b * (n1 - 1)) / 255); // --------------------- (b2)
+                    c = bmp2.GetPixel(i, j); b = c.R; ib2 = (int)((double)(b * (n2 - 1)) / 255); // --------------------- (b1)              
+                    b = glbl_faze1[ib2 + (n1 - ib1)];
+                    Z[i, j] = b  * n1 - (n1 - ib1);
                 }
             }
-        }
-
-        // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
-        // -----------------------------------------------------------------------------------------------------------------------------------           
-        // -----------------------------------         Расшифровка            ----------------------------------------------------------------          
-        // -----------------------------------------------------------------------------------------------------------------------------------          
-        private static void GLBL_FAZE(int Diag)
-        {
+         }
            
+        // -----------------------------------------------------------------------------------------------------------------------------------           
+        // -----------------------------------        Заполнение массива для расшифровки  glbl_faze ,    glbl_faze1   ------------------------          
+        // -----------------------------------------------------------------------------------------------------------------------------------          
+        private static void GLBL_FAZE(int n1, int n2, int Diag)
+        {
+
             for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                       // Массив для расшифровки
 
             Int32 A = Diag * Math.Max(n1, n2);
@@ -421,366 +461,35 @@ namespace rab1
                 mnx_x = mxx_x;
                 mnx = mxx;
             }
-           
-
         }
-
-        private static void rash_2pi(Bitmap bmp, Bitmap bmp1, Bitmap bmp2, int w, int h, int Diag)
+        // -----------------------------------------------------------------------------------------------------------------------------------           
+        // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
+        // -----------------------------------------------------------------------------------------------------------------------------------  
+        static void Z_bmp(Bitmap bmp, Int32[,] Z)               // -------------------------- Z -> BMP
         {
-            GLBL_FAZE(Diag);                         // Заполнение массива glbl_faze[] для расшифровки
-            int b,  ib1, ib2;
-           
-            Color c;                                                 
-            for (int i = 0; i < w; i++)
+            int b2_min = Z[0, 0], b2_max = Z[0, 0];
+            int w = bmp.Width;
+            int h = bmp.Height;
+            int b2;
+
+            for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
+            MessageBox.Show(" Max = " + b2_max.ToString() + " Min =  " + b2_min.ToString());
+
+            double max = 255 / (double)(b2_max - b2_min);
+          
+           // if (b2_max == 0) return;
+
+            for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
                 {
-                    c = bmp1.GetPixel(i, j); b = c.R; ib1 = (int)((double)(b * (n1 - 1)) / 255); // --------------------- (b2)
-                    c = bmp2.GetPixel(i, j); b = c.R; ib2 = (int)((double)(b * (n2 - 1)) / 255); // --------------------- (b1)              
-                    b = glbl_faze1[ib2 + (n1 - ib1)];
-                    Z[i, j] = b  * n1 - (n1 - ib1);
+                    b2 = (int)((Z[i, j] - b2_min) *  max);
+                    //if (b2 < 0 || b2 > 255) b2 = 0;
+                    bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));
                 }
             }
-
-           
-           
-        }     
-        // ----------------------------------------------------------------------------------------------------------------------------------------------------------------          
-        // ---------------------------------------------                   Прослеживание линий              ---------------------------------------------------------------        
-        // ----------------------------------------------------------------------------------------------------------------------------------------------------------------  
-        static int x1, x2;                                                            // Затравочная область для следующей строки
-        static int y1, y2;                                                            // Границы горизонтальные
-
-        private static int Num_Line(int[,] bmp_r, int[,] bmp_line, Graphics grBack)                                                  // По строке
-        {
-            int w1 = n2, hh = n1;
-            int[] type_line1 = new int[200];
-            int[] type_line = new int[200];       // Тип линии ( Начало на левой границе - 2;  Начало на верхней - 1)
-            Pen p1 = new Pen(Color.Black, 1);
-            //------------------------------------------------------------------------------------------------------------- 1 линия
-            int y00 = 0;
-            int cntr = 0, b = 0;
-            int ii = 1;                // Номер линии
-            int ib1 = 0, ib2 = 0;
-            x1 = 0; x2 = 0;            // Затравочные границы
-            for (ib2 = 0; ib2 < n2 - 1; ib2++) { b = bmp_r[ib2, ib1]; if (b > 0) break; } x1 = ib2;
-            for (ib2 = x1; ib2 < n2 - 1; ib2++) { b = bmp_r[ib2, ib1]; if (b == 0) break; } x2 = ib2 - 1;
-            y00 = 0;
-            y1 = 0; y2 = 1;
-
-            type_line[100] = 1;
-            for (ii = 1; ii < 80; ii++)
-            {
-                cntr = 0; for (ib1 = y1; ib1 < y2; ib1++) if (Num(ib1, ii, bmp_r, bmp_line) != 0) { cntr = 1; y00 = ib1; break; }
-                if (cntr == 0) break; // Нет начальных точек
-
-                for (ib1 = y00; ib1 < n1 - 1; ib1++) if (Num(ib1, ii, bmp_r, bmp_line) == 0) break;  // Не найдено в строке ни одной точки
-
-                cntr = Num_N(ii, bmp_line);  // Пересечение с границами
-                if (cntr == 0)
-                {
-                    //MessageBox.Show(" Конец----------------- " + ii.ToString());
-                    //type_line[100 + ii] = ii;
-                    break;
-                }    // Нет пресечения с границами (Конечная точка)
-                if (cntr == 2)
-                {
-                    //MessageBox.Show(" Правая y1: " + y1.ToString() + " y2: " + y2.ToString()+  " ii: "+ii.ToString());
-                    grBack.DrawLine(p1, x0, y0 + y1 * scale, x0 + w1 * scale, y0 + y1 * scale);
-                    grBack.DrawLine(p1, x0, y0 + y2 * scale, x0 + w1 * scale, y0 + y2 * scale);
-                    x1 = 0; x2 = 0;
-                    type_line[100 + ii + 1] = 2;
-                    continue;
-                }
-
-                if (cntr == 1)
-                {
-                    //MessageBox.Show(" Нижняя x1: " + x1.ToString() + " x2: " + x2.ToString()+  " ii: "+ii.ToString());
-
-                    grBack.DrawLine(p1, x0 + x1 * scale, y0, x0 + x1 * scale, hh * scale + y0);
-                    grBack.DrawLine(p1, x0 + x2 * scale, y0, x0 + x2 * scale, hh * scale + y0);
-                    y1 = 0; y2 = 2;
-                    type_line[100 + ii + 1] = 1;
-                    continue;
-                }
-
-            }
-
-            //----------------------------------------------------------------------------------------------------------------------------------- Начальные линии
-            ib1 = 0;
-            x1 = 0; x2 = 0;            // Затравочные границы
-            for (ib2 = 0; ib2 < n2 - 1; ib2++) { b = bmp_r[ib2, ib1]; if (b > 0) break; }
-            x1 = ib2;
-            for (ib2 = x1; ib2 < n2 - 1; ib2++) { b = bmp_r[ib2, ib1]; if (b == 0) break; }
-            x2 = ib2 - 1;
-            //grBack.DrawLine(p1, x0 + x1 * scale, y0, x0 + x1 * scale, hh * scale + y0);
-            //grBack.DrawLine(p1, x0 + x2 * scale, y0, x0 + x2 * scale, hh * scale + y0);
-            y1 = n1 - 2; y2 = n1 - 1;
-            type_line[99] = 1;
-            for (ii = -1; ii > -100; ii--)
-            {
-                cntr = 0; for (ib1 = y1; ib1 < y2; ib1++) if (Num(ib1, ii, bmp_r, bmp_line) != 0) { cntr = 1; y00 = ib1 - 1; break; }
-
-                if (cntr != 0)
-                {
-                    for (ib1 = y00; ib1 >= 0; ib1--) if (Num(ib1, ii, bmp_r, bmp_line) == 0) break;   // Не найдено в строке ни одной точки
-
-                    cntr = Num_N2(ii, bmp_line);                   // Поиск границ пересечения
-                    if (cntr == 2)                                 // Пересечение с левой границей
-                    {
-                        //MessageBox.Show(" Левая " + y1.ToString() + " x2: " + y2.ToString() + " i " + ii.ToString());
-                        grBack.DrawLine(p1, x0, y0 + y1 * scale, x0 + w1 * scale, y0 + y1 * scale);
-                        grBack.DrawLine(p1, x0, y0 + y2 * scale, x0 + w1 * scale, y0 + y2 * scale);
-                        x1 = n2 - 3; x2 = n2 - 1;
-                        //y1 = y1 - 1; y2 = y2 + 1;
-                        type_line[100 + ii] = 2;
-                        continue;
-                    }
-
-                    if (cntr == 1)                               // Пересечение с верхней границей
-                    {
-                        //MessageBox.Show(" Верхняя x1: " + x1.ToString() + " x2: " + x2.ToString());
-
-                        grBack.DrawLine(p1, x0 + x1 * scale, y0, x0 + x1 * scale, hh * scale + y0);
-                        grBack.DrawLine(p1, x0 + x2 * scale, y0, x0 + x2 * scale, hh * scale + y0);
-                        y1 = n1 - 2; y2 = n1 - 1;
-                        type_line[100 + ii] = 1;
-                        continue;
-                    }
-                    if (cntr == 0)
-                    {
-                        type_line[100 + ii] = 1;
-                        break;
-                    }
-                }
-            }
-
-            //MessageBox.Show(" Начало " + ii.ToString());
-
-            // ------------------------------------------------------------------------------------------------------------------------- Нумерация полос
-            int ii1 = -ii;
-            int ii_max = 1;        // ---------------------------------------------------------- Максимальное количество полос
-            for (ib2 = 0; ib2 < n2; ib2++)
-                for (ib1 = 0; ib1 < n1; ib1++)
-                {
-                    b = bmp_line[ib2, ib1];
-                    if (b < 0) { b = b - ii + 1; bmp_line[ib2, ib1] = b; continue; }
-                    if (b > 0) { b = b - ii; if (b >= ii_max) ii_max = b; bmp_line[ib2, ib1] = b; continue; }
-
-                }
-            for (int i = 0; i < ii_max; i++)
-            {
-                int k;
-                if (i <= ii1) k = type_line[i + 100 + ii]; else k = type_line[i + 100 + ii + 1];
-                type_line1[i] = k;
-            }
-
-            //int[] number_2pi = new int[ii_max + 1];
-            for (int i = 1; i <= ii_max; i++) number_2pi[i] = i;
-            int nmb_2pi = 0;
-            for (int i = 1; i <= ii_max; i++)
-            {
-                if (type_line1[i - 1] == 1) nmb_2pi--;
-                number_2pi[i] = nmb_2pi + ii_max - 2;
-            }
-
-
-
-            //    MessageBox.Show(" Всего " + ii_max.ToString() + " полос ");
-
-            // -------------------------------------------------------------------------------------------Заполнение глобальных маccивов glbl_faze[n1+n2], glbl_faze1[n1+n2]
-            for (int j = 0; j < n2+n1; j++) { glbl_faze[j] = 0; glbl_faze1[j] = 0; }
-
-            for (ib2 = 0; ib2 < n2; ib2++)
-                for (ib1 = 0; ib1 < n1; ib1++)
-                { b = bmp_line[ib2, ib1]; if (b > 0) { ii1 = ib2 + (n1 - ib1); glbl_faze[ii1] = b; glbl_faze1[ii1] = number_2pi[b]; } }
-
-
-            return ii_max;
         }
-
-// ----------------------------------------------------------------------------------------------------------------------  Расширение границ  ------------------------------  
-        private static void Rash_glbl_faze()       
-            {
-                int b;
-                int ix0 = 0, ix1 = n2 + n1 - 1;      // ----------------------------------------------------------------------------------------  1 промежуток и последний
-                int ibx0 = 0, ibx1 = 0;
-                int max;
-
-                for (int i = 0; i < n2 + n1; i++)     { b = glbl_faze[i]; ix0 = i; if (b != 0) break; } ibx0 = glbl_faze[ix0];
-                for (int i = n2 + n1 - 1; i > 0; i--) { b = glbl_faze[i]; ix1 = i; if (b != 0) break; } ibx1 = glbl_faze[ix1];
-                max = (ix0 + (n2 + n1 - 1) - ix1) / 2; // Длина отрезка
-                
-                for (int i = ix0 - max; i < ix0; i++) glbl_faze[i] = ibx0;
-                for (int i = 0; i < ix0 - max; i++)   glbl_faze[i] = ibx1;
-           
-                                if (max < ix0)
-                                {
-                                    for (int i = ix0 - max; i < ix0; i++) glbl_faze[i] = ibx0;
-                                    for (int i = 0; i < ix0 - max; i++)   glbl_faze[i] = ibx1;
-                                }
-                                else
-                                { 
-                                    for (int i = 0; i < ix0; i++)         glbl_faze[i] = ibx0; 
-                                }
-
-                                if (max < ((n2 + n1 - 1) - ix1))
-                                {
-                                    for (int i = ix1; i < n2 + n1 - max; i++)     glbl_faze[i] = ibx1;
-                                    for (int i = n2 + n1 - max; i < n2 + n1; i++) glbl_faze[i] = ibx0;
-                                }
-                                else { for (int i = ix1; i < n2 + n1; i++)    glbl_faze[i] = ibx1; }
-              
-                // Следующие промежутки
-
-                int i0 = ix0; int cntr0, cntr1;
-                for (; ; )
-                {
-                    cntr0 = 0; for (int i = i0; i < n2 + n1; i++) { b = glbl_faze[i]; if (b == 0) { cntr0 = 1; ix0 = i; ibx0 = glbl_faze[i - 1]; break; } }
-                    if (cntr0 == 0) break;                                                              // { MessageBox.Show(" Не найден 0 "); break; }
-                    cntr1 = 0; for (int i = ix0 + 1; i < n2 + n1; i++) { b = glbl_faze[i]; if (b != 0) { cntr1 = 1; ix1 = i; ibx1 = glbl_faze[i]; break; } }
-                    if (cntr1 == 0) break;                                                              //{ MessageBox.Show(" Не найден 1 "); break; }
-                    max = (ix1 - ix0) / 2; // Длина отрезка
-                    for (int i = ix0; i < ix0 + max; i++) glbl_faze[i] = ibx0;
-                    for (int i = ix0 + max; i < ix1; i++) glbl_faze[i] = ibx1;
-                    i0 = ix1;
-
-                }
- 
-                for (int i = 0; i < n2 + n1; i++) { b = glbl_faze[i]; glbl_faze1[i] = number_2pi[b]; }
-
-
-        }
-
- //----------------------------------------------------------------------------------------------------------------------------------       
- //----------------------------------------------------------------------------------------------------------------------------------
- // ---------------------------------------------------------------------------------------------------------------------------------
-
-        private static int Num(int ib1, int n, int[,] bmp_r, int[,]  bmp_line)                                                  // По строке
-        {
-            int b;
-            
-            int x20 = x2, x10 = x1;
-            int x21 = x2, x11 = x1;
-            int cntr1 = 0; for (int i = x1; i <= x2; i++)   { b = bmp_r[i, ib1]; if (b > 0) { x10 = i; cntr1 = 1; break; } }  if (cntr1 == 1) x1 = x10;
-            int cntr2 = 0; for (int i = x1; i >= 0; i--)    { b = bmp_r[i, ib1]; if (b > 0) { x11 = i; cntr2 = 1; } else { if (Math.Abs(x1 - i) < 4) continue; else break; } } if (cntr2 == 1) x1 = x11;
-            int cntr3 = 0; for (int i = x2; i >= x1; i--)   { b = bmp_r[i, ib1]; if (b > 0) { x20 = i; cntr3 = 1; break; } }  if (cntr3 == 1) x2 = x20;                               
-            int cntr4 = 0; for (int i = x2; i < n2-1; i++)  { b = bmp_r[i, ib1]; if (b > 0) { x20 = i; cntr4 = 1; } else { if (Math.Abs(x1 - i) < 4) continue; else break; }; } if (cntr4 == 1) x2 = x20;
-            for (int i = x1; i <= x2; i++) bmp_line[i, ib1] = n;
-            if (cntr1 == 1 || cntr2 == 1 || cntr3 == 1 || cntr4 == 1)  return (1);  else  return 0;     
-            
-        }
-
-        // -----------------------------------------------------------------------------------------------------------------------------
-        // -----------------------------------------------------------------------------------------------------------------------------
-        // --------------------------------------------------------------------------------- Поиск пересечения с нижней и правой границей
-        private static int Num_N(int n, int[,] bmp_line)                                                 
-        {   
-        int cntry = 0;                               // ----------------------------------- Поиск пересечения с правой  границей
-            y1 = n1-1; y2 = 0;
-            for (int ib1 = 0; ib1 < n1-1; ib1++)
-            {
-                int b1 = bmp_line[n2 - 1, ib1];
-                int b2 = bmp_line[n2 - 2, ib1];
-                int b3 = bmp_line[n2 - 3, ib1];
-                if (b1 == n || b2==n || b3==n )
-                {
-                    if (ib1 > y2) y2 = ib1;
-                    if (ib1 < y1) y1 = ib1;
-                    cntry = 1;
-                }
-            }
-            y2++;
-            if (cntry == 1) return 2;               // -------------------------------- Пересечениe с правой горизонтальной границей
-            // --------------------------------------------------------------------------------- Поиск пересечения с нижней   границей
-            int cntrx = 0;
-            x1 = n2 - 1; x2 = 0;
-            for (int ib2 = 0; ib2 < n2 - 1; ib2++)
-            {
-                
-                int b1 = bmp_line[ib2, n1 - 1];
-                int b2 = bmp_line[ib2, n1 - 2];
-                int b3 = bmp_line[ib2, n1 - 3];
-                if (b1 == n || b2 == n || b3 == n)
-                {
-                    if (ib2 > x2) x2 = ib2;
-                    if (ib2 < x1) x1 = ib2;
-                    cntrx = 1;
-                }
-            }
-            x2++;
-            if (cntrx == 1) return 1;   // -------------------------------- Поиск пересечения с нижней вертикальной границей
-           
- 
-            return 0;              
-        }
-        //--------------------------------------------------------------------------------- Для начальных точек
-        private static int Num_N2(int n, int[,] bmp_line)                                                 
-        {
-            int b;
-            // ------------------------------------------------------------------------------------- Поиск пересечения с левой вертикальной границей (y1,y1)                        
-            int cntry = 0;
-            y1 = n1 - 1; y2 = 0;
-            for (int ib1 = 0; ib1 < n1 - 1; ib1++) 
-            {
-                b = bmp_line[0, ib1];
-                if (b == n)
-                {
-                    if (ib1 > y2) y2 = ib1;
-                    if (ib1 < y1) y1 = ib1;
-                    cntry = 1;
-                }
-            }
-            y2++;
-            // ------------------------------------------------------------------------------------ Поиск пересечения с верхней горизонтальной границей (x1,x2)
-            int cntrx = 0;
-            x1 = n2 - 1; x2 = 0;
-            for (int ib2 = 0; ib2 < n2 - 1; ib2++)
-            {
-                b = bmp_line[ib2, 0];
-                if (b == n)
-                {
-                    if (ib2 > x2) x2 = ib2;
-                    if (ib2 < x1) x1 = ib2;
-                    cntrx = 1;
-                }
-            }
-            x2++;
-            if (cntrx == 1) return 1;  // пересечение с верхней границей
-            if (cntry == 1) return 2;  // пересечение с левой границей
-
-            return 0;
-        }
-        
-// --------------------------------------------------------------------------------------------------------------------------------        
-// --------------------------------------------------------------------------------------------------------------------------------        
-// --------------------------------------------------------------------------------------------------------------------------------                
-// --------------------------------------------------------------------------------------------------------------------------------                
-// --------------------------------------------------------------------------------------------------------------------------------                
-// --------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr)
-        {
-            China(sN1, sN2);           // Вычисление формулы
-            Graph_China2(img, Diag, rb, pr_obr);                          // Построение таблицы
-        }
-
 //-----------------------------------------------------------------------------------------------------------------------------------
-        
-
-        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01,  int sN1, int sN2, int Diag) // Расшифровка
-        {
-            China(sN1, sN2);                                           // Вычисление формулы 
-            int w = img[0].Width;
-            int h = img[0].Height;
-            Bitmap bmp1 = new Bitmap(img[0], w, h);
-            Bitmap bmp2 = new Bitmap(img[1], w, h);
-            Bitmap bmp = new Bitmap(pictureBox01.Image, w, h);
-            Z = new int[w, h];
-            rash_2pi(bmp, bmp1, bmp2, w, h,  Diag);     //  РАСШИФРОВКА (Заполнение Z[,])
-            Z_bmp(bmp, Z, w, h);                        //  Z -> bmp с масштабированием
-            pictureBox01.Size = new System.Drawing.Size(w, h);
-            pictureBox01.Image = bmp;
-        }
 
         public static void pi2_ABC( PictureBox pictureBox01, int xx0, int xx1, int yy0, int yy1) // Устранение тренда по методу наименьших квадратов
         {
@@ -795,7 +504,7 @@ namespace rab1
             MessageBox.Show(" A "+ A.ToString() + " B " + B.ToString() + " C " + C.ToString());
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) Z[i, j] = Z[i, j] - Convert.ToInt32(A * i + B * j + C);           
 
-            Z_bmp(bmp, Z, w, h);                                                                          //  Z -> bmp с масштабированием
+            Z_bmp(bmp, Z);                                                                          //  Z -> bmp с масштабированием
             pictureBox01.Size = new System.Drawing.Size(w, h);
             pictureBox01.Image = bmp;
         }
@@ -816,7 +525,7 @@ namespace rab1
 
                 for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) Z[i, j] =Z[i, j] + Convert.ToInt32(A * i + B * j + D);
                 Bitmap bmp = new Bitmap(pictureBox01.Image, w, h);
-                Z_bmp(bmp, Z, w, h);                                                                          //  Z -> bmp с масштабированием
+                Z_bmp(bmp, Z);                                                                          //  Z -> bmp с масштабированием
                 pictureBox01.Size = new System.Drawing.Size(w, h);
                 pictureBox01.Image = bmp;
         }
