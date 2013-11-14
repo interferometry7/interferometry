@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace rab1
 {
@@ -394,9 +395,9 @@ namespace rab1
             int h = img[0].Height;
             Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
             Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
-            Bitmap bmp  = new Bitmap( w, h);           // Результат
+            Bitmap bmp  = new Bitmap( w, h);            // Результат
             Z = new int[w, h];
-            rash_2pi(bmp1, bmp2, n1, n2,  Diag);        //  РАСШИФРОВКА (Заполнение Z[,])
+            rash_2pi(bmp1, bmp2, n1, n2,  Diag, Z);     //  РАСШИФРОВКА (Заполнение Z[,])
             Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
             //pictureBox01.Size = new System.Drawing.Size(w, h);
             pictureBox01.Image = bmp;
@@ -405,24 +406,35 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, int n1, int n2, int Diag)
+        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, int n1, int n2, int Diag, int[,] Z)
         {
             GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
-            int b, ib1, ib2;
+            int b1, b2, b3, ib1, ib2;
             int w = bmp1.Width;
             int h = bmp1.Height;
-         
-            Color c;                                                 
+
+            BitmapData data1 = ImageProcessor.getBitmapData(bmp1);
+            BitmapData data2 = ImageProcessor.getBitmapData(bmp2);
+            Color c;
+            double fn1 = (double)(n1 - 1) / 255;
+            double fn2 = (double)(n2 - 1) / 255;
+           
+
+            int all = w;  int done = 0;   PopupProgressBar.show();   
+                       
             for (int i = 0; i < w; i++)
             {
                 for (int j = 0; j < h; j++)
                 {
-                    c = bmp1.GetPixel(i, j); b = c.R; ib1 = (int)((double)(b * (n1 - 1)) / 255); // --------------------- (b2)
-                    c = bmp2.GetPixel(i, j); b = c.R; ib2 = (int)((double)(b * (n2 - 1)) / 255); // --------------------- (b1)              
-                    b = glbl_faze1[ib2 + (n1 - ib1)];
-                    Z[i, j] = b  * n1 - (n1 - ib1);
+                    c = ImageProcessor.getPixel(i, j, data1); b1 = c.R; ib1 = (int)(fn1*b1);  // c = bmp1.GetPixel(i, j);  
+                    c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int)(fn2*b2);  // c = bmp2.GetPixel(i, j);
+                    b3 = glbl_faze1[ib2 + (n1 - ib1)] ;
+                    Z[i, j] = 256*b3 + b1; // glbl_faze1[ib2 + (n1 - ib1)] + ib1;                                 // glbl_faze1[ib2 + (n1 - ib1)];
                 }
+                done++; PopupProgressBar.setProgress(done, all);
             }
+
+            PopupProgressBar.close();
          }
            
         // -----------------------------------------------------------------------------------------------------------------------------------           
@@ -433,8 +445,8 @@ namespace rab1
 
             for (int i = 0; i < n1 + n2; i++) { glbl_faze[i] = -1; glbl_faze1[i] = -1; }                       // Массив для расшифровки
 
-            Int32 A = Diag * Math.Max(n1, n2);
-            Int32 pf;
+            int A = Diag * Math.Max(n1, n2);
+            int pf;
             for (int b2 = 0; b2 < n2; b2++)                                                                    // Диагонали   
             {
                 pf = M2 * N2 * b2 % (n1 * n2);
@@ -461,6 +473,9 @@ namespace rab1
                 mnx_x = mxx_x;
                 mnx = mxx;
             }
+
+           // for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i.ToString() + "  =  " + pf.ToString()); }    
+
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
@@ -468,26 +483,32 @@ namespace rab1
         static void Z_bmp(Bitmap bmp, Int32[,] Z)               // -------------------------- Z -> BMP
         {
             int b2_min = Z[0, 0], b2_max = Z[0, 0];
-            int w = bmp.Width;
+            int w = bmp.Width; ;
             int h = bmp.Height;
             int b2;
+
+
+            //BitmapData data = ImageProcessor.getBitmapData(bmp);
 
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
             MessageBox.Show(" Max = " + b2_max.ToString() + " Min =  " + b2_min.ToString());
 
             double max = 255 / (double)(b2_max - b2_min);
           
-           // if (b2_max == 0) return;
-
+            //if (b2_max == 0) return;
+            int all = w;             int done = 0;             PopupProgressBar.show();
             for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
                 {
                     b2 = (int)((Z[i, j] - b2_min) *  max);
                     //if (b2 < 0 || b2 > 255) b2 = 0;
-                    bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));
+                    //ImageProcessor.setPixel(data, i, j, Color.FromArgb(b2, b2, b2));       
+                     bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));                  
                 }
+                done++; PopupProgressBar.setProgress(done, all);
             }
+            PopupProgressBar.close();
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
 

@@ -1204,7 +1204,7 @@ namespace rab1.Forms
            // this.DIALOG_CHINA(this.RSHFRT);
             int sN1=167;
             int sN2=241;
-            int Diag=10;
+            int Diag=9;
             int pr = 30;                       // Отсечение
             Image[] imagesF = new Image[4];
 
