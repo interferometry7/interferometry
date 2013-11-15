@@ -429,8 +429,8 @@ namespace rab1
                     c = ImageProcessor.getPixel(i, j, data1); b1 = c.R; ib1 = (int)(fn1*b1);  // c = bmp1.GetPixel(i, j);  
                     c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int)(fn2*b2);  // c = bmp2.GetPixel(i, j);
                     b3 = glbl_faze1[ib2 + (n1 - ib1)] ;
-                    //Z[i, j] = (n1) * b3 + ib1;                                               // glbl_faze1[ib2 + (n1 - ib1)];
-                    Z[i, j] = (n2) * b3 + ib2;
+                    Z[i, j] = (n1) * b3 + ib1;                                               // glbl_faze1[ib2 + (n1 - ib1)];
+                  
                 }
                 done++; PopupProgressBar.setProgress(done, all);
             }
