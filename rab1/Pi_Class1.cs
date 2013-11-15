@@ -26,7 +26,7 @@ namespace rab1
         static Int32 n1;
         static Int32 n2;
 
-        static Int32[,] Z;                                     // Глобальный массив результирующих фаз (Размер задается при расшифровке)
+        static Int64[,] Z;                                     // Глобальный массив результирующих фаз (Размер задается при расшифровке)
 
         /*      
         Назначение: Нахождение наибольшего общего делителя двух чисел N и M по рекуррентному соотношению
@@ -304,7 +304,7 @@ namespace rab1
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static Plane getPlaneParams(Int32[,] Z, int xx0, int xx1, int yy0, int yy1)                                                  // По строке
+        public static Plane getPlaneParams(Int64[,] Z, int xx0, int xx1, int yy0, int yy1)                                                  // По строке
         {
             double width = xx1 - xx0;
             double height = yy1 - yy0;
@@ -345,7 +345,7 @@ namespace rab1
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private static void ABC(Int32 [,] Z,  int xx0, int xx1, int yy0, int yy1)                                                  // По строке
+        private static void ABC(Int64 [,] Z,  int xx0, int xx1, int yy0, int yy1)                                                  // По строке
         {
             double M = xx1-xx0;
             double N = yy1-yy0;
@@ -396,8 +396,8 @@ namespace rab1
             Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
             Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
             Bitmap bmp  = new Bitmap( w, h);            // Результат
-            Z = new int[w, h];
-            rash_2pi(bmp1, bmp2, n1, n2,  Diag, Z);     //  РАСШИФРОВКА (Заполнение Z[,])
+            Z = new Int64[w, h];
+            rash_2pi(bmp1, bmp2, sN1, sN2, Diag, Z);     //  РАСШИФРОВКА (Заполнение Z[,])
             Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
             //pictureBox01.Size = new System.Drawing.Size(w, h);
             pictureBox01.Image = bmp;
@@ -406,7 +406,7 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, int n1, int n2, int Diag, int[,] Z)
+        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, int n1, int n2, int Diag, Int64[,] Z)
         {
             GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
             int b1, b2, b3, ib1, ib2;
@@ -429,7 +429,8 @@ namespace rab1
                     c = ImageProcessor.getPixel(i, j, data1); b1 = c.R; ib1 = (int)(fn1*b1);  // c = bmp1.GetPixel(i, j);  
                     c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int)(fn2*b2);  // c = bmp2.GetPixel(i, j);
                     b3 = glbl_faze1[ib2 + (n1 - ib1)] ;
-                    Z[i, j] = 256*b3 + b1; // glbl_faze1[ib2 + (n1 - ib1)] + ib1;                                 // glbl_faze1[ib2 + (n1 - ib1)];
+                    //Z[i, j] = (n1) * b3 + ib1;                                               // glbl_faze1[ib2 + (n1 - ib1)];
+                    Z[i, j] = (n2) * b3 + ib2;
                 }
                 done++; PopupProgressBar.setProgress(done, all);
             }
@@ -480,9 +481,9 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        static void Z_bmp(Bitmap bmp, Int32[,] Z)               // -------------------------- Z -> BMP
+        static void Z_bmp(Bitmap bmp, Int64[,] Z)               // -------------------------- Z -> BMP
         {
-            int b2_min = Z[0, 0], b2_max = Z[0, 0];
+            Int64 b2_min = Z[0, 0], b2_max = Z[0, 0];
             int w = bmp.Width; ;
             int h = bmp.Height;
             int b2;
@@ -517,7 +518,7 @@ namespace rab1
 
             int w = pictureBox01.Width;
             int h = pictureBox01.Height;
-            Z = new int[w, h];                //------------------------------- УБРАТЬ
+            Z = new Int64[w, h];                //------------------------------- УБРАТЬ
             Color c;
             Bitmap bmp = new Bitmap(pictureBox01.Image, w, h);
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { c = bmp.GetPixel(i, j);  Z[i, j] = c.R; }
