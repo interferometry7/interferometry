@@ -1204,7 +1204,7 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, EventArgs e)
         {
-            if ((pictureBox9.Image == null) || (pictureBox10.Image == null) || (pictureBox11.Image == null))
+            if ((pictureBox9.Image == null) || (pictureBox10.Image == null))
             {
                 MessageBox.Show("Изображения пустые");
                 return;
@@ -1233,7 +1233,18 @@ namespace rab1.Forms
             if (pictureBox.Image != null)
             {
                 Bitmap currentBitmap = (Bitmap) pictureBox.Image;
-                Color currentColor = currentBitmap.GetPixel(e.X, e.Y);
+
+                Color currentColor;
+
+                try
+                {
+                    currentColor = currentBitmap.GetPixel(e.X, e.Y);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                
 
                 int redComponent = currentColor.R;
                 int greenComponent = currentColor.G;
