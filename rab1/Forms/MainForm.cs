@@ -466,7 +466,12 @@ namespace rab1.Forms
             fz[1] = N_fz2;
             fz[2] = N_fz3;
             fz[3] = N_fz4;
-            int n = 3;  if (fz[3] != 0) { n = 4; }
+            int n = 3;
+
+            if (fz[3] != 0)
+            {
+                n = 4;
+            }
 
             img[0] = pictureBox1.Image;
             img[1] = pictureBox2.Image;

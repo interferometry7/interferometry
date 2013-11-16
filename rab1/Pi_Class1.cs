@@ -435,6 +435,9 @@ namespace rab1
                 done++; PopupProgressBar.setProgress(done, all);
             }
 
+            bmp1.UnlockBits(data1);
+            bmp2.UnlockBits(data2);
+
             PopupProgressBar.close();
          }
            
@@ -492,7 +495,7 @@ namespace rab1
             //BitmapData data = ImageProcessor.getBitmapData(bmp);
 
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
-            MessageBox.Show(" Max = " + b2_max.ToString() + " Min =  " + b2_min.ToString());
+            MessageBox.Show(" Max = " + b2_max + " Min =  " + b2_min);
 
             double max = 255 / (double)(b2_max - b2_min);
           
@@ -523,11 +526,11 @@ namespace rab1
             Bitmap bmp = new Bitmap(pictureBox01.Image, w, h);
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { c = bmp.GetPixel(i, j);  Z[i, j] = c.R; }
             ABC(Z, xx0, xx1, yy0, yy1);
-            MessageBox.Show(" A "+ A.ToString() + " B " + B.ToString() + " C " + C.ToString());
+            MessageBox.Show(" A "+ A + " B " + B + " C " + C);
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) Z[i, j] = Z[i, j] - Convert.ToInt32(A * i + B * j + C);           
 
             Z_bmp(bmp, Z);                                                                          //  Z -> bmp с масштабированием
-            pictureBox01.Size = new System.Drawing.Size(w, h);
+            pictureBox01.Size = new Size(w, h);
             pictureBox01.Image = bmp;
         }
  // ------------------------------------------------------------------------------------------------------------------- Вычитание плоскости, проходящей через 3 точки

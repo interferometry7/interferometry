@@ -274,6 +274,9 @@ namespace rab1.Forms
             OpenGLForm newForm = new OpenGLForm();
             List<Point3D> result = new List<Point3D>();
 
+            
+            StreamWriter outfile = new StreamWriter("AllTxtFiles.txt");
+
             foreach (Point3D currentPoint in pointsList)
             {
                 double planeZ = (somePlane.a*currentPoint.x) + (somePlane.b*currentPoint.y) + somePlane.c;
@@ -286,8 +289,66 @@ namespace rab1.Forms
                                              (int) Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ)),
                                              Color.RoyalBlue));
 
-                //result.Add(new Point3D(currentPoint.x, currentPoint.y, (int)Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ))));
+                StringBuilder stringForFile = new StringBuilder("");
+                stringForFile.Append("v " + currentPoint.x + " " + currentPoint.y + " " +
+                                     (int) Math.Abs(Math.Abs(currentPoint.z) - Math.Abs(planeZ)));
+
+                outfile.Write(stringForFile.ToString());
+                outfile.WriteLine();
             }
+
+            int i = 0;
+
+            foreach (Point3D firstPoint in pointsList)
+            {
+                i++;
+
+                int minDistance = Int32.MaxValue;
+
+                int firstClosestPoint = 0;
+                int secondClosestPoint = 0;
+
+                int j = 0;
+
+                foreach (Point3D secondPoint in pointsList)
+                {
+                    j++;
+
+                    if (i == j)
+                    {
+                        continue;
+                    }
+
+                    int currentDistance = (int) Math.Sqrt(Math.Pow((firstPoint.x - secondPoint.x), 2) + Math.Pow((firstPoint.y - secondPoint.y), 2) + Math.Pow((firstPoint.z - secondPoint.z), 2));
+
+                    if (currentDistance < minDistance)
+                    {
+                        minDistance = currentDistance;
+                        if (firstClosestPoint != null)
+                        {
+                            secondClosestPoint = firstClosestPoint;
+                        }
+
+                        firstClosestPoint = j;
+                    }
+                }
+
+                StringBuilder stringForFile = new StringBuilder("");
+                stringForFile.Append("f " + i + " " + firstClosestPoint + " " + secondClosestPoint);
+
+                outfile.Write(stringForFile.ToString());
+                outfile.WriteLine();
+
+                stringForFile = new StringBuilder("");
+                stringForFile.Append("f " + i + " " + secondClosestPoint + " " + firstClosestPoint);
+
+                outfile.Write(stringForFile.ToString());
+                outfile.WriteLine();
+            }
+
+
+
+
 
             newForm.Show();
 

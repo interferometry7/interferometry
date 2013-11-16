@@ -137,7 +137,6 @@ namespace rab1
                     fz = Math.Atan2(fz1, fz2) + pi;
                     r = (int)((fz * 255) / pi2);
 
-                    //bmp5.SetPixel(i, j, Color.FromArgb(r, r, r));
                     ImageProcessor.setPixel(data5, i, j, Color.FromArgb(r, r, r)); 
                 }
                 done++; PopupProgressBar.setProgress(done, all);
@@ -149,7 +148,6 @@ namespace rab1
             ((Bitmap)img[3]).UnlockBits(data4);
             bmp5.UnlockBits(data5);
 
-            //pictureBox01.Size = bmp5.Size;
             pictureBox01.Image = bmp5;
             PopupProgressBar.close();
         }
