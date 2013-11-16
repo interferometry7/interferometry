@@ -308,7 +308,9 @@ namespace rab1.Forms
                     int h1 = mainPictureBox.Image.Height;
                     mainPictureBox.Size = new Size(w1, h1);
                     mainPictureBox.Show();
-                                                                        // Вывод размера
+
+                    imageWidth.Text = Convert.ToString(w1);
+                    imageHeight.Text = Convert.ToString(h1);// Вывод размера
                 }
                 catch (Exception ex) { MessageBox.Show("Ошибка " + ex.Message); }
             }
@@ -1183,8 +1185,6 @@ namespace rab1.Forms
 
             newForm.Show();
 
-
-
             PlaneParamsForm planeParamsForm = new PlaneParamsForm(somePlane);
             planeParamsForm.planeParamsChoosed+=PlaneParamsFormOnPlaneParamsChoosed;
             planeParamsForm.Show();
@@ -1242,6 +1242,12 @@ namespace rab1.Forms
                 redComponentLabel.Text = Convert.ToString(redComponent);
                 greenComponentLabel.Text = Convert.ToString(greenComponent);
                 blueComponentLabel.Text = Convert.ToString(blueComponent);
+
+                int xPosition = e.X;
+                int yPositon = e.Y;
+
+                xLabel.Text = Convert.ToString(xPosition);
+                yLabel.Text = Convert.ToString(yPositon);
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

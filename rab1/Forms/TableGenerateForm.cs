@@ -33,6 +33,8 @@ namespace rab1.Forms
             bool unknownParameter = checkBox1.Checked;
 
             Pi_Class1.pi2_frml2(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel);
+
+            Close();
         }
     }
 }

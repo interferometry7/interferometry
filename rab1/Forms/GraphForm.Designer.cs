@@ -32,26 +32,26 @@
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.hc = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.vc = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cb = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.hc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vc)).BeginInit();
             this.SuspendLayout();
             // 
-            // hc
+            // chart
             // 
-            this.hc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             chartArea3.Name = "ChartArea1";
-            this.hc.ChartAreas.Add(chartArea3);
-            this.hc.Location = new System.Drawing.Point(3, 0);
-            this.hc.Name = "hc";
+            this.chart.ChartAreas.Add(chartArea3);
+            this.chart.Location = new System.Drawing.Point(3, 0);
+            this.chart.Name = "chart";
             series3.ChartArea = "ChartArea1";
             series3.Name = "Series1";
-            this.hc.Series.Add(series3);
-            this.hc.Size = new System.Drawing.Size(864, 300);
-            this.hc.TabIndex = 0;
-            this.hc.Text = "chart1";
+            this.chart.Series.Add(series3);
+            this.chart.Size = new System.Drawing.Size(864, 300);
+            this.chart.TabIndex = 0;
+            this.chart.Text = "chart1";
             // 
             // vc
             // 
@@ -90,11 +90,11 @@
             this.ClientSize = new System.Drawing.Size(871, 662);
             this.Controls.Add(this.cb);
             this.Controls.Add(this.vc);
-            this.Controls.Add(this.hc);
+            this.Controls.Add(this.chart);
             this.Name = "GraphForm";
             this.Text = "FiltrationForm";
             this.Resize += new System.EventHandler(this.GraphForm_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.hc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vc)).EndInit();
             this.ResumeLayout(false);
 
@@ -102,7 +102,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart hc;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.DataVisualization.Charting.Chart vc;
         private System.Windows.Forms.ComboBox cb;
     }

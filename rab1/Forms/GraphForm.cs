@@ -53,15 +53,9 @@ namespace rab1
 
         }
 
-        public void SetWidth(int w)
-        { 
-            //~100 px на отступы слева и справа
-            Width = w+100;
-        
-        }
         private void draw_chart(int w1, int h1, int[] buf, int[] bufy)
          {
-            hc.Series.Clear();
+            chart.Series.Clear();
             vc.Series.Clear();
             Series ser = new Series();
             ser.Color = Color.FromArgb(255, 0, 0);
@@ -78,26 +72,37 @@ namespace rab1
             ser_unw.Color = Color.FromArgb(0, 0, 255);
             ser_unw.ChartType = SeriesChartType.Line;
 
-            int val, add = 0, add1 = 0;
-            for (int x = 1; x < w1; ++x)
+            int currentValue, add = 0, add1 = 0;
+
+            for (int i = 1; i < w1; ++i)
             {
 
-                val = buf[x];
-                ser.Points.AddXY(x, val);
-                val += add;
-                add1 = buf[x - 1] - val + add;
+                currentValue = buf[i];
+                ser.Points.AddXY(i, currentValue);
+                currentValue += add;
+                add1 = buf[i - 1] - currentValue + add;
+
                 if (Math.Abs(add1) > 128)
                 {
                     add += add1;
-                    val += add1;
+                    currentValue += add1;
                 }
-                ser_unw.Points.AddXY(x, val);
-                if (x == pos_x) ser_p.Points.AddXY(x, val);  
+
+                ser_unw.Points.AddXY(i, currentValue);
+
+                if (i == pos_x)
+                {
+                    ser_p.Points.AddXY(i, currentValue);
+                }  
             }
       
-            hc.Series.Add(ser);
-            hc.Series.Add(ser_p);
-            if(DrawUnwrup)hc.Series.Add(ser_unw);
+            chart.Series.Add(ser);
+            chart.Series.Add(ser_p);
+
+            if (DrawUnwrup)
+            {
+                chart.Series.Add(ser_unw);
+            }
 
 
             //////////////////vert
@@ -115,55 +120,54 @@ namespace rab1
             ser_p.MarkerStyle = MarkerStyle.Circle;
             ser_p.Color = Color.Blue;
 
-            val = 0; add = 0; add1 = 0;
+            currentValue = 0; add = 0; add1 = 0;
             for (int x = 1; x < h1; ++x)
             {
 
-                val = bufy[x];
-                ser1.Points.AddXY(x, val);
-                val += add;
-                add1 = bufy[x - 1] - val + add;
+                currentValue = bufy[x];
+                ser1.Points.AddXY(x, currentValue);
+                currentValue += add;
+                add1 = bufy[x - 1] - currentValue + add;
                 if (Math.Abs(add1) > 128)
                 {
                     add += add1;
-                    val += add1;
+                    currentValue += add1;
                 }
-                ser_unw1.Points.AddXY(x, val);
-                if (x == pos_y) ser_p.Points.AddXY(x, val);  
+                ser_unw1.Points.AddXY(x, currentValue);
+                if (x == pos_y) ser_p.Points.AddXY(x, currentValue);  
             }
 
             vc.Series.Add(ser1);
             vc.Series.Add(ser_p);
-            if (DrawUnwrup) vc.Series.Add(ser_unw1);      
+
+            if (DrawUnwrup)
+            {
+                vc.Series.Add(ser_unw1);
+            }      
         }
 
         private void GraphForm_Resize(object sender, EventArgs e)
         {
-            hc.Top = 3;
+            chart.Top = 3;
             vc.Top = Height / 2 - 25;
             vc.Height = Height / 2 - 25;
-            hc.Height = Height / 2 - 25;
-
-           // vc.ChartAreas[0].AxisX.Interval = 100;
-
-           // double oo = vc.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
-            
+            chart.Height = Height / 2 - 25;
         }
 
 
         private void EnableSelection()
         {
-            this.hc.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            this.hc.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = false;
-            this.hc.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
-            this.hc.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = false;
+            this.chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            this.chart.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = false;
+            this.chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
+            this.chart.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = false;
             this.vc.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             this.vc.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = false;
             this.vc.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
             this.vc.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = false;
 
-            this.hc.AxisViewChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ViewEventArgs>(this._AxisViewChanged);
-            this.vc.AxisViewChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ViewEventArgs>(this._AxisViewChanged);
+            this.chart.AxisViewChanged += this._AxisViewChanged;
+            this.vc.AxisViewChanged += this._AxisViewChanged;
         }
 
         private void _AxisViewChanged(object sender, ViewEventArgs e)
@@ -171,10 +175,10 @@ namespace rab1
             if (sender is Chart)
             {
                 double mx, mn, interv;
-                if(((Chart)sender).Name == "hc")
+                if(((Chart)sender).Name == "chart")
                 {
-                    mx = hc.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
-                    mn = hc.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
+                    mx = chart.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
+                    mn = chart.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
                     if (Math.Abs(mx - hscmax)> 15 && Math.Abs(mn - hscmin)>15)
                     {
                         hscmax = mx;
@@ -184,8 +188,8 @@ namespace rab1
                         if (mx - mn < 5) mx = mn + 5;                     
                         interv = (int)Math.Abs(mx - mn) / 5;
                         interv = (int)interv - (int)interv % 5;
-                        hc.ChartAreas[0].AxisX.ScaleView.Zoom(mn+1, mx+1);
-                        hc.ChartAreas[0].AxisX.Interval = interv;
+                        chart.ChartAreas[0].AxisX.ScaleView.Zoom(mn+1, mx+1);
+                        chart.ChartAreas[0].AxisX.Interval = interv;
                     }
                 
                 }

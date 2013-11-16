@@ -87,12 +87,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CameraForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CameraForm.Designer.cs">
-      <DependentUpon>CameraForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="FiltrClass.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,6 +116,12 @@
     </Compile>
     <Compile Include="Forms\FiltrationForm.Designer.cs">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HystogrammForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HystogrammForm.Designer.cs">
+      <DependentUpon>HystogrammForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TableGenerateForm.cs">
       <SubType>Form</SubType>
@@ -163,16 +163,9 @@
     <Compile Include="ImageHelper.cs" />
     <Compile Include="Forms\PopupProgressBar.cs" />
     <Compile Include="ImageProcessor.cs" />
-    <Compile Include="Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrameworkManager.cs" />
     <Compile Include="ImageGetter.cs" />
     <Compile Include="Pi_Class1.cs" />
-    <Compile Include="SumClass.cs" />
     <Compile Include="Forms\GraphForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,9 +186,6 @@
     <EmbeddedResource Include="Forms\BackgroundImagesGeneratorForm.resx">
       <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CameraForm.resx">
-      <DependentUpon>CameraForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChooseForm.resx">
       <DependentUpon>ChooseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -205,14 +195,14 @@
     <EmbeddedResource Include="Forms\FiltrationForm.resx">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HystogrammForm.resx">
+      <DependentUpon>HystogrammForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TableGenerateForm.resx">
       <DependentUpon>TableGenerateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlaneParamsForm.resx">
       <DependentUpon>PlaneParamsForm.cs</DependentUpon>
@@ -242,9 +232,6 @@
     <EmbeddedResource Include="Forms\StretchImageForm.resx">
       <DependentUpon>StretchImageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ClassDiagram4.cd" />
-    <None Include="ClassDiagram5.cd" />
-    <None Include="ClassDiagram6.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

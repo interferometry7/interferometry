@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using rab1.Forms;
 
 namespace rab1
 {
@@ -261,11 +263,15 @@ namespace rab1
                     if (b > pr_obr) { grBack.DrawRectangle(new Pen(Color.FromArgb(146, 24, 47)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);  }
                 }
             }
+             
             MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
            
 
             pc1.Refresh();
             f_sin.Show();
+
+            //HystogrammForm hystogrammForm = new HystogrammForm(bmp_r, n2 + 3, n1 + 3);
+            //hystogrammForm.Show();
 
         }
 

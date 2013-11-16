@@ -94,7 +94,6 @@
             this.imageWidth = new System.Windows.Forms.Label();
             this.imageHeight = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -103,7 +102,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -111,6 +109,8 @@
             this.greenComponentLabel = new System.Windows.Forms.Label();
             this.blueComponentLabel = new System.Windows.Forms.Label();
             this.colorComponentsPanel = new System.Windows.Forms.Panel();
+            this.xLabel = new System.Windows.Forms.Label();
+            this.yLabel = new System.Windows.Forms.Label();
             this.pictureBox13 = new rab1.CustomPictureBox();
             this.pictureBox12 = new rab1.CustomPictureBox();
             this.pictureBox11 = new rab1.CustomPictureBox();
@@ -151,7 +151,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(1027, 36);
+            this.button3.Location = new System.Drawing.Point(1111, 36);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(55, 28);
             this.button3.TabIndex = 5;
@@ -251,7 +251,7 @@
             // button12
             // 
             this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button12.Location = new System.Drawing.Point(970, 36);
+            this.button12.Location = new System.Drawing.Point(1054, 36);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(51, 28);
             this.button12.TabIndex = 30;
@@ -293,7 +293,7 @@
             this.groupBox1.Controls.Add(this.radioButton6);
             this.groupBox1.Controls.Add(this.radioButton8);
             this.groupBox1.Controls.Add(this.radioButton7);
-            this.groupBox1.Location = new System.Drawing.Point(970, 104);
+            this.groupBox1.Location = new System.Drawing.Point(1054, 104);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(32, 602);
             this.groupBox1.TabIndex = 34;
@@ -441,7 +441,7 @@
             this.cameraToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1094, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1178, 24);
             this.menuStrip1.TabIndex = 42;
             this.menuStrip1.Text = "Файл";
             // 
@@ -767,7 +767,7 @@
             // imageWidth
             // 
             this.imageWidth.AutoSize = true;
-            this.imageWidth.Location = new System.Drawing.Point(668, 36);
+            this.imageWidth.Location = new System.Drawing.Point(6, 34);
             this.imageWidth.Name = "imageWidth";
             this.imageWidth.Size = new System.Drawing.Size(15, 13);
             this.imageWidth.TabIndex = 52;
@@ -776,7 +776,7 @@
             // imageHeight
             // 
             this.imageHeight.AutoSize = true;
-            this.imageHeight.Location = new System.Drawing.Point(724, 37);
+            this.imageHeight.Location = new System.Drawing.Point(62, 35);
             this.imageHeight.Name = "imageHeight";
             this.imageHeight.Size = new System.Drawing.Size(13, 13);
             this.imageHeight.TabIndex = 53;
@@ -784,23 +784,13 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(671, 66);
+            this.button4.Location = new System.Drawing.Point(660, 32);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 54;
             this.button4.Text = "2Pi";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click_1);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(752, 56);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 42);
-            this.button5.TabIndex = 56;
-            this.button5.Text = "Вычитание плоскости";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // groupBox2
             // 
@@ -809,7 +799,7 @@
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.radioButton18);
             this.groupBox2.Controls.Add(this.radioButton19);
-            this.groupBox2.Location = new System.Drawing.Point(862, 104);
+            this.groupBox2.Location = new System.Drawing.Point(946, 104);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(32, 120);
             this.groupBox2.TabIndex = 35;
@@ -860,7 +850,7 @@
             // 
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(909, 90);
+            this.label20.Location = new System.Drawing.Point(993, 90);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(39, 13);
             this.label20.TabIndex = 58;
@@ -870,7 +860,7 @@
             // 
             this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(1024, 90);
+            this.label21.Location = new System.Drawing.Point(1108, 90);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(18, 13);
             this.label21.TabIndex = 59;
@@ -879,7 +869,7 @@
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(893, 37);
+            this.button6.Location = new System.Drawing.Point(977, 37);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(55, 28);
             this.button6.TabIndex = 6;
@@ -887,19 +877,10 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 10);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(124, 13);
-            this.label6.TabIndex = 60;
-            this.label6.Text = "Цветовые компоненты";
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(7, 39);
+            this.label15.Location = new System.Drawing.Point(2, 5);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(15, 13);
             this.label15.TabIndex = 61;
@@ -908,7 +889,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(7, 64);
+            this.label16.Location = new System.Drawing.Point(45, 5);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(15, 13);
             this.label16.TabIndex = 62;
@@ -917,7 +898,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 92);
+            this.label19.Location = new System.Drawing.Point(88, 5);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(14, 13);
             this.label19.TabIndex = 63;
@@ -926,7 +907,7 @@
             // redComponentLabel
             // 
             this.redComponentLabel.AutoSize = true;
-            this.redComponentLabel.Location = new System.Drawing.Point(35, 39);
+            this.redComponentLabel.Location = new System.Drawing.Point(23, 5);
             this.redComponentLabel.Name = "redComponentLabel";
             this.redComponentLabel.Size = new System.Drawing.Size(13, 13);
             this.redComponentLabel.TabIndex = 64;
@@ -935,7 +916,7 @@
             // greenComponentLabel
             // 
             this.greenComponentLabel.AutoSize = true;
-            this.greenComponentLabel.Location = new System.Drawing.Point(35, 64);
+            this.greenComponentLabel.Location = new System.Drawing.Point(65, 5);
             this.greenComponentLabel.Name = "greenComponentLabel";
             this.greenComponentLabel.Size = new System.Drawing.Size(13, 13);
             this.greenComponentLabel.TabIndex = 65;
@@ -944,7 +925,7 @@
             // blueComponentLabel
             // 
             this.blueComponentLabel.AutoSize = true;
-            this.blueComponentLabel.Location = new System.Drawing.Point(36, 92);
+            this.blueComponentLabel.Location = new System.Drawing.Point(109, 5);
             this.blueComponentLabel.Name = "blueComponentLabel";
             this.blueComponentLabel.Size = new System.Drawing.Size(13, 13);
             this.blueComponentLabel.TabIndex = 66;
@@ -954,17 +935,38 @@
             // 
             this.colorComponentsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.colorComponentsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.colorComponentsPanel.Controls.Add(this.label6);
+            this.colorComponentsPanel.Controls.Add(this.yLabel);
+            this.colorComponentsPanel.Controls.Add(this.xLabel);
             this.colorComponentsPanel.Controls.Add(this.blueComponentLabel);
             this.colorComponentsPanel.Controls.Add(this.label15);
             this.colorComponentsPanel.Controls.Add(this.greenComponentLabel);
             this.colorComponentsPanel.Controls.Add(this.label16);
             this.colorComponentsPanel.Controls.Add(this.redComponentLabel);
             this.colorComponentsPanel.Controls.Add(this.label19);
-            this.colorComponentsPanel.Location = new System.Drawing.Point(838, 239);
+            this.colorComponentsPanel.Controls.Add(this.imageHeight);
+            this.colorComponentsPanel.Controls.Add(this.imageWidth);
+            this.colorComponentsPanel.Location = new System.Drawing.Point(741, 32);
             this.colorComponentsPanel.Name = "colorComponentsPanel";
-            this.colorComponentsPanel.Size = new System.Drawing.Size(131, 114);
+            this.colorComponentsPanel.Size = new System.Drawing.Size(230, 64);
             this.colorComponentsPanel.TabIndex = 67;
+            // 
+            // xLabel
+            // 
+            this.xLabel.AutoSize = true;
+            this.xLabel.Location = new System.Drawing.Point(146, 5);
+            this.xLabel.Name = "xLabel";
+            this.xLabel.Size = new System.Drawing.Size(12, 13);
+            this.xLabel.TabIndex = 67;
+            this.xLabel.Text = "x";
+            // 
+            // yLabel
+            // 
+            this.yLabel.AutoSize = true;
+            this.yLabel.Location = new System.Drawing.Point(184, 5);
+            this.yLabel.Name = "yLabel";
+            this.yLabel.Size = new System.Drawing.Size(12, 13);
+            this.yLabel.TabIndex = 68;
+            this.yLabel.Text = "y";
             // 
             // pictureBox13
             // 
@@ -972,7 +974,7 @@
             this.pictureBox13.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox13.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox13.Location = new System.Drawing.Point(900, 163);
+            this.pictureBox13.Location = new System.Drawing.Point(984, 163);
             this.pictureBox13.Name = "pictureBox13";
             this.pictureBox13.Size = new System.Drawing.Size(48, 48);
             this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -986,7 +988,7 @@
             this.pictureBox12.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox12.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox12.Location = new System.Drawing.Point(900, 109);
+            this.pictureBox12.Location = new System.Drawing.Point(984, 109);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(48, 48);
             this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -999,7 +1001,7 @@
             this.pictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox11.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox11.Location = new System.Drawing.Point(1008, 658);
+            this.pictureBox11.Location = new System.Drawing.Point(1092, 658);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(48, 48);
             this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1012,7 +1014,7 @@
             this.pictureBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox10.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox10.Location = new System.Drawing.Point(1008, 597);
+            this.pictureBox10.Location = new System.Drawing.Point(1092, 597);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(48, 48);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1025,7 +1027,7 @@
             this.pictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox9.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox9.Location = new System.Drawing.Point(1008, 543);
+            this.pictureBox9.Location = new System.Drawing.Point(1092, 543);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(48, 48);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1039,7 +1041,7 @@
             this.pictureBox8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox8.Location = new System.Drawing.Point(1008, 489);
+            this.pictureBox8.Location = new System.Drawing.Point(1092, 489);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(48, 48);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1053,7 +1055,7 @@
             this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox7.Location = new System.Drawing.Point(1008, 435);
+            this.pictureBox7.Location = new System.Drawing.Point(1092, 435);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(48, 48);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1067,7 +1069,7 @@
             this.pictureBox6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox6.Location = new System.Drawing.Point(1008, 381);
+            this.pictureBox6.Location = new System.Drawing.Point(1092, 381);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(48, 48);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1081,7 +1083,7 @@
             this.pictureBox5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox5.Location = new System.Drawing.Point(1008, 327);
+            this.pictureBox5.Location = new System.Drawing.Point(1092, 327);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(48, 48);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1095,7 +1097,7 @@
             this.pictureBox4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox4.Location = new System.Drawing.Point(1008, 273);
+            this.pictureBox4.Location = new System.Drawing.Point(1092, 273);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(48, 48);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1109,7 +1111,7 @@
             this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox3.Location = new System.Drawing.Point(1008, 219);
+            this.pictureBox3.Location = new System.Drawing.Point(1092, 219);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(48, 48);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1123,7 +1125,7 @@
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox2.Location = new System.Drawing.Point(1008, 163);
+            this.pictureBox2.Location = new System.Drawing.Point(1092, 163);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(48, 48);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1153,7 +1155,7 @@
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox1.Location = new System.Drawing.Point(1008, 109);
+            this.pictureBox1.Location = new System.Drawing.Point(1092, 109);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(48, 48);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1164,7 +1166,7 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1094, 735);
+            this.ClientSize = new System.Drawing.Size(1178, 735);
             this.Controls.Add(this.colorComponentsPanel);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.label21);
@@ -1172,11 +1174,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox13);
             this.Controls.Add(this.pictureBox12);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.imageHeight);
-            this.Controls.Add(this.imageWidth);
             this.Controls.Add(this.pictureBox10);
             this.Controls.Add(this.pictureBox9);
             this.Controls.Add(this.panel3);
@@ -1304,7 +1303,6 @@
         private System.Windows.Forms.ToolStripMenuItem сглаживаниеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
         private CustomPictureBox mainPictureBox;
-        private System.Windows.Forms.Button button5;
         private CustomPictureBox pictureBox12;
         private CustomPictureBox pictureBox13;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -1324,7 +1322,6 @@
         private System.Windows.Forms.ToolStripMenuItem транспонированиеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem определениеПлоскостиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem расшифровка2piToolStripMenuItem;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label19;
@@ -1332,6 +1329,8 @@
         private System.Windows.Forms.Label greenComponentLabel;
         private System.Windows.Forms.Label blueComponentLabel;
         private System.Windows.Forms.Panel colorComponentsPanel;
+        private System.Windows.Forms.Label yLabel;
+        private System.Windows.Forms.Label xLabel;
        
       
     }
