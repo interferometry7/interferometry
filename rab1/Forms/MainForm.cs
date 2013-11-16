@@ -1204,20 +1204,22 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void расшифровка2piToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if ((pictureBox9.Image == null) || (pictureBox10.Image == null) || (pictureBox11.Image == null))
+            {
+                MessageBox.Show("Изображения пустые");
+                return;
+            }
 
-        
-           // this.DIALOG_CHINA(this.RSHFRT);
             int sN1=167;
             int sN2=241;
             int Diag=9;
-            int pr = 30;                       // Отсечение
+
             Image[] imagesF = new Image[4];
 
             imagesF[0] = pictureBox9.Image;     // 1 фаза
             imagesF[1] = pictureBox10.Image;    // 2 фаза
             imagesF[2] = pictureBox11.Image;    // 3 ограничение по контуру
-            //imagesF[3] = pictureBox8.Image; 
-           //Pi_Class1.pi2_rshfr(Image[] img, PictureBox pictureBox01,  sN1,  sN2, int Diag)
+
             Pi_Class1.pi2_rshfr(imagesF,  pictureBox8, sN1, sN2, Diag);
         }
 /*
