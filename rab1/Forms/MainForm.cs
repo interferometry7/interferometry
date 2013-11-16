@@ -796,7 +796,7 @@ namespace rab1.Forms
         private void relayout()
         {
             this.panel1.Size = new Size(this.Size.Width - 160, this.Size.Height - 150);
-            this.mainPictureBox.Size = new Size(this.panel1.Size.Width - 120, this.panel1.Size.Height - 36);
+            this.mainPictureBox.Size = new Size(this.panel1.Size.Width - 140, this.panel1.Size.Height - 36);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton12_CheckedChanged(object sender, EventArgs e)
@@ -1202,7 +1202,7 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                                  Расшифровка
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void расшифровка2piToolStripMenuItem_Click(object sender, EventArgs e)
+        private void unwrapClicked(object sender, EventArgs e)
         {
             if ((pictureBox9.Image == null) || (pictureBox10.Image == null) || (pictureBox11.Image == null))
             {
@@ -1210,18 +1210,41 @@ namespace rab1.Forms
                 return;
             }
 
-            int sN1=167;
-            int sN2=241;
-            int Diag=9;
-
-            Image[] imagesF = new Image[4];
+            Image[] imagesF = new Image[3];
 
             imagesF[0] = pictureBox9.Image;     // 1 фаза
             imagesF[1] = pictureBox10.Image;    // 2 фаза
             imagesF[2] = pictureBox11.Image;    // 3 ограничение по контуру
 
-            Pi_Class1.pi2_rshfr(imagesF,  pictureBox8, sN1, sN2, Diag);
+            UnwrapForm unwrapForm = new UnwrapForm(imagesF);
+            unwrapForm.imageUnwrapped+=UnwrapFormOnImageUnwrapped;
+            unwrapForm.Show();
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void UnwrapFormOnImageUnwrapped(Bitmap unwrappedImage)
+        {
+            pictureBox8.Image = unwrappedImage;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void mainPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            PictureBox pictureBox = (PictureBox) sender;
+
+            if (pictureBox.Image != null)
+            {
+                Bitmap currentBitmap = (Bitmap) pictureBox.Image;
+                Color currentColor = currentBitmap.GetPixel(e.X, e.Y);
+
+                int redComponent = currentColor.R;
+                int greenComponent = currentColor.G;
+                int blueComponent = currentColor.B;
+
+                redComponentLabel.Text = Convert.ToString(redComponent);
+                greenComponentLabel.Text = Convert.ToString(greenComponent);
+                blueComponentLabel.Text = Convert.ToString(blueComponent);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
         private void RSHFRT(object sender, EventArgs e)
         {

@@ -387,7 +387,7 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_rshfr(Image[] img, PictureBox pictureBox01, int sN1, int sN2, int Diag) // Расшифровка
+        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag) // Расшифровка
         {
             China(sN1, sN2);                                           // Вычисление формулы 
 
@@ -400,7 +400,7 @@ namespace rab1
             rash_2pi(bmp1, bmp2, sN1, sN2, Diag, Z);     //  РАСШИФРОВКА (Заполнение Z[,])
             Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
 
-            pictureBox01.Image = bmp;
+            return bmp;
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
@@ -491,7 +491,7 @@ namespace rab1
             int b2;
 
 
-            //BitmapData data = ImageProcessor.getBitmapData(bmp);
+            BitmapData data = ImageProcessor.getBitmapData(bmp);
 
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
             MessageBox.Show(" Max = " + b2_max + " Min =  " + b2_min);
@@ -506,12 +506,15 @@ namespace rab1
                 {
                     b2 = (int)((Z[i, j] - b2_min) *  max);
                     //if (b2 < 0 || b2 > 255) b2 = 0;
-                    //ImageProcessor.setPixel(data, i, j, Color.FromArgb(b2, b2, b2));       
-                     bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));                  
+                    ImageProcessor.setPixel(data, i, j, Color.FromArgb(b2, b2, b2));       
+                    //bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));                  
                 }
-                done++; PopupProgressBar.setProgress(done, all);
+                done++; 
+                PopupProgressBar.setProgress(done, all);
             }
+
             PopupProgressBar.close();
+            bmp.UnlockBits(data);
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
 
