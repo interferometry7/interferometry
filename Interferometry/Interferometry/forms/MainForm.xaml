@@ -1,0 +1,40 @@
+﻿<Window x:Class="Interferometry.forms.MainForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Главное окно" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="616" Width="715" xmlns:my="clr-namespace:Interferometry" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="612*" />
+        </Grid.ColumnDefinitions>
+        <TabControl Height="100" Name="tabControl1" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <TabItem Header="Работа с файлами" Name="tabItem1">
+                <Grid>
+                    <Button Content="Загрузить" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+                    <Button Content="Сохранить" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button2" VerticalAlignment="Top" Width="75" />
+                    <Button Content="Загрузить 8 изображений" Height="23" HorizontalAlignment="Left" Margin="87,6,0,0" Name="button5" VerticalAlignment="Top" Width="168" />
+                    <Button Content="Сохранить 8 изображений" Height="23" HorizontalAlignment="Left" Margin="87,43,0,0" Name="button6" VerticalAlignment="Top" Width="168" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Получение фазы" Name="tabItem2">
+                <Grid>
+                    <Button Content="Atan (с записью в 9 и 10 изображение)" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button3" VerticalAlignment="Top" Width="233" ClipToBounds="False" />
+                    <Button Content="Atan (с записью в 12 и 13 изображение)" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button4" VerticalAlignment="Top" Width="233" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Восстановление фазы" Name="tabItem3">
+                <Grid>
+                    <Button Content="Построить таблицу остатков" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button7" VerticalAlignment="Top" Width="188" />
+                    <Button Content="Определить плоскость" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button8" VerticalAlignment="Top" Width="188" />
+                    <Button Content="Расшифровка" Height="23" HorizontalAlignment="Left" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Width="100" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <ScrollViewer Margin="12,106,147,12" Name="scrollViewer1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid Name="grid1" Background="#5A000000">
+                <Image Name="mainImage" Stretch="None" />
+            </Grid>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" HorizontalAlignment="Right" Margin="0,106,12,12" Name="imageContainersScroller" Width="129" Background="#5A000000" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+    </Grid>
+</Window>

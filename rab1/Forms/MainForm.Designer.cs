@@ -63,10 +63,8 @@
             this.фазаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTANToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN123ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aTANRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN2123GraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN2123456ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PRMTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aTAN2123412567813ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,8 +107,8 @@
             this.greenComponentLabel = new System.Windows.Forms.Label();
             this.blueComponentLabel = new System.Windows.Forms.Label();
             this.colorComponentsPanel = new System.Windows.Forms.Panel();
-            this.xLabel = new System.Windows.Forms.Label();
             this.yLabel = new System.Windows.Forms.Label();
+            this.xLabel = new System.Windows.Forms.Label();
             this.pictureBox13 = new rab1.CustomPictureBox();
             this.pictureBox12 = new rab1.CustomPictureBox();
             this.pictureBox11 = new rab1.CustomPictureBox();
@@ -496,13 +494,11 @@
             // 
             this.aTANToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aTAN123ToolStripMenuItem,
-            this.aTANRGBToolStripMenuItem,
             this.aTAN2123GraphToolStripMenuItem,
             this.aTAN2123456ToolStripMenuItem,
-            this.PRMTRToolStripMenuItem,
             this.aTAN2123412567813ToolStripMenuItem});
             this.aTANToolStripMenuItem.Name = "aTANToolStripMenuItem";
-            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.aTANToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aTANToolStripMenuItem.Text = "ATAN";
             // 
             // aTAN123ToolStripMenuItem
@@ -511,13 +507,6 @@
             this.aTAN123ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTAN123ToolStripMenuItem.Text = "ATAN2 1234 ->9 5678->10";
             this.aTAN123ToolStripMenuItem.Click += new System.EventHandler(this.aTAN123ToolStripMenuItem_Click_1);
-            // 
-            // aTANRGBToolStripMenuItem
-            // 
-            this.aTANRGBToolStripMenuItem.Name = "aTANRGBToolStripMenuItem";
-            this.aTANRGBToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.aTANRGBToolStripMenuItem.Text = "ATAN2 RGB";
-            this.aTANRGBToolStripMenuItem.Click += new System.EventHandler(this.aTANRGBToolStripMenuItem_Click_1);
             // 
             // aTAN2123GraphToolStripMenuItem
             // 
@@ -532,12 +521,6 @@
             this.aTAN2123456ToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.aTAN2123456ToolStripMenuItem.Text = "ATAN2 1234 5678";
             this.aTAN2123456ToolStripMenuItem.Click += new System.EventHandler(this.aTAN2123456ToolStripMenuItem_Click);
-            // 
-            // PRMTRToolStripMenuItem
-            // 
-            this.PRMTRToolStripMenuItem.Name = "PRMTRToolStripMenuItem";
-            this.PRMTRToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.PRMTRToolStripMenuItem.Text = "Параметры";
             // 
             // aTAN2123412567813ToolStripMenuItem
             // 
@@ -950,15 +933,6 @@
             this.colorComponentsPanel.Size = new System.Drawing.Size(230, 64);
             this.colorComponentsPanel.TabIndex = 67;
             // 
-            // xLabel
-            // 
-            this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(146, 5);
-            this.xLabel.Name = "xLabel";
-            this.xLabel.Size = new System.Drawing.Size(12, 13);
-            this.xLabel.TabIndex = 67;
-            this.xLabel.Text = "x";
-            // 
             // yLabel
             // 
             this.yLabel.AutoSize = true;
@@ -967,6 +941,15 @@
             this.yLabel.Size = new System.Drawing.Size(12, 13);
             this.yLabel.TabIndex = 68;
             this.yLabel.Text = "y";
+            // 
+            // xLabel
+            // 
+            this.xLabel.AutoSize = true;
+            this.xLabel.Location = new System.Drawing.Point(146, 5);
+            this.xLabel.Name = "xLabel";
+            this.xLabel.Size = new System.Drawing.Size(12, 13);
+            this.xLabel.TabIndex = 67;
+            this.xLabel.Text = "x";
             // 
             // pictureBox13
             // 
@@ -1269,11 +1252,9 @@
         private System.Windows.Forms.ToolStripMenuItem Save8ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aTANToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aTAN123ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aTANRGBToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem aTAN2123GraphToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cameraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem PRMTRToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem canon500DToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сделатьСнимокToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Cadr8ToolStripMenuItem;

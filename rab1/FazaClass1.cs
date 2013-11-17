@@ -461,9 +461,6 @@ namespace rab1
             bmp4.UnlockBits(data4);
             bmp5.UnlockBits(data5);
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
             if (imageProcessed != null)
             {
                 imageProcessed(bmp5);
@@ -483,9 +480,6 @@ namespace rab1
 
                 imageProcessedForOpenGL(newList);
             }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
     }
 }
