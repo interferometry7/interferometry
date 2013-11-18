@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -66,6 +67,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="custom_visual_components\PopupProgressBar.cs" />
     <Compile Include="FilesHelper.cs" />
     <Compile Include="forms\MainForm.xaml.cs">
       <DependentUpon>MainForm.xaml</DependentUpon>
@@ -76,8 +78,10 @@
     <Compile Include="forms\UnwrapForm.designer.cs">
       <DependentUpon>UnwrapForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageProcessor.cs" />
     <Compile Include="interfaces\FilesHelperDelegate.cs" />
     <Compile Include="interfaces\ImageContainerDelegate.cs" />
+    <Compile Include="math_classes\Pi_Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

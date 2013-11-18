@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
@@ -34,11 +35,6 @@ namespace Interferometry.forms
             imageContainersList = new List<ImageContainer>();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            mainImage.Source = FilesHelper.loadImege();
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Grid newScrollerContent = new Grid();
@@ -64,20 +60,25 @@ namespace Interferometry.forms
             imageContainersScroller.Content = newScrollerContent;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        //ImageContainerDelegate Methods
+      
+        
+        
+        //Методы из пункта "Работа с файлами"
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void exportImage(ImageContainer imageContainer, BitmapImage bitmapImage)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
-            mainImage.Source = bitmapImage;
+            ImageSource newSource = FilesHelper.loadImege();
+
+            if (newSource != null)
+            {
+                mainImage.Source = newSource;
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public BitmapImage getImageToLoad(ImageContainer imageContainer)
-        {
-            return (BitmapImage)mainImage.Source;
-        }
+
+
+
+        //Методы из пункта "Расшифровка"
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
@@ -94,8 +95,29 @@ namespace Interferometry.forms
             imagesF[2] = FilesHelper.bitmapImageToBitmap(imageContainersList[10].getImage());    // 3 ограничение по контуру
 
             UnwrapForm unwrapForm = new UnwrapForm(imagesF);
-            //unwrapForm.imageUnwrapped += UnwrapFormOnImageUnwrapped;
+            unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
             unwrapForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void unwrapFormOnImageUnwrapped(Bitmap unwrappedImage)
+        {
+            imageContainersList[7].setImage(unwrappedImage);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      
+
+
+
+        //ImageContainerDelegate Methods
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void exportImage(ImageContainer imageContainer, ImageSource bitmapImage)
+        {
+            mainImage.Source = bitmapImage;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public ImageSource getImageToLoad(ImageContainer imageContainer)
+        {
+            return mainImage.Source;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

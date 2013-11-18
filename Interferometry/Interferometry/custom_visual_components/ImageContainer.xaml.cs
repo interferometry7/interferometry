@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -34,6 +35,11 @@ namespace Interferometry
             return (BitmapImage) image.Source;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setImage(Bitmap bitmap)
+        {
+            image.Source = FilesHelper.bitmapToBitmapImage(bitmap);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -41,14 +47,19 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void onImageClick(object sender, MouseButtonEventArgs e)
         {
-            image.Source = FilesHelper.loadImege();
+            ImageSource newSource = FilesHelper.loadImege();
+
+            if (newSource != null)
+            {
+                image.Source = newSource;
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void exportImageButton_Click(object sender, RoutedEventArgs e)
         {
             if ((image.Source != null) && (myDelegate != null))
             {
-                myDelegate.exportImage(this, (BitmapImage) image.Source);
+                myDelegate.exportImage(this, image.Source);
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

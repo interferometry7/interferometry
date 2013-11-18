@@ -31,9 +31,9 @@ namespace rab1.Forms
                 int secondSineNumber = Convert.ToInt32(sineNumbers2.Text);
                 int poriodsNumber = Convert.ToInt32(periodsNumber.Text);
 
-                //Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber);
+                Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber);
 
-                //imageUnwrapped(result);
+                imageUnwrapped(result);
 
                 Close();
             }
