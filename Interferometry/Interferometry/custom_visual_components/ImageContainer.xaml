@@ -12,10 +12,10 @@
             <RowDefinition Height="100*" />
             <RowDefinition Height="100*" />
         </Grid.RowDefinitions>
-        <Button Content="&lt;-" HorizontalAlignment="Left" Margin="6,6,0,3" Name="button1" Width="25" />
-        <Button Content="-&gt;" HorizontalAlignment="Left" Margin="6,3,0,6" Name="button2" Width="25" Grid.Row="1" />
-        <Grid Margin="37,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000">
-            <Image Name="image1" Stretch="Fill" />
+        <Button Content="&lt;-" HorizontalAlignment="Left" Margin="6,6,0,3" Name="exportImageButton" Width="25" Click="exportImageButton_Click" />
+        <Button Content="-&gt;" HorizontalAlignment="Left" Margin="6,3,0,6" Name="loadImageButton" Width="25" Grid.Row="1" Click="loadImageClicked" />
+        <Grid Margin="37,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick">
+            <Image Name="image" Stretch="Fill" />
         </Grid>
     </Grid>
 </UserControl>

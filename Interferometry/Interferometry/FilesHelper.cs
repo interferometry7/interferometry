@@ -30,10 +30,6 @@ namespace Interferometry
             }
 
             return null;
-
-
-            
-            
         }
     }
 }

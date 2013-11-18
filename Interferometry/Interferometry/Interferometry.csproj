@@ -71,6 +71,7 @@
       <DependentUpon>MainForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="interfaces\FilesHelperDelegate.cs" />
+    <Compile Include="interfaces\ImageContainerDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

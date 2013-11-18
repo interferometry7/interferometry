@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Interferometry.interfaces;
 
 namespace Interferometry
 {
@@ -19,9 +20,34 @@ namespace Interferometry
     /// </summary>
     public partial class ImageContainer : UserControl
     {
+        public ImageContainerDelegate myDelegate;
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public ImageContainer()
         {
             InitializeComponent();
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void onImageClick(object sender, MouseButtonEventArgs e)
+        {
+            image.Source = FilesHelper.loadImege();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void exportImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if ((image.Source != null) && (myDelegate != null))
+            {
+                myDelegate.exportImage(this, (BitmapImage) image.Source);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadImageClicked(object sender, RoutedEventArgs e)
+        {
+            if (myDelegate != null)
+            {
+                image.Source = myDelegate.getImageToLoad(this);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

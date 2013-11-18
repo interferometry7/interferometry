@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Interferometry.interfaces;
 using Image = System.Drawing.Image;
 
 namespace Interferometry.forms
@@ -19,7 +20,7 @@ namespace Interferometry.forms
     /// <summary>
     /// Логика взаимодействия для MainForm.xaml
     /// </summary>
-    public partial class MainForm : Window
+    public partial class MainForm : Window, ImageContainerDelegate
     {
         private List<ImageContainer> imageContainersList;
 
@@ -46,6 +47,7 @@ namespace Interferometry.forms
             for (int i = 0; i < 10; i++)
             {
                 ImageContainer newImageContainer = new ImageContainer();
+                newImageContainer.myDelegate = this;
                 newImageContainer.HorizontalAlignment = HorizontalAlignment.Stretch;
                 newImageContainer.VerticalAlignment = VerticalAlignment.Stretch;
                 newImageContainer.Width = Double.NaN;
@@ -64,9 +66,17 @@ namespace Interferometry.forms
 
 
 
-        //Private Methods
+        //ImageContainerDelegate Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        public void exportImage(ImageContainer imageContainer, BitmapImage bitmapImage)
+        {
+            mainImage.Source = bitmapImage;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public BitmapImage getImageToLoad(ImageContainer imageContainer)
+        {
+            return (BitmapImage)mainImage.Source;
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
