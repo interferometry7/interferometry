@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Interferometry.interfaces;
+using rab1.Forms;
 using Image = System.Drawing.Image;
 
 namespace Interferometry.forms
@@ -44,7 +45,7 @@ namespace Interferometry.forms
             newScrollerContent.HorizontalAlignment = HorizontalAlignment.Stretch;
             newScrollerContent.VerticalAlignment = VerticalAlignment.Stretch;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 11; i++)
             {
                 ImageContainer newImageContainer = new ImageContainer();
                 newImageContainer.myDelegate = this;
@@ -76,6 +77,25 @@ namespace Interferometry.forms
         public BitmapImage getImageToLoad(ImageContainer imageContainer)
         {
             return (BitmapImage)mainImage.Source;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void unwrapClicked(object sender, RoutedEventArgs e)
+        {
+            if ((imageContainersList[8].getImage() == null) || (imageContainersList[9].getImage() == null))
+            {
+                MessageBox.Show("Изображения пустые");
+                return;
+            }
+
+            Image[] imagesF = new Image[3];
+
+            imagesF[0] = FilesHelper.bitmapImageToBitmap(imageContainersList[8].getImage());     // 1 фаза
+            imagesF[1] = FilesHelper.bitmapImageToBitmap(imageContainersList[9].getImage());    // 2 фаза
+            imagesF[2] = FilesHelper.bitmapImageToBitmap(imageContainersList[10].getImage());    // 3 ограничение по контуру
+
+            UnwrapForm unwrapForm = new UnwrapForm(imagesF);
+            //unwrapForm.imageUnwrapped += UnwrapFormOnImageUnwrapped;
+            unwrapForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

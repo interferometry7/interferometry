@@ -26,7 +26,7 @@
                 <Grid>
                     <Button Content="Построить таблицу остатков" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button7" VerticalAlignment="Top" Width="188" />
                     <Button Content="Определить плоскость" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button8" VerticalAlignment="Top" Width="188" />
-                    <Button Content="Расшифровка" Height="23" HorizontalAlignment="Left" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Width="100" />
+                    <Button Content="Расшифровка" Height="23" HorizontalAlignment="Left" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Width="100" Click="unwrapClicked" />
                 </Grid>
             </TabItem>
         </TabControl>
