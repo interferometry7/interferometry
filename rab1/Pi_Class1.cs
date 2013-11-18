@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 using System.Drawing;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using rab1.Forms;
@@ -69,10 +70,12 @@ namespace rab1
         //           Построение таблицы
         //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_China2(Image[] img, int Diag, bool rb, int pr_obr)
+        public static void Graph_China2(Image[] img,  int Diag, bool rb, int pr_obr)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
+
+           
 
             f_sin = new Form();
             f_sin.Size = new Size(max_x + 8, max_y + 8);
@@ -146,25 +149,9 @@ namespace rab1
 
             
             
-            int mxx = 0, mxx_x = 0, mnx_x = 0, cntr = 0;
+//            int mxx = 0, mxx_x = 0, mnx_x = 0, cntr = 0;
             int mnx = 0;
-/*
-           
-           for (; ; )
-            {
-                for (int i = mnx_x; i < n1 + n2; i++)
-                {
-                    cntr = i;
-                    int bb = glbl_faze[i]; if (bb >= 0 && bb != mnx) { mxx = bb; mxx_x = i; break; }
-                }
-                if (cntr >= n1 + n2 - 1) break;                   
-                int m = (mxx_x - mnx_x) / 2;
-                for (int j = mnx_x; j < mnx_x + m; j++) glbl_faze1[j] = mnx;
-                for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
-                mnx_x = mxx_x;
-                mnx = mxx;
-            }
- */
+
 // Отрисовка границ допустимого диапазона(Gold)
             mnx = glbl_faze1[0];
             for (int i = 0; i < n1 + n2; i++)
@@ -179,81 +166,15 @@ namespace rab1
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //     Заполнение  массива bmp_r
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            int r, g, b;
-            int w = img[0].Width;
-            int h = img[0].Height;
-            Bitmap bmp1 = new Bitmap(img[1], w, h);
-            Bitmap bmp2 = new Bitmap(img[0], w, h);
-            Bitmap bmp3 = new Bitmap(img[2], w, h);
-
-            int[,] bmp_r = new int[n2 + 3, n1 + 3];
-            int[] ims1 = new int[h];
-            int[] ims2 = new int[h];
-            int[] ims3 = new int[h];
-
-            Color c, c1;
-
-            int xx0 = 0, yy0 = 0;
-            int xx1 = w, yy1 = h;
-            double fn1 = (double)(n1 - 1) / 255;
-            double fn2 = (double)(n2 - 1) / 255;
-          
-
-            int all = xx1-xx0;
-            int done = 0;
-            PopupProgressBar.show();
-
-            Int32 count = 0;
-            if (rb == true)                                             // ------------- По фигуре из 3 квадрата
-                for (int i = xx0; i < xx1; i++)
-                {
-
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                        c1 = bmp3.GetPixel(i, j);
-                        if (c1.R == 0) ims3[j] = 0;
-                        else                                        // ims1[j] = (int)((double)(r * (n1 - 1)) / 255); 
-                        {
-                            ims3[j] = 1;
-                            c = bmp1.GetPixel(i, j); r = c.R;       ims1[j] = (int)((double)(r) * fn1);  //(b2)
-                            c = bmp2.GetPixel(i, j); r = c.R;       ims2[j] = (int)((double)(r) * fn2);  //(b1) 
-                        }
-
-                    }
-
-                    for (int j = yy0; j < yy1; j++)   
-                      { 
-                           if (ims3[j] != 0) 
-                               { r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; 
-                                 count++; 
-                               } 
-                    
-                     }
-                    done++; PopupProgressBar.setProgress(done, all);
-                }
-            if (rb == false)                                               // --------- По квадратной области
-                for (int i = xx0; i < xx1; i++)
-                {
-
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                        c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int)((double)(r * (n1 - 1)) / 255);  //(b2)
-                        c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int)((double)(r * (n2 - 1)) / 255);  //(b1)   
-                    }
-
-                    for (int j = yy0; j < yy1; j++)
-                    {
-                        r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++;
-                    }
-                }
-
-            PopupProgressBar.close();
             
+            int[,] bmp_r = new int[n2 + 3, n1 + 3];
+            int count=bmp_2pi(img, bmp_r, Diag, pr_obr);
+
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Рисование точек по диагоналям
+            // Рисование точек в таблице по диагоналям
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            int ib2 = 0, ib1 = 0, max_count = 0;
+            int b = 0, ib2 = 0, ib1 = 0, max_count = 0;
             for (ib2 = 0; ib2 < n2 - 1; ib2++)
             {
                 for (ib1 = 0; ib1 < n1 - 1; ib1++)
@@ -275,7 +196,72 @@ namespace rab1
 
         }
 
-        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //     Заполнение  массива bmp_r
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static int bmp_2pi(Image[] img, int[,] bmp_r , int Diag, int pr_obr)
+        {
+           int r,g;
+           int w = img[0].Width;
+           int h = img[0].Height;
+           Bitmap bmp1 = new Bitmap(img[1], w, h);
+           Bitmap bmp2 = new Bitmap(img[0], w, h);
+           Bitmap bmp3 = new Bitmap(img[2], w, h);
+
+
+           int[] ims1 = new int[h];
+           int[] ims2 = new int[h];
+           int[] ims3 = new int[h];
+
+           Color c, c1;
+
+           int xx0 = 0, yy0 = 0;
+           int xx1 = w, yy1 = h;
+           double fn1 = (double) (n1 - 1)/255;
+           double fn2 = (double) (n2 - 1)/255;
+
+   
+           int all = xx1 - xx0;
+           int done = 0;
+           PopupProgressBar.show();
+
+          int count = 0;
+          // ------------------------------------------------------------------------- По фигуре из 3 квадрата
+            for (int i = xx0; i < xx1; i++)
+            {
+                for (int j = yy0; j < yy1; j++)
+                {
+                    c1 = bmp3.GetPixel(i, j);
+                    if (c1.R == 0)
+                    {
+                        ims3[j] = 0;
+                    }
+                    else // ims1[j] = (int)((double)(r * (n1 - 1)) / 255); 
+                    {
+                        ims3[j] = 1;
+                        c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int) ((double) (r)*fn1); //(b2)
+                        c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int) ((double) (r)*fn2); //(b1) 
+                    }
+
+                }
+
+                for (int j = yy0; j < yy1; j++)
+                {
+                    if (ims3[j] != 0)
+                    {
+                        r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++;
+                    }
+
+                }
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+       
+
+        PopupProgressBar.close();
+            return (count);
+        }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------------          
 // ---------------------------------------------         Определение коэффициентов плоскости  z[i,j] = A*i + B*j +C   методом наименьших квадратов     
@@ -395,15 +381,20 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag) // Расшифровка
         {
-            China(sN1, sN2);                                           // Вычисление формулы 
+            China(sN1, sN2);                                          // Вычисление формулы 
+            int pr_obr = 20;                                          // Граница отсечения по количеству попаданий
+            int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                 // Массив точек в таблице 2pi
+            int count = bmp_2pi(img, bmp_r, Diag, pr_obr);
 
             int w = img[0].Width;
             int h = img[0].Height;
             Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
             Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
+            Bitmap bmp3 = new Bitmap(img[2], w, h);     // 2 фаза
             Bitmap bmp  = new Bitmap( w, h);            // Результат
+
             Z = new Int64[w, h];
-            rash_2pi(bmp1, bmp2, sN1, sN2, Diag, Z);     //  РАСШИФРОВКА (Заполнение Z[,])
+            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z);    //  РАСШИФРОВКА (Заполнение Z[,])
             Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
 
             return bmp;
@@ -411,7 +402,7 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, int n1, int n2, int Diag, Int64[,] Z)
+        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z)
         {
             GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
             int b1, b2, b3, ib1, ib2;
@@ -420,9 +411,13 @@ namespace rab1
 
             BitmapData data1 = ImageProcessor.getBitmapData(bmp1);
             BitmapData data2 = ImageProcessor.getBitmapData(bmp2);
+            BitmapData data3 = ImageProcessor.getBitmapData(bmp3);  // Маска
+
             Color c;
             double fn1 = (double)(n1 - 1) / 255;
             double fn2 = (double)(n2 - 1) / 255;
+
+
            
 
             int all = w;  int done = 0;   PopupProgressBar.show();   
@@ -431,18 +426,46 @@ namespace rab1
             {
                 for (int j = 0; j < h; j++)
                 {
-                    c = ImageProcessor.getPixel(i, j, data1); b1 = c.R; ib1 = (int)(fn1*b1);  // c = bmp1.GetPixel(i, j);  
-                    c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int)(fn2*b2);  // c = bmp2.GetPixel(i, j);
-                    b3 = glbl_faze1[ib2 + (n1 - ib1)] ;
-                    Z[i, j] = (n1) * b3 + ib1;                                               // glbl_faze1[ib2 + (n1 - ib1)];
-                  
+                    c = ImageProcessor.getPixel(i, j, data1);
+                    b1 = c.R;
+                    ib1 = (int) (fn1*b1); // c = bmp1.GetPixel(i, j);                   
+                    c = ImageProcessor.getPixel(i, j, data2);
+                    b2 = c.R;
+                    ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
+                    /*                  if ((i==ii) && (j==jj))
+                    {
+                        d1 = b1;
+                        id1 = ib1;
+                        d2 = b2;
+                        id2 = ib2;
+                        ib3 = glbl_faze1[ib2 + (n1 - ib1)];
+                        x = (n1) * ib3 + ib1;   
+                    }
+   */
+                    c = ImageProcessor.getPixel(i, j, data3);
+                    if (bmp_r[ib2, ib1] > pr_obr && c.R != 0 )
+                    {
+                        b3 = glbl_faze1[ib2 + (n1 - ib1)];
+                        Z[i, j] = (n1)*b3 + ib1; // glbl_faze1[ib2 + (n1 - ib1)];
+                    }
                 }
                 done++; PopupProgressBar.setProgress(done, all);
             }
+            //int d1 = 0, d2 = 0, id1 = 0, id2 = 0, ib3 = 0, x = 0;
+            //int ii = 1300; int jj = 536;
+            //int ii = 19 * (n1 - 1) / 255; int jj = 237 * (n2 - 1) / 255;
+            //int ii = 1294; int jj = 546;
+            //Color c1 = ImageProcessor.getPixel(ii, jj, data1);
+            //Color c2 = ImageProcessor.getPixel(jj, ii, data2);
+            //int d1 = c1.R;
+            //int d2 = c2.R;
+          //  int dd1 = (int)Z[ii, jj];
+          //  int dd2 = (int)Z[jj, ii];
+          //  MessageBox.Show(" (" + ii + "," + jj + ")= " + " cx= " + d1 + " cy = " + d2 + " ib1= " + id1 + " ib2 = " + id2 + " ib3 = " + ib3 + " x = " + x);
 
             bmp1.UnlockBits(data1);
             bmp2.UnlockBits(data2);
-
+            bmp3.UnlockBits(data3);
             PopupProgressBar.close();
          }
            
@@ -483,6 +506,7 @@ namespace rab1
                 mnx = mxx;
             }
 
+         
            // for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i.ToString() + "  =  " + pf.ToString()); }    
 
         }
@@ -518,9 +542,20 @@ namespace rab1
                 done++; 
                 PopupProgressBar.setProgress(done, all);
             }
-
+/*          
+            int ii = 1300; int jj = 536;
+            Color c1 = ImageProcessor.getPixel(ii, jj, data);
+           
+            int d1 = c1.R;
+     
+            int dd1 = (int)Z[ii, jj];
+            int dd2 = (int)((Z[ii, jj] - b2_min) * max);
+            MessageBox.Show("  Z = " + dd1 + "  Z  255 = " + dd2);
+*/
             PopupProgressBar.close();
             bmp.UnlockBits(data);
+
+          
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
 

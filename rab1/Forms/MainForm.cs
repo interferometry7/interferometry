@@ -1204,7 +1204,7 @@ namespace rab1.Forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, EventArgs e)
         {
-            if ((pictureBox9.Image == null) || (pictureBox10.Image == null))
+            if ((pictureBox9.Image == null) || (pictureBox10.Image == null) || (pictureBox11.Image == null))
             {
                 MessageBox.Show("Изображения пустые");
                 return;
