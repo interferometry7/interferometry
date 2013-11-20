@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using rab1;
 
-public delegate void ImageUnwrapped(Bitmap unwrappedImage);
+public delegate void ImageUnwrapped(Pi_Class1.UnwrapResult unwrappedPhase);
 
 namespace rab1.Forms
 {
@@ -31,7 +32,7 @@ namespace rab1.Forms
                 int secondSineNumber = Convert.ToInt32(sineNumbers2.Text);
                 int poriodsNumber = Convert.ToInt32(periodsNumber.Text);
 
-                Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber);
+                Pi_Class1.UnwrapResult result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber);
 
                 imageUnwrapped(result);
 

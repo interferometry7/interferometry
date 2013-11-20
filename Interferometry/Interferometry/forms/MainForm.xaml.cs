@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Interferometry.interfaces;
+using rab1;
 using rab1.Forms;
 using Image = System.Drawing.Image;
 
@@ -99,9 +100,10 @@ namespace Interferometry.forms
             unwrapForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void unwrapFormOnImageUnwrapped(Bitmap unwrappedImage)
+        private void unwrapFormOnImageUnwrapped(Pi_Class1.UnwrapResult unwrappedPhase)
         {
-            imageContainersList[7].setImage(unwrappedImage);
+            Bitmap unwrappedPhaseImage = Pi_Class1.Z_bmp(unwrappedPhase.unwrappedPhase, unwrappedPhase.width, unwrappedPhase.height);
+            imageContainersList[7].setImage(unwrappedPhaseImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       

@@ -379,7 +379,7 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag) // Расшифровка
+        public static UnwrapResult pi2_rshfr(Image[] img, int sN1, int sN2, int Diag) // Расшифровка
         {
             China(sN1, sN2);                                          // Вычисление формулы 
             int pr_obr = 20;                                          // Граница отсечения по количеству попаданий
@@ -395,9 +395,21 @@ namespace rab1
 
             Z = new Int64[w, h];
             rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z);    //  РАСШИФРОВКА (Заполнение Z[,])
-            Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
+            //Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
 
-            return bmp;
+            UnwrapResult unwrapResult = new UnwrapResult();
+            unwrapResult.unwrappedPhase = Z;
+            unwrapResult.width = w;
+            unwrapResult.height = h;
+
+            return unwrapResult;
+        }
+
+        public class UnwrapResult
+        {
+            public Int64[,] unwrappedPhase;
+            public int width;
+            public int height;
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
@@ -513,10 +525,11 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        static void Z_bmp(Bitmap bmp, Int64[,] Z)               // -------------------------- Z -> BMP
+        public static Bitmap Z_bmp(Int64[,] Z, int width, int height)               // -------------------------- Z -> BMP
         {
             Int64 b2_min = Z[0, 0], b2_max = Z[0, 0];
-            int w = bmp.Width; ;
+            Bitmap bmp = new Bitmap(width, height);
+            int w = bmp.Width;
             int h = bmp.Height;
             int b2;
 
@@ -555,7 +568,7 @@ namespace rab1
             PopupProgressBar.close();
             bmp.UnlockBits(data);
 
-          
+            return bmp;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -572,12 +585,12 @@ namespace rab1
             MessageBox.Show(" A "+ A + " B " + B + " C " + C);
             for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) Z[i, j] = Z[i, j] - Convert.ToInt32(A * i + B * j + C);           
 
-            Z_bmp(bmp, Z);                                                                          //  Z -> bmp с масштабированием
+            //Z_bmp(Z, w, h);                                                                          //  Z -> bmp с масштабированием
             pictureBox01.Size = new Size(w, h);
             pictureBox01.Image = bmp;
         }
  // ------------------------------------------------------------------------------------------------------------------- Вычитание плоскости, проходящей через 3 точки
-        public static void NKL(PictureBox pictureBox01, int x1, int y1, int x2, int y2, int x3, int y3)
+        /*public static void NKL(PictureBox pictureBox01, int x1, int y1, int x2, int y2, int x3, int y3)
         {   
             
             double ax=x2-x1, ay=y2-y1, az=Z[x2,y2]-Z[x1,y1];
@@ -596,7 +609,7 @@ namespace rab1
                 Z_bmp(bmp, Z);                                                                          //  Z -> bmp с масштабированием
                 pictureBox01.Size = new System.Drawing.Size(w, h);
                 pictureBox01.Image = bmp;
-        }
+        }*/
 
 
 
