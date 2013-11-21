@@ -16,7 +16,8 @@ using System.Windows.Shapes;
 using Interferometry.interfaces;
 using rab1;
 using rab1.Forms;
-using Image = System.Drawing.Image;
+using Color = System.Drawing.Color;
+using Image = System.Windows.Controls.Image;
 
 namespace Interferometry.forms
 {
@@ -94,7 +95,7 @@ namespace Interferometry.forms
                 return;
             }
 
-            Image[] imagesF = new Image[3];
+            Bitmap[] imagesF = new Bitmap[3];
 
             imagesF[0] = FilesHelper.bitmapImageToBitmap(imageContainersList[8].getImage());     // 1 фаза
             imagesF[1] = FilesHelper.bitmapImageToBitmap(imageContainersList[9].getImage());    // 2 фаза
@@ -182,6 +183,42 @@ namespace Interferometry.forms
                 + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);
 
             needPointsCapture = false;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void mainImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            Image image = (Image)sender;
+
+            if (image.Source != null)
+            {
+                Bitmap currentBitmap = FilesHelper.bitmapImageToBitmap((BitmapImage) image.Source);
+
+                Color currentColor;
+
+                try
+                {
+                    currentColor = currentBitmap.GetPixel((int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+
+
+                int redComponent = currentColor.R;
+                int greenComponent = currentColor.G;
+                int blueComponent = currentColor.B;
+
+                redComponentLabel.Content = Convert.ToString(redComponent);
+                greenComponentLabel.Content = Convert.ToString(greenComponent);
+                blueComponentLabel.Content = Convert.ToString(blueComponent);
+
+                int xPosition = (int)e.GetPosition(mainImage).X;
+                int yPositon = (int)e.GetPosition(mainImage).Y;
+
+                xLabel.Content = Convert.ToString(xPosition);
+                yLabel.Content = Convert.ToString(yPositon);
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          

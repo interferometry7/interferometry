@@ -30,10 +30,24 @@
                     <Button Content="Указать точки для удаления плоскости" Height="23" HorizontalAlignment="Left" Margin="200,43,0,0" Name="choosePoinsButton" VerticalAlignment="Top" Width="232" Click="choosePointsClicked" />
                 </Grid>
             </TabItem>
+            <TabItem Header="Информация" Name="tabItem4">
+                <Grid>
+                    <Label Content="X:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
+                    <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="32,6,0,0" Name="xLabel" VerticalAlignment="Top" />
+                    <Label Content="Y:" Height="28" HorizontalAlignment="Left" Margin="94,6,0,0" Name="label3" VerticalAlignment="Top" />
+                    <Label Content="Label" Height="28" Margin="119,6,0,0" Name="yLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
+                    <Label Content="R:" Height="28" HorizontalAlignment="Left" Margin="6,38,0,0" Name="label5" VerticalAlignment="Top" />
+                    <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="32,38,0,0" Name="redComponentLabel" VerticalAlignment="Top" />
+                    <Label Content="G:" Height="28" Margin="94,38,0,0" Name="label7" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
+                    <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="119,38,0,0" Name="greenComponentLabel" VerticalAlignment="Top" />
+                    <Label Content="B:" Height="28" HorizontalAlignment="Left" Margin="182,38,0,0" Name="label2" VerticalAlignment="Top" />
+                    <Label Content="Label" Height="28" Margin="207,38,0,0" Name="blueComponentLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
+                </Grid>
+            </TabItem>
         </TabControl>
         <ScrollViewer Margin="12,106,147,12" Name="scrollViewer1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Name="grid1" Background="#5A000000">
-                <Image Name="mainImage" Stretch="None" MouseUp="mainImage_MouseUp" />
+                <Image Name="mainImage" Stretch="None" MouseUp="mainImage_MouseUp" MouseMove="mainImage_MouseMove" />
             </Grid>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" HorizontalAlignment="Right" Margin="0,106,12,12" Name="imageContainersScroller" Width="129" Background="#5A000000" VerticalScrollBarVisibility="Auto"></ScrollViewer>
