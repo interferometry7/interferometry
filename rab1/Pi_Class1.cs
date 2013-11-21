@@ -394,16 +394,52 @@ namespace rab1
         
             Bitmap bmp  = new Bitmap( w, h);            // Результат
 
+            bool rd1 = false;
             Z = new Int64[w, h];
-            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z, rd);    //  РАСШИФРОВКА (Заполнение Z[,])
-            Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
+            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z, rd1);    //  РАСШИФРОВКА (Заполнение Z[,])
+            int x1 = 15, x2 = 1403, y1 = 50;
+            Z_sub(x1,   x2, y1, Z, w, h);
+            Z_bmp(bmp, bmp3, Z, rd);                              //  Z -> bmp с масштабированием
 
             return bmp;
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
+        // -----------------------------------       Вычитание наклона  -> в вещественный массив Z             -------------------------------          
+        // -----------------------------------------------------------------------------------------------------------------------------------  
+        private static void Z_sub(int x1,  int x2, int y1, Int64[,] Z, int w, int h)
+        {
+            Int64 z1 = Z[x1, y1];
+            Int64 z2 = Z[x2, y1];
+            double tt = (double) (z2 - z1)/(double) (x2 - x1);
+            Int64 [] s = new Int64[w];
+            for (int j = x1; j < x2; j++)
+            {
+                s[j] = (Int64)(tt * (j - x1)) + (z1);
+            }
+            for (int i =0; i < 200; i++)
+            {
+                for (int j = x1; j < x2; j++)
+                {
+                    Z[j, i] =  s[j];
+
+                }
+            }
+           
+            for (int i = 500; i < h; i++)
+            {
+                for (int j = x1; j < x2; j++)
+                {
+                    Z[j, i] =Z[j, i] - s[j];
+                    
+                }
+            }
+        }
+
+        // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z, bool rd)
+       
+       private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z, bool rd)
         {
             GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
             int b1, b2, b3, ib1, ib2;
@@ -433,16 +469,7 @@ namespace rab1
                     c = ImageProcessor.getPixel(i, j, data2);
                     b2 = c.R;
                     ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
-                    /*                  if ((i==ii) && (j==jj))
-                    {
-                        d1 = b1;
-                        id1 = ib1;
-                        d2 = b2;
-                        id2 = ib2;
-                        ib3 = glbl_faze1[ib2 + (n1 - ib1)];
-                        x = (n1) * ib3 + ib1;   
-                    }
-   */
+                   
                     if (rd)
                     {
                         c = ImageProcessor.getPixel(i, j, data3);
@@ -525,52 +552,77 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        static void Z_bmp(Bitmap bmp, Int64[,] Z)               // -------------------------- Z -> BMP
+        static void Z_bmp(Bitmap bmp, Bitmap bmp3, Int64[,] Z, bool rd)               // -------------------------- Z -> BMP
         {
             Int64 b2_min = Z[0, 0], b2_max = Z[0, 0];
             int w = bmp.Width; ;
             int h = bmp.Height;
             int b2;
-
+            Color c;
 
             BitmapData data = ImageProcessor.getBitmapData(bmp);
+            BitmapData data3 = ImageProcessor.getBitmapData(bmp3);
 
-            for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
+            for (int i = 0; i < w; i++)
+                for (int j = 0; j < h; j++)
+                {
+                    if (rd)
+                    {
+                        c = ImageProcessor.getPixel(i, j, data3);
+                        if (c.R != 0)
+                        {
+                            b2_max = Math.Max(b2_max, Z[i, j]);
+                            b2_min = Math.Min(b2_min, Z[i, j]);
+                        }
+                    }
+                    else
+                    {
+                        b2_max = Math.Max(b2_max, Z[i, j]);
+                        b2_min = Math.Min(b2_min, Z[i, j]);
+                    }
+                }
             MessageBox.Show(" Max = " + b2_max + " Min =  " + b2_min);
-
-            double max = 255 / (double)(b2_max - b2_min);
+            b2_min = 0;
+            b2_max = 255*4;
+            double max = (double)255 / (double)(b2_max - b2_min);
           
-            //if (b2_max == 0) return;
+           
             int all = w;             int done = 0;             PopupProgressBar.show();
             for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
                 {
-                    b2 = (int)((Z[i, j] - b2_min) *  max);
-                    //if (b2 < 0 || b2 > 255) b2 = 0;
+                    if (rd)
+                    {
+                        c = ImageProcessor.getPixel(i, j, data3);
+                        if (c.R != 0)
+                        {
+                            b2 = (int) ((Z[i, j] - b2_min)*max);
+                        }
+                        else b2 = 0;
+                    }
+                    else
+                    {
+                        b2 = (int) ((Z[i, j] - b2_min)*max);
+                    }
+                    if (b2 < 0 || b2 > 255) b2 = 0;
                     ImageProcessor.setPixel(data, i, j, Color.FromArgb(b2, b2, b2));       
-                    //bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));                  
+                    //bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));                 
                 }
+                   
+                   
+               
                 done++; 
                 PopupProgressBar.setProgress(done, all);
             }
-/*          
-            int ii = 1300; int jj = 536;
-            Color c1 = ImageProcessor.getPixel(ii, jj, data);
-           
-            int d1 = c1.R;
-     
-            int dd1 = (int)Z[ii, jj];
-            int dd2 = (int)((Z[ii, jj] - b2_min) * max);
-            MessageBox.Show("  Z = " + dd1 + "  Z  255 = " + dd2);
-*/
+
             PopupProgressBar.close();
             bmp.UnlockBits(data);
-
+            bmp3.UnlockBits(data3);
           
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
-
+/*
         public static void pi2_ABC( PictureBox pictureBox01, int xx0, int xx1, int yy0, int yy1) // Устранение тренда по методу наименьших квадратов
         {
 
@@ -588,8 +640,9 @@ namespace rab1
             pictureBox01.Size = new Size(w, h);
             pictureBox01.Image = bmp;
         }
+ */
  // ------------------------------------------------------------------------------------------------------------------- Вычитание плоскости, проходящей через 3 точки
-        public static void NKL(PictureBox pictureBox01, int x1, int y1, int x2, int y2, int x3, int y3)
+ /*       public static void NKL(PictureBox pictureBox01, int x1, int y1, int x2, int y2, int x3, int y3)
         {   
             
             double ax=x2-x1, ay=y2-y1, az=Z[x2,y2]-Z[x1,y1];
@@ -610,7 +663,7 @@ namespace rab1
                 pictureBox01.Image = bmp;
         }
 
-
+*/
 
 
     }
