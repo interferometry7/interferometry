@@ -379,10 +379,10 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag) // Расшифровка
+        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag, bool rd, int pr_obr) // Расшифровка
         {
             China(sN1, sN2);                                          // Вычисление формулы 
-            int pr_obr = 20;                                          // Граница отсечения по количеству попаданий
+                                                   
             int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                 // Массив точек в таблице 2pi
             int count = bmp_2pi(img, bmp_r, Diag, pr_obr);
 
@@ -390,11 +390,12 @@ namespace rab1
             int h = img[0].Height;
             Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
             Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
-            Bitmap bmp3 = new Bitmap(img[2], w, h);     // 2 фаза
+            Bitmap bmp3 = new Bitmap(img[2], w, h);     // Маска
+        
             Bitmap bmp  = new Bitmap( w, h);            // Результат
 
             Z = new Int64[w, h];
-            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z);    //  РАСШИФРОВКА (Заполнение Z[,])
+            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z, rd);    //  РАСШИФРОВКА (Заполнение Z[,])
             Z_bmp(bmp, Z);                              //  Z -> bmp с масштабированием
 
             return bmp;
@@ -402,7 +403,7 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z)
+        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z, bool rd)
         {
             GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
             int b1, b2, b3, ib1, ib2;
@@ -442,11 +443,22 @@ namespace rab1
                         x = (n1) * ib3 + ib1;   
                     }
    */
-                    c = ImageProcessor.getPixel(i, j, data3);
-                    if (bmp_r[ib2, ib1] > pr_obr && c.R != 0 )
+                    if (rd)
                     {
-                        b3 = glbl_faze1[ib2 + (n1 - ib1)];
-                        Z[i, j] = (n1)*b3 + ib1; // glbl_faze1[ib2 + (n1 - ib1)];
+                        c = ImageProcessor.getPixel(i, j, data3);
+                        if (bmp_r[ib2, ib1] >= pr_obr && c.R != 0)
+                        {
+                            b3 = glbl_faze1[ib2 + (n1 - ib1)];
+                            Z[i, j] = (n1)*b3 + ib1; // glbl_faze1[ib2 + (n1 - ib1)];
+                        }
+                    }
+                    else
+                    {
+                        if (bmp_r[ib2, ib1] >= pr_obr)
+                        {
+                            b3 = glbl_faze1[ib2 + (n1 - ib1)];
+                            Z[i, j] = (n1) * b3 + ib1; // glbl_faze1[ib2 + (n1 - ib1)];
+                        }
                     }
                 }
                 done++; PopupProgressBar.setProgress(done, all);

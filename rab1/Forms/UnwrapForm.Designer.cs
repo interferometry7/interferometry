@@ -35,6 +35,9 @@
             this.sineNumbers2 = new System.Windows.Forms.TextBox();
             this.periodsNumber = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cutLevelTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -49,7 +52,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(58, 91);
+            this.label2.Location = new System.Drawing.Point(58, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 1;
@@ -58,7 +61,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(58, 138);
+            this.label3.Location = new System.Drawing.Point(58, 106);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 2;
@@ -66,21 +69,21 @@
             // 
             // sineNumbers1
             // 
-            this.sineNumbers1.Location = new System.Drawing.Point(211, 47);
+            this.sineNumbers1.Location = new System.Drawing.Point(236, 47);
             this.sineNumbers1.Name = "sineNumbers1";
             this.sineNumbers1.Size = new System.Drawing.Size(100, 20);
             this.sineNumbers1.TabIndex = 3;
             // 
             // sineNumbers2
             // 
-            this.sineNumbers2.Location = new System.Drawing.Point(211, 91);
+            this.sineNumbers2.Location = new System.Drawing.Point(236, 73);
             this.sineNumbers2.Name = "sineNumbers2";
             this.sineNumbers2.Size = new System.Drawing.Size(100, 20);
             this.sineNumbers2.TabIndex = 4;
             // 
             // periodsNumber
             // 
-            this.periodsNumber.Location = new System.Drawing.Point(211, 138);
+            this.periodsNumber.Location = new System.Drawing.Point(236, 99);
             this.periodsNumber.Name = "periodsNumber";
             this.periodsNumber.Size = new System.Drawing.Size(100, 20);
             this.periodsNumber.TabIndex = 5;
@@ -95,11 +98,42 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButtonClicked);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(154, 166);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(125, 17);
+            this.checkBox1.TabIndex = 7;
+            this.checkBox1.Text = "По форме 11 кадра";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // cutLevelTextBox
+            // 
+            this.cutLevelTextBox.Location = new System.Drawing.Point(236, 129);
+            this.cutLevelTextBox.Name = "cutLevelTextBox";
+            this.cutLevelTextBox.Size = new System.Drawing.Size(100, 20);
+            this.cutLevelTextBox.TabIndex = 11;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(22, 132);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(156, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Уровень обрезания (N точек)";
+            // 
             // UnwrapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 263);
+            this.Controls.Add(this.cutLevelTextBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.periodsNumber);
             this.Controls.Add(this.sineNumbers2);
@@ -124,5 +158,8 @@
         private System.Windows.Forms.TextBox sineNumbers2;
         private System.Windows.Forms.TextBox periodsNumber;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox cutLevelTextBox;
+        private System.Windows.Forms.Label label4;
     }
 }
