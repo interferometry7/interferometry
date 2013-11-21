@@ -23,9 +23,14 @@ namespace Interferometry.forms
     /// <summary>
     /// Логика взаимодействия для MainForm.xaml
     /// </summary>
-    public partial class MainForm : Window, ImageContainerDelegate
+    public partial class MainForm : ImageContainerDelegate
     {
         private List<ImageContainer> imageContainersList;
+        private Pi_Class1.ZArrayDescriptor zArrayDescriptor;
+
+        private bool needPointsCapture = false;
+        private Point3D firstClick;
+        private Point3D secondClick;
 
         //Life Cycle
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,26 +105,102 @@ namespace Interferometry.forms
             unwrapForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void unwrapFormOnImageUnwrapped(Pi_Class1.UnwrapResult unwrappedPhase)
+        private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
         {
-            Bitmap unwrappedPhaseImage = Pi_Class1.Z_bmp(unwrappedPhase.unwrappedPhase, unwrappedPhase.width, unwrappedPhase.height);
+            Bitmap unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.unwrappedPhase, unwrappedPhase.width, unwrappedPhase.height);
             imageContainersList[7].setImage(unwrappedPhaseImage);
+            imageContainersList[7].zArrayDescriptor = unwrappedPhase;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void choosePointsClicked(object sender, RoutedEventArgs e)
+        {
+            if (mainImage.Source == null)
+            {
+                MessageBox.Show("Главное изображение пустое");
+                return;
+            }
+
+            if (zArrayDescriptor == null)
+            {
+                MessageBox.Show("Z-массив пуст");
+                return;
+            }
+
+            needPointsCapture = true;
+            firstClick = null;
+            secondClick = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       
 
-
-
+        
         //ImageContainerDelegate Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void exportImage(ImageContainer imageContainer, ImageSource bitmapImage)
         {
             mainImage.Source = bitmapImage;
+            zArrayDescriptor = imageContainer.zArrayDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public ImageSource getImageToLoad(ImageContainer imageContainer)
         {
+            imageContainer.zArrayDescriptor = zArrayDescriptor;
             return mainImage.Source;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        //Mouse Events
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void mainImage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (needPointsCapture == false)
+            {
+                return;
+            }
+
+            if (firstClick == null)
+            {
+                int x = (int)e.GetPosition(mainImage).X;
+                int y = (int)e.GetPosition(mainImage).Y;
+                int z = (int)zArrayDescriptor.unwrappedPhase[x, y];
+
+                firstClick = new Point3D(x, y, z);
+                return;
+            }
+            else
+            {
+                int x = (int)e.GetPosition(mainImage).X;
+                int y = (int)e.GetPosition(mainImage).Y;
+                int z = (int)zArrayDescriptor.unwrappedPhase[x, y];
+
+                secondClick = new Point3D(x, y, z);
+            }
+
+            MessageBox.Show("Первая точка - X = " + firstClick.z + " Y = " + firstClick.y + " Z = " + firstClick.z
+                + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);
+
+            needPointsCapture = false;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         
+        
+
+        //Additional Classes
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public class Point3D
+        {
+            public int x;
+            public int y;
+            public int z;
+            
+            public Point3D(int newX, int newY, int newZ)
+            {
+                x = newX;
+                y = newY;
+                z = newZ;
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

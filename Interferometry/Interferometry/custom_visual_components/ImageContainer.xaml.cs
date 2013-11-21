@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Interferometry.interfaces;
+using rab1;
 
 namespace Interferometry
 {
@@ -22,6 +23,7 @@ namespace Interferometry
     public partial class ImageContainer : UserControl
     {
         public ImageContainerDelegate myDelegate;
+        public Pi_Class1.ZArrayDescriptor zArrayDescriptor;
 
         //Interface Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -26,13 +26,14 @@
                 <Grid>
                     <Button Content="Построить таблицу остатков" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button7" VerticalAlignment="Top" Width="188" />
                     <Button Content="Определить плоскость" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button8" VerticalAlignment="Top" Width="188" />
-                    <Button Content="Расшифровка" Height="23" HorizontalAlignment="Left" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Width="100" Click="unwrapClicked" />
+                    <Button Content="Расшифровка" Height="23" HorizontalAlignment="Left" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Width="232" Click="unwrapClicked" />
+                    <Button Content="Указать точки для удаления плоскости" Height="23" HorizontalAlignment="Left" Margin="200,43,0,0" Name="choosePoinsButton" VerticalAlignment="Top" Width="232" Click="choosePointsClicked" />
                 </Grid>
             </TabItem>
         </TabControl>
         <ScrollViewer Margin="12,106,147,12" Name="scrollViewer1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Name="grid1" Background="#5A000000">
-                <Image Name="mainImage" Stretch="None" />
+                <Image Name="mainImage" Stretch="None" MouseUp="mainImage_MouseUp" />
             </Grid>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" HorizontalAlignment="Right" Margin="0,106,12,12" Name="imageContainersScroller" Width="129" Background="#5A000000" VerticalScrollBarVisibility="Auto"></ScrollViewer>

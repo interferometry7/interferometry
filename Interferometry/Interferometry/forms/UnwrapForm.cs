@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using rab1;
 
-public delegate void ImageUnwrapped(Pi_Class1.UnwrapResult unwrappedPhase);
+public delegate void ImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase);
 
 namespace rab1.Forms
 {
@@ -32,7 +32,7 @@ namespace rab1.Forms
                 int secondSineNumber = Convert.ToInt32(sineNumbers2.Text);
                 int poriodsNumber = Convert.ToInt32(periodsNumber.Text);
 
-                Pi_Class1.UnwrapResult result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber);
+                Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, true, 0);
 
                 imageUnwrapped(result);
 
