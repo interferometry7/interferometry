@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,7 +19,10 @@ using Interferometry.interfaces;
 using rab1;
 using rab1.Forms;
 using Color = System.Drawing.Color;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Image = System.Windows.Controls.Image;
+using MessageBox = System.Windows.MessageBox;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Interferometry.forms
 {
@@ -79,6 +84,14 @@ namespace Interferometry.forms
             if (newSource != null)
             {
                 mainImage.Source = newSource;
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void saveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (mainImage.Source != null)
+            {
+                FilesHelper.saveImage(mainImage.Source);
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -9,9 +9,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.MessageBox;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Size = System.Drawing.Size;
 
 namespace Interferometry
@@ -21,7 +21,7 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static BitmapImage loadImege()
         {
-            OpenFileDialog dialog1 = new OpenFileDialog();
+            /*System.Windows.Forms.OpenFileDialog dialog1 = new System.Windows.Forms.OpenFileDialog();
             bool? result = dialog1.ShowDialog();
 
             if (result == true)
@@ -32,6 +32,39 @@ namespace Interferometry
                 newBitmapImage.UriSource = new Uri(dialog1.FileName);
                 newBitmapImage.EndInit();                
                 return newBitmapImage;
+            }
+
+            return null;*/
+
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream myStream;
+                    if ((myStream = openFileDialog.OpenFile()) != null)
+                    {
+                        using (myStream)
+                        {
+                            BitmapImage newBitmapImage = new BitmapImage();
+
+                            newBitmapImage.BeginInit();
+                            newBitmapImage.UriSource = new Uri(openFileDialog.FileName);
+                            newBitmapImage.EndInit();
+                            return newBitmapImage;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    return null;
+                }
             }
 
             return null;
@@ -55,22 +88,6 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*public static BitmapImage bitmapToBitmapImage(Bitmap bitmap)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bitmap.Save(ms, ImageFormat.Png);
-                ms.Position = 0;
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                ms.Seek(0, SeekOrigin.Begin);
-                bi.StreamSource = ms;
-                bi.EndInit();
-
-                return bi;
-            }
-        }*/
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [DllImport("gdi32")]
         static extern int DeleteObject(IntPtr o);
 
@@ -90,6 +107,35 @@ namespace Interferometry
             }
 
             return bs;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void saveImage(ImageSource someImage)
+        {
+            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)someImage));
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream stream;
+                    if ((stream = saveFileDialog.OpenFile()) != null)
+                    {
+                        encoder.Save(stream);
+                        stream.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not write file to disk. Original error: " + ex.Message);
+                }
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
