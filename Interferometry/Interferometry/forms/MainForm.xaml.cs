@@ -200,7 +200,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mainImage_MouseMove(object sender, MouseEventArgs e)
         {
-            Image image = (Image)sender;
+            /*Image image = (Image)sender;
 
             if (image.Source != null)
             {
@@ -231,7 +231,7 @@ namespace Interferometry.forms
 
                 xLabel.Content = Convert.ToString(xPosition);
                 yLabel.Content = Convert.ToString(yPositon);
-            }
+            }*/
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          

@@ -117,6 +117,12 @@
     <Compile Include="Forms\FiltrationForm.Designer.cs">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Graphic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Graphic.Designer.cs">
+      <DependentUpon>Graphic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\HystogrammForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FiltrationForm.resx">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Graphic.resx">
+      <DependentUpon>Graphic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HystogrammForm.resx">
       <DependentUpon>HystogrammForm.cs</DependentUpon>

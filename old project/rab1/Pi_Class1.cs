@@ -405,7 +405,11 @@ namespace rab1
             
             //GraphClass1.grfk(w, h, x, y, Z);
             Z_sub(x1, x2, y1, Z, w, h, bmp3, rd);
-            GraphClass1.grfk(w, x, y, Z);
+            //GraphClass1.grfk(w, x, y, Z);
+
+            Graphic graphic = new Graphic(w, x, y, Z);
+            graphic.Show();
+
             Z_bmp(bmp, bmp3, Z);                              //  Z -> bmp с масштабированием
 
             return bmp;
