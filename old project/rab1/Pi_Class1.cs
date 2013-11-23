@@ -444,15 +444,18 @@ namespace rab1
              }
 
             MessageBox.Show(" Sub   Max = " + max + " Min =  " + min);
-            max = 255*7;
-            min = 255*4;
+            max = Z[1102,572]+100;
+            min = Z[713,566];
+            MessageBox.Show(" Sub1   Max = " + max + " Min =  " + min);
             for (int i = 0; i < h; i++)
              for (int j = 0; j < w; j++)
               {
                 if (rd)
                 {
                     c = ImageProcessor.getPixel(j, i, data3);
-                    if (c.R != 0) Z[j, i] = ((Z[j, i] - min)*32000)/(max - min);
+                    if (c.R != 0){ Z[j, i] = ((Z[j, i] - min)*32000)/(max - min);
+                        if (Z[j, i] < 0 || Z[j, i] > 32000) Z[j, i] = 0;
+                    }
                      else Z[j, i] = 0;
                 }
                 
