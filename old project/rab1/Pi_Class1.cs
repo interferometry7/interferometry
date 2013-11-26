@@ -116,7 +116,7 @@ namespace rab1
             // ----------------------------------------------------------------------------------------------------------------
            
                    GLBL_FAZE(n1, n2, Diag);                                                         //  Заполнение glbl_faze[]  и glbl_faze1[] - допустимые границы диапазона
-// Отрисовка диагоналей
+// -----------------------------------------------------------------------------------------------Отрисовка диагоналей
             Int32 A = Diag * Math.Max(n1, n2);
             Int32 pf;
             for (int b2 = 0; b2 < n2; b2++)                                                                    // Диагонали   
@@ -186,12 +186,12 @@ namespace rab1
                 }
             }
              
-            MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
+            //MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
            
 
             pc1.Refresh();
             f_sin.Show();
-
+            bmp_gstgr(bmp_r);
             //HystogrammForm hystogrammForm = new HystogrammForm(bmp_r, n2 + 3, n1 + 3);
             //hystogrammForm.Show();
 
@@ -262,6 +262,7 @@ namespace rab1
         PopupProgressBar.close();
             return (count);
         }
+      
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------------          
@@ -404,15 +405,48 @@ namespace rab1
             int x = 1075, y = 600;
             
             //GraphClass1.grfk(w, h, x, y, Z);
+
+          
             Z_sub(x1, x2, y1, Z, w, h, bmp3, rd);
             //GraphClass1.grfk(w, x, y, Z);
-
-            Graphic graphic = new Graphic(w, x, y, Z);
+            Int64[] buf = new Int64[w];
+            for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; }
+            Graphic graphic = new Graphic(w, x, buf);
+            
+            
             graphic.Show();
+            Int64[] buf1 = new Int64[h];
+            for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; }
+            Graphic graphic1 = new Graphic(h, y, buf1);
+            graphic1.Show();
 
             Z_bmp(bmp, bmp3, Z);                              //  Z -> bmp с масштабированием
 
             return bmp;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //     Заполнение   массива  гистограмм
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void bmp_gstgr(int[,] bmp_r)
+        {
+            int n = n1 + n2 + 3;
+           Int64[] buf = new Int64[n];
+           int[] buf1 = new int[n];
+            for (int i = 0; i < n1; i++)
+            {
+                for (int j = 0; j < n2; j++)
+                {
+                    buf[j + (n1 - i)] += bmp_r[j, i];
+                }
+            }
+
+            for (int i = 0; i < n; i++) buf1[i] = glbl_faze[i];
+           Graphic graphic = new Graphic(n, 0, buf, buf1);
+           graphic.Show();
+
+           
+          //  Graphic graphic1 = new Graphic(n, 0, buf);
+          //  graphic1.Show();
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Вычитание наклона  -> в вещественный массив Z             -------------------------------          
