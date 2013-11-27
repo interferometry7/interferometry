@@ -71,7 +71,7 @@ namespace rab1
         //           Построение таблицы
         //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_China2(Image[] img,  int Diag, bool rb, int pr_obr)
+        public static void Graph_China2(Image[] img,  int Diag, bool rb, int pr_obr, int sdvg_x)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
@@ -169,7 +169,7 @@ namespace rab1
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             
             int[,] bmp_r = new int[n2 + 3, n1 + 3];
-            int count=bmp_2pi(img, bmp_r, Diag, pr_obr);
+            int count = bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Рисование точек в таблице по диагоналям
@@ -200,7 +200,7 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //     Заполнение  массива bmp_r
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static int bmp_2pi(Image[] img, int[,] bmp_r , int Diag, int pr_obr)
+        public static int bmp_2pi(Image[] img, int[,] bmp_r , int Diag, int pr_obr, int sdvg_x)
         {
            int r,g;
            int w = img[0].Width;
@@ -250,7 +250,11 @@ namespace rab1
                 {
                     if (ims3[j] != 0)
                     {
-                        r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++;
+                        r = ims1[j];
+                        r = r + sdvg_x; 
+                        if (r > n1) r -= n1; 
+                        g = ims2[j]; 
+                        bmp_r[g, r]++; count++;
                     }
 
                 }
@@ -372,55 +376,48 @@ namespace rab1
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr)
+        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr, int sdvg_x)
         {
             China(sN1, sN2);           // Вычисление формулы
-            Graph_China2(img, Diag, rb, pr_obr);                          // Построение таблицы
+            Graph_China2(img, Diag, rb, pr_obr, sdvg_x);                          // Построение таблицы
         }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag, bool rd, int pr_obr) // Расшифровка
+        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag, bool rd, int pr_obr, int sdvg_x) // Расшифровка
         {
-            China(sN1, sN2);                                          // Вычисление формулы 
-                                                   
-            int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                 // Массив точек в таблице 2pi
-            int count = bmp_2pi(img, bmp_r, Diag, pr_obr);
+            China(sN1, sN2);                                            // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
+                                               
+            int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                   // Массив точек в таблице 2pi
+            int count = bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);      // Заполнение массива bmp_r
 
             int w = img[0].Width;
             int h = img[0].Height;
-            Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
-            Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
-            Bitmap bmp3 = new Bitmap(img[2], w, h);     // Маска
-        
-            Bitmap bmp  = new Bitmap( w, h);            // Результат
+            Bitmap bmp1 = new Bitmap(img[1], w, h);                     // 1 фаза
+            Bitmap bmp2 = new Bitmap(img[0], w, h);                     // 2 фаза
+            Bitmap bmp3 = new Bitmap(img[2], w, h);                     // Маска     
+            Bitmap bmp  = new Bitmap( w, h);                            // Результат
 
             
             Z = new Int64[w, h];
 
-          
-            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z);    //  РАСШИФРОВКА (Заполнение Z[,])
+            GLBL_FAZE(n1, n2, Diag);                                       // Заполнение массива glbl_faze[] (Все -1 кроме номеров полос) 
+                                                                           // для расшифровки glbl_faze1[] расширяется значениям номеров полос на допустимый диапазон
+            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sdvg_x, sN1, sN2, Diag, Z);  //  РАСШИФРОВКА (Заполнение Z[,])
             int x1 = 15, x2 = 1400, y1 = 50;
-            int x = 1075, y = 600;
+           
             
             //GraphClass1.grfk(w, h, x, y, Z);
 
           
-            Z_sub(x1, x2, y1, Z, w, h, bmp3, rd);
+            Z_sub(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
             //GraphClass1.grfk(w, x, y, Z);
-            Int64[] buf = new Int64[w];
-            for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; }
-            Graphic graphic = new Graphic(w, x, buf);
-            
-            
-            graphic.Show();
-            Int64[] buf1 = new Int64[h];
-            for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; }
-            Graphic graphic1 = new Graphic(h, y, buf1);
-            graphic1.Show();
+            int x = 1075, y = 600;
+            Int64[] buf  = new Int64[w];  for (int i = 0; i < w; i++) { buf[i] = Z[i, y];  }  Graphic graphic = new Graphic(w, x, buf);   graphic.Show();   // График по x
+            Int64[] buf1 = new Int64[h];  for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; }  Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
 
-            Z_bmp(bmp, bmp3, Z);                              //  Z -> bmp с масштабированием
+            Z_bmp(bmp, bmp3, Z);                                           //  Z -> bmp с масштабированием
 
             return bmp;
         }
@@ -506,10 +503,10 @@ namespace rab1
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
        
-       private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z)
+       private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
         {
-            GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
-            int b1, b2, b3, ib1, ib2;
+            
+            int b1, b2, b3, ib1, ib2, i1;
             int w = bmp1.Width;
             int h = bmp1.Height;
 
@@ -527,13 +524,10 @@ namespace rab1
             {
                 for (int j = 0; j < h; j++)
                 {
-                   c = ImageProcessor.getPixel(i, j, data1);
-                   b1 = c.R;
-                   ib1 = (int) (fn1*b1); // c = bmp1.GetPixel(i, j);                   
-                   c = ImageProcessor.getPixel(i, j, data2);
-                   b2 = c.R;
-                   ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
-                   
+                   c = ImageProcessor.getPixel(i, j, data1); b1 = c.R; ib1 = (int) (fn1*b1); // c = bmp1.GetPixel(i, j);                   
+                   c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
+
+                   //i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1; 
                    if (bmp_r[ib2, ib1] >= pr_obr)
                         {
                             b3 = glbl_faze1[ib2 + (n1 - ib1)];

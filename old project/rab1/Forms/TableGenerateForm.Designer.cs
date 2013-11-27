@@ -38,6 +38,8 @@
             this.sineNumberTextBox2 = new System.Windows.Forms.TextBox();
             this.periodsNumberTextBox = new System.Windows.Forms.TextBox();
             this.cutLevelTextBox = new System.Windows.Forms.TextBox();
+            this.textBox1_sdvgx = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -65,7 +67,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 52);
+            this.label1.Location = new System.Drawing.Point(15, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 13);
             this.label1.TabIndex = 2;
@@ -74,7 +76,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 79);
+            this.label2.Location = new System.Drawing.Point(15, 57);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 3;
@@ -83,7 +85,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 106);
+            this.label3.Location = new System.Drawing.Point(15, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 4;
@@ -92,7 +94,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 133);
+            this.label4.Location = new System.Drawing.Point(15, 109);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(156, 13);
             this.label4.TabIndex = 5;
@@ -100,37 +102,55 @@
             // 
             // sineNumberTextBox1
             // 
-            this.sineNumberTextBox1.Location = new System.Drawing.Point(229, 49);
+            this.sineNumberTextBox1.Location = new System.Drawing.Point(229, 24);
             this.sineNumberTextBox1.Name = "sineNumberTextBox1";
             this.sineNumberTextBox1.Size = new System.Drawing.Size(100, 20);
             this.sineNumberTextBox1.TabIndex = 6;
             // 
             // sineNumberTextBox2
             // 
-            this.sineNumberTextBox2.Location = new System.Drawing.Point(229, 76);
+            this.sineNumberTextBox2.Location = new System.Drawing.Point(229, 50);
             this.sineNumberTextBox2.Name = "sineNumberTextBox2";
             this.sineNumberTextBox2.Size = new System.Drawing.Size(100, 20);
             this.sineNumberTextBox2.TabIndex = 7;
             // 
             // periodsNumberTextBox
             // 
-            this.periodsNumberTextBox.Location = new System.Drawing.Point(229, 103);
+            this.periodsNumberTextBox.Location = new System.Drawing.Point(229, 76);
             this.periodsNumberTextBox.Name = "periodsNumberTextBox";
             this.periodsNumberTextBox.Size = new System.Drawing.Size(100, 20);
             this.periodsNumberTextBox.TabIndex = 8;
             // 
             // cutLevelTextBox
             // 
-            this.cutLevelTextBox.Location = new System.Drawing.Point(229, 130);
+            this.cutLevelTextBox.Location = new System.Drawing.Point(229, 102);
             this.cutLevelTextBox.Name = "cutLevelTextBox";
             this.cutLevelTextBox.Size = new System.Drawing.Size(100, 20);
             this.cutLevelTextBox.TabIndex = 9;
+            // 
+            // textBox1_sdvgx
+            // 
+            this.textBox1_sdvgx.Location = new System.Drawing.Point(229, 128);
+            this.textBox1_sdvgx.Name = "textBox1_sdvgx";
+            this.textBox1_sdvgx.Size = new System.Drawing.Size(100, 20);
+            this.textBox1_sdvgx.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(15, 135);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(153, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Сдвиг по первой координате";
             // 
             // TableGenerateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 276);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox1_sdvgx);
             this.Controls.Add(this.cutLevelTextBox);
             this.Controls.Add(this.periodsNumberTextBox);
             this.Controls.Add(this.sineNumberTextBox2);
@@ -161,5 +181,7 @@
         private System.Windows.Forms.TextBox sineNumberTextBox2;
         private System.Windows.Forms.TextBox periodsNumberTextBox;
         private System.Windows.Forms.TextBox cutLevelTextBox;
+        private System.Windows.Forms.TextBox textBox1_sdvgx;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -20,6 +20,7 @@ namespace rab1.Forms
             sineNumbers2.Text = "241";
             periodsNumber.Text = "9";
             cutLevelTextBox.Text = Convert.ToString(0);
+            textBox1.Text = Convert.ToString(0);
 
             this.images = images;
         }
@@ -32,9 +33,10 @@ namespace rab1.Forms
                 int secondSineNumber = Convert.ToInt32(sineNumbers2.Text);
                 int poriodsNumber = Convert.ToInt32(periodsNumber.Text);
                 int cutLevel = Convert.ToInt32(cutLevelTextBox.Text);
+                int sdvg_x = Convert.ToInt32(textBox1.Text);
                 bool unknownParameter = checkBox1.Checked;
 
-                Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel);
+                Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel, sdvg_x);
 
                 imageUnwrapped(result);
             }
