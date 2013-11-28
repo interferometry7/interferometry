@@ -16,7 +16,7 @@ namespace rab1.Forms
             InitializeComponent();
 
 
-            int hh = 511;   //260;
+            int hh = 512;   //260;
 
             Int64 maxx = buf[0], minx = buf[0], b;
             for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b; }
@@ -50,20 +50,35 @@ namespace rab1.Forms
             // ------------------------------------------------------------------------------------------------------------График по x   
 
             //  Ось x
-            grBack.DrawLine(p1, 8, hh + 9, w1 + 8, hh + 9);
-            for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + 8, hh + 1, i + 8, hh + 9);
-            grBack.DrawString(sx, font, new SolidBrush(Color.Black), 48, hh + 25, drawFormat);
+            int x0 = 40;
+            grBack.DrawLine(p1, x0, hh + 9, w1 + x0, hh + 9);
+            for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + x0, hh + 1, i + x0, hh + 9);
+            grBack.DrawString(sx, font, new SolidBrush(Color.Black), 40+x0, hh + 25, drawFormat);
 
             //  Ось y
-            grBack.DrawLine(p1, 8, 8, 8, hh + 8);
-            for (int i = 8; i < hh + 8; i += 8) grBack.DrawLine(p1, 8, i, 12, i);
+            grBack.DrawLine(p1, x0, 8, x0, hh + 8);
+            for (int i = 8; i < hh + 8; i += 8) grBack.DrawLine(p1, x0, i, x0+4, i);
 
-            grBack.DrawLine(p3, x + 8, 0, x + 8, hh + 9);       // Значение координаты
+            Font drawFont = new Font("Arial", 8);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+
+            long k = (hh) / 32;
+            long kx = (maxx - minx)/k;
+            long nf = minx;
+            for (int i = 0; i <= hh; i += 32)
+            {
+                sx = nf.ToString(); 
+                grBack.DrawString(sx, drawFont, drawBrush, 2, hh-i); //, drawFormat);
+                nf += kx;
+            }
+
+
+            grBack.DrawLine(p3, x + x0, 0, x + x0, hh + 9);                                                                     // Значение координаты
 
 
 
 
-            for (int i = 0; i < w1 - 1; i++) grBack.DrawLine(p2, i + 8, hh - buf[i] + 8, i + 1 + 8, hh - buf[i + 1] + 8);
+            for (int i = 0; i < w1 - 1; i++) grBack.DrawLine(p2, i + x0, hh - buf[i] + 8, i + 1 + x0, hh - buf[i + 1] + 8);
 
 
 
