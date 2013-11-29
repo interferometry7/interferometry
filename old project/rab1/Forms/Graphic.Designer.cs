@@ -36,7 +36,7 @@
             // 
             this.pc1.Location = new System.Drawing.Point(12, 12);
             this.pc1.Name = "pc1";
-            this.pc1.Size = new System.Drawing.Size(481, 406);
+            this.pc1.Size = new System.Drawing.Size(768, 442);
             this.pc1.TabIndex = 0;
             this.pc1.TabStop = false;
             // 
@@ -44,7 +44,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 430);
+            this.ClientSize = new System.Drawing.Size(792, 513);
             this.Controls.Add(this.pc1);
             this.Name = "Graphic";
             this.Text = "Form2";

@@ -47,40 +47,39 @@ namespace rab1.Forms
             Pen p1 = new Pen(Color.Black, 1);
             Pen p2 = new Pen(Color.Red, 1);
             Pen p3 = new Pen(Color.Green, 1);
-            // ------------------------------------------------------------------------------------------------------------График по x   
+            // ------------------------------------------------------------------------------------------------------------График 
 
-            //  Ось x
+            //  -----------------------------------------------------------------------------------------------------Ось x
             int x0 = 40;
-            grBack.DrawLine(p1, x0, hh + 9, w1 + x0, hh + 9);
-            for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + x0, hh + 1, i + x0, hh + 9);
+            grBack.DrawLine(p1, x0, hh , w1 + x0, hh );
+            for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + x0, hh , i + x0, hh + 8);
             grBack.DrawString(sx, font, new SolidBrush(Color.Black), 40+x0, hh + 25, drawFormat);
 
-            //  Ось y
+            //  -----------------------------------------------------------------------------------------------------Ось y
             grBack.DrawLine(p1, x0, 8, x0, hh + 8);
             for (int i = 8; i < hh + 8; i += 8) grBack.DrawLine(p1, x0, i, x0+4, i);
 
             Font drawFont = new Font("Arial", 8);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
 
-            long k = (hh) / 32;
-            long kx = (maxx - minx)/k;
-            long nf = minx;
+            double k = (hh) / 32;                                            
+            double kx = (maxx - minx)/k;
+            double nf = minx;
+            long kf;
             for (int i = 0; i <= hh; i += 32)
             {
-                sx = nf.ToString(); 
+                kf = (long)nf;
+                sx = kf.ToString(); 
                 grBack.DrawString(sx, drawFont, drawBrush, 2, hh-i); //, drawFormat);
                 nf += kx;
+                grBack.DrawLine(p1, x0, i, x0 + w1, i);
             }
-
+            
 
             grBack.DrawLine(p3, x + x0, 0, x + x0, hh + 9);                                                                     // Значение координаты
 
 
-
-
             for (int i = 0; i < w1 - 1; i++) grBack.DrawLine(p2, i + x0, hh - buf[i] + 8, i + 1 + x0, hh - buf[i + 1] + 8);
-
-
 
 
             pc1.Refresh();
