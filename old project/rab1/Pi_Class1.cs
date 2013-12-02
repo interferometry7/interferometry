@@ -18,7 +18,7 @@ namespace rab1
         static Int32 N1 = -1;
         static Int32 N2 = -1;
         static int NMAX=1600;
-        static int[] glbl_faze  = new int[NMAX];               // Номера для прослеживания полос (номера линий)
+        static int[] glbl_faze  = new int[NMAX];               // Номера для прослеживания полос (номера линий  -1 -1 .... 10 -1 .... -1)
         static int[] glbl_faze1 = new int[NMAX];               // Количество добавлений b1 (Для расшифровки)
         static int[] number_2pi = new int[200];                // Максимум 200 полос (пока) ------------------------------
         static Form  f_sin;
@@ -427,7 +427,7 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void bmp_gstgr(int[,] bmp_r)
         {
-            int n = n1 + n2 + 3;
+           int n = n1 + n2 + 3;
            Int64[] buf = new Int64[n];
            int[] buf1 = new int[n];
             for (int i = 0; i < n1; i++)
@@ -498,8 +498,9 @@ namespace rab1
                    i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1; 
                    if (bmp_r[ib2, ib1] >= pr_obr)
                         {
-                            b3 = glbl_faze1[ib2 + (n1 - i1)];
-                            Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)];
+                           // b3 = glbl_faze1[ib2 + (n1 - i1)];
+                           // Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)];
+                       Z[i, j] = GLBL_R(n1, n2, i1, ib2);  
                         }
                     
                 }
@@ -553,6 +554,38 @@ namespace rab1
            // for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i.ToString() + "  =  " + pf.ToString()); }    
 
         }
+// --------------------------------------------------------------------------------------------------------------
+ 
+private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
+        {
+            
+            int i0 = ib2 + (n1 - ib1);
+            int b0 = glbl_faze1[i0];
+            int ib10 = ib1;
+
+            int r = 0;
+            while ( b0 != glbl_faze[i0 + r])
+            {
+                r++;
+               
+                if (i0 + r > n1 + n2 - 1) r = 0;
+                if (r > 20) { r = 300; break; }
+            }
+
+            int l = 0;
+            while (b0 != glbl_faze[i0 - l])
+            {
+                l++;
+                
+                if (i0 - l < 0) l = n2 + n1 - 1;
+                if (l > 20) { l = 300; break; }
+            }
+            if (r < l) ib10 = ib1 - r; else ib10 = ib1 + l;
+            long z = (n1) * b0 + ib10;                               //Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)]
+            //long z = (n1) * b0 + ib1;
+            return z;
+        }
+
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
@@ -569,7 +602,7 @@ namespace rab1
 
             BitmapData data = ImageProcessor.getBitmapData(bmp);
             BitmapData data3 = ImageProcessor.getBitmapData(bmp3);
-
+/*
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < h; j++)
                 {
@@ -579,8 +612,9 @@ namespace rab1
                     
                 }
             MessageBox.Show(" Z_bmp  Max = " + b2_max + " Min =  " + b2_min);
-            b2_max=1000;
-            b2_min = 0;
+ */
+            b2_max=550;
+            b2_min = 412;
            double max = (double)255 / (double)(b2_max - b2_min);
            
            

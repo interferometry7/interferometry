@@ -6,27 +6,32 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using OpenTK.Graphics.ES10;
 
 namespace rab1.Forms
 {
     public partial class Graphic : Form
     {
+        private Int64[] buf_gl;
+        private int w;
+        private int x0 = 40;
+        
         public Graphic(int w1, int x, Int64[] buf)
         {
             InitializeComponent();
 
-
+            buf_gl = new Int64[w1]; 
             int hh = 512;   //260;
-
+            w = w1;
             Int64 maxx = buf[0], minx = buf[0], b;
-            for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b; }
+            for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b; buf_gl[i] = b; }
 
             for (int i = 0; i < w1; i++) { buf[i] = (buf[i] - minx) * hh / (maxx - minx); }
 
 
             Font font = new Font("Courier", 12, FontStyle.Regular); //, GraphicsUnit.Pixel)Regular;
             StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip); //   .  NoClip);
-            string sx = " minx =  " + minx + "  maxx =  " + maxx;
+            // string sx = " minx =  " + minx + "  maxx =  " + maxx;
 
 
             pc1.BackColor = Color.White;
@@ -50,10 +55,10 @@ namespace rab1.Forms
             // ------------------------------------------------------------------------------------------------------------График 
 
             //  -----------------------------------------------------------------------------------------------------Ось x
-            int x0 = 40;
+           
             grBack.DrawLine(p1, x0, hh , w1 + x0, hh );
             for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + x0, hh , i + x0, hh + 8);
-            grBack.DrawString(sx, font, new SolidBrush(Color.Black), 40+x0, hh + 25, drawFormat);
+            //grBack.DrawString(sx, font, new SolidBrush(Color.Black), 40+x0, hh + 25, drawFormat);
 
             //  -----------------------------------------------------------------------------------------------------Ось y
             grBack.DrawLine(p1, x0, 8, x0, hh + 8);
@@ -69,7 +74,7 @@ namespace rab1.Forms
             for (int i = 0; i <= hh; i += 32)
             {
                 kf = (long)nf;
-                sx = kf.ToString(); 
+                string sx = kf.ToString(); 
                 grBack.DrawString(sx, drawFont, drawBrush, 2, hh-i); //, drawFormat);
                 nf += kx;
                 grBack.DrawLine(p1, x0, i, x0 + w1, i);
@@ -162,5 +167,46 @@ namespace rab1.Forms
 
             Controls.Add(pc1);
         }
+
+        private void pc1_MouseMove(object sender, MouseEventArgs e)
+        {
+           /*
+            PictureBox pictureBox = (PictureBox)sender;
+
+            if (pictureBox.Image != null)
+            {
+             
+                Bitmap currentBitmap = (Bitmap)pictureBox.Image;
+
+              Color currentColor;
+
+                try
+                {
+                    currentColor = currentBitmap.GetPixel(e.X, e.Y);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+
+
+                int redComponent = currentColor.R;
+                int greenComponent = currentColor.G;
+                int blueComponent = currentColor.B;
+
+                redComponentLabel.Text = Convert.ToString(redComponent);
+                greenComponentLabel.Text = Convert.ToString(greenComponent);
+                blueComponentLabel.Text = Convert.ToString(blueComponent);
+         */
+                int yPositon;
+                int xPosition = e.X - x0;
+                label1.Text = Convert.ToString(xPosition);
+            if (xPosition >= 0 && xPosition < w)
+              {
+                yPositon = (int) buf_gl[xPosition];
+                label2.Text = Convert.ToString(yPositon);
+              }
+            }
+        }
     }
-}
+
