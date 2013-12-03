@@ -581,7 +581,7 @@ private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
                 if (i0 - l < 0) l = n2 + n1 - 1;
                 if (l > 20) { l = 300; break; }
             }
-            if (r < l) ib10 = ib1 - r/2; else ib10 = ib1 + l/2;
+            if (r < l) ib10 = ib1 + r/2; else ib10 = ib1 - l/2;
             long z = (n1) * b0 + ib10;                               //Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)]
             //long z = (n1) * b0 + ib1;
             return z;
