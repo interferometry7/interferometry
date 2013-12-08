@@ -22,6 +22,8 @@ namespace Interferometry
     /// </summary>
     public partial class ImageContainer : UserControl
     {
+        private int imageNumber;
+
         public ImageContainerDelegate myDelegate;
         public Pi_Class1.ZArrayDescriptor zArrayDescriptor;
 
@@ -40,6 +42,12 @@ namespace Interferometry
         public void setImage(Bitmap bitmap)
         {
             image.Source = FilesHelper.bitmapToBitmapImage(bitmap);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setImageNumberLabel(int newImageNumber)
+        {
+            imageNumber = newImageNumber;
+            imageNumberLabel.Content = imageNumber;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -61,6 +61,7 @@ namespace Interferometry.forms
                 newImageContainer.VerticalAlignment = VerticalAlignment.Stretch;
                 newImageContainer.Width = Double.NaN;
                 newImageContainer.Height = Double.NaN;
+                newImageContainer.setImageNumberLabel(i + 1);
 
                 RowDefinition newRowDefinition = new RowDefinition();
                 newScrollerContent.RowDefinitions.Add(newRowDefinition);
