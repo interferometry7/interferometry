@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Interferometry.interfaces;
 using rab1;
+using Color = System.Drawing.Color;
 
 namespace Interferometry
 {
@@ -23,9 +25,9 @@ namespace Interferometry
     public partial class ImageContainer : UserControl
     {
         private int imageNumber;
+        private Pi_Class1.ZArrayDescriptor zArrayDescriptor;
 
         public ImageContainerDelegate myDelegate;
-        public Pi_Class1.ZArrayDescriptor zArrayDescriptor;
 
         //Interface Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +50,50 @@ namespace Interferometry
         {
             imageNumber = newImageNumber;
             imageNumberLabel.Content = imageNumber;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setzArrayDescriptor(Pi_Class1.ZArrayDescriptor newDescriptor)
+        {
+            zArrayDescriptor = newDescriptor;
+
+            if (zArrayDescriptor == null)
+            {
+                return;
+            }
+
+            double max = 0;
+            double min = Double.MaxValue;
+
+            for (int i = 0; i < zArrayDescriptor.width; i++)
+            {
+                for (int j = 0; j < zArrayDescriptor.height; j++)
+                {
+                    max = Math.Max(max, zArrayDescriptor.array[i, j]);
+                    min = Math.Min(min, zArrayDescriptor.array[i, j]);
+                }
+            }
+
+            double multiplier = 255/(max - min);
+
+            Bitmap newBitmap = new Bitmap(zArrayDescriptor.width, zArrayDescriptor.height);
+            BitmapData data = ImageProcessor.getBitmapData(newBitmap);
+
+            for (int i = 0; i < zArrayDescriptor.width; i++)
+            {
+                for (int j = 0; j < zArrayDescriptor.height; j++)
+                {
+                    int colorComponent = (int) (zArrayDescriptor.array[i, j]*multiplier);
+                    ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
+                }
+            }
+
+            newBitmap.UnlockBits(data);
+            setImage(newBitmap);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public Pi_Class1.ZArrayDescriptor getzArrayDescriptor()
+        {
+            return zArrayDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

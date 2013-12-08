@@ -29,7 +29,7 @@ namespace rab1
         static Int32 n1;
         static Int32 n2;
 
-        static Int64[,] Z;                                     // Глобальный массив результирующих фаз (Размер задается при расшифровке)
+        static double[,] Z;                                     // Глобальный массив результирующих фаз (Размер задается при расшифровке)
 
         /*      
         Назначение: Нахождение наибольшего общего делителя двух чисел N и M по рекуррентному соотношению
@@ -395,14 +395,14 @@ namespace rab1
             Bitmap bmp  = new Bitmap( w, h);            // Результат
 
             bool rd1 = false;
-            Z = new Int64[w, h];
+            Z = new double[w, h];
             rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z, rd1);    //  РАСШИФРОВКА (Заполнение Z[,])
             int x1 = 15, x2 = 1403, y1 = 50;
             Z_sub(x1,   x2, y1, Z, w, h);
             //Z_bmp(bmp, bmp3, Z, rd);                              //  Z -> bmp с масштабированием
 
             ZArrayDescriptor zArrayDescriptor = new ZArrayDescriptor();
-            zArrayDescriptor.unwrappedPhase = Z;
+            zArrayDescriptor.array = Z;
             zArrayDescriptor.width = w;
             zArrayDescriptor.height = h;
 
@@ -411,22 +411,22 @@ namespace rab1
 
         public class ZArrayDescriptor
         {
-            public Int64[,] unwrappedPhase;
+            public double[,] array;
             public int width;
             public int height;
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Вычитание наклона  -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void Z_sub(int x1,  int x2, int y1, Int64[,] Z, int w, int h)
+        private static void Z_sub(int x1, int x2, int y1, double[,] Z, int w, int h)
         {
-            Int64 z1 = Z[x1, y1];
-            Int64 z2 = Z[x2, y1];
+            double z1 = Z[x1, y1];
+            double z2 = Z[x2, y1];
             double tt = (double) (z2 - z1)/(double) (x2 - x1);
             Int64 [] s = new Int64[w];
             for (int j = x1; j < x2; j++)
             {
-                s[j] = (Int64)(tt * (j - x1)) + (z1);
+                s[j] = (long) ((tt * (j - x1)) + (z1));
             }
             for (int i =0; i < 200; i++)
             {
@@ -450,8 +450,8 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-       
-       private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z, bool rd)
+
+        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, double[,] Z, bool rd)
         {
             GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
             int b1, b2, b3, ib1, ib2;
@@ -640,9 +640,9 @@ namespace rab1
           
         }
         //-----------------------------------------------------------------------------------------------------------------------------------
-        public static Bitmap getUnwrappedPhaseImage(Int64[,] Z, int width, int height)
+        public static Bitmap getUnwrappedPhaseImage(double[,] Z, int width, int height)
         {
-            Int64 b2_min = Z[0, 0], b2_max = Z[0, 0];
+            double b2_min = Z[0, 0], b2_max = Z[0, 0];
             Bitmap bmp = new Bitmap(width, height);
             int w = bmp.Width;
             int h = bmp.Height;

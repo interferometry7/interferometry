@@ -21,22 +21,6 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static BitmapImage loadImege()
         {
-            /*System.Windows.Forms.OpenFileDialog dialog1 = new System.Windows.Forms.OpenFileDialog();
-            bool? result = dialog1.ShowDialog();
-
-            if (result == true)
-            {
-                BitmapImage newBitmapImage = new BitmapImage();
-
-                newBitmapImage.BeginInit();
-                newBitmapImage.UriSource = new Uri(dialog1.FileName);
-                newBitmapImage.EndInit();                
-                return newBitmapImage;
-            }
-
-            return null;*/
-
-
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;

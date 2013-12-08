@@ -17,6 +17,6 @@
         <Grid Margin="50,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick">
             <Image Name="image" Stretch="Fill" />
         </Grid>
-        <Label Content="Label" Height="28" HorizontalAlignment="Left" Name="imageNumberLabel" VerticalAlignment="Top" Width="21" FontSize="10" />
+        <Label Content="Label" Height="28" HorizontalAlignment="Left" Name="imageNumberLabel" VerticalAlignment="Top" Width="21" FontSize="10" Margin="0,16,0,0" Grid.RowSpan="2" />
     </Grid>
 </UserControl>

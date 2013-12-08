@@ -96,6 +96,11 @@ namespace Interferometry.forms
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadEightImages(object sender, RoutedEventArgs e)
+        {
+
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -122,9 +127,9 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
         {
-            Bitmap unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.unwrappedPhase, unwrappedPhase.width, unwrappedPhase.height);
+            Bitmap unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
             imageContainersList[7].setImage(unwrappedPhaseImage);
-            imageContainersList[7].zArrayDescriptor = unwrappedPhase;
+            imageContainersList[7].setzArrayDescriptor(unwrappedPhase);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
@@ -146,6 +151,29 @@ namespace Interferometry.forms
             secondClick = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        //Методы из пункта "Расшифровка"
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void createWrappedPhase(object sender, RoutedEventArgs e)
+        {
+            double[] fz = new double[4];
+            fz[0] = 0;
+            fz[1] = 90;
+            fz[2] = 180;
+            fz[3] = 270;
+
+            Bitmap[] img = new Bitmap[4];
+            img[0] = FilesHelper.bitmapImageToBitmap(imageContainersList[0].getImage());
+            img[1] = FilesHelper.bitmapImageToBitmap(imageContainersList[1].getImage());
+            img[2] = FilesHelper.bitmapImageToBitmap(imageContainersList[2].getImage());
+            img[3] = FilesHelper.bitmapImageToBitmap(imageContainersList[3].getImage());
+
+            Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(img, fz);
+            imageContainersList[9].setzArrayDescriptor(result);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       
 
         
@@ -154,12 +182,12 @@ namespace Interferometry.forms
         public void exportImage(ImageContainer imageContainer, ImageSource bitmapImage)
         {
             mainImage.Source = bitmapImage;
-            zArrayDescriptor = imageContainer.zArrayDescriptor;
+            zArrayDescriptor = imageContainer.getzArrayDescriptor();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public ImageSource getImageToLoad(ImageContainer imageContainer)
         {
-            imageContainer.zArrayDescriptor = zArrayDescriptor;
+            imageContainer.setzArrayDescriptor(zArrayDescriptor);
             return mainImage.Source;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +207,7 @@ namespace Interferometry.forms
             {
                 int x = (int)e.GetPosition(mainImage).X;
                 int y = (int)e.GetPosition(mainImage).Y;
-                int z = (int)zArrayDescriptor.unwrappedPhase[x, y];
+                int z = (int)zArrayDescriptor.array[x, y];
 
                 firstClick = new Point3D(x, y, z);
                 return;
@@ -188,7 +216,7 @@ namespace Interferometry.forms
             {
                 int x = (int)e.GetPosition(mainImage).X;
                 int y = (int)e.GetPosition(mainImage).Y;
-                int z = (int)zArrayDescriptor.unwrappedPhase[x, y];
+                int z = (int)zArrayDescriptor.array[x, y];
 
                 secondClick = new Point3D(x, y, z);
             }
@@ -201,38 +229,42 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mainImage_MouseMove(object sender, MouseEventArgs e)
         {
-            /*Image image = (Image)sender;
-
-            if (image.Source != null)
+            try
             {
-                Bitmap currentBitmap = FilesHelper.bitmapImageToBitmap((BitmapImage) image.Source);
+                Image image = (Image) sender;
 
-                Color currentColor;
-
-                try
+                if (image.Source != null)
                 {
-                    currentColor = currentBitmap.GetPixel((int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y);
+                    Bitmap currentBitmap = FilesHelper.bitmapImageToBitmap((BitmapImage) image.Source);
+
+                    Color currentColor;
+
+                    try
+                    {
+                        currentColor = currentBitmap.GetPixel((int) e.GetPosition(mainImage).X,
+                            (int) e.GetPosition(mainImage).Y);
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+
+
+                    int redComponent = currentColor.R;
+                    int greenComponent = currentColor.G;
+                    int blueComponent = currentColor.B;
+
+                    redComponentLabel.Content = Convert.ToString(redComponent);
+                    greenComponentLabel.Content = Convert.ToString(greenComponent);
+                    blueComponentLabel.Content = Convert.ToString(blueComponent);
+
+                    int xPosition = (int) e.GetPosition(mainImage).X;
+                    int yPositon = (int) e.GetPosition(mainImage).Y;
+
+                    xLabel.Content = Convert.ToString(xPosition);
+                    yLabel.Content = Convert.ToString(yPositon);
                 }
-                catch (Exception)
-                {
-                    return;
-                }
-
-
-                int redComponent = currentColor.R;
-                int greenComponent = currentColor.G;
-                int blueComponent = currentColor.B;
-
-                redComponentLabel.Content = Convert.ToString(redComponent);
-                greenComponentLabel.Content = Convert.ToString(greenComponent);
-                blueComponentLabel.Content = Convert.ToString(blueComponent);
-
-                int xPosition = (int)e.GetPosition(mainImage).X;
-                int yPositon = (int)e.GetPosition(mainImage).Y;
-
-                xLabel.Content = Convert.ToString(xPosition);
-                yLabel.Content = Convert.ToString(yPositon);
-            }*/
+            }catch (Exception ex){}
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          

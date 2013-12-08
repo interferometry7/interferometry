@@ -81,6 +81,7 @@
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="interfaces\FilesHelperDelegate.cs" />
     <Compile Include="interfaces\ImageContainerDelegate.cs" />
+    <Compile Include="math_classes\FazaClass1.cs" />
     <Compile Include="math_classes\Pi_Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
