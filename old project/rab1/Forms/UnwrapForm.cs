@@ -35,8 +35,9 @@ namespace rab1.Forms
                 int cutLevel = Convert.ToInt32(cutLevelTextBox.Text);
                 int sdvg_x = Convert.ToInt32(textBox1.Text);
                 bool unknownParameter = checkBox1.Checked;
+                bool SUB_RD = checkBox2.Checked;
 
-                Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel, sdvg_x);
+                Bitmap result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
 
                 imageUnwrapped(result);
             }

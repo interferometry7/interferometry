@@ -385,7 +385,7 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag, bool rd, int pr_obr, int sdvg_x) // Расшифровка
+        public static Bitmap pi2_rshfr(Image[] img, int sN1, int sN2, int Diag, bool rd, bool SUB_rd, int pr_obr, int sdvg_x) // Расшифровка
         {
             China(sN1, sN2);                                            // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
                                                
@@ -410,7 +410,7 @@ namespace rab1
             
             //GraphClass1.grfk(w, h, x, y, Z);
             Int64[] sub_line = new Int64[w];
-            Z_sub(x1, x2, y1, Z, w, h, sub_line);
+            if (SUB_rd) { Z_sub(x1, x2, y1, Z, w, h, sub_line); }   // 
           
             //Z_sub1(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
             //GraphClass1.grfk(w, x, y, Z);
@@ -474,7 +474,7 @@ namespace rab1
        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
         {
             
-            int b1, b2, b3, ib1, ib2, i1;
+            int b1, b2,  ib1, ib2, i1;
             int w = bmp1.Width;
             int h = bmp1.Height;
 
@@ -496,13 +496,7 @@ namespace rab1
                    c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
 
                    i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1; 
-                   if (bmp_r[ib2, ib1] >= pr_obr)
-                        {
-                           // b3 = glbl_faze1[ib2 + (n1 - i1)];
-                           // Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)];
-                       Z[i, j] = GLBL_R(n1, n2, i1, ib2);  
-                        }
-                    
+                   if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2);  }                 
                 }
                 done++; PopupProgressBar.setProgress(done, all);
             }
@@ -581,7 +575,7 @@ private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
                 if (i0 - l < 0) l = n2 + n1 - 1;
                 if (l > 20) { l = 300; break; }
             }
-            if (r < l) ib10 = ib1 + r/2; else ib10 = ib1 - l/2;
+            if (r < l) ib10 = ib1 - r/2; else ib10 = ib1 + l/2;
             long z = (n1) * b0 + ib10;                               //Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)]
             //long z = (n1) * b0 + ib1;
             return z;
@@ -603,19 +597,21 @@ private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
 
             BitmapData data = ImageProcessor.getBitmapData(bmp);
             BitmapData data3 = ImageProcessor.getBitmapData(bmp3);
-/*
+
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < h; j++)
                 {
-                    c = ImageProcessor.getPixel(i, j, data3);
-                    if (c.R != 0) 
+                   // c = ImageProcessor.getPixel(i, j, data3);
+                   // if (c.R != 0) 
                         { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
                     
                 }
             MessageBox.Show(" Z_bmp  Max = " + b2_max + " Min =  " + b2_min);
- */
-            b2_max=550;
-            b2_min = 412;
+
+//            b2_max=550;
+//            b2_min = 412;
+//            b2_max = 750;
+//            b2_min = 160;
            double max = (double)255 / (double)(b2_max - b2_min);
            
            
