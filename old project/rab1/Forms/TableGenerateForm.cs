@@ -11,6 +11,9 @@ namespace rab1.Forms
         private const int periodsNumber = 9;
         private const int cutLevel = 10;
         private const int sdvg_x = 0;
+        private const int x = 0;
+        private const int y = 0;
+
         private Image[] images;
 
         public TableGenerateForm(Image[] imagesToProcess)
@@ -22,6 +25,8 @@ namespace rab1.Forms
             periodsNumberTextBox.Text = Convert.ToString(periodsNumber);
             cutLevelTextBox.Text = Convert.ToString(cutLevel);
             textBox1_sdvgx.Text = Convert.ToString(sdvg_x);
+            textBox1.Text = Convert.ToString(x);
+            textBox2.Text = Convert.ToString(y);
             images = imagesToProcess;
         }
 
@@ -32,9 +37,11 @@ namespace rab1.Forms
             int poriodsNumber = Convert.ToInt32(periodsNumberTextBox.Text);
             int cutLevel = Convert.ToInt32(cutLevelTextBox.Text);
             int sdvg_x = Convert.ToInt32(textBox1_sdvgx.Text);
+            int x = Convert.ToInt32(textBox1.Text);
+            int y = Convert.ToInt32(textBox2.Text);
             bool unknownParameter = checkBox1.Checked;
 
-            Pi_Class1.pi2_frml2(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel, sdvg_x);
+            Pi_Class1.pi2_frml2(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel, sdvg_x, x, y);
 
             Close();
         }

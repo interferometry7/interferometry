@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using Emgu.CV.Structure;
 using rab1.Forms;
 
 namespace rab1
@@ -71,7 +72,14 @@ namespace rab1
         //           Построение таблицы
         //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_China2(Image[] img,  int Diag, bool rb, int pr_obr, int sdvg_x)
+        //  
+        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
+        {
+            China(sN1, sN2);           // Вычисление формулы
+            Graph_China2(img, Diag, rb, pr_obr, sdvg_x, X, Y);                          // Построение таблицы
+        }
+
+        public static void Graph_China2(Image[] img, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
@@ -181,14 +189,28 @@ namespace rab1
                 for (ib1 = 0; ib1 < n1 - 1; ib1++)
                 {
                     b = bmp_r[ib2, ib1];
-                    max_count = Math.Max(b, max_count);              
+                    //max_count = Math.Max(b, max_count);              
                     if (b > pr_obr) { grBack.DrawRectangle(new Pen(Color.FromArgb(146, 24, 47)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);  }
                 }
             }
-             
-            //MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
-           
+            // -------------------------------------------------------------------------------------Рисование одной точки X, Y
+            Color c;
+            int r;
+            double fn1 = (double)(n1 - 1) / 255;
+            double fn2 = (double)(n2 - 1) / 255;
+            int is1;
+            int is2;
 
+            int w = img[0].Width;
+            int h = img[0].Height;
+            Bitmap bmp1 = new Bitmap(img[1], w, h);
+            Bitmap bmp2 = new Bitmap(img[0], w, h);
+            c = bmp1.GetPixel(X, Y);  r = c.R; is1 = (int)((double)(r) * fn1); //(b2)
+            is1 += sdvg_x; if (is1 > n1) is1 -= n1; 
+            c = bmp2.GetPixel(X, Y);  r = c.R; is2 = (int)((double)(r) * fn2); //(b1) 
+            grBack.DrawRectangle(new Pen(Color.FromArgb(0, 255, 0)), x0 + is2 * scale, y0 + is1 * scale, 25, 25);
+            //MessageBox.Show(" x = " + is2 + " Y =  " + is1);
+            //--------------------------------------------------------------------------------------------------------------------
             pc1.Refresh();
             f_sin.Show();
             bmp_gstgr(bmp_r);
@@ -376,12 +398,7 @@ namespace rab1
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr, int sdvg_x)
-        {
-            China(sN1, sN2);           // Вычисление формулы
-            Graph_China2(img, Diag, rb, pr_obr, sdvg_x);                          // Построение таблицы
-        }
-
+      
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -494,7 +511,6 @@ namespace rab1
                 {
                    c = ImageProcessor.getPixel(i, j, data1); b1 = c.R; ib1 = (int) (fn1*b1); // c = bmp1.GetPixel(i, j);                   
                    c = ImageProcessor.getPixel(i, j, data2); b2 = c.R; ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
-
                    i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1; 
                    if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2);  }                 
                 }
@@ -592,7 +608,7 @@ private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
             Int64 b2_min = 1000000, b2_max = -1000000;
             int b2;
            
-            Color c;
+            //Color c;
 
 
             BitmapData data = ImageProcessor.getBitmapData(bmp);
@@ -606,7 +622,7 @@ private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
                         { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
                     
                 }
-            MessageBox.Show(" Z_bmp  Max = " + b2_max + " Min =  " + b2_min);
+ //           MessageBox.Show(" Z_bmp  Max = " + b2_max + " Min =  " + b2_min);
 
 //            b2_max=550;
 //            b2_min = 412;
