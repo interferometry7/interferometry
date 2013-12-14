@@ -38,12 +38,20 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public BitmapImage getImage()
         {
-            return (BitmapImage) image.Source;
+            return (BitmapImage) Utils.getImageFromArray(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImage(Bitmap bitmap)
         {
-            image.Source = FilesHelper.bitmapToBitmapImage(bitmap);
+            //image.Source = FilesHelper.bitmapToBitmapImage(bitmap);
+            if (bitmap == null)
+            {
+                return;
+            }
+
+            BitmapSource someImage = FilesHelper.bitmapToBitmapImage(bitmap);
+            zArrayDescriptor = Utils.getArrayFromImage(someImage);
+            setzArrayDescriptor(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImageNumberLabel(int newImageNumber)
@@ -55,40 +63,7 @@ namespace Interferometry
         public void setzArrayDescriptor(Pi_Class1.ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
-
-            if (zArrayDescriptor == null)
-            {
-                return;
-            }
-
-            double max = 0;
-            double min = Double.MaxValue;
-
-            for (int i = 0; i < zArrayDescriptor.width; i++)
-            {
-                for (int j = 0; j < zArrayDescriptor.height; j++)
-                {
-                    max = Math.Max(max, zArrayDescriptor.array[i, j]);
-                    min = Math.Min(min, zArrayDescriptor.array[i, j]);
-                }
-            }
-
-            double multiplier = 255/(max - min);
-
-            Bitmap newBitmap = new Bitmap(zArrayDescriptor.width, zArrayDescriptor.height);
-            BitmapData data = ImageProcessor.getBitmapData(newBitmap);
-
-            for (int i = 0; i < zArrayDescriptor.width; i++)
-            {
-                for (int j = 0; j < zArrayDescriptor.height; j++)
-                {
-                    int colorComponent = (int) (zArrayDescriptor.array[i, j]*multiplier);
-                    ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
-                }
-            }
-
-            newBitmap.UnlockBits(data);
-            setImage(newBitmap);
+            image.Source = Utils.getImageFromArray(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public Pi_Class1.ZArrayDescriptor getzArrayDescriptor()
@@ -107,15 +82,15 @@ namespace Interferometry
 
             if (newSource != null)
             {
-                image.Source = newSource;
+                setImage(newSource);
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void exportImageButton_Click(object sender, RoutedEventArgs e)
         {
-            if ((image.Source != null) && (myDelegate != null))
+            if (myDelegate != null)
             {
-                myDelegate.exportImage(this, image.Source);
+                myDelegate.exportImage(this, getzArrayDescriptor());
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

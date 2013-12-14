@@ -65,6 +65,7 @@
     <Compile Include="custom_visual_components\ImageContainer.xaml.cs">
       <DependentUpon>ImageContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="custom_visual_components\PopupProgressBar.cs" />

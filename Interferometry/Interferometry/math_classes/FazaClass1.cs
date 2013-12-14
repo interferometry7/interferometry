@@ -16,7 +16,7 @@ namespace Interferometry
         {
             int w1 = img[0].Width;
             int h1 = img[0].Height;
-            double[,] result = new double[w1, h1];                        // массив для значений фаз
+            Int64[,] result = new Int64[w1, h1];                        // массив для значений фаз
 
             int n_sdv = img.Length;                                                   // Число фазовых сдвигов
 
@@ -77,7 +77,7 @@ namespace Interferometry
                         fz2 += v_sdv[ii] * k_cos[ii];
                     }
 
-                    result[i, j] = (Math.Atan2(fz1, fz2) + pi);
+                    result[i, j] = (long) (Math.Atan2(fz1, fz2) + pi);
                     fz = (Math.Atan2(fz1, fz2) + pi)*pi2;
 
                     //Float_Tmp[i, j] = fz ;

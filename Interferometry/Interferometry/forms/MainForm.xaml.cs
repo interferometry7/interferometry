@@ -179,16 +179,15 @@ namespace Interferometry.forms
         
         //ImageContainerDelegate Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void exportImage(ImageContainer imageContainer, ImageSource bitmapImage)
+        public void exportImage(ImageContainer imageContainer, Pi_Class1.ZArrayDescriptor arrayDescriptor)
         {
-            mainImage.Source = bitmapImage;
-            zArrayDescriptor = imageContainer.getzArrayDescriptor();
+            zArrayDescriptor = arrayDescriptor;
+            mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public ImageSource getImageToLoad(ImageContainer imageContainer)
         {
-            imageContainer.setzArrayDescriptor(zArrayDescriptor);
-            return mainImage.Source;
+            return Utils.getImageFromArray(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
