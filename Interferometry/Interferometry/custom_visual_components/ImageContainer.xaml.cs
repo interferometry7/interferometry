@@ -43,14 +43,12 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImage(Bitmap bitmap)
         {
-            //image.Source = FilesHelper.bitmapToBitmapImage(bitmap);
             if (bitmap == null)
             {
                 return;
             }
-
-            BitmapSource someImage = FilesHelper.bitmapToBitmapImage(bitmap);
-            zArrayDescriptor = Utils.getArrayFromImage(someImage);
+            
+            zArrayDescriptor = Utils.getArrayFromImage(bitmap);
             setzArrayDescriptor(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,11 +76,11 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void onImageClick(object sender, MouseButtonEventArgs e)
         {
-            ImageSource newSource = FilesHelper.loadImege();
+            BitmapImage newSource = FilesHelper.loadImage();
 
             if (newSource != null)
             {
-                setImage(newSource);
+                setImage(FilesHelper.bitmapImageToBitmap(newSource));
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

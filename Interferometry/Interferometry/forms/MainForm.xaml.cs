@@ -80,7 +80,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            ImageSource newSource = FilesHelper.loadImege();
+            ImageSource newSource = FilesHelper.loadImage();
 
             if (newSource != null)
             {

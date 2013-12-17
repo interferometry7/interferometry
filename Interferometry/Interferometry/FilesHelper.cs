@@ -19,7 +19,7 @@ namespace Interferometry
     class FilesHelper
     {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static BitmapImage loadImege()
+        public static BitmapImage loadImage()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";

@@ -65,12 +65,25 @@ namespace Interferometry
                 return null;
             }
 
-            Pi_Class1.ZArrayDescriptor result = new Pi_Class1.ZArrayDescriptor();
-            result.array = new long[(int) someImage.Width, (int) someImage.Height];
-            result.width = (int) someImage.Width;
-            result.height = (int)someImage.Height;
-
             Bitmap newBitmap = FilesHelper.bitmapImageToBitmap((BitmapImage) someImage);
+            Pi_Class1.ZArrayDescriptor result = getArrayFromImage(newBitmap);
+
+            return result;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Pi_Class1.ZArrayDescriptor getArrayFromImage(Bitmap newBitmap)
+        {
+            if (newBitmap == null)
+            {
+                MessageBox.Show("newBitmap == null!!!!");
+                return null;
+            }
+
+            Pi_Class1.ZArrayDescriptor result = new Pi_Class1.ZArrayDescriptor();
+            result.array = new long[newBitmap.Width, newBitmap.Height];
+            result.width = newBitmap.Width;
+            result.height = newBitmap.Height;
+
             BitmapData data = ImageProcessor.getBitmapData(newBitmap);
 
             for (int i = 0; i < newBitmap.Width; i++)
@@ -78,7 +91,7 @@ namespace Interferometry
                 for (int j = 0; j < newBitmap.Height; j++)
                 {
                     Color currentColor = ImageProcessor.getPixel(i, j, data);
-                    result.array[i, j] = (currentColor.R + currentColor.G + currentColor.B)/3;
+                    result.array[i, j] = (currentColor.R + currentColor.G + currentColor.B) / 3;
                 }
             }
 
