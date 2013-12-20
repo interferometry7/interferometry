@@ -497,7 +497,6 @@ namespace rab1
 
             BitmapData data1 = ImageProcessor.getBitmapData(bmp1);
             BitmapData data2 = ImageProcessor.getBitmapData(bmp2);
-            BitmapData data3 = ImageProcessor.getBitmapData(bmp3);  // Маска
 
             Color c;
             double fn1 = (double)(n1 - 1) / 255;
@@ -519,7 +518,6 @@ namespace rab1
     
             bmp1.UnlockBits(data1);
             bmp2.UnlockBits(data2);
-            bmp3.UnlockBits(data3);
             PopupProgressBar.close();
          }
            
@@ -567,7 +565,7 @@ namespace rab1
 // --------------------------------------------------------------------------------------------------------------
 //     Определение расстояния до ближайшей диагонали
 // --------------------------------------------------------------------------------------------------------------
-private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
+        private static long GLBL_R(int n1, int n2, int ib1,  int  ib2)
         {
             
             int i0 = ib2 + (n1 - ib1);

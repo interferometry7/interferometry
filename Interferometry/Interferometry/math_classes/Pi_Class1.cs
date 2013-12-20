@@ -70,12 +70,12 @@ namespace rab1
         //           Построение таблицы
         //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_China2(Image[] img,  int Diag, bool rb, int pr_obr)
+        public static void Graph_China2(ZArrayDescriptor[] img, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
 
-           
+
 
             f_sin = new Form();
             f_sin.Size = new Size(max_x + 8, max_y + 8);
@@ -111,11 +111,11 @@ namespace rab1
             StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip);
 
             string s = n2.ToString(); grBack.DrawString("b2 " + s, font, new SolidBrush(Color.Black), w1 * scale + x0 + 8, y0 - 8, drawFormat);
-                   s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
+            s = n1.ToString(); grBack.DrawString("b1 " + s, font, new SolidBrush(Color.Black), x0, hh * scale + 20 + 10 * scale, drawFormat);
             // ----------------------------------------------------------------------------------------------------------------
-           
-                   GLBL_FAZE(n1, n2, Diag);                                                         //  Заполнение glbl_faze[]  и glbl_faze1[] - допустимые границы диапазона
-// Отрисовка диагоналей
+
+            GLBL_FAZE(n1, n2, Diag);                                                         //  Заполнение glbl_faze[]  и glbl_faze1[] - допустимые границы диапазона
+            // -----------------------------------------------------------------------------------------------Отрисовка диагоналей
             Int32 A = Diag * Math.Max(n1, n2);
             Int32 pf;
             for (int b2 = 0; b2 < n2; b2++)                                                                    // Диагонали   
@@ -125,7 +125,7 @@ namespace rab1
                 {
                     grBack.DrawLine(p2, x0 + b2 * scale, y0, x0 + b2 * scale + n1 * scale, hh * scale + y0);
                     pf = pf / n1;
-                //    glbl_faze[n1 + b2] = pf;
+                    //    glbl_faze[n1 + b2] = pf;
                     s = pf.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + b2 * scale, y0 - 4 * scale, drawFormat);
                 }
             }
@@ -136,23 +136,23 @@ namespace rab1
                 {
                     grBack.DrawLine(p3, x0, y0 + b1 * scale, x0 + n1 * scale - b1 * scale, hh * scale + y0);
                     pf = pf / n1;
-                //    glbl_faze[n1 - b1] = pf;
+                    //    glbl_faze[n1 - b1] = pf;
                     s = pf.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 - 10 * scale, y0 + b1 * scale, drawFormat);
                 }
             }
-// Нумерация внизу таблицы
+            // Нумерация внизу таблицы
             for (int i = 0; i < n1 + n2; i++)
             {
                 int bb = glbl_faze[i];
                 if (bb >= 0) { s = bb.ToString(); grBack.DrawString(s, font, new SolidBrush(Color.Black), x0 + i * scale, y0 + n1 * scale + 8 * scale, drawFormat); }
             }
 
-            
-            
-//            int mxx = 0, mxx_x = 0, mnx_x = 0, cntr = 0;
+
+
+            //            int mxx = 0, mxx_x = 0, mnx_x = 0, cntr = 0;
             int mnx = 0;
 
-// Отрисовка границ допустимого диапазона(Gold)
+            // Отрисовка границ допустимого диапазона(Gold)
             mnx = glbl_faze1[0];
             for (int i = 0; i < n1 + n2; i++)
             {
@@ -166,9 +166,9 @@ namespace rab1
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //     Заполнение  массива bmp_r
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            
+
             int[,] bmp_r = new int[n2 + 3, n1 + 3];
-            int count=bmp_2pi(img, bmp_r, Diag, pr_obr);
+            int count = bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Рисование точек в таблице по диагоналям
@@ -180,67 +180,104 @@ namespace rab1
                 for (ib1 = 0; ib1 < n1 - 1; ib1++)
                 {
                     b = bmp_r[ib2, ib1];
-                    max_count = Math.Max(b, max_count);              
-                    if (b > pr_obr) { grBack.DrawRectangle(new Pen(Color.FromArgb(146, 24, 47)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1);  }
+                    //max_count = Math.Max(b, max_count);              
+                    if (b > pr_obr) { grBack.DrawRectangle(new Pen(Color.FromArgb(146, 24, 47)), x0 + ib2 * scale, y0 + ib1 * scale, 1, 1); }
                 }
             }
-             
-            MessageBox.Show(" count =  " + count + "  max =  " + max_count  );
-           
+            // -------------------------------------------------------------------------------------Рисование одной точки X, Y
+            Color c;
+            long r;
+            double fn1 = (double)(n1 - 1) / 255;
+            double fn2 = (double)(n2 - 1) / 255;
+            int is1;
+            int is2;
 
+            int w = img[0].width;
+            int h = img[0].height;
+
+            r = img[1].array[X, Y]; 
+            is1 = (int)(r * fn1); //(b2)
+
+            is1 += sdvg_x; 
+            if (is1 > n1) is1 -= n1;
+
+            r = img[0].array[X, Y];  
+            is2 = (int)(r * fn2); //(b1) 
+
+            grBack.DrawRectangle(new Pen(Color.FromArgb(0, 255, 0)), x0 + is2 * scale, y0 + is1 * scale, 25, 25);
+            //MessageBox.Show(" x = " + is2 + " Y =  " + is1);
+            //--------------------------------------------------------------------------------------------------------------------
             pc1.Refresh();
             f_sin.Show();
+            bmp_gstgr(bmp_r);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //     Заполнение   массива  гистограмм
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void bmp_gstgr(int[,] bmp_r)
+        {
+            int n = n1 + n2 + 3;
+            Int64[] buf = new Int64[n];
+            int[] buf1 = new int[n];
+            for (int i = 0; i < n1; i++)
+            {
+                for (int j = 0; j < n2; j++)
+                {
+                    buf[j + (n1 - i)] += bmp_r[j, i];
+                }
+            }
 
-            //HystogrammForm hystogrammForm = new HystogrammForm(bmp_r, n2 + 3, n1 + 3);
-            //hystogrammForm.Show();
+            for (int i = 0; i < n; i++) buf1[i] = glbl_faze[i];
+            Graphic graphic = new Graphic(n, 0, buf, buf1);
+            graphic.Show();
 
+
+            //  Graphic graphic1 = new Graphic(n, 0, buf);
+            //  graphic1.Show();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //     Заполнение  массива bmp_r
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static int bmp_2pi(Image[] img, int[,] bmp_r , int Diag, int pr_obr)
+        public static int bmp_2pi(ZArrayDescriptor[] img, int[,] bmp_r, int Diag, int pr_obr, int sdvg_x)
         {
-           int r,g;
-           int w = img[0].Width;
-           int h = img[0].Height;
-           Bitmap bmp1 = new Bitmap(img[1], w, h);
-           Bitmap bmp2 = new Bitmap(img[0], w, h);
-           Bitmap bmp3 = new Bitmap(img[2], w, h);
+            long r;
+            int g;
+            int w = img[0].width;
+            int h = img[0].height;
+
+            int[] ims1 = new int[h];
+            int[] ims2 = new int[h];
+            int[] ims3 = new int[h];
+
+            int xx0 = 0, yy0 = 0;
+            int xx1 = w, yy1 = h;
+            double fn1 = (double)(n1 - 1) / 255;
+            double fn2 = (double)(n2 - 1) / 255;
 
 
-           int[] ims1 = new int[h];
-           int[] ims2 = new int[h];
-           int[] ims3 = new int[h];
+            int all = xx1 - xx0;
+            int done = 0;
+            PopupProgressBar.show();
 
-           Color c, c1;
-
-           int xx0 = 0, yy0 = 0;
-           int xx1 = w, yy1 = h;
-           double fn1 = (double) (n1 - 1)/255;
-           double fn2 = (double) (n2 - 1)/255;
-
-   
-           int all = xx1 - xx0;
-           int done = 0;
-           PopupProgressBar.show();
-
-          int count = 0;
-          // ------------------------------------------------------------------------- По фигуре из 3 квадрата
+            int count = 0;
+            // ------------------------------------------------------------------------- По фигуре из 3 квадрата
             for (int i = xx0; i < xx1; i++)
             {
                 for (int j = yy0; j < yy1; j++)
                 {
-                    c1 = bmp3.GetPixel(i, j);
-                    if (c1.R == 0)
+                    if (img[2].array[i, j] == 0)
                     {
                         ims3[j] = 0;
                     }
-                    else // ims1[j] = (int)((double)(r * (n1 - 1)) / 255); 
+                    else
                     {
                         ims3[j] = 1;
-                        c = bmp1.GetPixel(i, j); r = c.R; ims1[j] = (int) ((double) (r)*fn1); //(b2)
-                        c = bmp2.GetPixel(i, j); r = c.R; ims2[j] = (int) ((double) (r)*fn2); //(b1) 
+                        r = img[1].array[i, j]; 
+                        ims1[j] = (int)(r * fn1);
+
+                        r = img[0].array[i, j]; 
+                        ims2[j] = (int)(r * fn2);
                     }
 
                 }
@@ -249,16 +286,20 @@ namespace rab1
                 {
                     if (ims3[j] != 0)
                     {
-                        r = ims1[j]; g = ims2[j]; bmp_r[g, r]++; count++;
+                        r = ims1[j];
+                        r = r + sdvg_x;
+                        if (r > n1) r -= n1;
+                        g = ims2[j];
+                        bmp_r[g, r]++; count++;
                     }
 
                 }
                 done++;
                 PopupProgressBar.setProgress(done, all);
             }
-       
 
-        PopupProgressBar.close();
+
+            PopupProgressBar.close();
             return (count);
         }
 
@@ -356,11 +397,10 @@ namespace rab1
             double k1 = - b1 / a1;
             double k2 = - c1 / a1;
             double k3 = - (c2+k2*b1 )/ ( b2+k1*b1);
-            //MessageBox.Show(" k1 = " + k1.ToString() + " k2 =  " + k2.ToString() + " k3 =  " + k3.ToString());
+
             C = (d3+k2*d1+k3*(d2+k1*d1) )/(c3+k2*c1+k3*(c2+k1*c1) );
             B = (d2+k1*d1-(c2+k1*c1)*C)/(b2+k1*b1);
             A = (d1 - b1 * B - c1 * C) / a1;
-            
         }
           
    
@@ -370,43 +410,50 @@ namespace rab1
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------                
 // --------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_frml2(Image[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr)
+        public static void pi2_frml2(ZArrayDescriptor[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
         {
             China(sN1, sN2);           // Вычисление формулы
-            Graph_China2(img, Diag, rb, pr_obr);                          // Построение таблицы
+            Graph_China2(img, Diag, rb, pr_obr, sdvg_x, X, Y);                          // Построение таблицы
         }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static ZArrayDescriptor pi2_rshfr(Image[] img, int sN1, int sN2, int Diag, bool rd, int pr_obr) // Расшифровка
+        public static ZArrayDescriptor pi2_rshfr(ZArrayDescriptor[] img, int sN1, int sN2, int Diag, bool rd, bool SUB_rd, int pr_obr, int sdvg_x) // Расшифровка
         {
-            China(sN1, sN2);                                          // Вычисление формулы 
-                                                   
-            int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                 // Массив точек в таблице 2pi
-            int count = bmp_2pi(img, bmp_r, Diag, pr_obr);
+            China(sN1, sN2);                                            // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
 
-            int w = img[0].Width;
-            int h = img[0].Height;
-            Bitmap bmp1 = new Bitmap(img[1], w, h);     // 1 фаза
-            Bitmap bmp2 = new Bitmap(img[0], w, h);     // 2 фаза
-            Bitmap bmp3 = new Bitmap(img[2], w, h);     // Маска
-        
-            Bitmap bmp  = new Bitmap( w, h);            // Результат
+            int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                   // Массив точек в таблице 2pi
+            bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);      // Заполнение массива bmp_r
 
-            bool rd1 = false;
+            int w = img[0].width;
+            int h = img[0].height;    
+
             Z = new Int64[w, h];
-            rash_2pi(bmp1, bmp2, bmp3, bmp_r, pr_obr, sN1, sN2, Diag, Z, rd1);    //  РАСШИФРОВКА (Заполнение Z[,])
-            int x1 = 15, x2 = 1403, y1 = 50;
-            Z_sub(x1,   x2, y1, Z, w, h);
-            //Z_bmp(bmp, bmp3, Z, rd);                              //  Z -> bmp с масштабированием
 
-            ZArrayDescriptor zArrayDescriptor = new ZArrayDescriptor();
-            zArrayDescriptor.array = Z;
-            zArrayDescriptor.width = w;
-            zArrayDescriptor.height = h;
+            GLBL_FAZE(n1, n2, Diag);                                       // Заполнение массива glbl_faze[] (Все -1 кроме номеров полос) 
+            // для расшифровки glbl_faze1[] расширяется значениям номеров полос на допустимый диапазон
+            rash_2pi(img[1], img[0], img[2], bmp_r, pr_obr, sdvg_x, sN1, sN2, Diag, Z);  //  РАСШИФРОВКА (Заполнение Z[,])
+            int x1 = 24, x2 = 460, y1 = 50;
 
-            return zArrayDescriptor;
+
+            //GraphClass1.grfk(w, h, x, y, Z);
+            Int64[] sub_line = new Int64[w];
+            if (SUB_rd) { Z_sub(x1, x2, y1, Z, w, h, sub_line); }   // 
+
+            //Z_sub1(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
+            //GraphClass1.grfk(w, x, y, Z);
+            int x = 1075, y = 600;
+            Int64[] buf = new Int64[w]; for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; } Graphic graphic = new Graphic(w, x, buf); graphic.Show();   // График по x
+            Int64[] buf1 = new Int64[h]; for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; } Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
+
+            ZArrayDescriptor result = new ZArrayDescriptor();
+            result.array = new long[w, h];
+            result.width = w;
+            result.height = h;
+            Z_bmp(result, img[2], Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
+
+            return result;
         }
 
         public class ZArrayDescriptor
@@ -418,107 +465,91 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Вычитание наклона  -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void Z_sub(int x1, int x2, int y1, Int64[,] Z, int w, int h)
+        private static void Z_sub(int x1, int x2, int y1, Int64[,] Z, int w, int h, Int64[] s)
         {
-            double z1 = Z[x1, y1];
-            double z2 = Z[x2, y1];
-            double tt = (double) (z2 - z1)/(double) (x2 - x1);
-            Int64 [] s = new Int64[w];
-            for (int j = x1; j < x2; j++)
-            {
-                s[j] = (long) ((tt * (j - x1)) + (z1));
-            }
-            for (int i =0; i < 200; i++)
-            {
-                for (int j = x1; j < x2; j++)
-                {
-                    Z[j, i] =  s[j];
 
-                }
-            }
-           
-            for (int i = 500; i < h; i++)
+            Int64 z1 = Z[x1, y1], z2 = Z[x2, y1];
+            double tt = (double)(z2 - z1) / (double)(x2 - x1);
+
+            //for (int j = x1; j < x2; j++)
+            for (int j = 0; j < w; j++)
             {
-                for (int j = x1; j < x2; j++)
-                {
-                    Z[j, i] =Z[j, i] - s[j];
-                    
-                }
+                s[j] = (Int64)(tt * (j - x1)) + (z1);
             }
+            for (int i = 0; i < h; i++)
+                for (int j = 0; j < w; j++)
+                    Z[j, i] = Z[j, i] - s[j];
+            //Z[j, i] =  s[j];
         }
 
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Сама расшифровка   -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
 
-        private static void rash_2pi(Bitmap bmp1, Bitmap bmp2, Bitmap bmp3, int[,] bmp_r, int pr_obr, int n1, int n2, int Diag, Int64[,] Z, bool rd)
+        private static void rash_2pi(ZArrayDescriptor bmp1, ZArrayDescriptor bmp2, ZArrayDescriptor bmp3, int[,] bmp_r, int pr_obr, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
         {
-            GLBL_FAZE(n1, n2, Diag);                         // Заполнение массива glbl_faze[] для расшифровки
-            int b1, b2, b3, ib1, ib2;
-            int w = bmp1.Width;
-            int h = bmp1.Height;
 
-            BitmapData data1 = ImageProcessor.getBitmapData(bmp1);
-            BitmapData data2 = ImageProcessor.getBitmapData(bmp2);
-            BitmapData data3 = ImageProcessor.getBitmapData(bmp3);  // Маска
+            long b1;
+            long b2;
+            int i1, ib1, ib2;
+            int w = bmp1.width;
+            int h = bmp1.height;
 
-            Color c;
             double fn1 = (double)(n1 - 1) / 255;
             double fn2 = (double)(n2 - 1) / 255;
 
+            int all = w; int done = 0; PopupProgressBar.show();
 
-           
-
-            int all = w;  int done = 0;   PopupProgressBar.show();   
-                       
             for (int i = 0; i < w; i++)
             {
                 for (int j = 0; j < h; j++)
                 {
-                    c = ImageProcessor.getPixel(i, j, data1);
-                    b1 = c.R;
-                    ib1 = (int) (fn1*b1); // c = bmp1.GetPixel(i, j);                   
-                    c = ImageProcessor.getPixel(i, j, data2);
-                    b2 = c.R;
-                    ib2 = (int) (fn2*b2); // c = bmp2.GetPixel(i, j);
-                   
-                    if (rd)
-                    {
-                        c = ImageProcessor.getPixel(i, j, data3);
-                        if (bmp_r[ib2, ib1] >= pr_obr && c.R != 0)
-                        {
-                            b3 = glbl_faze1[ib2 + (n1 - ib1)];
-                            Z[i, j] = (n1)*b3 + ib1; // glbl_faze1[ib2 + (n1 - ib1)];
-                        }
-                    }
-                    else
-                    {
-                        if (bmp_r[ib2, ib1] >= pr_obr)
-                        {
-                            b3 = glbl_faze1[ib2 + (n1 - ib1)];
-                            Z[i, j] = (n1) * b3 + ib1; // glbl_faze1[ib2 + (n1 - ib1)];
-                        }
-                    }
-                }
-                done++; PopupProgressBar.setProgress(done, all);
-            }
-            //int d1 = 0, d2 = 0, id1 = 0, id2 = 0, ib3 = 0, x = 0;
-            //int ii = 1300; int jj = 536;
-            //int ii = 19 * (n1 - 1) / 255; int jj = 237 * (n2 - 1) / 255;
-            //int ii = 1294; int jj = 546;
-            //Color c1 = ImageProcessor.getPixel(ii, jj, data1);
-            //Color c2 = ImageProcessor.getPixel(jj, ii, data2);
-            //int d1 = c1.R;
-            //int d2 = c2.R;
-          //  int dd1 = (int)Z[ii, jj];
-          //  int dd2 = (int)Z[jj, ii];
-          //  MessageBox.Show(" (" + ii + "," + jj + ")= " + " cx= " + d1 + " cy = " + d2 + " ib1= " + id1 + " ib2 = " + id2 + " ib3 = " + ib3 + " x = " + x);
+                    b1 = bmp1.array[i, j]; 
+                    ib1 = (int)(fn1 * b1);
 
-            bmp1.UnlockBits(data1);
-            bmp2.UnlockBits(data2);
-            bmp3.UnlockBits(data3);
+                    b2 = bmp2.array[i, j]; 
+                    ib2 = (int)(fn2 * b2);
+
+                    i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1;
+                    if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2); }
+                }
+
+                done++; 
+                PopupProgressBar.setProgress(done, all);
+            }
+
             PopupProgressBar.close();
-         }
+        }
+
+        private static long GLBL_R(int n1, int n2, int ib1, int ib2)
+        {
+
+            int i0 = ib2 + (n1 - ib1);
+            int b0 = glbl_faze1[i0];
+            int ib10 = ib1;
+
+            int r = 0;
+            while (b0 != glbl_faze[i0 + r])
+            {
+                r++;
+
+                if (i0 + r > n1 + n2 - 1) r = 0;
+                if (r > 20) { r = 300; break; }
+            }
+
+            int l = 0;
+            while (b0 != glbl_faze[i0 - l])
+            {
+                l++;
+
+                if (i0 - l < 0) l = n2 + n1 - 1;
+                if (l > 20) { l = 300; break; }
+            }
+            if (r < l) ib10 = ib1 - r / 2; else ib10 = ib1 + l / 2;
+            long z = (n1) * b0 + ib10;                               //Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)]
+            //long z = (n1) * b0 + ib1;
+            return z;
+        }
            
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Заполнение массива для расшифровки  glbl_faze ,    glbl_faze1   ------------------------          
@@ -564,80 +595,44 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void Z_bmp(Bitmap bmp, Bitmap bmp3, Int64[,] Z, bool rd)               // -------------------------- Z -> BMP
+        static void Z_bmp(ZArrayDescriptor bmp, ZArrayDescriptor bmp3, Int64[,] Z)               // -------------------------- Z -> BMP
         {
-            Int64 b2_min = Z[0, 0], b2_max = Z[0, 0];
-            int w = bmp.Width;
-            int h = bmp.Height;
-            int b2;
-            Color c;
 
-            BitmapData data = ImageProcessor.getBitmapData(bmp);
-            BitmapData data3 = ImageProcessor.getBitmapData(bmp3);
+            int w = bmp.width; ;
+            int h = bmp.height;
+            Int64 b2_min = 1000000, b2_max = -1000000;
+            int b2;
 
             for (int i = 0; i < w; i++)
-            {
                 for (int j = 0; j < h; j++)
                 {
-                    if (rd)
-                    {
-                        c = ImageProcessor.getPixel(i, j, data3);
-                        if (c.R != 0)
-                        {
-                            b2_max = Math.Max(b2_max, Z[i, j]);
-                            b2_min = Math.Min(b2_min, Z[i, j]);
-                        }
-                    }
-                    else
-                    {
-                        b2_max = Math.Max(b2_max, Z[i, j]);
-                        b2_min = Math.Min(b2_min, Z[i, j]);
-                    }
+
+                    { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
+
                 }
-            }
 
-            MessageBox.Show(" Max = " + b2_max + " Min =  " + b2_min);
-            b2_min = 0;
-            b2_max = 255*4;
-            double max = (double)255 / (double)(b2_max - b2_min);
-          
-           
-            int all = w;             
-            int done = 0;             
-            PopupProgressBar.show();
+            double max = 255 / (double)(b2_max - b2_min);
 
+
+            int all = w; int done = 0; PopupProgressBar.show();
             for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
                 {
-                    if (rd)
-                    {
-                        c = ImageProcessor.getPixel(i, j, data3);
-                        if (c.R != 0)
-                        {
-                            b2 = (int) ((Z[i, j] - b2_min)*max);
-                        }
-                        else b2 = 0;
-                    }
-                    else
-                    {
-                        b2 = (int) ((Z[i, j] - b2_min)*max);
-                    }
-                    if (b2 < 0 || b2 > 255) b2 = 0;
-                    ImageProcessor.setPixel(data, i, j, Color.FromArgb(b2, b2, b2));       
-                    //bmp.SetPixel(i, j, Color.FromArgb(b2, b2, b2));                 
+                    b2 = (int)((Z[i, j] - b2_min) * max);
+                    if (b2 < 0) b2 = 0;
+                    if (b2 > 255) b2 = 255;
+                    
+                    bmp.array[i, j] = b2;
                 }
-                   
-                   
-               
-                done++; 
+
+
+
+                done++;
                 PopupProgressBar.setProgress(done, all);
             }
 
             PopupProgressBar.close();
-            bmp.UnlockBits(data);
-            bmp3.UnlockBits(data3);
-          
         }
         //-----------------------------------------------------------------------------------------------------------------------------------
         public static Bitmap getUnwrappedPhaseImage(Int64[,] Z, int width, int height)

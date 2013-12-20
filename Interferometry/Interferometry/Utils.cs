@@ -44,6 +44,12 @@ namespace Interferometry
                 for (int j = 0; j < newDescriptor.height; j++)
                 {
                     int colorComponent = (int)(newDescriptor.array[i, j] * multiplier);
+
+                    if (colorComponent > 255)
+                    {
+                        colorComponent = 255;
+                    }
+
                     ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
                 }
             }

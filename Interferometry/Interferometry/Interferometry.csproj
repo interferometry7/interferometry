@@ -65,6 +65,18 @@
     <Compile Include="custom_visual_components\ImageContainer.xaml.cs">
       <DependentUpon>ImageContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\Graphic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Graphic.designer.cs">
+      <DependentUpon>Graphic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\TableGenerateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TableGenerateForm.designer.cs">
+      <DependentUpon>TableGenerateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +109,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="forms\Graphic.resx">
+      <DependentUpon>Graphic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TableGenerateForm.resx">
+      <DependentUpon>TableGenerateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\UnwrapForm.resx">
       <DependentUpon>UnwrapForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -84,7 +84,8 @@ namespace Interferometry.forms
 
             if (newSource != null)
             {
-                mainImage.Source = newSource;
+                zArrayDescriptor = Utils.getArrayFromImage((BitmapSource) newSource);
+                mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,21 +105,21 @@ namespace Interferometry.forms
 
 
 
-        //Методы из пункта "Расшифровка"
+        //Методы из пункта "Восстановление фазы"
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
-            if ((imageContainersList[8].getImage() == null) || (imageContainersList[9].getImage() == null))
+            if ((imageContainersList[8].getzArrayDescriptor() == null) || (imageContainersList[9].getzArrayDescriptor() == null))
             {
                 MessageBox.Show("Изображения пустые");
                 return;
             }
 
-            Bitmap[] imagesF = new Bitmap[3];
+            Pi_Class1.ZArrayDescriptor[] imagesF = new Pi_Class1.ZArrayDescriptor[3];
 
-            imagesF[0] = FilesHelper.bitmapImageToBitmap(imageContainersList[8].getImage());     // 1 фаза
-            imagesF[1] = FilesHelper.bitmapImageToBitmap(imageContainersList[9].getImage());    // 2 фаза
-            imagesF[2] = FilesHelper.bitmapImageToBitmap(imageContainersList[10].getImage());    // 3 ограничение по контуру
+            imagesF[0] = imageContainersList[8].getzArrayDescriptor();
+            imagesF[1] = imageContainersList[9].getzArrayDescriptor();
+            imagesF[2] = imageContainersList[10].getzArrayDescriptor();
 
             UnwrapForm unwrapForm = new UnwrapForm(imagesF);
             unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
@@ -151,11 +152,6 @@ namespace Interferometry.forms
             secondClick = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        //Методы из пункта "Расшифровка"
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
             double[] fz = new double[4];
@@ -164,14 +160,36 @@ namespace Interferometry.forms
             fz[2] = 180;
             fz[3] = 270;
 
-            Bitmap[] img = new Bitmap[4];
-            img[0] = FilesHelper.bitmapImageToBitmap(imageContainersList[0].getImage());
-            img[1] = FilesHelper.bitmapImageToBitmap(imageContainersList[1].getImage());
-            img[2] = FilesHelper.bitmapImageToBitmap(imageContainersList[2].getImage());
-            img[3] = FilesHelper.bitmapImageToBitmap(imageContainersList[3].getImage());
+            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
+            source[0] = imageContainersList[0].getzArrayDescriptor();
+            source[1] = imageContainersList[1].getzArrayDescriptor();
+            source[2] = imageContainersList[2].getzArrayDescriptor();
+            source[3] = imageContainersList[3].getzArrayDescriptor();
 
-            Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(img, fz);
+            Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(source, fz);
+            imageContainersList[8].setzArrayDescriptor(result);
+
+            source = new Pi_Class1.ZArrayDescriptor[4];
+            source[0] = imageContainersList[4].getzArrayDescriptor();
+            source[1] = imageContainersList[5].getzArrayDescriptor();
+            source[2] = imageContainersList[6].getzArrayDescriptor();
+            source[3] = imageContainersList[7].getzArrayDescriptor();
+
+            result = FazaClass.ATAN_1234(source, fz);
             imageContainersList[9].setzArrayDescriptor(result);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void buildTableClicked(object sender, RoutedEventArgs e)
+        {
+            Pi_Class1.ZArrayDescriptor[] imagesForTable = new Pi_Class1.ZArrayDescriptor[3];
+
+            imagesForTable[0] = imageContainersList[8].getzArrayDescriptor();
+            imagesForTable[1] = imageContainersList[9].getzArrayDescriptor();
+            imagesForTable[2] = imageContainersList[10].getzArrayDescriptor();
+
+
+            TableGenerateForm tableGenerateForm = new TableGenerateForm(imagesForTable);
+            tableGenerateForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       
@@ -230,28 +248,11 @@ namespace Interferometry.forms
         {
             try
             {
-                Image image = (Image) sender;
-
-                if (image.Source != null)
+                if (zArrayDescriptor != null)
                 {
-                    Bitmap currentBitmap = FilesHelper.bitmapImageToBitmap((BitmapImage) image.Source);
-
-                    Color currentColor;
-
-                    try
-                    {
-                        currentColor = currentBitmap.GetPixel((int) e.GetPosition(mainImage).X,
-                            (int) e.GetPosition(mainImage).Y);
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
-
-
-                    int redComponent = currentColor.R;
-                    int greenComponent = currentColor.G;
-                    int blueComponent = currentColor.B;
+                    int redComponent = (int) zArrayDescriptor.array[(int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y];
+                    int greenComponent = (int)zArrayDescriptor.array[(int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y];
+                    int blueComponent = (int)zArrayDescriptor.array[(int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y];
 
                     redComponentLabel.Content = Convert.ToString(redComponent);
                     greenComponentLabel.Content = Convert.ToString(greenComponent);
