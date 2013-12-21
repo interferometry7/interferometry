@@ -299,7 +299,35 @@ namespace Interferometry.forms
             }
             else if (currentCursorMode == CursorMode.tableBuildMode)
             {
+                if (imageContainersList[8].getzArrayDescriptor() == null)
+                {
+                    MessageBox.Show("9 изображение пустое!");
+                    return;
+                }
 
+                if (imageContainersList[9].getzArrayDescriptor() == null)
+                {
+                    MessageBox.Show("10 изображение пустое!");
+                    return;
+                }
+
+                if (imageContainersList[10].getzArrayDescriptor() == null)
+                {
+                    MessageBox.Show("11 изображение пустое!");
+                    return;
+                }
+
+                Pi_Class1.ZArrayDescriptor[] imagesForTable = new Pi_Class1.ZArrayDescriptor[3];
+
+                imagesForTable[0] = imageContainersList[8].getzArrayDescriptor();
+                imagesForTable[1] = imageContainersList[9].getzArrayDescriptor();
+                imagesForTable[2] = imageContainersList[10].getzArrayDescriptor();
+
+
+                TableGenerateForm tableGenerateForm = new TableGenerateForm(imagesForTable);
+                tableGenerateForm.setX((int)e.GetPosition(mainImage).X);
+                tableGenerateForm.setY((int)e.GetPosition(mainImage).Y);
+                tableGenerateForm.Show();
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

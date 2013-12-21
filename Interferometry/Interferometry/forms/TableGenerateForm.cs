@@ -11,8 +11,8 @@ namespace rab1.Forms
         private const int periodsNumber = 9;
         private const int cutLevel = 10;
         private const int sdvg_x = 0;
-        private const int x = 0;
-        private const int y = 0;
+        private int x = 0;
+        private int y = 0;
 
         private Pi_Class1.ZArrayDescriptor[] images;
 
@@ -30,6 +30,18 @@ namespace rab1.Forms
             images = imagesToProcess;
         }
 
+        public void setX(int newX)
+        {
+            x = newX;
+            textBox1.Text = Convert.ToString(x);
+        }
+
+        public void setY(int newY)
+        {
+            y = newY;
+            textBox2.Text = Convert.ToString(y);
+        }
+
         private void buildClicked(object sender, EventArgs e)
         {
             int firstSineNumber = Convert.ToInt32(sineNumberTextBox1.Text);
@@ -37,8 +49,6 @@ namespace rab1.Forms
             int poriodsNumber = Convert.ToInt32(periodsNumberTextBox.Text);
             int cutLevel = Convert.ToInt32(cutLevelTextBox.Text);
             int sdvg_x = Convert.ToInt32(textBox1_sdvgx.Text);
-            int x = Convert.ToInt32(textBox1.Text);
-            int y = Convert.ToInt32(textBox2.Text);
             bool unknownParameter = checkBox1.Checked;
 
             Pi_Class1.pi2_frml2(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel, sdvg_x, x, y);
