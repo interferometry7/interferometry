@@ -41,6 +41,10 @@
                     <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="119,38,0,0" Name="greenComponentLabel" VerticalAlignment="Top" />
                     <Label Content="B:" Height="28" HorizontalAlignment="Left" Margin="182,38,0,0" Name="label2" VerticalAlignment="Top" />
                     <Label Content="Label" Height="28" Margin="207,38,0,0" Name="blueComponentLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
+                    <Label Content="Режим курсора" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Top"/>
+                    <RadioButton x:Name="defaultCursorModeButton" Content="Выбор" HorizontalAlignment="Left" Margin="281,23,0,0" VerticalAlignment="Top" IsChecked="True" Checked="defaultCursorModeButton_Checked"/>
+                    <RadioButton x:Name="graphCursorModeButton" Content="Построение графика" HorizontalAlignment="Left" Margin="281,44,0,0" VerticalAlignment="Top" Checked="graphCursorModeButton_Checked"/>
+                    <RadioButton Content="Построение таблицы" Margin="441,23,114,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1"/>
                 </Grid>
             </TabItem>
         </TabControl>

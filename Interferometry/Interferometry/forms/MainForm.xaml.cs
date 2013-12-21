@@ -31,12 +31,30 @@ namespace Interferometry.forms
     /// </summary>
     public partial class MainForm : ImageContainerDelegate
     {
+        private enum CursorMode
+        {
+            /// <summary>
+            /// Режим по умолчанию. При клике по изображению ничего не происходит
+            /// </summary>
+            defaultMode,
+            /// <summary>
+            /// При клике по изображению строится график
+            /// </summary>
+            graphBuildMode,
+            /// <summary>
+            /// При клике по изображению строится таблица
+            /// </summary>
+            tableBuildMode
+        };
+
         private List<ImageContainer> imageContainersList;
         private Pi_Class1.ZArrayDescriptor zArrayDescriptor;
 
         private bool needPointsCapture = false;
         private Point3D firstClick;
         private Point3D secondClick;
+
+        private CursorMode currentCursorMode = CursorMode.defaultMode;
 
         //Life Cycle
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,9 +115,18 @@ namespace Interferometry.forms
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Загрузить 8 изображений
         private void loadEightImages(object sender, RoutedEventArgs e)
         {
+            ImageSource[] newSources = FilesHelper.loadEightImages();
 
+            if (newSources != null)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                }
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -128,13 +155,14 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
         {
-            Bitmap unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
-            imageContainersList[7].setImage(unwrappedPhaseImage);
-            imageContainersList[7].setzArrayDescriptor(unwrappedPhase);
+            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
+            imageContainersList[7].setzArrayDescriptor(unwrappedPhaseImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
         {
+            currentCursorMode = CursorMode.defaultMode;
+
             if (mainImage.Source == null)
             {
                 MessageBox.Show("Главное изображение пустое");
@@ -192,6 +220,26 @@ namespace Interferometry.forms
             tableGenerateForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        //Методы из пункта "Информация"
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void defaultCursorModeButton_Checked(object sender, RoutedEventArgs e)
+        {
+            currentCursorMode = CursorMode.defaultMode;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void graphCursorModeButton_Checked(object sender, RoutedEventArgs e)
+        {
+            currentCursorMode = CursorMode.graphBuildMode;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+            currentCursorMode = CursorMode.tableBuildMode;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       
 
         
@@ -215,33 +263,44 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mainImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (needPointsCapture == false)
+            if (currentCursorMode == CursorMode.defaultMode)
             {
-                return;
-            }
+                if (needPointsCapture == false)
+                {
+                    return;
+                }
 
-            if (firstClick == null)
+                if (firstClick == null)
+                {
+                    int x = (int) e.GetPosition(mainImage).X;
+                    int y = (int) e.GetPosition(mainImage).Y;
+                    int z = (int) zArrayDescriptor.array[x, y];
+
+                    firstClick = new Point3D(x, y, z);
+                    return;
+                }
+                else
+                {
+                    int x = (int) e.GetPosition(mainImage).X;
+                    int y = (int) e.GetPosition(mainImage).Y;
+                    int z = (int) zArrayDescriptor.array[x, y];
+
+                    secondClick = new Point3D(x, y, z);
+                }
+
+                MessageBox.Show("Первая точка - X = " + firstClick.z + " Y = " + firstClick.y + " Z = " + firstClick.z
+                                + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);
+
+                needPointsCapture = false;
+            }
+            else if (currentCursorMode == CursorMode.graphBuildMode)
             {
-                int x = (int)e.GetPosition(mainImage).X;
-                int y = (int)e.GetPosition(mainImage).Y;
-                int z = (int)zArrayDescriptor.array[x, y];
-
-                firstClick = new Point3D(x, y, z);
-                return;
+                ImageHelper.drawGraph(zArrayDescriptor, (int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y);
             }
-            else
+            else if (currentCursorMode == CursorMode.tableBuildMode)
             {
-                int x = (int)e.GetPosition(mainImage).X;
-                int y = (int)e.GetPosition(mainImage).Y;
-                int z = (int)zArrayDescriptor.array[x, y];
 
-                secondClick = new Point3D(x, y, z);
             }
-
-            MessageBox.Show("Первая точка - X = " + firstClick.z + " Y = " + firstClick.y + " Z = " + firstClick.z
-                + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);
-
-            needPointsCapture = false;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mainImage_MouseMove(object sender, MouseEventArgs e)

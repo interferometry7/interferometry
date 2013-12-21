@@ -54,6 +54,59 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static BitmapImage[] loadEightImages()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            BitmapImage[] result = new BitmapImage[8];
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream myStream;
+                    if ((myStream = openFileDialog.OpenFile()) != null)
+                    {
+                        using (myStream)
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
+                                String fileName;
+
+                                if (openFileDialog.FileName.Contains("1."))
+                                {
+                                    fileName = openFileDialog.FileName.Replace("1.", (i + 1) + ".");
+                                }
+                                else
+                                {
+                                    fileName = openFileDialog.FileName;
+                                }
+
+                                BitmapImage newBitmapImage = new BitmapImage();
+
+                                newBitmapImage.BeginInit();
+                                newBitmapImage.UriSource = new Uri(fileName);
+                                newBitmapImage.EndInit();
+
+                                result[i] = newBitmapImage;
+                            }
+
+                            return result;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    return null;
+                }
+            }
+
+            return null;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Bitmap bitmapImageToBitmap(BitmapImage bitmapImage)
         {
             if (bitmapImage == null)

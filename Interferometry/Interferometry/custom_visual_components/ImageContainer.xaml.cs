@@ -41,17 +41,6 @@ namespace Interferometry
             return (BitmapImage) Utils.getImageFromArray(zArrayDescriptor);
         }*/
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void setImage(Bitmap bitmap)
-        {
-            if (bitmap == null)
-            {
-                return;
-            }
-            
-            zArrayDescriptor = Utils.getArrayFromImage(bitmap);
-            setzArrayDescriptor(zArrayDescriptor);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImageNumberLabel(int newImageNumber)
         {
             imageNumber = newImageNumber;
@@ -82,6 +71,17 @@ namespace Interferometry
             {
                 setImage(FilesHelper.bitmapImageToBitmap(newSource));
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void setImage(Bitmap bitmap)
+        {
+            if (bitmap == null)
+            {
+                return;
+            }
+
+            zArrayDescriptor = Utils.getArrayFromImage(bitmap);
+            setzArrayDescriptor(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void exportImageButton_Click(object sender, RoutedEventArgs e)

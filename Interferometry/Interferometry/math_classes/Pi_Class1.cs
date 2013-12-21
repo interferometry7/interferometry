@@ -635,37 +635,35 @@ namespace rab1
             PopupProgressBar.close();
         }
         //-----------------------------------------------------------------------------------------------------------------------------------
-        public static Bitmap getUnwrappedPhaseImage(Int64[,] Z, int width, int height)
+        public static ZArrayDescriptor getUnwrappedPhaseImage(Int64[,] Z, int width, int height)
         {
             double b2_min = Z[0, 0], b2_max = Z[0, 0];
-            Bitmap bmp = new Bitmap(width, height);
-            int w = bmp.Width;
-            int h = bmp.Height;
-            int b2;
 
-            BitmapData data = ImageProcessor.getBitmapData(bmp);
+            ZArrayDescriptor result = new ZArrayDescriptor();
+            result.array = new long[width, height];
+            result.width = width;
+            result.height = height;
 
-            for (int i = 0; i < w; i++) for (int j = 0; j < h; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
+            for (int i = 0; i < width; i++) for (int j = 0; j < height; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
 
 
-            double max = 255 / (double)(b2_max - b2_min);
+            double max = 255 / (b2_max - b2_min);
 
-            int all = w; int done = 0; PopupProgressBar.show();
-            for (int i = 0; i < w; i++)                                                                  
+            int all = width; int done = 0; PopupProgressBar.show();
+            for (int i = 0; i < width; i++)                                                                  
             {
-                for (int j = 0; j < h; j++)
+                for (int j = 0; j < height; j++)
                 {
-                    b2 = (int)((Z[i, j] - b2_min) * max);
-                    ImageProcessor.setPixel(data, i, j, Color.FromArgb(b2, b2, b2));                 
+                    int b2 = (int)((Z[i, j] - b2_min) * max);
+                    result.array[i, j] = b2;
                 }
                 done++;
                 PopupProgressBar.setProgress(done, all);
             }
 
             PopupProgressBar.close();
-            bmp.UnlockBits(data);
 
-            return bmp;
+            return result;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
 /*
