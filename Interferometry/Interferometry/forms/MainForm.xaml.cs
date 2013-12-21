@@ -78,7 +78,7 @@ namespace Interferometry.forms
         
         //Методы из пункта "Работа с файлами"
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void loadClicked(object sender, RoutedEventArgs e)
         {
             ImageSource newSource = FilesHelper.loadImage();
 
@@ -203,9 +203,9 @@ namespace Interferometry.forms
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public ImageSource getImageToLoad(ImageContainer imageContainer)
+        public Pi_Class1.ZArrayDescriptor getImageToLoad(ImageContainer imageContainer)
         {
-            return Utils.getImageFromArray(zArrayDescriptor);
+            return zArrayDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

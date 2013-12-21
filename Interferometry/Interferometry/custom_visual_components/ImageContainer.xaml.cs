@@ -96,7 +96,7 @@ namespace Interferometry
         {
             if (myDelegate != null)
             {
-                image.Source = myDelegate.getImageToLoad(this);
+                setzArrayDescriptor(myDelegate.getImageToLoad(this));
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

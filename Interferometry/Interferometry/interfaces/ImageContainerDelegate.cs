@@ -12,6 +12,6 @@ namespace Interferometry.interfaces
     public interface ImageContainerDelegate
     {
         void exportImage(ImageContainer imageContainer, Pi_Class1.ZArrayDescriptor arrayDescriptor);
-        ImageSource getImageToLoad(ImageContainer imageContainer);
+        Pi_Class1.ZArrayDescriptor getImageToLoad(ImageContainer imageContainer);
     }
 }
