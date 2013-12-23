@@ -25,7 +25,7 @@ namespace Interferometry
             double[] k_sin = new double[4];
             double[] k_cos = new double[4];
             double pi = Math.PI;
-            double pi2 = 255/(Math.PI * 2);
+            double pi2 = 512/(Math.PI * 2);
 
             for (int i = 0; i < n_sdv; i++)
             {
@@ -33,7 +33,7 @@ namespace Interferometry
                 k_cos[i] = Math.Cos(fzz[i] * pi / 180);
             }
 
-            int Gamma = 1;
+            //int Gamma = 1;
 
             int all = w1; 
             int done = 0; 
@@ -43,10 +43,14 @@ namespace Interferometry
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    i_sdv[0] = (int)Math.Pow(img[0].array[i, j], Gamma);
-                    i_sdv[1] = (int)Math.Pow(img[1].array[i, j], Gamma);
-                    i_sdv[2] = (int)Math.Pow(img[2].array[i, j], Gamma);
-                    i_sdv[3] = (int)Math.Pow(img[3].array[i, j], Gamma);
+                   // i_sdv[0] = (int)Math.Pow(img[0].array[i, j], Gamma);
+                   // i_sdv[1] = (int)Math.Pow(img[1].array[i, j], Gamma);
+                   // i_sdv[2] = (int)Math.Pow(img[2].array[i, j], Gamma);
+                   // i_sdv[3] = (int)Math.Pow(img[3].array[i, j], Gamma);
+                    i_sdv[0] = img[0].array[i, j];
+                    i_sdv[1] = img[1].array[i, j];
+                    i_sdv[2] = img[2].array[i, j];
+                    i_sdv[3] = img[3].array[i, j];
 
                     // ------                                     Формула расшифровки
 

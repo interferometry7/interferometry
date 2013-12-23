@@ -66,6 +66,12 @@
     <Compile Include="custom_visual_components\ImageContainer.xaml.cs">
       <DependentUpon>ImageContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\TableFaza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\TableFaza.Designer.cs">
+      <DependentUpon>TableFaza.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\GraphForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Graphic.resx">
       <DependentUpon>Graphic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\TableFaza.resx">
+      <DependentUpon>TableFaza.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\TableGenerateForm.resx">
       <DependentUpon>TableGenerateForm.cs</DependentUpon>

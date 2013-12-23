@@ -15,6 +15,7 @@ namespace rab1.Forms
         private int y = 0;
 
         private Pi_Class1.ZArrayDescriptor[] images;
+        
 
         public TableGenerateForm(Pi_Class1.ZArrayDescriptor[] imagesToProcess)
         {
@@ -28,6 +29,7 @@ namespace rab1.Forms
             textBox1.Text = Convert.ToString(x);
             textBox2.Text = Convert.ToString(y);
             images = imagesToProcess;
+           
         }
 
         public void setX(int newX)

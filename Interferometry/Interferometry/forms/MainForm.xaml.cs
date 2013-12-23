@@ -120,13 +120,20 @@ namespace Interferometry.forms
         {
             ImageSource[] newSources = FilesHelper.loadEightImages();
 
+            int all = 7;
+            int done = 0;
+            PopupProgressBar.show();
+
             if (newSources != null)
             {
                 for (int i = 0; i < 8; i++)
                 {
                     imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    done++;
+                    PopupProgressBar.setProgress(done, all);
                 }
             }
+            PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -188,23 +195,45 @@ namespace Interferometry.forms
             fz[2] = 180;
             fz[3] = 270;
 
-            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
-            source[0] = imageContainersList[0].getzArrayDescriptor();
-            source[1] = imageContainersList[1].getzArrayDescriptor();
-            source[2] = imageContainersList[2].getzArrayDescriptor();
-            source[3] = imageContainersList[3].getzArrayDescriptor();
+            Pi_Class1.ZArrayDescriptor[] source1 = new Pi_Class1.ZArrayDescriptor[4];
+            Pi_Class1.ZArrayDescriptor[] source2 = new Pi_Class1.ZArrayDescriptor[4];
+            source1[0] = imageContainersList[0].getzArrayDescriptor();
+            source1[1] = imageContainersList[1].getzArrayDescriptor();
+            source1[2] = imageContainersList[2].getzArrayDescriptor();
+            source1[3] = imageContainersList[3].getzArrayDescriptor();
+            source2[0] = imageContainersList[4].getzArrayDescriptor();
+            source2[1] = imageContainersList[5].getzArrayDescriptor();
+            source2[2] = imageContainersList[6].getzArrayDescriptor();
+            source2[3] = imageContainersList[7].getzArrayDescriptor();
+           
+           
+            TableFaza TableFaza = new TableFaza(source1, source1, fz);
+            TableFaza.Show();
+             Pi_Class1.ZArrayDescriptor result1 = TableFaza.get1();
+            imageContainersList[8].setzArrayDescriptor(result1);
+            Pi_Class1.ZArrayDescriptor result2 = TableFaza.get2();
+            imageContainersList[9].setzArrayDescriptor(result2);
 
-            Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(source, fz);
-            imageContainersList[8].setzArrayDescriptor(result);
+            //imageContainersList[9].setzArrayDescriptor(result);
+            /*            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
+                        source[0] = imageContainersList[0].getzArrayDescriptor();
+                        source[1] = imageContainersList[1].getzArrayDescriptor();
+                        source[2] = imageContainersList[2].getzArrayDescriptor();
+                        source[3] = imageContainersList[3].getzArrayDescriptor();
 
-            source = new Pi_Class1.ZArrayDescriptor[4];
-            source[0] = imageContainersList[4].getzArrayDescriptor();
-            source[1] = imageContainersList[5].getzArrayDescriptor();
-            source[2] = imageContainersList[6].getzArrayDescriptor();
-            source[3] = imageContainersList[7].getzArrayDescriptor();
+                        Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(source, fz);
+                        imageContainersList[8].setzArrayDescriptor(result);
 
-            result = FazaClass.ATAN_1234(source, fz);
-            imageContainersList[9].setzArrayDescriptor(result);
+                        source = new Pi_Class1.ZArrayDescriptor[4];
+                        source[0] = imageContainersList[4].getzArrayDescriptor();
+                        source[1] = imageContainersList[5].getzArrayDescriptor();
+                        source[2] = imageContainersList[6].getzArrayDescriptor();
+                        source[3] = imageContainersList[7].getzArrayDescriptor();
+
+                        result = FazaClass.ATAN_1234(source, fz);
+
+                        imageContainersList[9].setzArrayDescriptor(result);
+             */
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void buildTableClicked(object sender, RoutedEventArgs e)
@@ -256,9 +285,6 @@ namespace Interferometry.forms
             return zArrayDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
         //Mouse Events
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mainImage_MouseUp(object sender, MouseButtonEventArgs e)
@@ -353,10 +379,7 @@ namespace Interferometry.forms
                 }
             }catch (Exception ex){}
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-         
-        
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         //Additional Classes
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public class Point3D
