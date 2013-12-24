@@ -12,7 +12,7 @@ namespace Interferometry
 {
     public class FazaClass
     {
-        public static Pi_Class1.ZArrayDescriptor ATAN_1234(Pi_Class1.ZArrayDescriptor[] img, double[] fzz)
+        public static Pi_Class1.ZArrayDescriptor ATAN_1234(Pi_Class1.ZArrayDescriptor[] img, double[] fzz, int sineNumber)
         {
             int w1 = img[0].width;
             int h1 = img[0].height;
@@ -25,7 +25,7 @@ namespace Interferometry
             double[] k_sin = new double[4];
             double[] k_cos = new double[4];
             double pi = Math.PI;
-            double pi2 = 512/(Math.PI * 2);
+            double pi2 = sineNumber / (Math.PI * 2);
 
             for (int i = 0; i < n_sdv; i++)
             {

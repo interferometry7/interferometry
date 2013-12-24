@@ -194,34 +194,21 @@ namespace Interferometry.forms
             fz[1] = 90;
             fz[2] = 180;
             fz[3] = 270;
-
-            Pi_Class1.ZArrayDescriptor[] source1 = new Pi_Class1.ZArrayDescriptor[4];
-            Pi_Class1.ZArrayDescriptor[] source2 = new Pi_Class1.ZArrayDescriptor[4];
-            source1[0] = imageContainersList[0].getzArrayDescriptor();
-            source1[1] = imageContainersList[1].getzArrayDescriptor();
-            source1[2] = imageContainersList[2].getzArrayDescriptor();
-            source1[3] = imageContainersList[3].getzArrayDescriptor();
-            source2[0] = imageContainersList[4].getzArrayDescriptor();
-            source2[1] = imageContainersList[5].getzArrayDescriptor();
-            source2[2] = imageContainersList[6].getzArrayDescriptor();
-            source2[3] = imageContainersList[7].getzArrayDescriptor();
+            int sineNumber1;
+            int sineNumber2;
            
-           
-            TableFaza TableFaza = new TableFaza(source1, source1, fz);
+            TableFaza TableFaza = new TableFaza();
             TableFaza.Show();
-             Pi_Class1.ZArrayDescriptor result1 = TableFaza.get1();
-            imageContainersList[8].setzArrayDescriptor(result1);
-            Pi_Class1.ZArrayDescriptor result2 = TableFaza.get2();
-            imageContainersList[9].setzArrayDescriptor(result2);
+            sineNumber1 = TableFaza.get_1();
+            sineNumber2 = TableFaza.get_2();
 
-            //imageContainersList[9].setzArrayDescriptor(result);
-            /*            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
+          
+                  Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
                         source[0] = imageContainersList[0].getzArrayDescriptor();
                         source[1] = imageContainersList[1].getzArrayDescriptor();
                         source[2] = imageContainersList[2].getzArrayDescriptor();
                         source[3] = imageContainersList[3].getzArrayDescriptor();
-
-                        Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(source, fz);
+                        Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(source, fz, sineNumber1);
                         imageContainersList[8].setzArrayDescriptor(result);
 
                         source = new Pi_Class1.ZArrayDescriptor[4];
@@ -230,10 +217,10 @@ namespace Interferometry.forms
                         source[2] = imageContainersList[6].getzArrayDescriptor();
                         source[3] = imageContainersList[7].getzArrayDescriptor();
 
-                        result = FazaClass.ATAN_1234(source, fz);
+                        result = FazaClass.ATAN_1234(source, fz, sineNumber2);
 
                         imageContainersList[9].setzArrayDescriptor(result);
-             */
+         
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void buildTableClicked(object sender, RoutedEventArgs e)
@@ -321,7 +308,14 @@ namespace Interferometry.forms
             }
             else if (currentCursorMode == CursorMode.graphBuildMode)
             {
-                ImageHelper.drawGraph(zArrayDescriptor, (int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y);
+               // ImageHelper.drawGraph(zArrayDescriptor, (int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y);
+                int x = (int)e.GetPosition(mainImage).X;
+                int y = (int)e.GetPosition(mainImage).Y;
+                Graphic graphic = new Graphic(zArrayDescriptor, x, y);  // График новый
+               
+                graphic.Show();   
+           
+
             }
             else if (currentCursorMode == CursorMode.tableBuildMode)
             {

@@ -444,8 +444,8 @@ namespace rab1
             //Z_sub1(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
             //GraphClass1.grfk(w, x, y, Z);
             int x = 1075, y = 600;
-            Int64[] buf = new Int64[w]; for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; } Graphic graphic = new Graphic(w, x, buf); graphic.Show();   // График по x
-            Int64[] buf1 = new Int64[h]; for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; } Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
+            //Int64[] buf = new Int64[w]; for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; } Graphic graphic = new Graphic(w, x, buf); graphic.Show();   // График по x
+            //Int64[] buf1 = new Int64[h]; for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; } Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
 
             ZArrayDescriptor result = new ZArrayDescriptor();
             result.array = new long[w, h];
