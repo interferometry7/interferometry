@@ -14,6 +14,7 @@ namespace Interferometry
     {
         public static Pi_Class1.ZArrayDescriptor ATAN_1234(Pi_Class1.ZArrayDescriptor[] img, double[] fzz, int sineNumber)
         {
+            
             int w1 = img[0].width;
             int h1 = img[0].height;
             long[,] result = new long[w1, h1];                        // массив для значений фаз

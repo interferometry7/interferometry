@@ -52,6 +52,8 @@ namespace rab1.Forms
             int cutLevel = Convert.ToInt32(cutLevelTextBox.Text);
             int sdvg_x = Convert.ToInt32(textBox1_sdvgx.Text);
             bool unknownParameter = checkBox1.Checked;
+            int x = Convert.ToInt32(textBox1.Text);
+            int y = Convert.ToInt32(textBox2.Text);
 
             Pi_Class1.pi2_frml2(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, cutLevel, sdvg_x, x, y);
 

@@ -67,25 +67,24 @@ namespace rab1.Forms
                 {
                     InitializeComponent();
 
-                    //buf_gl = new Int64[w1];
-                    //buf1_gl = new Int64[w1];
-             
-                    int hh = 512;   //260;
+   
+                    int hh = 256;   //260;
                     w = w1;
+                    buf_gl  = new Int64[w1];
+                    buf1_gl = new Int64[w1];
                     Int64 maxx = buf[0], minx = buf[0], b;
-                    for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b; } //buf_gl[i] = b; }
-
+                    for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b; buf_gl[i] = b; } //buf_gl[i] = b; }
                     for (int i = 0; i < w1; i++) { buf[i] = (buf[i] - minx) * hh / (maxx - minx); }
 
 
-                    Font font = new Font("Courier", 12, FontStyle.Regular); //, GraphicsUnit.Pixel)Regular;
-                    StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip); //   .  NoClip);
+                    Font font = new Font("Courier", 12); 
+                    //StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip); //   .  NoClip);
                     // string sx = " minx =  " + minx + "  maxx =  " + maxx;
 
        
                     pc1.BackColor = Color.White;
-                    pc1.Location = new System.Drawing.Point(0, 8);
-                    pc1.Size = new Size(w1 + 16, hh + 64);
+                    //pc1.Location = new System.Drawing.Point(0, 8);
+                    pc1.Size = new Size(w1 + 16, hh + 32);
                     pc1.SizeMode = PictureBoxSizeMode.StretchImage;
                     pc1.BorderStyle = BorderStyle.Fixed3D;
                     Bitmap btmBack = new Bitmap(w1 + 16, hh + 64);      //изображение
@@ -95,45 +94,11 @@ namespace rab1.Forms
                     pc1.Image = btmFront;
                     pc1.BackgroundImage = btmBack;
 
+                
+
+                    Graph(buf, w1, x, grBack);
 
 
-
-                    Pen p1 = new Pen(Color.Black, 1);
-                    Pen p2 = new Pen(Color.Red, 1);
-                    Pen p3 = new Pen(Color.Green, 1);
-                    // ------------------------------------------------------------------------------------------------------------График 
-
-                    //  -----------------------------------------------------------------------------------------------------Ось x
-
-                    grBack.DrawLine(p1, x0, hh, w1 + x0, hh);
-                    for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + x0, hh, i + x0, hh + 8);
-                    //grBack.DrawString(sx, font, new SolidBrush(Color.Black), 40+x0, hh + 25, drawFormat);
-
-                    //  -----------------------------------------------------------------------------------------------------Ось y
-                    grBack.DrawLine(p1, x0, 8, x0, hh + 8);
-                    for (int i = 8; i < hh + 8; i += 8) grBack.DrawLine(p1, x0, i, x0 + 4, i);
-
-                    Font drawFont = new Font("Arial", 8);
-                    SolidBrush drawBrush = new SolidBrush(Color.Black);
-
-                    double k = (hh) / 32;
-                    double kx = (maxx - minx) / k;
-                    double nf = minx;
-                    long kf;
-                    for (int i = 0; i <= hh; i += 32)
-                    {
-                        kf = (long)nf;
-                        string sx = kf.ToString();
-                        grBack.DrawString(sx, drawFont, drawBrush, 2, hh - i); //, drawFormat);
-                        nf += kx;
-                        grBack.DrawLine(p1, x0, i, x0 + w1, i);
-                    }
-
-
-                    grBack.DrawLine(p3, x + x0, 0, x + x0, hh + 9);                                                                     // Значение координаты
-
-
-                    for (int i = 0; i < w1 - 1; i++) grBack.DrawLine(p2, i + x0, hh - buf[i] + 8, i + 1 + x0, hh - buf[i + 1] + 8);
           //-------------------------------------------------------------------------------------------------------  Истинные диагонали
             Pen p4 = new Pen(Color.Blue, 1);
             for (int i = 0; i < w1 - 1; i++)
@@ -142,13 +107,12 @@ namespace rab1.Forms
                 buf1_gl[i] = buf1[i];
                 if (buf1[i] >= 0)
                 {
-                    //MessageBox.Show(sx1);
-                    grBack.DrawLine(p4, i + x0, 8, i + x0, hh + 8);
+                   grBack.DrawLine(p4, i + x0, 8, i + x0, hh + 8);
                 }
             }
-            pc1.Refresh();
+           // pc1.Refresh();
 
-                    Controls.Add(pc1);
+           //         Controls.Add(pc1);
                 }
 
 
@@ -157,13 +121,16 @@ namespace rab1.Forms
         {
                        
                 int xPosition = e.X - x0;
-                int с_buf1 = 0;    
+                int с_buf1 = 0;
+                int с_buf2 = 0; 
               
             if (xPosition >= 0 && xPosition < w)
               {
                 с_buf1   = (int) buf_gl[xPosition];
+                с_buf2   = (int)buf1_gl[xPosition];
                 label4.Text = Convert.ToString(xPosition);
                 label5.Text = Convert.ToString(с_buf1);
+                label11.Text = Convert.ToString(с_buf2);
               }
         }
         private void pc2_MouseMove(object sender, MouseEventArgs e)
@@ -203,7 +170,7 @@ namespace rab1.Forms
             {
               
                 string sx = i.ToString();
-                grBack.DrawString(sx, drawFont, drawBrush, i+x0, hh + 10); //, drawFormat);
+                grBack.DrawString(sx, drawFont, drawBrush, i+x0, hh + 11); //, drawFormat);
               
             }
 

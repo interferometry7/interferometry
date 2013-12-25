@@ -37,10 +37,10 @@ namespace rab1.Forms
                 int sdvg_x = Convert.ToInt32(textBox1.Text);
                 bool unknownParameter = checkBox1.Checked;
                 bool SUB_RD = checkBox2.Checked;
+                Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
+                //Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
 
-                Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
-
-                imageUnwrapped(result);
+               // imageUnwrapped(result);
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
