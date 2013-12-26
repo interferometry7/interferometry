@@ -22,8 +22,8 @@ namespace Interferometry
                 return null;
             }
 
-            double max = 0;
-            double min = Double.MaxValue;
+            long max = 0;
+            long min = long.MaxValue;
 
             for (int i = 0; i < newDescriptor.width; i++)
             {
@@ -33,8 +33,8 @@ namespace Interferometry
                     min = Math.Min(min, newDescriptor.array[i, j]);
                 }
             }
-
-            double multiplier = 255 / (max - min);
+            //if (max == min) { return ;  message}
+            double multiplier =  255 / (max - min);
 
             Bitmap newBitmap = new Bitmap(newDescriptor.width, newDescriptor.height);
             BitmapData data = ImageProcessor.getBitmapData(newBitmap);
@@ -45,10 +45,8 @@ namespace Interferometry
                 {
                     int colorComponent = (int)(newDescriptor.array[i, j] * multiplier);
 
-                    if (colorComponent > 255)
-                    {
-                        colorComponent = 255;
-                    }
+                    if (colorComponent > 255)  {  colorComponent = 255;  }
+                    //if (colorComponent < 0)    { colorComponent = 0; }
 
                     ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
                 }

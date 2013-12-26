@@ -400,7 +400,7 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         
 //-----------------------------------------------------------------------------------------------------------------------------------
-        public static void pi2_rshfr(ZArrayDescriptor[] img, int sN1, int sN2, int Diag, bool rd, bool SUB_rd, int pr_obr, int sdvg_x) // Расшифровка
+        public static ZArrayDescriptor pi2_rshfr(ZArrayDescriptor[] img, int sN1, int sN2, int Diag, bool rd, bool SUB_rd, int pr_obr, int sdvg_x) // Расшифровка
         {
             China(sN1, sN2);                                            // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
 
@@ -410,31 +410,31 @@ namespace rab1
             int w = img[0].width;
             int h = img[0].height;    
 
-           // Z = new Int64[w, h];
+            Z = new Int64[w, h];
 
             GLBL_FAZE(n1, n2, Diag);                                     // Заполнение массива glbl_faze[] (Все -1 кроме номеров полос) 
             // для расшифровки glbl_faze1[] расширяется значениям номеров полос на допустимый диапазон
             rash_2pi(img[1], img[0], img[2], bmp_r, pr_obr, sdvg_x, sN1, sN2, Diag, Z);  //  РАСШИФРОВКА (Заполнение Z[,])
 //            int x1 = 24, x2 = 460, y1 = 50;
 
-/*
-            //GraphClass1.grfk(w, h, x, y, Z);
-            Int64[] sub_line = new Int64[w];
-            if (SUB_rd) { Z_sub(x1, x2, y1, Z, w, h, sub_line); }   // 
+            /*
+                        //GraphClass1.grfk(w, h, x, y, Z);
+                        Int64[] sub_line = new Int64[w];
+                        if (SUB_rd) { Z_sub(x1, x2, y1, Z, w, h, sub_line); }   // 
 
-            //Z_sub1(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
-            //GraphClass1.grfk(w, x, y, Z);
-            int x = 1075, y = 600;
-            //Int64[] buf = new Int64[w]; for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; } Graphic graphic = new Graphic(w, x, buf); graphic.Show();   // График по x
-            //Int64[] buf1 = new Int64[h]; for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; } Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
-
+                        //Z_sub1(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
+                        //GraphClass1.grfk(w, x, y, Z);
+                        int x = 1075, y = 600;
+                        //Int64[] buf = new Int64[w]; for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; } Graphic graphic = new Graphic(w, x, buf); graphic.Show();   // График по x
+                        //Int64[] buf1 = new Int64[h]; for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; } Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
+            */
             ZArrayDescriptor result = new ZArrayDescriptor();
             result.array = new long[w, h];
             result.width = w;
             result.height = h;
-            Z_bmp(result, img[2], Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
-*/
-//            return result;
+            Z_bmp(result, Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
+
+          return result;
         }
 
         public class ZArrayDescriptor
@@ -571,11 +571,23 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------        Z -> bmp с масштабированием                              -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        static void Z_bmp(ZArrayDescriptor bmp, ZArrayDescriptor bmp3, Int64[,] Z)               // -------------------------- Z -> BMP
+        static void Z_bmp(ZArrayDescriptor bmp, Int64[,] Z)               // -------------------------- Z -> BMP
         {
-
+            
             int w = bmp.width; ;
             int h = bmp.height;
+
+            for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
+            {
+                for (int j = 0; j < h; j++)
+                {
+
+
+                    bmp.array[i, j] = Z[i, j];
+                }
+            }
+/*
+            
             Int64 b2_min = 1000000, b2_max = -1000000;
             int b2;
 
@@ -609,37 +621,38 @@ namespace rab1
             }
 
             PopupProgressBar.close();
+ */
         }
         //-----------------------------------------------------------------------------------------------------------------------------------
         public static ZArrayDescriptor getUnwrappedPhaseImage(Int64[,] Z, int width, int height)
         {
-            double b2_min = Z[0, 0], b2_max = Z[0, 0];
+           //  double b2_min = Z[0, 0], b2_max = Z[0, 0];
 
-            ZArrayDescriptor result = new ZArrayDescriptor();
-            result.array = new long[width, height];
-            result.width = width;
-            result.height = height;
+                        ZArrayDescriptor result = new ZArrayDescriptor();
+                        result.array = new long[width, height];
+                        result.width = width;
+                        result.height = height;
+/*
+                        for (int i = 0; i < width; i++) for (int j = 0; j < height; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
 
-            for (int i = 0; i < width; i++) for (int j = 0; j < height; j++) { b2_max = Math.Max(b2_max, Z[i, j]); b2_min = Math.Min(b2_min, Z[i, j]); }
 
+                        double max = 255 / (b2_max - b2_min);
 
-            double max = 255 / (b2_max - b2_min);
+                        int all = width; int done = 0; PopupProgressBar.show();
+                        for (int i = 0; i < width; i++)                                                                  
+                        {
+                            for (int j = 0; j < height; j++)
+                            {
+                                int b2 = (int)((Z[i, j] - b2_min) * max);
+                                result.array[i, j] = b2;
+                            }
+                            done++;
+                            PopupProgressBar.setProgress(done, all);
+                        }
 
-            int all = width; int done = 0; PopupProgressBar.show();
-            for (int i = 0; i < width; i++)                                                                  
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    int b2 = (int)((Z[i, j] - b2_min) * max);
-                    result.array[i, j] = b2;
-                }
-                done++;
-                PopupProgressBar.setProgress(done, all);
-            }
-
-            PopupProgressBar.close();
-
-            return result;
+                        PopupProgressBar.close();
+            */
+                        return result;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------
 /*

@@ -142,26 +142,32 @@ namespace Interferometry.forms
         //         Удаление фазовой неоднозначности
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
-            if ((imageContainersList[7].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 8 пусто"); return; }
+           
             if ((imageContainersList[8].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 9 пусто"); return; }
             if ((imageContainersList[9].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 10 пусто"); return; }
+            if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
 
             Pi_Class1.ZArrayDescriptor[] imagesF = new Pi_Class1.ZArrayDescriptor[3];
 
             imagesF[0] = imageContainersList[8].getzArrayDescriptor();
             imagesF[1] = imageContainersList[9].getzArrayDescriptor();
-            imagesF[2] = imageContainersList[7].getzArrayDescriptor();
+            imagesF[2] = imageContainersList[10].getzArrayDescriptor();  
 
-            UnwrapForm unwrapForm = new UnwrapForm(imagesF);
-          //  unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
-            unwrapForm.Show();
+           // UnwrapForm unwrapForm = new UnwrapForm(imagesF);
+            UnwrapForm unwrapForm = new UnwrapForm();
+            UnwrapForm.UnwrappedDate d = new UnwrapForm.UnwrappedDate();
+            d = unwrapForm.get();
+            Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(imagesF, d.firstSineNumber, d.secondSineNumber, d.poriodsNumber, d.unknownParameter, d.SUB_RD, d.cutLevel, d.sdvg_x);
+            imageContainersList[7].setzArrayDescriptor(result);
+ //           unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
+ //           unwrapForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //  private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
-      //  {
-      //      Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
-      //      imageContainersList[7].setzArrayDescriptor(unwrappedPhaseImage);
-      //  }
+//        private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
+//        {
+//            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
+//            imageContainersList[7].setzArrayDescriptor(unwrappedPhaseImage);
+//        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
         {
@@ -260,9 +266,7 @@ namespace Interferometry.forms
         {
             currentCursorMode = CursorMode.tableBuildMode;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////2
         
         //ImageContainerDelegate Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
