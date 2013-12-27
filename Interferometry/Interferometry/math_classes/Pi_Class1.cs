@@ -432,7 +432,14 @@ namespace rab1
             result.array = new long[w, h];
             result.width = w;
             result.height = h;
-            Z_bmp(result, Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
+            for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    result.array[i, j] = Z[i, j];
+                }
+            }
+            //Z_bmp(result, Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
 
           return result;
         }
@@ -487,9 +494,7 @@ namespace rab1
                     ib2 = (int)(bmp2.array[i, j]);
 
                     i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1;
-                   // if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2); }
-                    if (bmp_r[ib2, ib1] >= pr_obr) { bmp3.array[i, j] = GLBL_R(n1, n2, i1, ib2); }
-
+                    if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2); }
                 }
 
                 done++; 

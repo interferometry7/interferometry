@@ -155,12 +155,16 @@ namespace Interferometry.forms
 
            // UnwrapForm unwrapForm = new UnwrapForm(imagesF);
             UnwrapForm unwrapForm = new UnwrapForm();
+            unwrapForm.Show();
             UnwrapForm.UnwrappedDate d = new UnwrapForm.UnwrappedDate();
             d = unwrapForm.get();
+           
+
             Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(imagesF, d.firstSineNumber, d.secondSineNumber, d.poriodsNumber, d.unknownParameter, d.SUB_RD, d.cutLevel, d.sdvg_x);
             imageContainersList[7].setzArrayDescriptor(result);
  //           unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
  //           unwrapForm.Show();
+//            unwrapForm.Close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //        private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
@@ -202,30 +206,33 @@ namespace Interferometry.forms
             int sineNumber1;
             int sineNumber2;
            
-            TableFaza TableFaza = new TableFaza();
-            TableFaza.Show();
-            sineNumber1 = TableFaza.get_1();
-            sineNumber2 = TableFaza.get_2();
-
+            //sineNumber1 = TableFaza.get_1();
+            //sineNumber2 = TableFaza.get_2();
+           
           
-                  Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
+                        Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[10];
                         source[0] = imageContainersList[0].getzArrayDescriptor();
                         source[1] = imageContainersList[1].getzArrayDescriptor();
                         source[2] = imageContainersList[2].getzArrayDescriptor();
                         source[3] = imageContainersList[3].getzArrayDescriptor();
-                        Pi_Class1.ZArrayDescriptor result = FazaClass.ATAN_1234(source, fz, sineNumber2);
-                        imageContainersList[8].setzArrayDescriptor(result);
+                        source[4] = imageContainersList[4].getzArrayDescriptor();
+                        source[5] = imageContainersList[5].getzArrayDescriptor();
+                        source[6] = imageContainersList[6].getzArrayDescriptor();
+                        source[7] = imageContainersList[7].getzArrayDescriptor();
+                        
 
-                        source = new Pi_Class1.ZArrayDescriptor[4];
-                        source[0] = imageContainersList[4].getzArrayDescriptor();
-                        source[1] = imageContainersList[5].getzArrayDescriptor();
-                        source[2] = imageContainersList[6].getzArrayDescriptor();
-                        source[3] = imageContainersList[7].getzArrayDescriptor();
-
-                        result = FazaClass.ATAN_1234(source, fz, sineNumber1);
-
-                        imageContainersList[9].setzArrayDescriptor(result);
-         
+                        TableFaza TableFaza = new TableFaza(source, fz);
+                        TableFaza.atan_Unwrapped += AtanFormOnImage;
+                       
+                        TableFaza.Show();
+                        TableFaza.Close();
+                        
+        }
+         private void AtanFormOnImage( TableFaza.Res d)
+        {
+            //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
+            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage1 = d.result1;             imageContainersList[8].setzArrayDescriptor(unwrappedPhaseImage1);
+            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage2 = d.result2;             imageContainersList[9].setzArrayDescriptor(unwrappedPhaseImage2);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //              Построить таблицу остатков
