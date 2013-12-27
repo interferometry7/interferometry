@@ -203,29 +203,23 @@ namespace Interferometry.forms
             fz[1] = 90;
             fz[2] = 180;
             fz[3] = 270;
-            int sineNumber1;
-            int sineNumber2;
+            
            
             //sineNumber1 = TableFaza.get_1();
             //sineNumber2 = TableFaza.get_2();
            
           
-                        Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[10];
-                        source[0] = imageContainersList[0].getzArrayDescriptor();
-                        source[1] = imageContainersList[1].getzArrayDescriptor();
-                        source[2] = imageContainersList[2].getzArrayDescriptor();
-                        source[3] = imageContainersList[3].getzArrayDescriptor();
-                        source[4] = imageContainersList[4].getzArrayDescriptor();
-                        source[5] = imageContainersList[5].getzArrayDescriptor();
-                        source[6] = imageContainersList[6].getzArrayDescriptor();
-                        source[7] = imageContainersList[7].getzArrayDescriptor();
-                        
+                        Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[8];
+                        for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
+
 
                         TableFaza TableFaza = new TableFaza(source, fz);
+                        TableFaza.Show();
+
                         TableFaza.atan_Unwrapped += AtanFormOnImage;
                        
-                        TableFaza.Show();
-                        TableFaza.Close();
+                        
+                        
                         
         }
          private void AtanFormOnImage( TableFaza.Res d)
