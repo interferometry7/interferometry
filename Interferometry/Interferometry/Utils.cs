@@ -33,7 +33,13 @@ namespace Interferometry
                     min = Math.Min(min, newDescriptor.array[i, j]);
                 }
             }
-            if (max == min) { max++; min--; MessageBox.Show(" min==max "); }
+
+            if (max - min == 0)
+            {
+                max = 1; 
+                min = 0; 
+            }
+
             double multiplier = (255 / (double)(max - min));
 
             Bitmap newBitmap = new Bitmap(newDescriptor.width, newDescriptor.height);

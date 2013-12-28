@@ -18,13 +18,13 @@ namespace rab1.Forms
        
         private bool unknownParameter;
         private bool SUB_RD;
-        //private Pi_Class1.ZArrayDescriptor[] images;
-        //public event ImageUnwrapped imageUnwrapped;
+        private Pi_Class1.ZArrayDescriptor[] images;
+        public event ImageUnwrapped imageUnwrapped;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       // public UnwrapForm(Pi_Class1.ZArrayDescriptor[] images)
+        public UnwrapForm(Pi_Class1.ZArrayDescriptor[] images)
       
         
-        public UnwrapForm()
+        //public UnwrapForm()
         {
             InitializeComponent();
 
@@ -34,13 +34,13 @@ namespace rab1.Forms
             cutLevelTextBox.Text = Convert.ToString(0);
             textBox1.Text = Convert.ToString(0);
 
-          //  this.images = images;
+            this.images = images;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void okButtonClicked(object sender, EventArgs e)
         {
-           // if (imageUnwrapped != null)
-           // {
+            if (imageUnwrapped != null)
+            {
                 firstSineNumber = Convert.ToInt32(sineNumbers1.Text);
                 secondSineNumber = Convert.ToInt32(sineNumbers2.Text);
                 poriodsNumber = Convert.ToInt32(periodsNumber.Text);
@@ -48,13 +48,13 @@ namespace rab1.Forms
                 sdvg_x = Convert.ToInt32(textBox1.Text);
                 unknownParameter = checkBox1.Checked;
                 SUB_RD = checkBox2.Checked;
-               // Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
-               // Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
+                //Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
+                Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
 
-              // imageUnwrapped(result);
-         //   }
+               imageUnwrapped(result);
+            }
         }
-        public UnwrappedDate get()
+        /*public UnwrappedDate get()
          {
              UnwrappedDate d = new  UnwrappedDate();
              d.firstSineNumber = firstSineNumber;
@@ -76,7 +76,7 @@ namespace rab1.Forms
              public bool SUB_RD;
              public int cutLevel;
              public int sdvg_x;
-          }
+          }*/
       }
   }
  

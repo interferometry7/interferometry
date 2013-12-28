@@ -136,10 +136,12 @@ namespace Interferometry.forms
             PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //         Методы из пункта "Восстановление фазы"
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        //         Удаление фазовой неоднозначности
+
+
+        // Методы из пункта "Восстановление фазы"
+        //Удаление фазовой неоднозначности
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
            
@@ -153,25 +155,16 @@ namespace Interferometry.forms
             imagesF[1] = imageContainersList[9].getzArrayDescriptor();
             imagesF[2] = imageContainersList[10].getzArrayDescriptor();  
 
-           // UnwrapForm unwrapForm = new UnwrapForm(imagesF);
-            UnwrapForm unwrapForm = new UnwrapForm();
+            UnwrapForm unwrapForm = new UnwrapForm(imagesF);
+            unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
             unwrapForm.Show();
-            UnwrapForm.UnwrappedDate d = new UnwrapForm.UnwrappedDate();
-            d = unwrapForm.get();
-           
-
-            Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(imagesF, d.firstSineNumber, d.secondSineNumber, d.poriodsNumber, d.unknownParameter, d.SUB_RD, d.cutLevel, d.sdvg_x);
-            imageContainersList[7].setzArrayDescriptor(result);
- //           unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
- //           unwrapForm.Show();
-//            unwrapForm.Close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
-//        {
-//            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
-//            imageContainersList[7].setzArrayDescriptor(unwrappedPhaseImage);
-//        }
+        private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
+        {
+            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
+            imageContainersList[7].setzArrayDescriptor(unwrappedPhaseImage);
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
         {
@@ -194,7 +187,6 @@ namespace Interferometry.forms
             secondClick = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         //                    ATAN2
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
@@ -203,26 +195,17 @@ namespace Interferometry.forms
             fz[1] = 90;
             fz[2] = 180;
             fz[3] = 270;
-            
-           
-            //sineNumber1 = TableFaza.get_1();
-            //sineNumber2 = TableFaza.get_2();
-           
-          
-                        Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[8];
-                        for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
+
+            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[8];
+            for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
 
 
-                        TableFaza TableFaza = new TableFaza(source, fz);
-                        TableFaza.Show();
-
-                        TableFaza.atan_Unwrapped += AtanFormOnImage;
-                       
-                        
-                        
-                        
+            TableFaza TableFaza = new TableFaza(source, fz);
+            TableFaza.atan_Unwrapped += AtanFormOnImage;
+            TableFaza.Show();
         }
-         private void AtanFormOnImage( TableFaza.Res d)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void AtanFormOnImage( TableFaza.Res d)
         {
             //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
             Pi_Class1.ZArrayDescriptor unwrappedPhaseImage1 = d.result1;             imageContainersList[8].setzArrayDescriptor(unwrappedPhaseImage1);
@@ -269,6 +252,8 @@ namespace Interferometry.forms
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////2
         
+
+
         //ImageContainerDelegate Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void exportImage(ImageContainer imageContainer, Pi_Class1.ZArrayDescriptor arrayDescriptor)
