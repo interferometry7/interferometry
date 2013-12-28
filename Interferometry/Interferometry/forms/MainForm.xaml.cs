@@ -21,6 +21,7 @@ using rab1.Forms;
 using Color = System.Drawing.Color;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Image = System.Windows.Controls.Image;
+using ListBox = System.Windows.Forms.ListBox;
 using MessageBox = System.Windows.MessageBox;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
@@ -104,7 +105,36 @@ namespace Interferometry.forms
             {
                 zArrayDescriptor = Utils.getArrayFromImage((BitmapSource) newSource);
                 mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
+
+                adjustSliders();
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void maxSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            maxLabel.Content = Convert.ToInt32(maxSlider.Value);
+
+            if (minSlider.Value > maxSlider.Value)
+            {
+                minSlider.Value = maxSlider.Value;
+            }
+
+            minSlider.Maximum = maxSlider.Value;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void minSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            minLabel.Content = Convert.ToInt32(minSlider.Value);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void redrawButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainImage.Source = Utils.getImageFromArray(zArrayDescriptor, (long) minSlider.Value, (long) maxSlider.Value);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void changeArrayClicked(object sender, RoutedEventArgs e)
+        {
+            zArrayDescriptor = Utils.getArrayFromImage(FilesHelper.bitmapSourceToBitmap((BitmapSource) mainImage.Source));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void saveButtonClicked(object sender, RoutedEventArgs e)
@@ -250,7 +280,27 @@ namespace Interferometry.forms
         {
             currentCursorMode = CursorMode.tableBuildMode;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////2
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+
+        //Private Methods
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void adjustSliders()
+        {
+            long max = Utils.getMax(zArrayDescriptor);
+            maxLabel.Content = max;
+            maxSlider.Minimum = 0;
+            maxSlider.Maximum = max;
+            maxSlider.Value = max;
+
+            long min = Utils.getMin(zArrayDescriptor);
+            minLabel.Content = min;
+            minSlider.Minimum = min;
+            minSlider.Maximum = max;
+            minSlider.Value = min;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
 
 
@@ -260,6 +310,8 @@ namespace Interferometry.forms
         {
             zArrayDescriptor = arrayDescriptor;
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
+
+            adjustSliders();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public Pi_Class1.ZArrayDescriptor getImageToLoad(ImageContainer imageContainer)
@@ -267,6 +319,9 @@ namespace Interferometry.forms
             return zArrayDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        
         //Mouse Events
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void mainImage_MouseUp(object sender, MouseButtonEventArgs e)

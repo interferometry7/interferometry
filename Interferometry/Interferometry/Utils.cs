@@ -12,6 +12,7 @@ namespace Interferometry
 {
     class Utils
     {
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  Метод для получения изображения из массива
         /// </summary>
@@ -22,22 +23,32 @@ namespace Interferometry
                 return null;
             }
 
-            long max = long.MinValue;;
-            long min = long.MaxValue;
-
-            for (int i = 0; i < newDescriptor.width; i++)
-            {
-                for (int j = 0; j < newDescriptor.height; j++)
-                {
-                    max = Math.Max(max, newDescriptor.array[i, j]);
-                    min = Math.Min(min, newDescriptor.array[i, j]);
-                }
-            }
+            long max = getMax(newDescriptor);
+            long min = getMin(newDescriptor);
 
             if (max - min == 0)
             {
                 max = 1; 
                 min = 0; 
+            }
+
+            return getImageFromArray(newDescriptor, min, max);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  Метод для получения изображения из массива
+        /// </summary>
+        public static BitmapSource getImageFromArray(Pi_Class1.ZArrayDescriptor newDescriptor, long min, long max)
+        {
+            if (newDescriptor == null)
+            {
+                return null;
+            }
+
+            if (max - min == 0)
+            {
+                max = 1;
+                min = 0;
             }
 
             double multiplier = (255 / (double)(max - min));
@@ -49,10 +60,10 @@ namespace Interferometry
             {
                 for (int j = 0; j < newDescriptor.height; j++)
                 {
-                    int colorComponent = (int)((newDescriptor.array[i, j]-min) * multiplier);
+                    int colorComponent = (int)((newDescriptor.array[i, j] - min) * multiplier);
 
-                    if (colorComponent > 255)  {  colorComponent = 255;  }
-                    if (colorComponent < 0)    { colorComponent = 0; }
+                    if (colorComponent > 255) { colorComponent = 255; }
+                    if (colorComponent < 0) { colorComponent = 0; }
 
                     ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
                 }
@@ -109,5 +120,52 @@ namespace Interferometry
 
             return result;
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  Метод для получения максимума из массива
+        /// </summary>
+        public static long getMax(Pi_Class1.ZArrayDescriptor newDescriptor)
+        {
+            if (newDescriptor == null)
+            {
+                return 0;
+            }
+
+            long max = long.MinValue; ;
+
+            for (int i = 0; i < newDescriptor.width; i++)
+            {
+                for (int j = 0; j < newDescriptor.height; j++)
+                {
+                    max = Math.Max(max, newDescriptor.array[i, j]);
+                }
+            }
+
+            return max;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  Метод для получения минимума из массива
+        /// </summary>
+        public static long getMin(Pi_Class1.ZArrayDescriptor newDescriptor)
+        {
+            if (newDescriptor == null)
+            {
+                return 0;
+            }
+
+            long min = long.MaxValue;
+
+            for (int i = 0; i < newDescriptor.width; i++)
+            {
+                for (int j = 0; j < newDescriptor.height; j++)
+                {
+                    min = Math.Min(min, newDescriptor.array[i, j]);
+                }
+            }
+
+            return min;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

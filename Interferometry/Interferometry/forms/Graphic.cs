@@ -24,9 +24,9 @@ namespace rab1.Forms
 
             int w1 = ZZ.width;             w = w1;
             int h1 = ZZ.height;            h = h1;
-            Int64[] buf = new Int64[w1];
-            buf_gl = new Int64[w1];
-            buf1_gl = new Int64[w1];
+            Int64[] buf = new Int64[Math.Max(w1, h1)];
+            buf_gl = new Int64[Math.Max(w1, h1)];
+            buf1_gl = new Int64[Math.Max(w1, h1)];
 
 
             for (int i = 0; i < w1; i++) { buf[i] = ZZ.array[i, y]; buf_gl[i] = buf[i]; }

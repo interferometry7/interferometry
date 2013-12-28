@@ -125,6 +125,24 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Bitmap bitmapSourceToBitmap(BitmapSource bitmapImage)
+        {
+            if (bitmapImage == null)
+            {
+                return null;
+            }
+
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                Bitmap bitmap = new Bitmap(outStream);
+
+                return new Bitmap(bitmap);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [DllImport("gdi32")]
         static extern int DeleteObject(IntPtr o);
 
