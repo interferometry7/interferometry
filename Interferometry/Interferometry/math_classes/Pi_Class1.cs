@@ -475,21 +475,21 @@ namespace rab1
             result.array = new long[result.width, result.height];
 
 
-            for (int i = 0; i < descriptor.width; i++)
+            /*for (int i = 0; i < descriptor.width; i++)
             {
                 for (int j = 0; j < descriptor.height; j++)
                 {
                     result.array[i, j] = descriptor.array[i, j];
                 }
-            }
+            }*/
 
 
             for (int i = 0; i < descriptor.width; i++)
             {
                 for (int j = 0; j < descriptor.height; j++)
                 {
-                    result.array[i, j] = result.array[i, j] - s[i];
-                    //result.array[i, j] = s[i];
+                    double cos = Math.Cos(((double)cosinusDegrees)*Math.PI/180) * i;
+                    result.array[i, j] =  (long) (result.array[i, j] - cos * s[i]);
                 }
             }
 
