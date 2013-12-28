@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using Interferometry.forms;
 using rab1.Forms;
 
 namespace rab1
@@ -453,21 +454,46 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Вычитание наклона  -> в вещественный массив Z             -------------------------------          
         // -----------------------------------------------------------------------------------------------------------------------------------  
-        private static void Z_sub(int x1, int x2, int y1, Int64[,] Z, int w, int h, Int64[] s)
+        public static ZArrayDescriptor Z_sub(int x1, int y1, int x2, int y2, ZArrayDescriptor descriptor, int cosinusDegrees)
         {
 
-           Int64 z1 = Z[x1, y1], z2 = Z[x2, y1];
-            double tt = (double)(z2 - z1) / (double)(x2 - x1);
+            long z1 = descriptor.array[x1, y1];
+            long z2 = descriptor.array[x2, y2];
+            double tt = (z2 - z1) / (double)(x2 - x1);
 
            //for (int j = x1; j < x2; j++)
-            for (int j = 0; j < w; j++)
+            long[] s = new long[descriptor.width];
+
+            for (int i = 0; i < descriptor.width; i++)
             {
-                s[j] = (Int64)(tt * (j - x1)) + (z1);
+                s[i] = (Int64)(tt * (i - x1)) + (z1);
             }
-            for (int i = 0; i < h; i++)
-                for (int j = 0; j < w; j++)
-                    Z[j, i] = Z[j, i] - s[j];
-            //Z[j, i] =  s[j];
+
+            ZArrayDescriptor result = new ZArrayDescriptor();
+            result.width = descriptor.width;
+            result.height = descriptor.height;
+            result.array = new long[result.width, result.height];
+
+
+            for (int i = 0; i < descriptor.width; i++)
+            {
+                for (int j = 0; j < descriptor.height; j++)
+                {
+                    result.array[i, j] = descriptor.array[i, j];
+                }
+            }
+
+
+            for (int i = 0; i < descriptor.width; i++)
+            {
+                for (int j = 0; j < descriptor.height; j++)
+                {
+                    result.array[i, j] = result.array[i, j] - s[i];
+                    //result.array[i, j] = s[i];
+                }
+            }
+
+            return result;
         }
 
         // -----------------------------------------------------------------------------------------------------------------------------------           

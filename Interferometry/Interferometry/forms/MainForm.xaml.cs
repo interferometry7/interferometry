@@ -57,6 +57,11 @@ namespace Interferometry.forms
 
         private CursorMode currentCursorMode = CursorMode.defaultMode;
 
+        /// <summary>
+        /// Значение косинуса для удаления плоскости по двум точкам
+        /// </summary>
+        private int cosinusValue = 0;
+
         //Life Cycle
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public MainForm()
@@ -216,7 +221,13 @@ namespace Interferometry.forms
             secondClick = null;
 
             PointsChooseForm pointsChooseForm = new PointsChooseForm();
+            pointsChooseForm.cosinusChoosed+= PointsChooseFormOnCosinusChoosed;
             pointsChooseForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void PointsChooseFormOnCosinusChoosed(int newCosinusValue)
+        {
+            cosinusValue = newCosinusValue;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                    ATAN2
@@ -353,8 +364,16 @@ namespace Interferometry.forms
                     secondClick = new Point3D(x, y, z);
                 }
 
-                MessageBox.Show("Первая точка - X = " + firstClick.z + " Y = " + firstClick.y + " Z = " + firstClick.z
-                                + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);
+                /*MessageBox.Show("Первая точка - X = " + firstClick.z + " Y = " + firstClick.y + " Z = " + firstClick.z
+                                + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);*/
+
+                Pi_Class1.ZArrayDescriptor result = Pi_Class1.Z_sub(firstClick.x, firstClick.y, secondClick.x,
+                    secondClick.y, zArrayDescriptor, cosinusValue);
+
+                zArrayDescriptor = result;
+                mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
+
+                adjustSliders();
 
                 needPointsCapture = false;
             }
