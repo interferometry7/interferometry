@@ -19,12 +19,10 @@ namespace Interferometry.forms
         private  int sineNumber1 = 167;
         private  int sineNumber2 = 241;
         public event Atan_Unwrapped atan_Unwrapped;
-        private Pi_Class1.ZArrayDescriptor[] source1;
-        public Res d;
-
+        private Pi_Class1.ZArrayDescriptor[] source;
         private double[] fz1;
 
-        public TableFaza(Pi_Class1.ZArrayDescriptor[] source, double[] fz)
+        public TableFaza(Pi_Class1.ZArrayDescriptor[] newSource, double[] fz)
         {
             InitializeComponent();
 
@@ -32,22 +30,30 @@ namespace Interferometry.forms
             sineNumbers2.Text = Convert.ToString(sineNumber2);
             fz1 = new double[4];
             fz1[0] = fz[0];  fz1[1] = fz[1];  fz1[2] = fz[2];  fz1[3] = fz[3];
-            source1 = new Pi_Class1.ZArrayDescriptor[8];
-          //  for (int i = 0; i < 8; i++) { source1[i] = source[i]; }
-           
+            source = newSource;
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             sineNumber1 = Convert.ToInt32(sineNumbers1.Text);
             sineNumber2 = Convert.ToInt32(sineNumbers2.Text);
-            
-            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[4];
-            for (int i = 0; i < 4; i++) { source[i] = source1[i]; }
-            d.result1 = FazaClass.ATAN_1234(source, fz1, sineNumber2);
-  
-            for (int i = 4; i < 8; i++) { source[i-4] = source1[i]; }
-            d.result2 = FazaClass.ATAN_1234(source, fz1, sineNumber1);
+
+            Pi_Class1.ZArrayDescriptor[] firstSource = new Pi_Class1.ZArrayDescriptor[4];
+            for (int i = 0; i < 4; i++)
+            {
+                firstSource[i] = source[i];
+            }
+
+            Res d = new Res();
+            d.result1 = FazaClass.ATAN_1234(firstSource, fz1, sineNumber2);
+
+            Pi_Class1.ZArrayDescriptor[] secondSource = new Pi_Class1.ZArrayDescriptor[4];
+            for (int i = 4; i < 8; i++)
+            {
+                secondSource[i - 4] = source[i];
+            }
+
+            d.result2 = FazaClass.ATAN_1234(secondSource, fz1, sineNumber1);
             
             Close();
             atan_Unwrapped(d);
