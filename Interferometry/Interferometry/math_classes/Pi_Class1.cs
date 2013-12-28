@@ -456,10 +456,10 @@ namespace rab1
         private static void Z_sub(int x1, int x2, int y1, Int64[,] Z, int w, int h, Int64[] s)
         {
 
-            Int64 z1 = Z[x1, y1], z2 = Z[x2, y1];
+           Int64 z1 = Z[x1, y1], z2 = Z[x2, y1];
             double tt = (double)(z2 - z1) / (double)(x2 - x1);
 
-            //for (int j = x1; j < x2; j++)
+           //for (int j = x1; j < x2; j++)
             for (int j = 0; j < w; j++)
             {
                 s[j] = (Int64)(tt * (j - x1)) + (z1);

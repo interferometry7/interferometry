@@ -22,9 +22,6 @@ namespace rab1.Forms
         public event ImageUnwrapped imageUnwrapped;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public UnwrapForm(Pi_Class1.ZArrayDescriptor[] images)
-      
-        
-        //public UnwrapForm()
         {
             InitializeComponent();
 

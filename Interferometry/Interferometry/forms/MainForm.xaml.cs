@@ -192,8 +192,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
         {
-            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
-            imageContainersList[7].setzArrayDescriptor(unwrappedPhaseImage);
+            imageContainersList[7].setzArrayDescriptor(unwrappedPhase);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
@@ -215,6 +214,9 @@ namespace Interferometry.forms
             needPointsCapture = true;
             firstClick = null;
             secondClick = null;
+
+            PointsChooseForm pointsChooseForm = new PointsChooseForm();
+            pointsChooseForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                    ATAN2

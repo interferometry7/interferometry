@@ -66,6 +66,9 @@
     <Compile Include="custom_visual_components\ImageContainer.xaml.cs">
       <DependentUpon>ImageContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\PointsChooseForm.xaml.cs">
+      <DependentUpon>PointsChooseForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\TableFaza.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="custom_visual_components\ImageContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\PointsChooseForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,12 @@
+﻿<Window x:Class="Interferometry.forms.PointsChooseForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PointsChooseForm" Height="209" Width="408">
+    <Grid>
+        <Label Content="Введите значение косинуса (в градусах), затем укажите две точки" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="cos:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="degreesTextBox" HorizontalAlignment="Left" Height="23" Margin="45,44,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Выбрать точки" HorizontalAlignment="Left" Margin="141,133,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>

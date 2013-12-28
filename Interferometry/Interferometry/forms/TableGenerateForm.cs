@@ -11,8 +11,8 @@ namespace rab1.Forms
         private const int periodsNumber = 9;
         private const int cutLevel = 10;
         private const int sdvg_x = 0;
-        private int x = 0;
-        private int y = 0;
+        private int x;
+        private int y;
 
         private Pi_Class1.ZArrayDescriptor[] images;
         
