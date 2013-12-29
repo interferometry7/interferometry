@@ -60,7 +60,7 @@ namespace Interferometry.forms
         /// <summary>
         /// Значение косинуса для удаления плоскости по двум точкам
         /// </summary>
-        private int cosinusValue = 0;
+        private double cosinusValue = 0;
 
         //Life Cycle
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,13 +182,13 @@ namespace Interferometry.forms
            
             if ((imageContainersList[8].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 9 пусто"); return; }
             if ((imageContainersList[9].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 10 пусто"); return; }
-            if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
+           // if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
 
             Pi_Class1.ZArrayDescriptor[] imagesF = new Pi_Class1.ZArrayDescriptor[3];
 
             imagesF[0] = imageContainersList[8].getzArrayDescriptor();
             imagesF[1] = imageContainersList[9].getzArrayDescriptor();
-            imagesF[2] = imageContainersList[10].getzArrayDescriptor();  
+           // imagesF[2] = imageContainersList[10].getzArrayDescriptor();  
 
             UnwrapForm unwrapForm = new UnwrapForm(imagesF);
             unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
@@ -199,22 +199,18 @@ namespace Interferometry.forms
         {
             imageContainersList[7].setzArrayDescriptor(unwrappedPhase);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        //                    Вычитание опорной плоскости
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
         {
             currentCursorMode = CursorMode.defaultMode;
 
-            if (mainImage.Source == null)
-            {
-                MessageBox.Show("Главное изображение пустое");
-                return;
-            }
+            if (mainImage.Source == null)  { MessageBox.Show("Главное изображение пустое");  return;  }
 
-            if (zArrayDescriptor == null)
-            {
-                MessageBox.Show("Z-массив пуст");
-                return;
-            }
+            if (zArrayDescriptor == null)  { MessageBox.Show("Z-массив пуст");               return;  }
 
             needPointsCapture = true;
             firstClick = null;
@@ -225,7 +221,7 @@ namespace Interferometry.forms
             pointsChooseForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void PointsChooseFormOnCosinusChoosed(int newCosinusValue)
+        private void PointsChooseFormOnCosinusChoosed(double newCosinusValue)
         {
             cosinusValue = newCosinusValue;
         }
@@ -233,17 +229,11 @@ namespace Interferometry.forms
         //                    ATAN2
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
-            double[] fz = new double[4];
-            fz[0] = 0;
-            fz[1] = 90;
-            fz[2] = 180;
-            fz[3] = 270;
-
+            
             Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[8];
             for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
 
-
-            TableFaza TableFaza = new TableFaza(source, fz);
+            TableFaza TableFaza = new TableFaza(source);
             TableFaza.atan_Unwrapped += AtanFormOnImage;
             TableFaza.Show();
         }
@@ -251,8 +241,10 @@ namespace Interferometry.forms
         private void AtanFormOnImage( TableFaza.Res d)
         {
             //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
-            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage1 = d.result1;             imageContainersList[8].setzArrayDescriptor(unwrappedPhaseImage1);
-            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage2 = d.result2;             imageContainersList[9].setzArrayDescriptor(unwrappedPhaseImage2);
+            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage1 = d.result1; 
+            imageContainersList[8].setzArrayDescriptor(unwrappedPhaseImage1);
+            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage2 = d.result2;
+            imageContainersList[9].setzArrayDescriptor(unwrappedPhaseImage2);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //              Построить таблицу остатков

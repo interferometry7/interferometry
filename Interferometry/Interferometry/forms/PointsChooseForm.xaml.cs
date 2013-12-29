@@ -11,27 +11,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-public delegate void CosinusChoosed(int newCosinusValue);
+public delegate void CosinusChoosed(double newCosinusValue);
 
 namespace Interferometry.forms
 {
     /// <summary>
     /// Interaction logic for PointsChooseForm.xaml
     /// </summary>
+    
+    
     public partial class PointsChooseForm
     {
+        private double degrees = 30;
         public event CosinusChoosed cosinusChoosed;
 
         public PointsChooseForm()
         {
             InitializeComponent();
+            degreesTextBox.Text = Convert.ToString(degrees);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (cosinusChoosed != null)
             {
-                int degrees = Convert.ToInt32(degreesTextBox.Text);
+                degrees = Convert.ToDouble(degreesTextBox.Text);
                 cosinusChoosed(degrees);
             }
 
