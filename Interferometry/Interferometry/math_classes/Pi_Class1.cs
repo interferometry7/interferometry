@@ -50,13 +50,17 @@ namespace rab1
            return n0;
         }
 
-        private static void China(int sN1, int sN2)
+        private static int China(int sN1, int sN2)
         {
             int n;
             n1 = sN1;
             n2 = sN2;
             Int32 NOD = Evklid(n1, n2); // Если NOD == 1 числа взаимно просты
-            if (NOD != 1) { MessageBox.Show("Числа не взаимно просты"); return; }
+            if (NOD != 1) 
+                { MessageBox.Show("Числа не взаимно просты. Наибольший общий делитель равен - "+ NOD);
+                  n1 = sN1 / NOD;
+                  n2 = sN2 / NOD;
+                }
 
             M1 = n2;
             M2 = n1;
@@ -64,6 +68,7 @@ namespace rab1
             N2 = -1;
             for (int i = 0; i < M1; i++) { n = (M1 * i) % n1; if (n == 1) { N1 = i; break; } } if (N1 < 0) N1 = N1 + n1;
             for (int i = 0; i < M2; i++) { n = (M2 * i) % n2; if (n == 1) { N2 = i; break; } } if (N2 < 0) N2 = N2 + n2;
+            return NOD;
         }
 // --------------------------------------------------------------------------------------------------------------------------- Рисование таблицы  (параметры) (b2, b1)
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +76,7 @@ namespace rab1
         //           Построение таблицы
         //
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void Graph_China2(ZArrayDescriptor[] img, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
+        public static void Graph_China2(ZArrayDescriptor[] img, int NOD, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
         {
             int max_x = (n1 + n2) * scale, max_y = 800;
             int w1 = n2, hh = n1;
@@ -168,7 +173,7 @@ namespace rab1
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             int[,] bmp_r = new int[n2 + 3, n1 + 3];
-            int count = bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);
+            int count = bmp_2pi(img, NOD, bmp_r, Diag, pr_obr, sdvg_x);
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Рисование точек в таблице по диагоналям
@@ -222,7 +227,7 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //     Заполнение  массива bmp_r
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static int bmp_2pi(ZArrayDescriptor[] img, int[,] bmp_r, int Diag, int pr_obr, int sdvg_x)
+        public static int bmp_2pi(ZArrayDescriptor[] img, int NOD, int[,] bmp_r, int Diag, int pr_obr, int sdvg_x)
         {
             int r;
             int g;
@@ -255,8 +260,8 @@ namespace rab1
                     else
                     {
                         ims3[j] = 1;                    
-                        ims1[j] = (int)(img[1].array[i, j]);
-                        ims2[j] = (int)(img[0].array[i, j]);
+                        ims1[j] = (int)(img[1].array[i, j] / NOD);
+                        ims2[j] = (int)(img[0].array[i, j] / NOD);
                     }
 
                 }
@@ -391,8 +396,9 @@ namespace rab1
 // --------------------------------------------------------------------------------------------------------------------------------
         public static void pi2_frml2(ZArrayDescriptor[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
         {
-            China(sN1, sN2);           // Вычисление формулы
-            Graph_China2(img, Diag, rb, pr_obr, sdvg_x, X, Y);                          // Построение таблицы
+            int NOD = China(sN1, sN2);
+            Graph_China2(img, NOD, Diag, rb, pr_obr, sdvg_x, X, Y);            // Вычисление формулы => n1, n2, NOD
+                                      // Построение таблицы
         }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -400,37 +406,29 @@ namespace rab1
 //-----------------------------------------------------------------------------------------------------------------------------------
         public static ZArrayDescriptor pi2_rshfr(ZArrayDescriptor[] img, int sN1, int sN2, int Diag,  int pr_obr, int sdvg_x) // Расшифровка
         {
-            China(sN1, sN2);                                            // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
-
-           // int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                   // Массив точек в таблице 2pi
-           // bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);                  // Заполнение массива bmp_r
 
             int w = img[0].width;
-            int h = img[0].height;    
+            int h = img[0].height;  
+            ZArrayDescriptor result = new ZArrayDescriptor(); 
+            result.array = new long[w, h];
+            result.width = w;
+            result.height = h;
+
+            int NOD=China(sN1, sN2);                                     // Проверка на взаимную простоту
+                                                                         // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
+           // int[,] bmp_r = new int[sN2 + 3, sN1 + 3];                  // Массив точек в таблице 2pi
+           // bmp_2pi(img, bmp_r, Diag, pr_obr, sdvg_x);                 // Заполнение массива bmp_r
+
+             
 
             Z = new Int64[w, h];
 
             GLBL_FAZE(n1, n2, Diag);                                     // Заполнение массива glbl_faze[] (Все -1 кроме номеров полос) 
-            // для расшифровки glbl_faze1[] расширяется значениям номеров полос на допустимый диапазон
-            //rash_2pi(img[1], img[0], img[2], bmp_r, pr_obr, sdvg_x, sN1, sN2, Diag, Z);  //  РАСШИФРОВКА (Заполнение Z[,])
-            rash_2pi(img[1], img[0], img[2], sdvg_x, sN1, sN2, Diag, Z);
-//            int x1 = 24, x2 = 460, y1 = 50;
+                                                                         // glbl_faze1[] расширяется значениям номеров полос
+                                                                         //  РАСШИФРОВКА (Заполнение Z[,])
+            rash_2pi(img[1], img[0], img[2], NOD, sdvg_x, n1, n2, Diag, Z);
 
-            /*
-                        //GraphClass1.grfk(w, h, x, y, Z);
-                        Int64[] sub_line = new Int64[w];
-                        if (SUB_rd) { Z_sub(x1, x2, y1, Z, w, h, sub_line); }   // 
-
-                        //Z_sub1(x1, x2, y1, Z, w, h, bmp3, rd);                          // Вычитание плоскости
-                        //GraphClass1.grfk(w, x, y, Z);
-                        int x = 1075, y = 600;
-                        //Int64[] buf = new Int64[w]; for (int i = 0; i < w; i++) { buf[i] = Z[i, y]; } Graphic graphic = new Graphic(w, x, buf); graphic.Show();   // График по x
-                        //Int64[] buf1 = new Int64[h]; for (int i = 0; i < h; i++) { buf1[i] = Z[x, i]; } Graphic graphic1 = new Graphic(h, y, buf1); graphic1.Show();  // График по y
-            */
-            ZArrayDescriptor result = new ZArrayDescriptor();
-            result.array = new long[w, h];
-            result.width = w;
-            result.height = h;
+           
             for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
@@ -490,15 +488,12 @@ namespace rab1
         // -----------------------------------------------------------------------------------------------------------------------------------  
 
        // private static void rash_2pi(ZArrayDescriptor bmp1, ZArrayDescriptor bmp2, ZArrayDescriptor bmp3, int[,] bmp_r, int pr_obr, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
-        private static void rash_2pi(ZArrayDescriptor bmp1, ZArrayDescriptor bmp2, ZArrayDescriptor bmp3,  int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
+        private static void rash_2pi(ZArrayDescriptor bmp1, ZArrayDescriptor bmp2, ZArrayDescriptor bmp3, int NOD, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
         {
 
-            int i1, ib1, ib2;
+           
             int w = bmp1.width;
             int h = bmp1.height;
-
-           // double fn1 = (double)(n1 - 1) / 255;
-           // double fn2 = (double)(n2 - 1) / 255;
 
             int all = w; int done = 0; PopupProgressBar.show();
 
@@ -506,12 +501,13 @@ namespace rab1
             {
                 for (int j = 0; j < h; j++)
                 {      
-                    ib1 = (int)(bmp1.array[i, j]);
-                    ib2 = (int)(bmp2.array[i, j]);
-
-                    i1 = ib1 + sdvg_x; if (i1 > n1) i1 -= n1;
+                   int i1 = (int)(bmp1.array[i, j]);
+                   int i2 = (int)(bmp2.array[i, j]);
+                   int b1  = i1 / NOD; int ib1 = b1 + sdvg_x; if (ib1 > n1) ib1 -= n1;
+                   int ib2 = i2 / NOD;
+                  
                     //if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2); }
-                    Z[i, j] = GLBL_R(n1, n2, i1, ib2);
+                    Z[i, j] = GLBL_R(n1, n2, ib1, ib2, i1, i2, NOD);
                 }
 
                 done++; 
@@ -520,14 +516,15 @@ namespace rab1
 
             PopupProgressBar.close();
         }
-
-        private static long GLBL_R(int n1, int n2, int ib1, int ib2)
+//  ib1, ib2 - координаты в таблице
+//  i1, i2   - истинные координаты (по числу разрядов)
+        private static long GLBL_R(int n1, int n2, int ib1, int ib2, int i1, int i2, int NOD)
         {
 
             int i0 = ib2 + (n1 - ib1);
             int b0 = glbl_faze1[i0];
-            int ib10 = ib1;
-
+            int ib10 = i1;
+                                                 // Определение ближайшей диагонали
             int r = 0;
             while (b0 != glbl_faze[i0 + r])
             {
@@ -543,15 +540,18 @@ namespace rab1
                 if (i0 - l < 0) l = n2 + n1 - 1; 
                 if (l > 20) { l = 300; break; }
             }
-            if (r < l) ib10 = ib1 - r / 2; else ib10 = ib1 + l / 2;
-            long z = (n1) * b0 + ib10;                               //Z[i, j] = (n1) * b3 + i1; // glbl_faze1[ib2 + (n1 - ib1)]
-            //long z = (n1) * b0 + ib1;
+                                                 // Сама расшифровка
+            //if (r < l) ib10 = ib1 - r / 2; else ib10 = ib1 + l / 2;
+            //long z = (n1) * b0 + ib10;
+            if (r < l) ib10 = i1 - r*NOD / 2; else ib10 = i1 + l*NOD / 2;
+            long z = (n1*NOD) * b0 + ib10;
+           
             return z;
         }
            
-        // -----------------------------------------------------------------------------------------------------------------------------------           
-        // -----------------------------------        Заполнение массива для расшифровки  glbl_faze ,    glbl_faze1   ------------------------          
-        // -----------------------------------------------------------------------------------------------------------------------------------          
+        // ----------------------------------------------------------------------------------------------------------------           
+        // ----------------        Заполнение массива для расшифровки  glbl_faze ,    glbl_faze1   ------------------------          
+        // ----------------------------------------------------------------------------------------------------------------          
         private static void GLBL_FAZE(int n1, int n2, int Diag)
         {
 
