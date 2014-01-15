@@ -167,5 +167,26 @@ namespace Interferometry
             return min;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Pi_Class1.ZArrayDescriptor cutZArray(Pi_Class1.ZArrayDescriptor someDescriptor, int min, int max)
+        {
+            for (int i = 0; i < someDescriptor.width; i++)
+            {
+                for (int j = 0; j < someDescriptor.height; j++)
+                {
+                    if (someDescriptor.array[i, j] > max)
+                    {
+                        someDescriptor.array[i, j] = max;
+                    }
+
+                    if (someDescriptor.array[i, j] < min)
+                    {
+                        someDescriptor.array[i, j] = min;
+                    }
+                }
+            }
+
+            return someDescriptor;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

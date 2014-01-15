@@ -139,7 +139,8 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void changeArrayClicked(object sender, RoutedEventArgs e)
         {
-            zArrayDescriptor = Utils.getArrayFromImage(FilesHelper.bitmapSourceToBitmap((BitmapSource) mainImage.Source));
+            //zArrayDescriptor = Utils.getArrayFromImage(FilesHelper.bitmapSourceToBitmap((BitmapSource) mainImage.Source));
+            zArrayDescriptor = Utils.cutZArray(zArrayDescriptor, (int) minSlider.Value, (int) maxSlider.Value);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void saveButtonClicked(object sender, RoutedEventArgs e)
@@ -355,9 +356,6 @@ namespace Interferometry.forms
 
                     secondClick = new Point3D(x, y, z);
                 }
-
-                /*MessageBox.Show("Первая точка - X = " + firstClick.z + " Y = " + firstClick.y + " Z = " + firstClick.z
-                                + " Вторая точка -" + secondClick.x + " Y = " + secondClick.y + " Z = " + secondClick.z);*/
 
                 Pi_Class1.ZArrayDescriptor result = Pi_Class1.Z_sub(firstClick.x, firstClick.y, secondClick.x,
                     secondClick.y, zArrayDescriptor, cosinusValue);
