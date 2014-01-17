@@ -17,9 +17,11 @@ namespace rab1
         static Int32 M2 = -1;
         static Int32 N1 = -1;
         static Int32 N2 = -1;
-        static int NMAX=1600;
+        static int NMAX=4800;
         static int[] glbl_faze  = new int[NMAX];               // Номера для прослеживания полос (номера линий)
         static int[] glbl_faze1 = new int[NMAX];               // Количество добавлений b1 (Для расшифровки)
+        static int[] glbl_faze2 = new int[NMAX];               // Адрес точной дигонали (Для расшифровки)
+
         static int[] number_2pi = new int[200];                // Максимум 200 полос (пока) ------------------------------
         static Form  f_sin;
         static PictureBox pc1;
@@ -490,7 +492,7 @@ namespace rab1
        // private static void rash_2pi(ZArrayDescriptor bmp1, ZArrayDescriptor bmp2, ZArrayDescriptor bmp3, int[,] bmp_r, int pr_obr, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
         private static void rash_2pi(ZArrayDescriptor bmp1, ZArrayDescriptor bmp2, ZArrayDescriptor bmp3, int NOD, int sdvg_x, int n1, int n2, int Diag, Int64[,] Z)
         {
-
+            //MessageBox.Show(" sdvg = " + sdvg_x + " n1 = " + n1 + " n2 = " + n2);
            
             int w = bmp1.width;
             int h = bmp1.height;
@@ -503,54 +505,77 @@ namespace rab1
                 {      
                    int i1 = (int)(bmp1.array[i, j]);
                    int i2 = (int)(bmp2.array[i, j]);
-                   int b1  = i1 / NOD; int ib1 = b1 + sdvg_x; if (ib1 > n1) ib1 -= n1;
-                   int ib2 = i2 / NOD;
-                  
-                    //if (bmp_r[ib2, ib1] >= pr_obr) { Z[i, j] = GLBL_R(n1, n2, i1, ib2); }
-                    Z[i, j] = GLBL_R(n1, n2, ib1, ib2, i1, i2, NOD);
+                   Z[i, j] = GLBL_R(n1, n2, i1, i2, sdvg_x, NOD);
                 }
-
+                //MessageBox.Show(" i = " + i);
                 done++; 
                 PopupProgressBar.setProgress(done, all);
             }
 
             PopupProgressBar.close();
         }
-//  ib1, ib2 - координаты в таблице
-//  i1, i2   - истинные координаты (по числу разрядов)
-        private static long GLBL_R(int n1, int n2, int ib1, int ib2, int i1, int i2, int NOD)
+        //  ib1, ib2 - координаты в таблице
+        //  i1, i2   - истинные координаты (по числу разрядов)
+        //
+        //   ------------------>   ib2
+        //   |  
+        //   |  
+        //
+        //   ib1
+        private static long GLBL_R(int n1, int n2, int i1, int i2, int sdvg_x, int NOD)
         {
+            int b1 = i1 / NOD; 
+            int ib1 = b1 + sdvg_x;                    while (ib1 >= n1) { ib1 -= n1; };            // Сдвиг значений к нулевой диагонали
+            i1 = i1 + (sdvg_x * NOD);                 while (i1 >= (n1 * NOD)) { i1 -= (n1 * NOD); };
 
-            int i0 = ib2 + (n1 - ib1);
-            int b0 = glbl_faze1[i0];
-            int ib10 = i1;
-                                                 // Определение ближайшей диагонали
-            int r = 0;
-            while (b0 != glbl_faze[i0 + r])
-            {
-                r++;
-                if (i0 + r > n1 + n2 - 1) r = 0;
-                if (r > 20) { r = 300; break; }
-            }
+            int ib2 = i2 / NOD;
 
-            int l = 0;
-            while (b0 != glbl_faze[i0 - l])
-            {
-                l++;
-                if (i0 - l < 0) l = n2 + n1 - 1; 
-                if (l > 20) { l = 300; break; }
-            }
+            int i0 = ib2 + (n1 - ib1);           // Индекс массива
+            int b0 = glbl_faze1[i0];             // Величина диагонали
+                                                       
+            //int l = glbl_faze2[i0] - i0;
+            //MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
+            int ib = i1;
+
+            //if (l > 0) ib = ib1 - l; else ib = ib1 + l;
+            long z = (n1 * NOD) * b0 + ib;
+            /*   
+             // Определение ближайшей диагонали
+             int r = 0;
+             while (b0 != glbl_faze[i0 + r])      // Поиск истинной диагонали
+              {
+                  r++;
+                  if (i0 + r > n1 + n2 - 1)  r = 0;
+                  if (r > 20) { r = 300; 
+                      //MessageBox.Show(" r>20 = " + r + " ib1 = " + ib1 + " ib2 = " + ib2 + " i0 = " + i0 + " glbl_faze1[i0] = " + glbl_faze1[i0] + " glbl_faze[i0] = " + glbl_faze[i0]); 
+                      break; }
+              }
+
+              int l = 0;
+              while (b0 != glbl_faze[i0 - l])
+              {
+                  l++;
+                  if (i0 - l < 0) l = n2 + n1 - 1;
+                  if (l > 20) { l = 300; 
+                      //MessageBox.Show(" l<20 = " + r + " ib1 = " + ib1 + " ib2 = " + ib2 + " i0 = " + i0 + " glbl_faze1[i0] = " + glbl_faze1[i0] + " glbl_faze[i0] = " + glbl_faze[i0]); 
+                      break; }
+              }
+           
                                                  // Сама расшифровка
             //if (r < l) ib10 = ib1 - r / 2; else ib10 = ib1 + l / 2;
             //long z = (n1) * b0 + ib10;
+            int ib10 = ib1;
             if (r < l) ib10 = i1 - r*NOD / 2; else ib10 = i1 + l*NOD / 2;
+            
             long z = (n1*NOD) * b0 + ib10;
-           
+            *  */
             return z;
         }
            
         // ----------------------------------------------------------------------------------------------------------------           
-        // ----------------        Заполнение массива для расшифровки  glbl_faze ,    glbl_faze1   ------------------------          
+        // ----------------        Заполнение массива для расшифровки  glbl_faze      -1 -1 2 -1 -1 
+        // ----------------                                            glbl_faze1      22222222233333333
+        // ----------------                                            glbl_faze2      адрес точной диагонали
         // ----------------------------------------------------------------------------------------------------------------          
         private static void GLBL_FAZE(int n1, int n2, int Diag)
         {
@@ -570,24 +595,27 @@ namespace rab1
                 if (pf < A) { pf = pf / n1; glbl_faze[n1 - b1] = pf; }
             }
             int mxx = 0, mxx_x = 0, mnx = 0, mnx_x = 0, cntr = 0;
+           
             for (; ; )
             {
                 for (int i = mnx_x; i < n1 + n2; i++)
                 {
                     cntr = i;
-                    int bb = glbl_faze[i]; if (bb >= 0 && bb != mnx) { mxx = bb; mxx_x = i; break; }
+                    int bb = glbl_faze[i]; 
+                    if (bb >= 0 && bb != mnx) { mxx = bb; mxx_x = i; break; }
                 }
+                
                 if (cntr >= n1 + n2 - 1) break;
                 //MessageBox.Show(" mnx =  " + mnx.ToString() + " mxx =  " + mxx.ToString());                    
                 int m = (mxx_x - mnx_x) / 2;
-                for (int j = mnx_x; j < mnx_x + m; j++) glbl_faze1[j] = mnx;
-                for (int j = mnx_x + m; j < mxx_x; j++) glbl_faze1[j] = mxx;
+                for (int j = mnx_x; j < mnx_x + m; j++) { glbl_faze1[j] = mnx; glbl_faze2[j] = mxx_x; }
+                for (int j = mnx_x + m; j < mxx_x; j++) { glbl_faze1[j] = mxx; glbl_faze2[j] = mxx_x; } 
                 mnx_x = mxx_x;
                 mnx = mxx;
             }
 
-         
-           // for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i.ToString() + "  =  " + pf.ToString()); }    
+
+           // for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i + "  glbl_faze1[i] " + glbl_faze1[i] + "  glbl_faze[i] " + glbl_faze[i]); }    
 
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
