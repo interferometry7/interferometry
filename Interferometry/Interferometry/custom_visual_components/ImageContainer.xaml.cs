@@ -44,6 +44,16 @@ namespace Interferometry
             imageNumberLabel.Content = imageNumber;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setzArrayDescriptorWithoutImageGenerating(Pi_Class1.ZArrayDescriptor newDescriptor)
+        {
+            zArrayDescriptor = newDescriptor;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setImageWithoutArrayGenerating(ImageSource imageSource)
+        {
+            image.Source = imageSource;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setzArrayDescriptor(Pi_Class1.ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
@@ -53,21 +63,6 @@ namespace Interferometry
         public Pi_Class1.ZArrayDescriptor getzArrayDescriptor()
         {
             return zArrayDescriptor;
-        }
-        public Size GetElementPixelSize(UIElement element)
-        {
-            Matrix transformToDevice;
-            var source = PresentationSource.FromVisual(element);
-            if (source != null)
-                transformToDevice = source.CompositionTarget.TransformToDevice;
-            else
-                using (var source2 = new HwndSource(new HwndSourceParameters()))
-                    transformToDevice = source2.CompositionTarget.TransformToDevice;
-
-            if (element.DesiredSize == new Size())
-                element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-
-            return (Size)transformToDevice.Transform((Vector)element.DesiredSize);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,6 +105,22 @@ namespace Interferometry
             {
                 setzArrayDescriptor(myDelegate.getImageToLoad(this));
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public Size GetElementPixelSize(UIElement element)
+        {
+            Matrix transformToDevice;
+            var source = PresentationSource.FromVisual(element);
+            if (source != null)
+                transformToDevice = source.CompositionTarget.TransformToDevice;
+            else
+                using (var source2 = new HwndSource(new HwndSourceParameters()))
+                    transformToDevice = source2.CompositionTarget.TransformToDevice;
+
+            if (element.DesiredSize == new Size())
+                element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+            return (Size)transformToDevice.Transform((Vector)element.DesiredSize);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

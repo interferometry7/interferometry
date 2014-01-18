@@ -102,7 +102,7 @@ namespace Interferometry.forms
         
         //Методы из пункта "Работа с файлами"
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void loadClicked(object sender, RoutedEventArgs e)
+        private void loadImageClicked(object sender, RoutedEventArgs e)
         {
             ImageSource newSource = FilesHelper.loadImage();
 
@@ -128,7 +128,8 @@ namespace Interferometry.forms
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
                     done++;
                     PopupProgressBar.setProgress(done, all);
                 }
@@ -145,16 +146,55 @@ namespace Interferometry.forms
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Сохранить массив ZArray
-        private void saveArrayButton1_Click(object sender, RoutedEventArgs e)
+        private void saveArrayClicked(object sender, RoutedEventArgs e)
         {
             if (zArrayDescriptor != null)
             {
                 FilesHelper.saveZArray(zArrayDescriptor);
             }
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadArrayClicked(object sender, RoutedEventArgs e)
         {
             setZArray(FilesHelper.loadZArray());
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void saveArraysClicked(object sender, RoutedEventArgs e)
+        {
+            Pi_Class1.ZArrayDescriptor[] arraysToSave = new Pi_Class1.ZArrayDescriptor[8];
+
+            for(int i = 0; i < 8; i++)
+            {
+                ImageContainer currentContainer = imageContainersList[i];
+                Pi_Class1.ZArrayDescriptor currentArray = currentContainer.getzArrayDescriptor();
+
+                if (currentArray != null)
+                {
+                    arraysToSave[i] = currentArray;
+                }
+            }
+
+            FilesHelper.saveZArrays(arraysToSave);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadArraysClicked(object sender, RoutedEventArgs e)
+        {
+            int all = 7;
+            int done = 0;
+            PopupProgressBar.show();
+
+            Pi_Class1.ZArrayDescriptor[] loadedArrays = FilesHelper.loadArrays();
+
+            if (loadedArrays != null)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    imageContainersList[i].setzArrayDescriptor(loadedArrays[i]);
+                    done++;
+                    PopupProgressBar.setProgress(done, all);
+                }
+            }
+            PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

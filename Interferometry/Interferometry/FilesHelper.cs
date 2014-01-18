@@ -143,6 +143,57 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Pi_Class1.ZArrayDescriptor[] loadArrays()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "array files (*.zarr)|*.zarr|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            Pi_Class1.ZArrayDescriptor[] result = new Pi_Class1.ZArrayDescriptor[8];
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream myStream;
+                    if ((myStream = openFileDialog.OpenFile()) != null)
+                    {
+                        using (myStream)
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
+                                String fileName;
+
+                                if (openFileDialog.FileName.Contains("1."))
+                                {
+                                    fileName = openFileDialog.FileName.Replace("1.", (i + 1) + ".");
+                                }
+                                else
+                                {
+                                    fileName = openFileDialog.FileName;
+                                }
+
+                                Stream fileStream = File.OpenRead(fileName);
+                                BinaryFormatter deserializer = new BinaryFormatter();
+                                Pi_Class1.ZArrayDescriptor loadedDescriptor = (Pi_Class1.ZArrayDescriptor) deserializer.Deserialize(fileStream);
+                                fileStream.Close();
+                                result[i] = loadedDescriptor;
+                            }
+
+                            return result;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    return null;
+                }
+            }
+
+            return null;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Bitmap bitmapImageToBitmap(BitmapImage bitmapImage)
         {
             if (bitmapImage == null)
@@ -247,6 +298,42 @@ namespace Interferometry
                         BinaryFormatter serializer = new BinaryFormatter();
                         serializer.Serialize(stream, arrayDescriptor);
                         stream.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not write file to disk. Original error: " + ex.Message);
+                }
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void saveZArrays(Pi_Class1.ZArrayDescriptor[] arraysToSave)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "array files (*.zarr)|*.zarr|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream stream;
+                    int pathLength = saveFileDialog.FileName.Length;
+                    String pathWithoutExtension = saveFileDialog.FileName.Substring(0, pathLength - 5);
+
+                    for (int i = 0; i < arraysToSave.Length; i++)
+                    {
+                        Pi_Class1.ZArrayDescriptor currentDescriptor = arraysToSave[i];
+                        saveFileDialog.FileName = pathWithoutExtension + Convert.ToString(i + 1) + ".zarr";
+
+                        if ((stream = saveFileDialog.OpenFile()) != null)
+                        {
+                            BinaryFormatter serializer = new BinaryFormatter();
+                            serializer.Serialize(stream, currentDescriptor);
+                            stream.Close();
+                        }
                     }
                 }
                 catch (Exception ex)
