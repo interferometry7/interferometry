@@ -197,6 +197,24 @@ namespace Interferometry.forms
             PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void saveImagesClicked(object sender, RoutedEventArgs e)
+        {
+            ImageSource[] imagesToSave = new ImageSource[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                ImageContainer currentContainer = imageContainersList[i];
+                ImageSource currentArray = currentContainer.getImage();
+
+                if (currentArray != null)
+                {
+                    imagesToSave[i] = currentArray;
+                }
+            }
+
+            FilesHelper.saveImages(imagesToSave);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

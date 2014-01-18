@@ -253,11 +253,7 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void saveImage(ImageSource someImage)
         {
-            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)someImage));
-
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-
             saveFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
@@ -269,6 +265,8 @@ namespace Interferometry
                     Stream stream;
                     if ((stream = saveFileDialog.OpenFile()) != null)
                     {
+                        BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create((BitmapSource)someImage));
                         encoder.Save(stream);
                         stream.Close();
                     }
@@ -332,6 +330,42 @@ namespace Interferometry
                         {
                             BinaryFormatter serializer = new BinaryFormatter();
                             serializer.Serialize(stream, currentDescriptor);
+                            stream.Close();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not write file to disk. Original error: " + ex.Message);
+                }
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void saveImages(ImageSource[] imagesToSave)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    int pathLength = saveFileDialog.FileName.Length;
+                    String pathWithoutExtension = saveFileDialog.FileName.Substring(0, pathLength - 5);
+
+                    for (int i = 0; i < imagesToSave.Length; i++)
+                    {
+                        ImageSource currentImage = imagesToSave[i];
+                        saveFileDialog.FileName = pathWithoutExtension + Convert.ToString(i + 1) + ".bmp";
+
+                        Stream stream;
+                        if ((stream = saveFileDialog.OpenFile()) != null)
+                        {
+                            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+                            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)currentImage));
+                            encoder.Save(stream);
                             stream.Close();
                         }
                     }
