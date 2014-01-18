@@ -115,42 +115,6 @@ namespace Interferometry.forms
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void maxSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            maxLabel.Content = Convert.ToInt32(maxSlider.Value);
-
-            if (minSlider.Value > maxSlider.Value)
-            {
-                minSlider.Value = maxSlider.Value;
-            }
-
-            minSlider.Maximum = maxSlider.Value;
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void minSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            minLabel.Content = Convert.ToInt32(minSlider.Value);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void redrawButton_Click(object sender, RoutedEventArgs e)
-        {
-            mainImage.Source = Utils.getImageFromArray(zArrayDescriptor, (long) minSlider.Value, (long) maxSlider.Value);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void changeArrayClicked(object sender, RoutedEventArgs e)
-        {
-            //zArrayDescriptor = Utils.getArrayFromImage(FilesHelper.bitmapSourceToBitmap((BitmapSource) mainImage.Source));
-            zArrayDescriptor = Utils.cutZArray(zArrayDescriptor, (int) minSlider.Value, (int) maxSlider.Value);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void saveButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if (mainImage.Source != null)
-            {
-                FilesHelper.saveImage(mainImage.Source);
-            }
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Загрузить 8 изображений
         private void loadEightImages(object sender, RoutedEventArgs e)
         {
@@ -172,10 +136,63 @@ namespace Interferometry.forms
             PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void saveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (mainImage.Source != null)
+            {
+                FilesHelper.saveImage(mainImage.Source);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Сохранить массив ZArray
+        private void saveArrayButton1_Click(object sender, RoutedEventArgs e)
+        {
+            if (zArrayDescriptor != null)
+            {
+                FilesHelper.saveZArray(zArrayDescriptor);
+            }
+        }
+        private void loadArrayClicked(object sender, RoutedEventArgs e)
+        {
+            setZArray(FilesHelper.loadZArray());
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        //Методы для обработки слайдеров и кнопок управления построением изображения
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void minSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            minLabel.Content = Convert.ToInt32(minSlider.Value);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void redrawButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainImage.Source = Utils.getImageFromArray(zArrayDescriptor, (long)minSlider.Value, (long)maxSlider.Value);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void changeArrayClicked(object sender, RoutedEventArgs e)
+        {
+            zArrayDescriptor = Utils.cutZArray(zArrayDescriptor, (int)minSlider.Value, (int)maxSlider.Value);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void maxSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            maxLabel.Content = Convert.ToInt32(maxSlider.Value);
+
+            if (minSlider.Value > maxSlider.Value)
+            {
+                minSlider.Value = maxSlider.Value;
+            }
+
+            minSlider.Maximum = maxSlider.Value;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
 
 
-        // Методы из пункта "Восстановление фазы"
+        //Методы из пункта "Восстановление фазы"
         //Удаление фазовой неоднозначности
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, RoutedEventArgs e)
@@ -202,7 +219,6 @@ namespace Interferometry.forms
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
         //                    Вычитание опорной плоскости
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void choosePointsClicked(object sender, RoutedEventArgs e)
@@ -307,6 +323,14 @@ namespace Interferometry.forms
             minSlider.Value = min;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void setZArray(Pi_Class1.ZArrayDescriptor arrayDescriptor)
+        {
+            zArrayDescriptor = arrayDescriptor;
+            mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
+
+            adjustSliders();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
 
 
@@ -314,10 +338,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void exportImage(ImageContainer imageContainer, Pi_Class1.ZArrayDescriptor arrayDescriptor)
         {
-            zArrayDescriptor = arrayDescriptor;
-            mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
-
-            adjustSliders();
+            setZArray(arrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public Pi_Class1.ZArrayDescriptor getImageToLoad(ImageContainer imageContainer)

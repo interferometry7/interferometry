@@ -443,6 +443,7 @@ namespace rab1
           return result;
         }
 
+        [Serializable()]
         public class ZArrayDescriptor
         {
             public Int64[,] array;

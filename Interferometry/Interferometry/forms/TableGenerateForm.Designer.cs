@@ -46,7 +46,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // loadImageButton
             // 
             this.button1.Location = new System.Drawing.Point(241, 241);
             this.button1.Name = "button1";

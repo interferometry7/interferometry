@@ -5,12 +5,14 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using rab1;
 using MessageBox = System.Windows.MessageBox;
 using Size = System.Drawing.Size;
 
@@ -40,7 +42,41 @@ namespace Interferometry
                             newBitmapImage.BeginInit();
                             newBitmapImage.UriSource = new Uri(openFileDialog.FileName);
                             newBitmapImage.EndInit();
+                            myStream.Close();
                             return newBitmapImage;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    return null;
+                }
+            }
+
+            return null;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Pi_Class1.ZArrayDescriptor loadZArray()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "array files (*.zarr)|*.zarr|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream myStream;
+                    if ((myStream = openFileDialog.OpenFile()) != null)
+                    {
+                        using (myStream)
+                        {
+                            BinaryFormatter deserializer = new BinaryFormatter();
+                            Pi_Class1.ZArrayDescriptor savedArray = (Pi_Class1.ZArrayDescriptor) deserializer.Deserialize(myStream);
+                            myStream.Close();
+                            return savedArray;
                         }
                     }
                 }
@@ -183,6 +219,33 @@ namespace Interferometry
                     if ((stream = saveFileDialog.OpenFile()) != null)
                     {
                         encoder.Save(stream);
+                        stream.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not write file to disk. Original error: " + ex.Message);
+                }
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void saveZArray(Pi_Class1.ZArrayDescriptor arrayDescriptor)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "array files (*.zarr)|*.zarr|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Stream stream;
+                    if ((stream = saveFileDialog.OpenFile()) != null)
+                    {
+                        BinaryFormatter serializer = new BinaryFormatter();
+                        serializer.Serialize(stream, arrayDescriptor);
                         stream.Close();
                     }
                 }
