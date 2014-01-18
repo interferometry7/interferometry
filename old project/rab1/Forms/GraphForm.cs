@@ -50,7 +50,6 @@ namespace rab1
             pos_x = x1;
             pos_y = y1;
             draw_chart(w1, h1, buf, bufy);
-
         }
 
         private void draw_chart(int w1, int h1, int[] buf, int[] bufy)
@@ -219,11 +218,5 @@ namespace rab1
             if (cb.SelectedIndex == 1) draw_chart(wd, ht, gx, gy);
             if (cb.SelectedIndex == 2) draw_chart(wd, ht, bx, by);
         }
-
-
-
-
-
-
     }
 }

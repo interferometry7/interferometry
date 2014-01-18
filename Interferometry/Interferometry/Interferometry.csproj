@@ -37,6 +37,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Canon.Eos.Framework">
+      <HintPath>libs\Canon.Eos.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV">
+      <HintPath>libs\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI">
+      <HintPath>libs\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.Util">
+      <HintPath>libs\Emgu.Util.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -93,6 +105,8 @@
     <Compile Include="forms\TableGenerateForm.designer.cs">
       <DependentUpon>TableGenerateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrameworkManager.cs" />
+    <Compile Include="ImageGetter.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
@@ -109,7 +123,6 @@
       <DependentUpon>UnwrapForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageProcessor.cs" />
-    <Compile Include="interfaces\FilesHelperDelegate.cs" />
     <Compile Include="interfaces\ImageContainerDelegate.cs" />
     <Compile Include="math_classes\FazaClass1.cs" />
     <Compile Include="math_classes\Pi_Class1.cs" />
@@ -152,7 +165,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="libs\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="forms\MainForm.xaml">
       <SubType>Designer</SubType>

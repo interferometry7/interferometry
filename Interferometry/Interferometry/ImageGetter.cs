@@ -20,12 +20,14 @@ namespace rab1
 {
     class ImageGetter
     {
-        public event ImageReceived imageReceived;
+        private static ImageGetter instance;
 
         private readonly FrameworkManager _manager;
         private EosCamera camera;
         private bool singleShotInProgress;
         private bool cameraLoaded;
+
+        public event ImageReceived imageReceived;
 
         //Birth
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,6 +36,16 @@ namespace rab1
             _manager = new FrameworkManager();
             _manager.CameraAdded+=ManagerOnCameraAdded;
             loadFunction();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static ImageGetter sharedInstance()
+        {
+            if (instance == null)
+            {
+                instance = new ImageGetter();
+            }
+
+            return instance;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void ManagerOnCameraAdded(object sender, EventArgs eventArgs)
@@ -54,7 +66,7 @@ namespace rab1
             }
 
             singleShotInProgress = true;
-            safeCall(() => { if (camera != null)  camera.TakePicture(); }, ex => MessageBox.Show(ex.ToString()));
+            safeCall(() => { if (camera != null)  camera.TakePicture(); }, ex => catchShootException(ex));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -114,6 +126,12 @@ namespace rab1
 
             //изображение получено
             imageReceived(e.GetImage());
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void catchShootException(Exception exception)
+        {
+            singleShotInProgress = false;
+            MessageBox.Show(exception.ToString());
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

@@ -67,7 +67,6 @@ namespace Interferometry.forms
         public MainForm()
         {
             InitializeComponent();
-
             imageContainersList = new List<ImageContainer>();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +103,10 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadImageClicked(object sender, RoutedEventArgs e)
         {
-            ImageSource newSource = FilesHelper.loadImage();
+           /*ImageGetter.sharedInstance().imageReceived+=OnImageReceived;
+           ImageGetter.sharedInstance().getImage();*/
+
+           ImageSource newSource = FilesHelper.loadImage();
 
             if (newSource != null)
             {
@@ -113,6 +115,11 @@ namespace Interferometry.forms
 
                 adjustSliders();
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void OnImageReceived(System.Drawing.Image newImage)
+        {
+            mainImage.Source = FilesHelper.bitmapToBitmapImage((Bitmap)newImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Загрузить 8 изображений
