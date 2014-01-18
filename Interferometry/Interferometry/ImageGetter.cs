@@ -65,8 +65,18 @@ namespace rab1
                 return;
             }
 
-            singleShotInProgress = true;
-            safeCall(() => { if (camera != null)  camera.TakePicture(); }, ex => catchShootException(ex));
+            safeCall(() =>
+            {
+                if (camera != null)
+                {
+                    singleShotInProgress = true;
+                    camera.TakePicture();
+                }
+                else
+                {
+                    MessageBox.Show("Камера не подключена");
+                }
+            }, ex => catchShootException(ex));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -51,6 +51,16 @@
                     <RadioButton Content="Построение таблицы" Margin="441,23,114,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Камера" Name="tabItem5">
+                <Grid>
+                    <Button x:Name="makePhotoButton" Content="Сделать один снимок" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="23
+                            " Click="makePhotoButton_Click"/>
+                    <Button x:Name="makePhotoSeriesButton" Content="Сделать серию снимков" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="makePhotoSeriesButton_Click"/>
+
+                </Grid>
+            </TabItem>
+            
+            
         </TabControl>
         <ScrollViewer Margin="12,106,231,12" Name="scrollViewer1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Name="grid1" Background="#5A000000">
