@@ -533,11 +533,11 @@ namespace rab1
             int i0 = ib2 + (n1 - ib1);           // Индекс массива
             int b0 = glbl_faze1[i0];             // Величина диагонали
                                                        
-            //int l = glbl_faze2[i0] - i0;
+            // int l = glbl_faze2[i0] - i0;
             //MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
             int ib = i1;
 
-            //if (l > 0) ib = ib1 - l; else ib = ib1 + l;
+            //if (l > 0) ib -=  (l/2)*NOD; else ib +=  (l/2)*NOD;
             long z = (n1 * NOD) * b0 + ib;
             /*   
              // Определение ближайшей диагонали
