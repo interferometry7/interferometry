@@ -531,45 +531,16 @@ namespace rab1
 
             int ib2 = i2 / NOD;
 
-            int i0 = ib2 + (n1 - ib1);           // Индекс массива
-            int b0 = glbl_faze1[i0];             // Величина диагонали
+            int i0 = ib2 + (n1 - ib1);           // Индекс в массиве
+            int b0 = glbl_faze1[i0];             // Значение ближайшей диагонали
                                                        
-            // int l = glbl_faze2[i0] - i0;
-            //MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
+            //int l = (glbl_faze2[i0] - i0);
+            //  MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
             int ib = i1;
 
-            //if (l > 0) ib -=  (l/2)*NOD; else ib +=  (l/2)*NOD;
+            //if (l > 0) ib -=  (l/2); else ib +=  (l/2);    // Уточнение ---------------------------------------------------------------
             long z = (n1 * NOD) * b0 + ib;
-            /*   
-             // Определение ближайшей диагонали
-             int r = 0;
-             while (b0 != glbl_faze[i0 + r])      // Поиск истинной диагонали
-              {
-                  r++;
-                  if (i0 + r > n1 + n2 - 1)  r = 0;
-                  if (r > 20) { r = 300; 
-                      //MessageBox.Show(" r>20 = " + r + " ib1 = " + ib1 + " ib2 = " + ib2 + " i0 = " + i0 + " glbl_faze1[i0] = " + glbl_faze1[i0] + " glbl_faze[i0] = " + glbl_faze[i0]); 
-                      break; }
-              }
-
-              int l = 0;
-              while (b0 != glbl_faze[i0 - l])
-              {
-                  l++;
-                  if (i0 - l < 0) l = n2 + n1 - 1;
-                  if (l > 20) { l = 300; 
-                      //MessageBox.Show(" l<20 = " + r + " ib1 = " + ib1 + " ib2 = " + ib2 + " i0 = " + i0 + " glbl_faze1[i0] = " + glbl_faze1[i0] + " glbl_faze[i0] = " + glbl_faze[i0]); 
-                      break; }
-              }
            
-                                                 // Сама расшифровка
-            //if (r < l) ib10 = ib1 - r / 2; else ib10 = ib1 + l / 2;
-            //long z = (n1) * b0 + ib10;
-            int ib10 = ib1;
-            if (r < l) ib10 = i1 - r*NOD / 2; else ib10 = i1 + l*NOD / 2;
-            
-            long z = (n1*NOD) * b0 + ib10;
-            *  */
             return z;
         }
            
