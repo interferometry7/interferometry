@@ -530,15 +530,12 @@ namespace rab1
             i1 = i1 + (sdvg_x * NOD);                 while (i1 >= (n1 * NOD)) { i1 -= (n1 * NOD); };
 
             int ib2 = i2 / NOD;
-
-            int i0 = ib2 + (n1 - ib1);           // Индекс в массиве
-            int b0 = glbl_faze1[i0];             // Значение ближайшей диагонали
-                                                       
+            int i0 = ib2 + (n1 - ib1);           // Индекс в массиве                                                                
             //int l = (glbl_faze2[i0] - i0);
-            //  MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
-            int ib = i1;
-
-            //if (l > 0) ib -=  (l/2); else ib +=  (l/2);    // Уточнение ---------------------------------------------------------------
+                                                 //  MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
+            int ib = i1; // +(l / 2);               // Уточнение ---------------------------------------------------------------
+           
+            int b0 = glbl_faze1[i0];             // Значение ближайшей диагонали
             long z = (n1 * NOD) * b0 + ib;
            
             return z;
@@ -586,8 +583,8 @@ namespace rab1
                 mnx = mxx;
             }
 
-
-           // for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i + "  glbl_faze1[i] " + glbl_faze1[i] + "  glbl_faze[i] " + glbl_faze[i]); }    
+            
+         //   for (int i = 0; i < n1 + n2; i++) { pf = glbl_faze1[i]; MessageBox.Show(" i =  " + i + "  glbl_faze1[i] " + glbl_faze1[i] + "  glbl_faze[i] " + glbl_faze[i]); }    
 
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
