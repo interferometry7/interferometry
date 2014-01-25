@@ -77,7 +77,7 @@ namespace Interferometry.forms
             newScrollerContent.HorizontalAlignment = HorizontalAlignment.Stretch;
             newScrollerContent.VerticalAlignment = VerticalAlignment.Stretch;
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 14; i++)
             {
                 ImageContainer newImageContainer = new ImageContainer();
                 newImageContainer.myDelegate = this;
