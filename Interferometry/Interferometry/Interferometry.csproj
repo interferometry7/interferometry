@@ -87,6 +87,9 @@
     <Compile Include="forms\PointsChooseForm.xaml.cs">
       <DependentUpon>PointsChooseForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\StripesForm.xaml.cs">
+      <DependentUpon>StripesForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\TableFaza.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="forms\PointsChooseForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\StripesForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

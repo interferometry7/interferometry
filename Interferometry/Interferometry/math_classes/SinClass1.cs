@@ -3,6 +3,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using Interferometry.forms;
 
 namespace rab1
 {
@@ -10,7 +11,7 @@ namespace rab1
     {
 
        // 
-        public static void sin_f(double N_sin, double f1, int max_x, int max_y, int XY, PictureBox pc1)    // sin b/w
+        public static Bitmap sin_f(double N_sin, double f1, int max_x, int max_y, int XY)    // sin b/w
         {
             int i, j;
             byte r;
@@ -38,12 +39,13 @@ namespace rab1
 
                     }
 
-            pc1.Image = bmp_sin;
+            return bmp_sin;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void drawLines(double N_sin, double f1, int max_x, int max_y, int XY, PictureBox pc1)    // sin b/w
+        public static Bitmap drawLines(double N_sin, double f1, int max_x, int max_y, int XY)    // sin b/w
         {
-            BitmapData bitmapData = ImageProcessor.getBitmapData((Bitmap)pc1.Image);
+            Bitmap result = new Bitmap(max_x, max_y);
+            BitmapData bitmapData = ImageProcessor.getBitmapData(result);
             byte r;
             double nx = max_x + 1;
             double pi = Math.PI;
@@ -101,36 +103,14 @@ namespace rab1
                 }
             }
 
-            Color currentColor;
-            int black = 0;
-            int white = 0;
-
-            for (int y = 0; y < max_y; y++)
-            {
-                for (int x = 0; x < max_x; x++)
-                {
-                    currentColor = ImageProcessor.getPixel(x, y, bitmapData);
-                                        
-                    if (currentColor.ToArgb() == Color.White.ToArgb())
-                    {
-                        white++;
-                    }
-                    else
-                    {
-                        black++;
-                    }
-                }
-            }
-
-            ((Bitmap)pc1.Image).UnlockBits(bitmapData);
+            result.UnlockBits(bitmapData);
+            return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void drawDitheredLines(double N_sin, double f1, int XY, PictureBox pc1)
+        public static Bitmap drawDitheredLines(double N_sin, double f1, int max_x, int max_y, int XY)
         {
-            int max_x = pc1.Width;
-            int max_y = pc1.Height;
-
-            BitmapData bitmapData = ImageProcessor.getBitmapData((Bitmap)pc1.Image);
+            Bitmap result = new Bitmap(max_x, max_y);
+            BitmapData bitmapData = ImageProcessor.getBitmapData(result);
             byte r;
             double nx = max_x + 1;
             double pi = Math.PI;
@@ -197,7 +177,7 @@ namespace rab1
                     if (x < max_x - 1)
                     {
                         currentColor = ImageProcessor.getPixel(x + 1, y, bitmapData);
-                        double a = (double)(7.0 / 16.0) * quantError;
+                        double a = 7.0 / 16.0 * quantError;
                         averageColor = currentColor.R + (int)a;
 
                         if (averageColor > 255)
@@ -305,7 +285,8 @@ namespace rab1
                 }
             }
 
-            ((Bitmap)pc1.Image).UnlockBits(bitmapData);
+            result.UnlockBits(bitmapData);
+            return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void bit_f(double N_sin, double f1, int max_x, int max_y, int XY, int MASK, PictureBox pc1)    // bit b/w

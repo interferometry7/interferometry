@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using Interferometry.forms;
 
 public delegate void OneImageOfSeries(Image newImage, int imageNumber);
 
@@ -9,8 +10,24 @@ namespace rab1
 {
     public partial class BackgroundImagesGeneratorForm : Form
     {
+        private enum StripeType
+        {
+            /// <summary>
+            /// Режим по умолчанию. Синусоидальные полосы
+            /// </summary>
+            sine,
+            /// <summary>
+            /// Просто линии
+            /// </summary>
+            lines,
+            /// <summary>
+            /// Полосы с дизерингом
+            /// </summary>
+            dithered
+        };
+
         private int stripOrientation = 0;
-        private int stripType = 0;
+        private StripeType stripeType = StripeType.sine;
         private int imageWidth = 800;
         private int imageHeight = 600;
         private int imageNumber = 0;
@@ -23,10 +40,9 @@ namespace rab1
         private int phaseShift3Value;
         private int phaseShift4Value;
 
-        private Form formForStripes;
-        //private CustomPictureBox pc1;
+        private StripesForm formForStripes;
+        private int numberOfImageInSeries = 8;
 
-        public int numberOfImageInSeries = 8;
         public event OneImageOfSeries oneImageOfSeries;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public BackgroundImagesGeneratorForm()
@@ -43,48 +59,30 @@ namespace rab1
 
             convertValues();
 
-            formForStripes = new Form();
-            formForStripes.Size = new Size(800 + 8, 600 + 8);
-            formForStripes.StartPosition = FormStartPosition.Manual;
-
-            /*pc1 = new CustomPictureBox();
-            pc1.BackColor = Color.White;
-            pc1.Location = new Point(0, 8);
-            pc1.Size = new Size(800, 600);
-            pc1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pc1.BorderStyle = BorderStyle.Fixed3D;
-
-            formForStripes.Controls.Add(pc1);
-
+            formForStripes = new StripesForm();
             updateInitialImage();
-            
-            pc1.Refresh();
-            formForStripes.Show();*/
+            formForStripes.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void updateInitialImage()
         {
             convertValues();
+            Bitmap result = null;
 
-           /* if (stripType == 0)
+            if (stripeType == StripeType.sine)
             {
-                SinClass1.sin_f(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, pc1);
+                result = SinClass1.sin_f(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
             }
-            else if (stripType == 1)
+            else if (stripeType == StripeType.lines)
             {
+                result = SinClass1.drawLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+            }
+            else if (stripeType == StripeType.dithered)
+            {
+                result = SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+            }
 
-            }
-            else if (stripType == 2)
-            {
-                SinClass1.drawLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, pc1);
-            }
-            else if (stripType == 3)
-            {
-                SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift1Value, stripOrientation, pc1);
-            }*/
-
-           /* pc1.Invalidate();
-            pc1.Update();*/
+            formForStripes.setImage(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void convertValues()
@@ -103,8 +101,8 @@ namespace rab1
             convertValues();
             imageNumber = 0;
 
-            /*ShooterSingleton.imageCaptured += imageTaken;
-            ShooterSingleton.getImage();*/
+            ImageGetter.sharedInstance().imageReceived += imageTaken;
+            ImageGetter.sharedInstance().getImage();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void imageTaken(Image newImage)
@@ -118,121 +116,63 @@ namespace rab1
 
             if (imageNumber >= numberOfImageInSeries)
             {
-                //ShooterSingleton.imageCaptured -= imageTaken;
+                ImageGetter.sharedInstance().imageReceived -= imageTaken;
             }
             else
             {
+                Bitmap result = null;
+
                 if (imageNumber == 1)
                 {
-                   /* if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin1Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin1Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift2Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin1Value/10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
                 }
                 else if (imageNumber == 2)
                 {
-                   /* if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin1Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin1Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift3Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin1Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
                 }
                 else if (imageNumber == 3)
                 {
-                    /*if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin1Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin1Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift4Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin1Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
                 }
                 else if (imageNumber == 4)
                 {
-                   /* if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin2Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin2Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift1Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin2Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
                 }
                 else if (imageNumber == 5)
                 {
-                    /*if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin2Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin2Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift2Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin2Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
                 }
                 else if (imageNumber == 6)
                 {
-                   /* if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin2Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin2Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift3Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin2Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
                 }
                 else if (imageNumber == 7)
                 {
-                    /*if (stripType == 0)
-                    {
-                        SinClass1.sin_f(numberOfSin2Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 2)
-                    {
-                        SinClass1.drawLines(numberOfSin2Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation, pc1);
-                    }
-                    else if (stripType == 3)
-                    {
-                        SinClass1.drawDitheredLines(numberOfSin2Value / 10, phaseShift4Value, stripOrientation, pc1);
-                    }*/
+                    drawLines(numberOfSin2Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
                 }
 
-                /*pc1.Invalidate();
-                pc1.Update();
-
-                ShooterSingleton.getImage();*/
+                ImageGetter.sharedInstance().getImage();
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void drawLines(double N_sin, double f1, int max_x, int max_y, int XY)
+        {
+            Bitmap result = null;
+
+            if (stripeType == StripeType.sine)
+            {
+                result = SinClass1.sin_f(N_sin, f1, max_x, max_y, XY);
+            }
+            else if (stripeType == StripeType.lines)
+            {
+                result = SinClass1.drawLines(N_sin, f1, max_x, max_y, XY);
+            }
+            else if (stripeType == StripeType.dithered)
+            {
+                result = SinClass1.drawDitheredLines(N_sin, f1, max_x, max_y, XY);
+            }
+
+            formForStripes.setImage(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -265,7 +205,7 @@ namespace rab1
         {
             if (((RadioButton)sender).Checked == true)
             {
-                stripType = 0;
+                stripeType = 0;
                 updateInitialImage();
             }
         }
@@ -274,7 +214,7 @@ namespace rab1
         {
             if (((RadioButton)sender).Checked == true)
             {
-                stripType = 1;
+                stripeType = StripeType.sine;
                 updateInitialImage();
             }
         }
@@ -283,22 +223,22 @@ namespace rab1
         {
             if (((RadioButton)sender).Checked == true)
             {
-                stripType = 2;
+                stripeType = StripeType.lines;
                 updateInitialImage();
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void BackgroundImagesGeneratorForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //ShooterSingleton.imageCaptured -= imageTaken;
-            //Dispose();
+            formForStripes.Close();
+            ImageGetter.sharedInstance().imageReceived -= imageTaken;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton6_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
             {
-                stripType = 3;
+                stripeType = StripeType.dithered;
                 updateInitialImage();
             }
         }

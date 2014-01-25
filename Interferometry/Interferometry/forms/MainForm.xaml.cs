@@ -69,7 +69,6 @@ namespace Interferometry.forms
         {
             InitializeComponent();
             imageContainersList = new List<ImageContainer>();
-            ImageGetter.sharedInstance().imageReceived += OnImageReceived;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -369,19 +368,27 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void makePhotoButton_Click(object sender, RoutedEventArgs e)
         {
+            ImageGetter.sharedInstance().imageReceived += OnImageReceived;
             ImageGetter.sharedInstance().getImage();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void OnImageReceived(System.Drawing.Image newImage)
         {
+            ImageGetter.sharedInstance().imageReceived -= OnImageReceived;
             imageContainersList[0].setzArrayDescriptor(Utils.getArrayFromImage((Bitmap) newImage));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void makePhotoSeriesButton_Click(object sender, RoutedEventArgs e)
         {
             BackgroundImagesGeneratorForm newForm = new BackgroundImagesGeneratorForm();
-            //newForm.oneImageOfSeries += oneImageCaptured;
+            newForm.oneImageOfSeries += oneImageOfSeriesTaken;
             newForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void oneImageOfSeriesTaken(System.Drawing.Image newImage, int imageNumber)
+        {
+            ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap) newImage);
+            imageContainersList[imageNumber - 1].setzArrayDescriptor(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -471,14 +478,11 @@ namespace Interferometry.forms
             }
             else if (currentCursorMode == CursorMode.graphBuildMode)
             {
-               // ImageHelper.drawGraph(zArrayDescriptor, (int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y);
                 int x = (int)e.GetPosition(mainImage).X;
                 int y = (int)e.GetPosition(mainImage).Y;
                 Graphic graphic = new Graphic(zArrayDescriptor, x, y);  // График новый
                
                 graphic.Show();   
-           
-
             }
             else if (currentCursorMode == CursorMode.tableBuildMode)
             {
