@@ -15,6 +15,11 @@ namespace Interferometry.math_classes
 
         public ZArrayDescriptor(ZArrayDescriptor descriptorToCopy)
         {
+            if (descriptorToCopy == null)
+            {
+                return;
+            }
+
             array = new long[descriptorToCopy.width, descriptorToCopy.height];
             width = descriptorToCopy.width;
             height = descriptorToCopy.height;

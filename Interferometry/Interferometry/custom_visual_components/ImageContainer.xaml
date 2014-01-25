@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Height="78" Width="114">
+    
     <Grid Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*" />
@@ -12,10 +13,18 @@
             <RowDefinition Height="100*" />
             <RowDefinition Height="100*" />
         </Grid.RowDefinitions>
+        
         <Button Content="&lt;-" HorizontalAlignment="Left" Margin="23,6,0,3" Name="exportImageButton" Width="25" Click="exportImageButton_Click" />
         <Button Content="-&gt;" HorizontalAlignment="Left" Margin="23,3,0,6" Name="loadImageButton" Width="25" Grid.Row="1" Click="loadImageClicked" />
-        <Grid Margin="50,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick">
+        <Grid Margin="50,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick" MouseEnter="grid1_MouseEnter" MouseLeave="grid1_MouseLeave">
             <Image Name="image" />
+            <Popup Name="popup" StaysOpen="False" Placement="Mouse" MaxWidth="150" MaxHeight="30">
+                <Border BorderBrush="White" BorderThickness="1" Background="Black">
+                    <TextBlock x:Name="popupText" Margin="1" TextWrapping="Wrap" Foreground="White">
+                    1920x1080
+                    </TextBlock>
+                </Border>
+            </Popup>
         </Grid>
         <Label Content="Label" Height="28" HorizontalAlignment="Left" Name="imageNumberLabel" VerticalAlignment="Top" Width="21" FontSize="10" Margin="0,16,0,0" Grid.RowSpan="2" />
     </Grid>

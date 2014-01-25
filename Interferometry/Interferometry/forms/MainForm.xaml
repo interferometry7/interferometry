@@ -73,8 +73,8 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Slider x:Name="maxSlider" HorizontalAlignment="Left" Margin="49,61,0,0" Orientation="Vertical" Width="26" ValueChanged="maxSlider_ValueChanged" SmallChange="1"/>
-            <Slider x:Name="minSlider" HorizontalAlignment="Left" Margin="49,0,0,63" Grid.Row="1" Orientation="Vertical" Width="26" SmallChange="1" ValueChanged="minSlider_ValueChanged"/>
+            <Slider x:Name="maxSlider" HorizontalAlignment="Left" Margin="49,61,0,10" Orientation="Vertical" Width="26" ValueChanged="maxSlider_ValueChanged" SmallChange="1"/>
+            <Slider x:Name="minSlider" HorizontalAlignment="Left" Margin="49,10,0,63" Grid.Row="1" Orientation="Vertical" Width="26" SmallChange="1" ValueChanged="minSlider_ValueChanged"/>
             <Label Content="Max:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.462" Width="60"/>
             <Label Content="Min:" HorizontalAlignment="Left" Margin="10,0,0,32" Grid.Row="1" RenderTransformOrigin="1.667,-1.423" Height="26" VerticalAlignment="Bottom" Width="65"/>
             <Button x:Name="redrawButton" Content="ok" HorizontalAlignment="Left" Margin="10,0,0,10" Width="39" Click="redrawButton_Click" Height="22" VerticalAlignment="Bottom"/>

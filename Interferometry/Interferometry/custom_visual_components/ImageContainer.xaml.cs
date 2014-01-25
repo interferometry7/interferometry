@@ -129,5 +129,28 @@ namespace Interferometry
             return (Size)transformToDevice.Transform((Vector)element.DesiredSize);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void grid1_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (zArrayDescriptor == null)
+            {
+                return;
+            }
+
+            popupText.Text = "" + zArrayDescriptor.width + "x" + zArrayDescriptor.height;
+
+            if (popup.IsOpen == false)
+            {
+                popup.IsOpen = true;
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void grid1_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (popup.IsOpen == true)
+            {
+                popup.IsOpen = false;
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
