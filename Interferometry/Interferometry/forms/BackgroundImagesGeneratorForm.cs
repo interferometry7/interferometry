@@ -39,6 +39,7 @@ namespace rab1
         private int phaseShift2Value;
         private int phaseShift3Value;
         private int phaseShift4Value;
+        private int phaseShift5Value;
 
         private StripesForm formForStripes;
         private int numberOfImageInSeries = 8;
@@ -56,6 +57,7 @@ namespace rab1
             phaseShift2.Text = "90";
             phaseShift3.Text = "180";
             phaseShift4.Text = "270";
+            phaseShift5.Text = "0";
 
             convertValues();
 
@@ -94,6 +96,7 @@ namespace rab1
             phaseShift2Value = Convert.ToInt16(phaseShift2.Text);
             phaseShift3Value = Convert.ToInt16(phaseShift3.Text);
             phaseShift4Value = Convert.ToInt16(phaseShift4.Text);
+            phaseShift5Value = Convert.ToInt16(phaseShift5.Text);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void okClicked(object sender, EventArgs e)
@@ -120,35 +123,75 @@ namespace rab1
             }
             else
             {
-                Bitmap result = null;
-
-                if (imageNumber == 1)
+                if (numberOfImageInSeries == 8)
                 {
-                    drawLines(numberOfSin1Value/10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
+                    if (imageNumber == 1)
+                    {
+                        drawLines(numberOfSin1Value/10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 2)
+                    {
+                        drawLines(numberOfSin1Value/10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 3)
+                    {
+                        drawLines(numberOfSin1Value/10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 4)
+                    {
+                        drawLines(numberOfSin2Value/10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 5)
+                    {
+                        drawLines(numberOfSin2Value/10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 6)
+                    {
+                        drawLines(numberOfSin2Value/10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 7)
+                    {
+                        drawLines(numberOfSin2Value/10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
+                    }
                 }
-                else if (imageNumber == 2)
+                else if (numberOfImageInSeries == 10)
                 {
-                    drawLines(numberOfSin1Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
-                }
-                else if (imageNumber == 3)
-                {
-                    drawLines(numberOfSin1Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
-                }
-                else if (imageNumber == 4)
-                {
-                    drawLines(numberOfSin2Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
-                }
-                else if (imageNumber == 5)
-                {
-                    drawLines(numberOfSin2Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
-                }
-                else if (imageNumber == 6)
-                {
-                    drawLines(numberOfSin2Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
-                }
-                else if (imageNumber == 7)
-                {
-                    drawLines(numberOfSin2Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
+                    if (imageNumber == 1)
+                    {
+                        drawLines(numberOfSin1Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 2)
+                    {
+                        drawLines(numberOfSin1Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 3)
+                    {
+                        drawLines(numberOfSin1Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 4)
+                    {
+                        drawLines(numberOfSin1Value / 10, phaseShift5Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 5)
+                    {
+                        drawLines(numberOfSin2Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 6)
+                    {
+                        drawLines(numberOfSin2Value / 10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 7)
+                    {
+                        drawLines(numberOfSin2Value / 10, phaseShift3Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 8)
+                    {
+                        drawLines(numberOfSin2Value / 10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 9)
+                    {
+                        drawLines(numberOfSin2Value / 10, phaseShift5Value, imageWidth, imageHeight, stripOrientation);
+                    }
                 }
 
                 ImageGetter.sharedInstance().getImage();
@@ -246,6 +289,18 @@ namespace rab1
         private void sineParameterSaveButton_Click(object sender, EventArgs e)
         {
             updateInitialImage();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            phaseShift5.Visible = true;
+            numberOfImageInSeries = 10;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            phaseShift5.Visible = false;
+            numberOfImageInSeries = 8;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

@@ -50,10 +50,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.okButton = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.radioButton8 = new System.Windows.Forms.RadioButton();
+            this.phaseShift5 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -76,7 +82,7 @@
             // 
             // numberOfSin1
             // 
-            this.numberOfSin1.Location = new System.Drawing.Point(120, 12);
+            this.numberOfSin1.Location = new System.Drawing.Point(134, 12);
             this.numberOfSin1.Name = "numberOfSin1";
             this.numberOfSin1.Size = new System.Drawing.Size(55, 20);
             this.numberOfSin1.TabIndex = 2;
@@ -84,7 +90,7 @@
             // 
             // numberOfSin2
             // 
-            this.numberOfSin2.Location = new System.Drawing.Point(181, 12);
+            this.numberOfSin2.Location = new System.Drawing.Point(222, 12);
             this.numberOfSin2.Name = "numberOfSin2";
             this.numberOfSin2.Size = new System.Drawing.Size(55, 20);
             this.numberOfSin2.TabIndex = 3;
@@ -131,12 +137,12 @@
             this.panel1.Controls.Add(this.numberOfSin1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(380, 45);
+            this.panel1.Size = new System.Drawing.Size(433, 45);
             this.panel1.TabIndex = 8;
             // 
             // sineParameterSaveButton
             // 
-            this.sineParameterSaveButton.Location = new System.Drawing.Point(243, 5);
+            this.sineParameterSaveButton.Location = new System.Drawing.Point(306, 6);
             this.sineParameterSaveButton.Name = "sineParameterSaveButton";
             this.sineParameterSaveButton.Size = new System.Drawing.Size(116, 32);
             this.sineParameterSaveButton.TabIndex = 4;
@@ -147,6 +153,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.phaseShift5);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.phaseShift1);
             this.panel2.Controls.Add(this.phaseShift4);
@@ -154,7 +161,7 @@
             this.panel2.Controls.Add(this.phaseShift3);
             this.panel2.Location = new System.Drawing.Point(12, 75);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(380, 54);
+            this.panel2.Size = new System.Drawing.Size(433, 54);
             this.panel2.TabIndex = 9;
             // 
             // panel3
@@ -273,7 +280,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(334, 235);
+            this.okButton.Location = new System.Drawing.Point(464, 269);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(145, 32);
             this.okButton.TabIndex = 14;
@@ -281,11 +288,63 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okClicked);
             // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel5.Controls.Add(this.radioButton8);
+            this.panel5.Controls.Add(this.radioButton7);
+            this.panel5.Controls.Add(this.label5);
+            this.panel5.Location = new System.Drawing.Point(464, 12);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(145, 117);
+            this.panel5.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(3, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(135, 38);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Количество снимков для каждого числа синусоид";
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Checked = true;
+            this.radioButton7.Location = new System.Drawing.Point(6, 58);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(31, 17);
+            this.radioButton7.TabIndex = 1;
+            this.radioButton7.TabStop = true;
+            this.radioButton7.Text = "4";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            this.radioButton7.CheckedChanged += new System.EventHandler(this.radioButton7_CheckedChanged);
+            // 
+            // radioButton8
+            // 
+            this.radioButton8.AutoSize = true;
+            this.radioButton8.Location = new System.Drawing.Point(6, 82);
+            this.radioButton8.Name = "radioButton8";
+            this.radioButton8.Size = new System.Drawing.Size(31, 17);
+            this.radioButton8.TabIndex = 2;
+            this.radioButton8.Text = "5";
+            this.radioButton8.UseVisualStyleBackColor = true;
+            this.radioButton8.CheckedChanged += new System.EventHandler(this.radioButton8_CheckedChanged);
+            // 
+            // phaseShift5
+            // 
+            this.phaseShift5.Location = new System.Drawing.Point(365, 14);
+            this.phaseShift5.Name = "phaseShift5";
+            this.phaseShift5.Size = new System.Drawing.Size(55, 20);
+            this.phaseShift5.TabIndex = 8;
+            this.phaseShift5.Visible = false;
+            // 
             // BackgroundImagesGeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(491, 311);
+            this.ClientSize = new System.Drawing.Size(621, 311);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -305,6 +364,8 @@
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -333,5 +394,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton radioButton6;
         private System.Windows.Forms.Button sineParameterSaveButton;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.RadioButton radioButton8;
+        private System.Windows.Forms.RadioButton radioButton7;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox phaseShift5;
     }
 }

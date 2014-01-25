@@ -150,6 +150,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="forms\BackgroundImagesGeneratorForm.resx">
+      <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\GraphForm.resx">
       <DependentUpon>GraphForm.cs</DependentUpon>
     </EmbeddedResource>
