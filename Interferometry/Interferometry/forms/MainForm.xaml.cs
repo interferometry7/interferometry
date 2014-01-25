@@ -222,11 +222,13 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void minSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            minLabel.Content = Convert.ToInt32(minSlider.Value);
+            minTextBox.Text = "" + Convert.ToInt32(minSlider.Value);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void redrawButton_Click(object sender, RoutedEventArgs e)
         {
+            minSlider.Value = Convert.ToInt32(minTextBox.Text);
+            maxSlider.Value = Convert.ToInt32(maxTextBox.Text);
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor, (long)minSlider.Value, (long)maxSlider.Value);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,7 +239,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void maxSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            maxLabel.Content = Convert.ToInt32(maxSlider.Value);
+            maxTextBox.Text = "" + Convert.ToInt32(maxSlider.Value);
 
             if (minSlider.Value > maxSlider.Value)
             {
@@ -245,6 +247,22 @@ namespace Interferometry.forms
             }
 
             minSlider.Maximum = maxSlider.Value;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void maxTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                redrawButton_Click(null, null);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void minTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                redrawButton_Click(null, null);
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
@@ -399,13 +417,13 @@ namespace Interferometry.forms
         private void adjustSliders()
         {
             long max = Utils.getMax(zArrayDescriptor);
-            maxLabel.Content = max;
+            maxTextBox.Text = "" + max;
             maxSlider.Minimum = 0;
             maxSlider.Maximum = max;
             maxSlider.Value = max;
 
             long min = Utils.getMin(zArrayDescriptor);
-            minLabel.Content = min;
+            minTextBox.Text = "" + min;
             minSlider.Minimum = min;
             minSlider.Maximum = max;
             minSlider.Value = min;

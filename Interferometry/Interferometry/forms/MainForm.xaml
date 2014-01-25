@@ -59,8 +59,8 @@
 
                 </Grid>
             </TabItem>
-            
-            
+
+
         </TabControl>
         <ScrollViewer Margin="12,106,231,12" Name="scrollViewer1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Name="grid1" Background="#5A000000">
@@ -73,14 +73,14 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Slider x:Name="maxSlider" HorizontalAlignment="Left" Margin="49,41,0,0" Orientation="Vertical" Width="26" ValueChanged="maxSlider_ValueChanged" SmallChange="1"/>
-            <Slider x:Name="minSlider" HorizontalAlignment="Left" Margin="49,0,0,41" Grid.Row="1" Orientation="Vertical" Width="26" SmallChange="1" ValueChanged="minSlider_ValueChanged"/>
-            <Label Content="Max:" HorizontalAlignment="Left" Margin="2,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.462"/>
-            <Label x:Name="maxLabel" Content="Label" HorizontalAlignment="Left" Margin="37,10,0,0" VerticalAlignment="Top"/>
-            <Label Content="Min:" HorizontalAlignment="Left" Margin="4,0,0,10" Grid.Row="1" RenderTransformOrigin="1.667,-1.423" Height="26" VerticalAlignment="Bottom"/>
-            <Label x:Name="minLabel" Content="Label" HorizontalAlignment="Left" Margin="37,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" RenderTransformOrigin="0.184,0.423"/>
+            <Slider x:Name="maxSlider" HorizontalAlignment="Left" Margin="49,61,0,0" Orientation="Vertical" Width="26" ValueChanged="maxSlider_ValueChanged" SmallChange="1"/>
+            <Slider x:Name="minSlider" HorizontalAlignment="Left" Margin="49,0,0,63" Grid.Row="1" Orientation="Vertical" Width="26" SmallChange="1" ValueChanged="minSlider_ValueChanged"/>
+            <Label Content="Max:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.462" Width="60"/>
+            <Label Content="Min:" HorizontalAlignment="Left" Margin="10,0,0,32" Grid.Row="1" RenderTransformOrigin="1.667,-1.423" Height="26" VerticalAlignment="Bottom" Width="65"/>
             <Button x:Name="redrawButton" Content="ok" HorizontalAlignment="Left" Margin="10,0,0,10" Width="39" Click="redrawButton_Click" Height="22" VerticalAlignment="Bottom"/>
             <Button x:Name="changeArray" Content="Сохр." HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" Height="22" Click="changeArrayClicked"/>
+            <TextBox x:Name="maxTextBox" HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" KeyDown="maxTextBox_KeyDown"/>
+            <TextBox x:Name="minTextBox" HorizontalAlignment="Left" Height="23" Margin="10,0,0,9" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Width="60" Grid.Row="1" KeyDown="minTextBox_KeyDown"/>
 
         </Grid>
     </Grid>
