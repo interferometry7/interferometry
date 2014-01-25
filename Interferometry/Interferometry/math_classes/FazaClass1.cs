@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
 using Interferometry.forms;
+using Interferometry.math_classes;
 using rab1;
 
 public delegate void ImageProcessed(Bitmap resultBitmap);
@@ -12,7 +13,7 @@ namespace Interferometry
 {
     public class FazaClass
     {
-        public static Pi_Class1.ZArrayDescriptor ATAN_1234(Pi_Class1.ZArrayDescriptor[] img, double[] fzz, int sineNumber)
+        public static ZArrayDescriptor ATAN_1234(ZArrayDescriptor[] img, double[] fzz, int sineNumber)
         {
             
             int w1 = img[0].width;
@@ -81,7 +82,7 @@ namespace Interferometry
 
             PopupProgressBar.close();
 
-            Pi_Class1.ZArrayDescriptor wrappedPhase = new Pi_Class1.ZArrayDescriptor();
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
             wrappedPhase.array = result;
             wrappedPhase.width = w1;
             wrappedPhase.height = h1;

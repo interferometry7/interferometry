@@ -5,6 +5,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using Interferometry.forms;
+using Interferometry.math_classes;
 using rab1.Forms;
 
 namespace rab1
@@ -22,7 +23,6 @@ namespace rab1
         static int[] glbl_faze1 = new int[NMAX];               // Количество добавлений b1 (Для расшифровки)
         static int[] glbl_faze2 = new int[NMAX];               // Адрес точной дигонали (Для расшифровки)
 
-        static int[] number_2pi = new int[200];                // Максимум 200 полос (пока) ------------------------------
         static Form  f_sin;
         static PictureBox pc1;
         static int scale = 4;
@@ -441,14 +441,6 @@ namespace rab1
             //Z_bmp(result, Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
 
           return result;
-        }
-
-        [Serializable()]
-        public class ZArrayDescriptor
-        {
-            public Int64[,] array;
-            public int width;
-            public int height;
         }
         // -----------------------------------------------------------------------------------------------------------------------------------           
         // -----------------------------------       Вычитание наклона  -> в вещественный массив Z             -------------------------------          

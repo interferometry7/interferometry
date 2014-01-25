@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Interferometry.math_classes;
 using rab1;
 
 namespace Interferometry
@@ -16,7 +17,7 @@ namespace Interferometry
         /// <summary>
         ///  Метод для получения изображения из массива
         /// </summary>
-        public static BitmapSource getImageFromArray(Pi_Class1.ZArrayDescriptor newDescriptor)
+        public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor)
         {
             if (newDescriptor == null)
             {
@@ -38,7 +39,7 @@ namespace Interferometry
         /// <summary>
         ///  Метод для получения изображения из массива
         /// </summary>
-        public static BitmapSource getImageFromArray(Pi_Class1.ZArrayDescriptor newDescriptor, long min, long max)
+        public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor, long min, long max)
         {
             if (newDescriptor == null)
             {
@@ -78,7 +79,7 @@ namespace Interferometry
         /// <summary>
         ///  Метод для получения массива из Bitmap. В массив записывается интенсивность (I = 1/3(R + G + B))
         /// </summary>
-        public static Pi_Class1.ZArrayDescriptor getArrayFromImage(BitmapSource someImage)
+        public static ZArrayDescriptor getArrayFromImage(BitmapSource someImage)
         {
             if (someImage == null)
             {
@@ -87,12 +88,12 @@ namespace Interferometry
             }
 
             Bitmap newBitmap = FilesHelper.bitmapImageToBitmap((BitmapImage) someImage);
-            Pi_Class1.ZArrayDescriptor result = getArrayFromImage(newBitmap);
+            ZArrayDescriptor result = getArrayFromImage(newBitmap);
 
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static Pi_Class1.ZArrayDescriptor getArrayFromImage(Bitmap newBitmap)
+        public static ZArrayDescriptor getArrayFromImage(Bitmap newBitmap)
         {
             if (newBitmap == null)
             {
@@ -100,7 +101,7 @@ namespace Interferometry
                 return null;
             }
 
-            Pi_Class1.ZArrayDescriptor result = new Pi_Class1.ZArrayDescriptor();
+            ZArrayDescriptor result = new ZArrayDescriptor();
             result.array = new long[newBitmap.Width, newBitmap.Height];
             result.width = newBitmap.Width;
             result.height = newBitmap.Height;
@@ -124,7 +125,7 @@ namespace Interferometry
         /// <summary>
         ///  Метод для получения максимума из массива
         /// </summary>
-        public static long getMax(Pi_Class1.ZArrayDescriptor newDescriptor)
+        public static long getMax(ZArrayDescriptor newDescriptor)
         {
             if (newDescriptor == null)
             {
@@ -147,7 +148,7 @@ namespace Interferometry
         /// <summary>
         ///  Метод для получения минимума из массива
         /// </summary>
-        public static long getMin(Pi_Class1.ZArrayDescriptor newDescriptor)
+        public static long getMin(ZArrayDescriptor newDescriptor)
         {
             if (newDescriptor == null)
             {
@@ -167,7 +168,7 @@ namespace Interferometry
             return min;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static Pi_Class1.ZArrayDescriptor cutZArray(Pi_Class1.ZArrayDescriptor someDescriptor, int min, int max)
+        public static ZArrayDescriptor cutZArray(ZArrayDescriptor someDescriptor, int min, int max)
         {
             for (int i = 0; i < someDescriptor.width; i++)
             {

@@ -8,18 +8,19 @@ using System.Drawing.Imaging;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using Interferometry.forms;
+using Interferometry.math_classes;
 
 namespace rab1
 {
     class ImageHelper
     {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void drawGraph(Pi_Class1.ZArrayDescriptor someImage, int pointX, int pointY)
+        public static void drawGraph(ZArrayDescriptor someImage, int pointX, int pointY)
         {
             drawGraph(someImage, pointX, pointY, 1);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
-        public static void drawGraph(Pi_Class1.ZArrayDescriptor someImage, int pointX, int pointY, double ratio)
+        public static void drawGraph(ZArrayDescriptor someImage, int pointX, int pointY, double ratio)
         {
             int w1 = someImage.width;
             int h1 = someImage.height;

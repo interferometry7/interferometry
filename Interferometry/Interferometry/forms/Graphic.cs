@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Interferometry.math_classes;
 
 namespace rab1.Forms
 {
@@ -18,7 +19,7 @@ namespace rab1.Forms
         private int x0 = 40;
         private int hh = 256; 
 
-        public Graphic(Pi_Class1.ZArrayDescriptor ZZ, int x, int y)
+        public Graphic(ZArrayDescriptor ZZ, int x, int y)
         {
             InitializeComponent();
 

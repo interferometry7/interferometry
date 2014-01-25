@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using rab1;
+using Interferometry.math_classes;
 
 namespace Interferometry.interfaces
 {
     public interface ImageContainerDelegate
     {
-        void exportImage(ImageContainer imageContainer, Pi_Class1.ZArrayDescriptor arrayDescriptor);
-        Pi_Class1.ZArrayDescriptor getImageToLoad(ImageContainer imageContainer);
+        void exportImage(ImageContainer imageContainer, ZArrayDescriptor arrayDescriptor);
+        ZArrayDescriptor getImageToLoad(ImageContainer imageContainer);
     }
 }

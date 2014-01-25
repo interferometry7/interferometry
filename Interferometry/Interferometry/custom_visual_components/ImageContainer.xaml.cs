@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Interferometry.interfaces;
+using Interferometry.math_classes;
 using rab1;
 using Color = System.Drawing.Color;
 using Size = System.Windows.Size;
@@ -27,7 +28,7 @@ namespace Interferometry
     public partial class ImageContainer : UserControl
     {
         private int imageNumber;
-        private Pi_Class1.ZArrayDescriptor zArrayDescriptor;
+        private ZArrayDescriptor zArrayDescriptor;
 
         public ImageContainerDelegate myDelegate;
 
@@ -44,7 +45,7 @@ namespace Interferometry
             imageNumberLabel.Content = imageNumber;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void setzArrayDescriptorWithoutImageGenerating(Pi_Class1.ZArrayDescriptor newDescriptor)
+        public void setzArrayDescriptorWithoutImageGenerating(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
         }
@@ -54,13 +55,13 @@ namespace Interferometry
             image.Source = imageSource;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void setzArrayDescriptor(Pi_Class1.ZArrayDescriptor newDescriptor)
+        public void setzArrayDescriptor(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
             image.Source = Utils.getImageFromArray(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public Pi_Class1.ZArrayDescriptor getzArrayDescriptor()
+        public ZArrayDescriptor getzArrayDescriptor()
         {
             return zArrayDescriptor;
         }

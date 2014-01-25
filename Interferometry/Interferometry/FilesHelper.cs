@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Interferometry.math_classes;
 using rab1;
 using MessageBox = System.Windows.MessageBox;
 using Size = System.Drawing.Size;
@@ -57,7 +58,7 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static Pi_Class1.ZArrayDescriptor loadZArray()
+        public static ZArrayDescriptor loadZArray()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "array files (*.zarr)|*.zarr|All files (*.*)|*.*";
@@ -74,7 +75,7 @@ namespace Interferometry
                         using (myStream)
                         {
                             BinaryFormatter deserializer = new BinaryFormatter();
-                            Pi_Class1.ZArrayDescriptor savedArray = (Pi_Class1.ZArrayDescriptor) deserializer.Deserialize(myStream);
+                            ZArrayDescriptor savedArray = (ZArrayDescriptor) deserializer.Deserialize(myStream);
                             myStream.Close();
                             return savedArray;
                         }
@@ -143,13 +144,13 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static Pi_Class1.ZArrayDescriptor[] loadArrays()
+        public static ZArrayDescriptor[] loadArrays()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "array files (*.zarr)|*.zarr|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
-            Pi_Class1.ZArrayDescriptor[] result = new Pi_Class1.ZArrayDescriptor[8];
+            ZArrayDescriptor[] result = new ZArrayDescriptor[8];
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -175,7 +176,7 @@ namespace Interferometry
 
                                 Stream fileStream = File.OpenRead(fileName);
                                 BinaryFormatter deserializer = new BinaryFormatter();
-                                Pi_Class1.ZArrayDescriptor loadedDescriptor = (Pi_Class1.ZArrayDescriptor) deserializer.Deserialize(fileStream);
+                                ZArrayDescriptor loadedDescriptor = (ZArrayDescriptor) deserializer.Deserialize(fileStream);
                                 fileStream.Close();
                                 result[i] = loadedDescriptor;
                             }
@@ -278,7 +279,7 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void saveZArray(Pi_Class1.ZArrayDescriptor arrayDescriptor)
+        public static void saveZArray(ZArrayDescriptor arrayDescriptor)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -305,7 +306,7 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void saveZArrays(Pi_Class1.ZArrayDescriptor[] arraysToSave)
+        public static void saveZArrays(ZArrayDescriptor[] arraysToSave)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -323,7 +324,7 @@ namespace Interferometry
 
                     for (int i = 0; i < arraysToSave.Length; i++)
                     {
-                        Pi_Class1.ZArrayDescriptor currentDescriptor = arraysToSave[i];
+                        ZArrayDescriptor currentDescriptor = arraysToSave[i];
                         saveFileDialog.FileName = pathWithoutExtension + Convert.ToString(i + 1) + ".zarr";
 
                         if ((stream = saveFileDialog.OpenFile()) != null)

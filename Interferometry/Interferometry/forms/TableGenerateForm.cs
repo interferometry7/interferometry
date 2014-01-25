@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Interferometry.math_classes;
 
 namespace rab1.Forms
 {
@@ -14,10 +15,10 @@ namespace rab1.Forms
         private int x;
         private int y;
 
-        private Pi_Class1.ZArrayDescriptor[] images;
+        private ZArrayDescriptor[] images;
         
 
-        public TableGenerateForm(Pi_Class1.ZArrayDescriptor[] imagesToProcess)
+        public TableGenerateForm(ZArrayDescriptor[] imagesToProcess)
         {
             InitializeComponent();
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using rab1;
+using Interferometry.math_classes;
 
-public delegate void ImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedImage);
+public delegate void ImageUnwrapped(ZArrayDescriptor unwrappedImage);
 
 namespace rab1.Forms
 {
@@ -18,10 +18,10 @@ namespace rab1.Forms
        
         // private bool unknownParameter;
         // private bool SUB_RD;
-        private Pi_Class1.ZArrayDescriptor[] images;
+        private ZArrayDescriptor[] images;
         public event ImageUnwrapped imageUnwrapped;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public UnwrapForm(Pi_Class1.ZArrayDescriptor[] images)
+        public UnwrapForm(ZArrayDescriptor[] images)
         {
             InitializeComponent();
 
@@ -47,33 +47,10 @@ namespace rab1.Forms
                 //SUB_RD = checkBox2.Checked;
                 //Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
                 //Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber, unknownParameter, SUB_RD, cutLevel, sdvg_x);
-                Pi_Class1.ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber,  cutLevel, sdvg_x);
+                ZArrayDescriptor result = Pi_Class1.pi2_rshfr(images, firstSineNumber, secondSineNumber, poriodsNumber,  cutLevel, sdvg_x);
                imageUnwrapped(result);
             }
         }
-        /*public UnwrappedDate get()
-         {
-             UnwrappedDate d = new  UnwrappedDate();
-             d.firstSineNumber = firstSineNumber;
-             d.secondSineNumber=secondSineNumber;
-             d.poriodsNumber=secondSineNumber;
-             d.unknownParameter = unknownParameter;
-             d.SUB_RD = SUB_RD;
-             d.cutLevel = cutLevel;
-             d.sdvg_x = sdvg_x;
-             return (d);
-         }
-
-       public class UnwrappedDate
-         {
-             public int firstSineNumber;
-             public int secondSineNumber;
-             public int poriodsNumber;
-             public bool unknownParameter;
-             public bool SUB_RD;
-             public int cutLevel;
-             public int sdvg_x;
-          }*/
       }
   }
  

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Interferometry.math_classes;
 using rab1;
 
 //public delegate void ImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedImage);
@@ -22,10 +23,10 @@ namespace Interferometry.forms
            
 
         public event Atan_Unwrapped atan_Unwrapped;
-        private Pi_Class1.ZArrayDescriptor[] source;
+        private ZArrayDescriptor[] source;
         private double[] fz1;
 
-        public TableFaza(Pi_Class1.ZArrayDescriptor[] newSource)
+        public TableFaza(ZArrayDescriptor[] newSource)
         {
             InitializeComponent();
             fz[0] = 0;
@@ -48,12 +49,12 @@ namespace Interferometry.forms
             sineNumber1 = Convert.ToInt32(sineNumbers1.Text);
             sineNumber2 = Convert.ToInt32(sineNumbers2.Text);
 
-            Pi_Class1.ZArrayDescriptor[] firstSource = new Pi_Class1.ZArrayDescriptor[4];
+            ZArrayDescriptor[] firstSource = new ZArrayDescriptor[4];
             for (int i = 0; i < 4; i++)  { firstSource[i] = source[i]; }
             Res d = new Res();
             d.result1 = FazaClass.ATAN_1234(firstSource, fz, sineNumber2);
 
-            Pi_Class1.ZArrayDescriptor[] secondSource = new Pi_Class1.ZArrayDescriptor[4];
+            ZArrayDescriptor[] secondSource = new ZArrayDescriptor[4];
             for (int i = 4; i < 8; i++) { secondSource[i - 4] = source[i]; }
             d.result2 = FazaClass.ATAN_1234(secondSource, fz, sineNumber1);
             
@@ -63,8 +64,8 @@ namespace Interferometry.forms
 
         public class Res
         {
-            public  Pi_Class1.ZArrayDescriptor result1;
-            public  Pi_Class1.ZArrayDescriptor result2;
+            public  ZArrayDescriptor result1;
+            public  ZArrayDescriptor result2;
         }
     }
    

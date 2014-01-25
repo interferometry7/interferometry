@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Interferometry.interfaces;
+using Interferometry.math_classes;
 using rab1;
 using rab1.Forms;
 using Color = System.Drawing.Color;
@@ -49,7 +50,7 @@ namespace Interferometry.forms
         };
 
         private List<ImageContainer> imageContainersList;
-        private Pi_Class1.ZArrayDescriptor zArrayDescriptor;
+        private ZArrayDescriptor zArrayDescriptor;
 
         private bool needPointsCapture = false;
         private Point3D firstClick;
@@ -161,12 +162,12 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void saveArraysClicked(object sender, RoutedEventArgs e)
         {
-            Pi_Class1.ZArrayDescriptor[] arraysToSave = new Pi_Class1.ZArrayDescriptor[8];
+            ZArrayDescriptor[] arraysToSave = new ZArrayDescriptor[8];
 
             for(int i = 0; i < 8; i++)
             {
                 ImageContainer currentContainer = imageContainersList[i];
-                Pi_Class1.ZArrayDescriptor currentArray = currentContainer.getzArrayDescriptor();
+                ZArrayDescriptor currentArray = currentContainer.getzArrayDescriptor();
 
                 if (currentArray != null)
                 {
@@ -183,7 +184,7 @@ namespace Interferometry.forms
             int done = 0;
             PopupProgressBar.show();
 
-            Pi_Class1.ZArrayDescriptor[] loadedArrays = FilesHelper.loadArrays();
+            ZArrayDescriptor[] loadedArrays = FilesHelper.loadArrays();
 
             if (loadedArrays != null)
             {
@@ -260,7 +261,7 @@ namespace Interferometry.forms
             if ((imageContainersList[9].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 10 пусто"); return; }
            // if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
 
-            Pi_Class1.ZArrayDescriptor[] imagesF = new Pi_Class1.ZArrayDescriptor[3];
+            ZArrayDescriptor[] imagesF = new ZArrayDescriptor[3];
 
             imagesF[0] = imageContainersList[8].getzArrayDescriptor();
             imagesF[1] = imageContainersList[9].getzArrayDescriptor();
@@ -271,7 +272,7 @@ namespace Interferometry.forms
             unwrapForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void unwrapFormOnImageUnwrapped(Pi_Class1.ZArrayDescriptor unwrappedPhase)
+        private void unwrapFormOnImageUnwrapped(ZArrayDescriptor unwrappedPhase)
         {
             imageContainersList[7].setzArrayDescriptor(unwrappedPhase);
         }
@@ -305,7 +306,7 @@ namespace Interferometry.forms
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
             
-            Pi_Class1.ZArrayDescriptor[] source = new Pi_Class1.ZArrayDescriptor[8];
+            ZArrayDescriptor[] source = new ZArrayDescriptor[8];
             for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
 
             TableFaza TableFaza = new TableFaza(source);
@@ -316,9 +317,9 @@ namespace Interferometry.forms
         private void AtanFormOnImage( TableFaza.Res d)
         {
             //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
-            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage1 = d.result1; 
+            ZArrayDescriptor unwrappedPhaseImage1 = d.result1; 
             imageContainersList[8].setzArrayDescriptor(unwrappedPhaseImage1);
-            Pi_Class1.ZArrayDescriptor unwrappedPhaseImage2 = d.result2;
+            ZArrayDescriptor unwrappedPhaseImage2 = d.result2;
             imageContainersList[9].setzArrayDescriptor(unwrappedPhaseImage2);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -326,7 +327,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void buildTableClicked(object sender, RoutedEventArgs e)
         {
-            Pi_Class1.ZArrayDescriptor[] imagesForTable = new Pi_Class1.ZArrayDescriptor[3];
+            ZArrayDescriptor[] imagesForTable = new ZArrayDescriptor[3];
 
             if ((imageContainersList[8].getzArrayDescriptor() == null) ) { MessageBox.Show("Изображениe 9 пусто");  return; }
             if ((imageContainersList[9].getzArrayDescriptor() == null))  { MessageBox.Show("Изображениe 10 пусто"); return; }
@@ -403,9 +404,9 @@ namespace Interferometry.forms
             minSlider.Value = min;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void setZArray(Pi_Class1.ZArrayDescriptor arrayDescriptor)
+        private void setZArray(ZArrayDescriptor arrayDescriptor)
         {
-            zArrayDescriptor = arrayDescriptor;
+            zArrayDescriptor = new ZArrayDescriptor(arrayDescriptor);
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
 
             adjustSliders();
@@ -416,12 +417,12 @@ namespace Interferometry.forms
 
         //ImageContainerDelegate Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void exportImage(ImageContainer imageContainer, Pi_Class1.ZArrayDescriptor arrayDescriptor)
+        public void exportImage(ImageContainer imageContainer, ZArrayDescriptor arrayDescriptor)
         {
             setZArray(arrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public Pi_Class1.ZArrayDescriptor getImageToLoad(ImageContainer imageContainer)
+        public ZArrayDescriptor getImageToLoad(ImageContainer imageContainer)
         {
             return zArrayDescriptor;
         }
@@ -458,7 +459,7 @@ namespace Interferometry.forms
                     secondClick = new Point3D(x, y, z);
                 }
 
-                Pi_Class1.ZArrayDescriptor result = Pi_Class1.Z_sub(firstClick.x, firstClick.y, secondClick.x,
+                ZArrayDescriptor result = Pi_Class1.Z_sub(firstClick.x, firstClick.y, secondClick.x,
                     secondClick.y, zArrayDescriptor, cosinusValue);
 
                 zArrayDescriptor = result;
@@ -499,7 +500,7 @@ namespace Interferometry.forms
                     return;
                 }
 
-                Pi_Class1.ZArrayDescriptor[] imagesForTable = new Pi_Class1.ZArrayDescriptor[3];
+                ZArrayDescriptor[] imagesForTable = new ZArrayDescriptor[3];
 
                 imagesForTable[0] = imageContainersList[8].getzArrayDescriptor();
                 imagesForTable[1] = imageContainersList[9].getzArrayDescriptor();
