@@ -519,13 +519,17 @@ namespace rab1
         {
             int b1 = i1 / NOD; 
             int ib1 = b1 + sdvg_x;                    while (ib1 >= n1) { ib1 -= n1; };            // Сдвиг значений к нулевой диагонали
-            i1 = i1 + (sdvg_x * NOD);                 while (i1 >= (n1 * NOD)) { i1 -= (n1 * NOD); };
+                           
 
             int ib2 = i2 / NOD;
-            int i0 = ib2 + (n1 - ib1);           // Индекс в массиве                                                                
-            //int l = (glbl_faze2[i0] - i0);
+            int i0 = ib2 + (n1 - ib1);           // Индекс в массиве
+
+            i1 = i1 + (sdvg_x * NOD);               while (i1 >= (n1 * NOD)) { i1 -= (n1 * NOD); };
+            int i00 = i2 + (n1 * NOD - i1);
+            int ll = glbl_faze2[i0];                                 
+            int l = (glbl_faze2[i0]*NOD - i00);
                                                  //  MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
-            int ib = i1; // +(l / 2);               // Уточнение ---------------------------------------------------------------
+            int ib = i1 -(l / 20);               // Уточнение ---------------------------------------------------------------
            
             int b0 = glbl_faze1[i0];             // Значение ближайшей диагонали
             long z = (n1 * NOD) * b0 + ib;
