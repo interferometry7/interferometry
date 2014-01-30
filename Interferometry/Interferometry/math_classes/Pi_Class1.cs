@@ -526,10 +526,10 @@ namespace rab1
 
             i1 = i1 + (sdvg_x * NOD);               while (i1 >= (n1 * NOD)) { i1 -= (n1 * NOD); };
             int i00 = i2 + (n1 * NOD - i1);
-            int ll = glbl_faze2[i0];                                 
+            //int ll = glbl_faze2[i0]-i0;                                 
             int l = (glbl_faze2[i0]*NOD - i00);
-                                                 //  MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
-            int ib = i1 -(l / 20);               // Уточнение ---------------------------------------------------------------
+                                                 //if ((l < 0) && (glbl_faze2[i0]!=0)) MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
+            int ib = i1 -(l / 2);               // Уточнение ---------------------------------------------------------------
            
             int b0 = glbl_faze1[i0];             // Значение ближайшей диагонали
             long z = (n1 * NOD) * b0 + ib;
@@ -572,8 +572,8 @@ namespace rab1
                 
                 if (cntr >= n1 + n2 - 1) break;
                 //MessageBox.Show(" mnx =  " + mnx.ToString() + " mxx =  " + mxx.ToString());                    
-                int m = (mxx_x - mnx_x) / 2;
-                for (int j = mnx_x; j < mnx_x + m; j++) { glbl_faze1[j] = mnx; glbl_faze2[j] = mxx_x; }
+                int m = (mxx_x - mnx_x) / 2;                                                                                                                                                                                                                                                                                                                                                                                                                               
+                for (int j = mnx_x; j < mnx_x + m; j++) { glbl_faze1[j] = mnx; glbl_faze2[j] = mnx_x; }
                 for (int j = mnx_x + m; j < mxx_x; j++) { glbl_faze1[j] = mxx; glbl_faze2[j] = mxx_x; } 
                 mnx_x = mxx_x;
                 mnx = mxx;
