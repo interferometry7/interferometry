@@ -517,6 +517,7 @@ namespace rab1
         //   ib1
         private static long GLBL_R(int n1, int n2, int i1, int i2, int sdvg_x, int NOD)
         {
+            double s2 = Math.Sqrt(2);
             int b1 = i1 / NOD; 
             int ib1 = b1 + sdvg_x;                    while (ib1 >= n1) { ib1 -= n1; };            // Сдвиг значений к нулевой диагонали
                            
@@ -528,8 +529,9 @@ namespace rab1
             int i00 = i2 + (n1 * NOD - i1);
             //int ll = glbl_faze2[i0]-i0;                                 
             int l = (glbl_faze2[i0]*NOD - i00);
+            l = (int)((double)l / s2);
                                                  //if ((l < 0) && (glbl_faze2[i0]!=0)) MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
-            int ib = i1 -(l / 2);               // Уточнение ---------------------------------------------------------------
+            int ib = i1 - l ;               // Уточнение ---------------------------------------------------------------
            
             int b0 = glbl_faze1[i0];             // Значение ближайшей диагонали
             long z = (n1 * NOD) * b0 + ib;
