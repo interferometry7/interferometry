@@ -101,8 +101,8 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void okClicked(object sender, EventArgs e)
         {
-            convertValues();
             imageNumber = 0;
+            updateInitialImage();
 
             ImageGetter.sharedInstance().imageReceived += imageTaken;
             ImageGetter.sharedInstance().getImage();
@@ -154,7 +154,7 @@ namespace rab1
                         drawLines(numberOfSin2Value/10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
                     }
                 }
-                else if (numberOfImageInSeries == 10)
+                else if (numberOfImageInSeries == 11)
                 {
                     if (imageNumber == 1)
                     {
@@ -294,7 +294,7 @@ namespace rab1
         private void radioButton8_CheckedChanged(object sender, EventArgs e)
         {
             phaseShift5.Visible = true;
-            numberOfImageInSeries = 10;
+            numberOfImageInSeries = 11;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton7_CheckedChanged(object sender, EventArgs e)

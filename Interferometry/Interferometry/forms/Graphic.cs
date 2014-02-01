@@ -17,51 +17,79 @@ namespace rab1.Forms
         private int w;
         private int h;
         private int x0 = 40;
-        private int hh = 256; 
+        private int hh = 256;
+        private Int64 maxx = 0, minx = 0;
 
         public Graphic(ZArrayDescriptor ZZ, int x, int y)
         {
             InitializeComponent();
+            init(ZZ, x, y, Color.Red);
+        }
 
-            int w1 = ZZ.width;             w = w1;
-            int h1 = ZZ.height;            h = h1;
+        public Graphic(ZArrayDescriptor ZZ, ZArrayDescriptor secondArray, int x, int y)
+        {
+            InitializeComponent();
+            init(ZZ, x, y, Color.Red);
+            init(secondArray, x, y, Color.Blue);
+        }
+
+        private void init(ZArrayDescriptor ZZ, int x, int y, Color drawColor)
+        {
+            int w1 = ZZ.width; w = w1;
+            int h1 = ZZ.height; h = h1;
             Int64[] buf = new Int64[Math.Max(w1, h1)];
             buf_gl = new Int64[Math.Max(w1, h1)];
             buf1_gl = new Int64[Math.Max(w1, h1)];
 
 
             for (int i = 0; i < w1; i++) { buf[i] = ZZ.array[i, y]; buf_gl[i] = buf[i]; }
-            //pc1
             pc1.BackColor = Color.White;
-            //pc1.Location = new System.Drawing.Point(0, 8);
             pc1.Size = new Size(w1 + 16, hh + 32);
-            // pc1.SizeMode = PictureBoxSizeMode.StretchImage;
             pc1.BorderStyle = BorderStyle.Fixed3D;
-            Bitmap btmBack = new Bitmap(w1 + 16, hh + 32);      //изображение
-            Bitmap btmFront = new Bitmap(w1 + 16, hh + 32);     //фон
-            Graphics grBack = Graphics.FromImage(btmBack);
-            //Graphics grFront = Graphics.FromImage(btmFront);  //лучше объявить заранее глобально.
-            pc1.Image = btmFront;
-            pc1.BackgroundImage = btmBack;
 
-            Graph(buf, w1, x, grBack);
+            if (pc1.BackgroundImage == null)
+            {
+                Bitmap btmBack = new Bitmap(w1 + 16, hh + 32); //изображение
+                pc1.BackgroundImage = btmBack;
+            }
+
+            if (pc1.Image == null)
+            {
+                Bitmap btmFront = new Bitmap(w1 + 16, hh + 32); //фон
+                pc1.Image = btmFront;
+            }
+
+
+            Graphics grBack = Graphics.FromImage(pc1.BackgroundImage);
+            
+            
+
+            Graph(buf, w1, x, grBack, drawColor);
 
             for (int i = 0; i < h1; i++) { buf[i] = ZZ.array[x, i]; buf1_gl[i] = buf[i]; }
-            //pictureBox1
             pictureBox1.BackColor = Color.White;
             pictureBox1.Size = new Size(w1 + 16, hh + 32);
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;
-            btmBack = new Bitmap(w1 + 16, hh + 32);      //изображение
-            btmFront = new Bitmap(w1 + 16, hh + 32);     //фон
-            grBack = Graphics.FromImage(btmBack);
-            //Graphics grFront = Graphics.FromImage(btmFront);  //лучше объявить заранее глобально.
-            pictureBox1.Image = btmFront;
-            pictureBox1.BackgroundImage = btmBack;
-   
-            Graph(buf, h1, y, grBack);
+            
+
+            if (pictureBox1.Image == null)
+            {
+                Bitmap btmFront = new Bitmap(w1 + 16, hh + 32); //фон
+                pictureBox1.Image = btmFront;
+            }
+
+            if (pictureBox1.BackgroundImage == null)
+            {
+                Bitmap btmBack = new Bitmap(w1 + 16, hh + 32); //изображение
+                pictureBox1.BackgroundImage = btmBack;
+            }
+
+            grBack = Graphics.FromImage(pictureBox1.BackgroundImage);
+
+            Graph(buf, h1, y, grBack, drawColor);
         }
-        
-        
+
+
         //  Перегруженный конструктор для графика таблицы
    
         public Graphic(int w1, int x, Int64[] buf, int[] buf1)
@@ -76,45 +104,33 @@ namespace rab1.Forms
                     Int64 maxx = buf[0], minx = buf[0], b;
                     for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b; buf_gl[i] = b; } //buf_gl[i] = b; }
                     for (int i = 0; i < w1; i++) { buf[i] = (buf[i] - minx) * hh / (maxx - minx); }
-
-
-                    Font font = new Font("Courier", 12); 
-                    //StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip); //   .  NoClip);
-                    // string sx = " minx =  " + minx + "  maxx =  " + maxx;
-
        
                     pc1.BackColor = Color.White;
-                    //pc1.Location = new System.Drawing.Point(0, 8);
                     pc1.Size = new Size(w1 + 16, hh + 32);
                     pc1.SizeMode = PictureBoxSizeMode.StretchImage;
                     pc1.BorderStyle = BorderStyle.Fixed3D;
                     Bitmap btmBack = new Bitmap(w1 + 16, hh + 64);      //изображение
                     Bitmap btmFront = new Bitmap(w1 + 16, hh + 64);     //фон
                     Graphics grBack = Graphics.FromImage(btmBack);
-                    //Graphics grFront = Graphics.FromImage(btmFront);  //лучше объявить заранее глобально.
                     pc1.Image = btmFront;
                     pc1.BackgroundImage = btmBack;
 
-                
 
-                    Graph(buf, w1, x, grBack);
+
+                    Graph(buf, w1, x, grBack, Color.Red);
 
 
           //-------------------------------------------------------------------------------------------------------  Истинные диагонали
             Pen p4 = new Pen(Color.Blue, 1);
             for (int i = 0; i < w1 - 1; i++)
             {
-                //string sx1 = " i =  " + i + "  buf1[i] =  " + buf1[i];
                 buf1_gl[i] = buf1[i];
                 if (buf1[i] >= 0)
                 {
                    grBack.DrawLine(p4, i + x0, 8, i + x0, hh + 8);
                 }
             }
-           // pc1.Refresh();
-
-           //         Controls.Add(pc1);
-                }
+        }
 
 
     
@@ -148,18 +164,25 @@ namespace rab1.Forms
             }
         }
 
-        private void Graph(Int64[] buf, int w1, int x, Graphics grBack)
+        private void Graph(Int64[] buf, int w1, int x, Graphics grBack, Color drawColor)
         {
-           
-            Int64 maxx = buf[0], minx = buf[0], b;
-            for (int i = 0; i < w1; i++) { b = buf[i]; if (b < minx) minx = b; if (b > maxx) maxx = b;  }
-            for (int i = 0; i < w1; i++) { buf[i] = (buf[i] - minx) * hh / (maxx - minx); }
+            Int64 b;
+            if ((maxx == 0) && (minx == 0))
+            {
+                for (int i = 0; i < w1; i++)
+                {
+                    b = buf[i];
+                    if (b < minx) minx = b;
+                    if (b > maxx) maxx = b;
+                }
+                for (int i = 0; i < w1; i++)
+                {
+                    buf[i] = (buf[i] - minx)*hh/(maxx - minx);
+                }
+            }
 
-            Font font = new Font("Arial", 12); //, GraphicsUnit.Pixel)Regular;, FontStyle.Regular
-            //StringFormat drawFormat = new StringFormat(StringFormatFlags.NoClip); //   .  NoClip);
-          
             Pen p1 = new Pen(Color.Black, 1);
-            Pen p2 = new Pen(Color.Red, 1);
+            Pen p2 = new Pen(drawColor, 1);
             Pen p3 = new Pen(Color.Green, 1);
             // ------------------------------------------------------------------------------------------------------------График 
             Font drawFont = new Font("Arial", 8);
@@ -169,10 +192,8 @@ namespace rab1.Forms
             for (int i = 0; i < w1; i += 8) grBack.DrawLine(p1, i + x0, hh, i + x0, hh + 8);
             for (int i = 0; i <= w1; i += 64)
             {
-              
                 string sx = i.ToString();
-                grBack.DrawString(sx, drawFont, drawBrush, i+x0, hh + 11); //, drawFormat);
-              
+                grBack.DrawString(sx, drawFont, drawBrush, i+x0, hh + 11);
             }
 
             //  -----------------------------------------------------------------------------------------------------Ось y
@@ -187,7 +208,7 @@ namespace rab1.Forms
             {
                 kf = (long)nf;
                 string sx = kf.ToString();
-                grBack.DrawString(sx, drawFont, drawBrush, 2, hh - i); //, drawFormat);
+                grBack.DrawString(sx, drawFont, drawBrush, 2, hh - i);
                 nf += kx;
                 grBack.DrawLine(p1, x0, i, x0 + w1, i);
             }
@@ -196,11 +217,11 @@ namespace rab1.Forms
             grBack.DrawLine(p3, x + x0, 0, x + x0, hh + 9);                                                                     // Значение координаты
 
 
-            for (int i = 0; i < w1 - 1; i++) grBack.DrawLine(p2, i + x0, hh - buf[i], i + 1 + x0, hh - buf[i + 1]);
-          
-        }
-
-        
+            for (int i = 0; i < w1 - 1; i++)
+            {
+                grBack.DrawLine(p2, i + x0, hh - buf[i], i + 1 + x0, hh - buf[i + 1]);
+            }
         }
     }
+}
 

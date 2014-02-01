@@ -47,6 +47,11 @@ namespace Interferometry.forms
             /// При клике по изображению строится таблица
             /// </summary>
             tableBuildMode
+            ,
+            /// <summary>
+            /// При клике по изображению строится график по двум первым изображениям
+            /// </summary>
+            doubleGraph
         };
 
         private List<ImageContainer> imageContainersList;
@@ -379,6 +384,11 @@ namespace Interferometry.forms
             currentCursorMode = CursorMode.tableBuildMode;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            currentCursorMode = CursorMode.doubleGraph;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -533,6 +543,20 @@ namespace Interferometry.forms
                 tableGenerateForm.setX((int)e.GetPosition(mainImage).X);
                 tableGenerateForm.setY((int)e.GetPosition(mainImage).Y);
                 tableGenerateForm.Show();
+            }
+            else if (currentCursorMode == CursorMode.doubleGraph)
+            {
+                if (imageContainersList[1].getzArrayDescriptor() == null)
+                {
+                    MessageBox.Show("2e изображение пустое!");
+                    return;
+                }
+
+                int x = (int)e.GetPosition(mainImage).X;
+                int y = (int)e.GetPosition(mainImage).Y;
+                Graphic graphic = new Graphic(zArrayDescriptor, imageContainersList[1].getzArrayDescriptor(), x, y);
+
+                graphic.Show();
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

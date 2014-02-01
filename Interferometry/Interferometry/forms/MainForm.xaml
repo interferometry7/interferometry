@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Interferometry.forms.MainForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Главное окно" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="616" Width="715" xmlns:my="clr-namespace:Interferometry" Loaded="Window_Loaded">
+        Title="Главное окно" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="600" Width="800" xmlns:my="clr-namespace:Interferometry" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -48,7 +48,8 @@
                     <Label Content="Режим курсора" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Top"/>
                     <RadioButton x:Name="defaultCursorModeButton" Content="Выбор" HorizontalAlignment="Left" Margin="281,23,0,0" VerticalAlignment="Top" IsChecked="True" Checked="defaultCursorModeButton_Checked"/>
                     <RadioButton x:Name="graphCursorModeButton" Content="Построение графика" HorizontalAlignment="Left" Margin="281,44,0,0" VerticalAlignment="Top" Checked="graphCursorModeButton_Checked"/>
-                    <RadioButton Content="Построение таблицы" Margin="441,23,114,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1"/>
+                    <RadioButton Content="Построение таблицы" Margin="441,23,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1" HorizontalAlignment="Left" Width="227"/>
+                    <RadioButton Content="Построение графиков по первым двум изображениям" Margin="441,44,0,0" VerticalAlignment="Top" Width="295" HorizontalAlignment="Left" Checked="RadioButton_Checked" />
                 </Grid>
             </TabItem>
             <TabItem Header="Камера" Name="tabItem5">
