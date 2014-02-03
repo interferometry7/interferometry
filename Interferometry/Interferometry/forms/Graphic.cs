@@ -18,7 +18,7 @@ namespace rab1.Forms
         private int h;
         private int x0 = 40;
         private int hh = 256;
-        private Int64 maxx = 0, minx = 0;
+        private Int64 maxx = -4000000, minx = 4000000;  
 
         public Graphic(ZArrayDescriptor ZZ, int x, int y)
         {
@@ -26,12 +26,78 @@ namespace rab1.Forms
             init(ZZ, x, y, Color.Red);
         }
 
-        public Graphic(ZArrayDescriptor ZZ, ZArrayDescriptor secondArray, int x, int y)
+        public Graphic(ZArrayDescriptor ZZ, ZArrayDescriptor secondArray, int x, int y)  // Двойной график
         {
             InitializeComponent();
-            init(ZZ, x, y, Color.Red);
-            init(secondArray, x, y, Color.Blue);
+            init1(ZZ, secondArray, x, y);
         }
+        private void init1(ZArrayDescriptor ZZ1, ZArrayDescriptor ZZ2, int x, int y)
+        {
+            int w1 = ZZ1.width;  w = w1;
+            int h1 = ZZ1.height; h = h1;
+
+            Int64[] buf1 = new Int64[Math.Max(w1, h1)];
+            Int64[] buf2 = new Int64[Math.Max(w1, h1)];
+
+            buf_gl = new Int64[Math.Max(w1, h1)];
+            buf1_gl = new Int64[Math.Max(w1, h1)];
+
+
+            for (int i = 0; i < w1; i++) { buf1[i] = ZZ1.array[i, y]; buf_gl[i]  = buf1[i]; }
+            for (int i = 0; i < w1; i++) { buf2[i] = ZZ2.array[i, y]; buf1_gl[i] = buf2[i]; }
+            MaxMin(buf1, buf2, w1);
+
+            pc1.BackColor = Color.White;
+            pc1.Size = new Size(w1 + 16, hh + 32);
+            pc1.BorderStyle = BorderStyle.Fixed3D;
+
+            if (pc1.BackgroundImage == null)
+            {
+                Bitmap btmBack = new Bitmap(w1 + 16, hh + 32); //изображение
+                pc1.BackgroundImage = btmBack;
+            }
+
+            if (pc1.Image == null)
+            {
+                Bitmap btmFront = new Bitmap(w1 + 16, hh + 32); //фон
+                pc1.Image = btmFront;
+            }
+
+
+            Graphics grBack = Graphics.FromImage(pc1.BackgroundImage);
+
+
+            Graph(buf1, w1, x, grBack, Color.Red,1);                                       // 1 График по x
+            Graph(buf2, w1, x, grBack, Color.Blue,1);                                      // 2 График по x
+
+
+            for (int i = 0; i < h1; i++) { buf1[i] = ZZ1.array[x, i]; buf_gl[i] = buf1[i]; }
+            for (int i = 0; i < h1; i++) { buf2[i] = ZZ2.array[x, i]; buf1_gl[i] = buf2[i]; }
+            MaxMin(buf1, buf2, h1);
+           
+            pictureBox1.BackColor = Color.White;
+            pictureBox1.Size = new Size(w1 + 16, hh + 32);
+            pictureBox1.BorderStyle = BorderStyle.Fixed3D;
+
+
+            if (pictureBox1.Image == null)
+            {
+                Bitmap btmFront = new Bitmap(w1 + 16, hh + 32); //фон
+                pictureBox1.Image = btmFront;
+            }
+
+            if (pictureBox1.BackgroundImage == null)
+            {
+                Bitmap btmBack = new Bitmap(w1 + 16, hh + 32); //изображение
+                pictureBox1.BackgroundImage = btmBack;
+            }
+
+            grBack = Graphics.FromImage(pictureBox1.BackgroundImage);
+
+            Graph(buf1, h1, y, grBack, Color.Red,1);                                          // 1 График по y
+            Graph(buf2, h1, y, grBack, Color.Blue,1);                                         // 2 График по y
+        }
+
 
         private void init(ZArrayDescriptor ZZ, int x, int y, Color drawColor)
         {
@@ -164,16 +230,15 @@ namespace rab1.Forms
             }
         }
 
-        private void Graph(Int64[] buf, int w1, int x, Graphics grBack, Color drawColor)
+        private void Graph(Int64[] buf, int w1, int x, Graphics grBack, Color drawColor, int maxmin=0)
         {
             Int64 b;
-            if ((maxx == 0) && (minx == 0))
+//            if ((maxx == 0) && (minx == 0))
+            if (maxmin == 0) 
             {
                 for (int i = 0; i < w1; i++)
                 {
-                    b = buf[i];
-                    if (b < minx) minx = b;
-                    if (b > maxx) maxx = b;
+                    b = buf[i];  if (b < minx) minx = b;  if (b > maxx) maxx = b;
                 }
                 for (int i = 0; i < w1; i++)
                 {
@@ -222,6 +287,28 @@ namespace rab1.Forms
                 grBack.DrawLine(p2, i + x0, hh - buf[i], i + 1 + x0, hh - buf[i + 1]);
             }
         }
+
+
+        private void MaxMin(Int64[] buf1, Int64[] buf2, int w1)
+        {
+
+            Int64 b, max = -4000000, min = 4000000;
+
+            for (int i = 0; i < w1; i++)
+            {
+                b = buf1[i]; if (b < min) min = b; if (b > max) max = b;
+                b = buf2[i]; if (b < min) min = b; if (b > max) max = b;
+            }
+            for (int i = 0; i < w1; i++)
+            {
+                buf1[i] = (buf1[i] - min) * hh / (max - min);
+                buf2[i] = (buf2[i] - min) * hh / (max - min);
+            }
+            maxx = max;
+            minx = min;
+
+        }
+       
     }
 }
 

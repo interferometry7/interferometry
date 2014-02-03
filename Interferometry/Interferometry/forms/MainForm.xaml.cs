@@ -546,15 +546,15 @@ namespace Interferometry.forms
             }
             else if (currentCursorMode == CursorMode.doubleGraph)
             {
-                if (imageContainersList[1].getzArrayDescriptor() == null)
+                if (imageContainersList[0].getzArrayDescriptor() == null)
                 {
-                    MessageBox.Show("2e изображение пустое!");
+                    MessageBox.Show("1-e изображение пустое!");
                     return;
                 }
 
                 int x = (int)e.GetPosition(mainImage).X;
                 int y = (int)e.GetPosition(mainImage).Y;
-                Graphic graphic = new Graphic(zArrayDescriptor, imageContainersList[1].getzArrayDescriptor(), x, y);
+                Graphic graphic = new Graphic(zArrayDescriptor, imageContainersList[0].getzArrayDescriptor(), x, y);
 
                 graphic.Show();
             }
