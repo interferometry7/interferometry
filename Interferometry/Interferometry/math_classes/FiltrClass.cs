@@ -24,18 +24,21 @@ namespace rab1
 
             int w1 = img[m1].width;
             int h1 = img[m1].height;
-            long[,] result = new long[w1, h1]; 
 
             int all = w1;
             int done = 0;
             PopupProgressBar.show();
 
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
+            wrappedPhase.width = w1;
+            wrappedPhase.height = h1;
+            wrappedPhase.array = new long[w1, h1];
+
             for (int i = 0; i < w1; i++)
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    result[i, j] = 0; // img[m1].array[i, j] - img[m2].array[i, j];
-                    
+                    wrappedPhase.array[i, j] = img[m1].array[i, j] - img[m2].array[i, j];
                 }
 
                 done++;
@@ -44,13 +47,7 @@ namespace rab1
 
             PopupProgressBar.close();
 
-            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
-            wrappedPhase.array = result;
-            wrappedPhase.width = w1;
-            wrappedPhase.height = h1;
-
             return wrappedPhase;
-          
         }
 
 /*

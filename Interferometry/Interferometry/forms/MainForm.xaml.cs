@@ -328,13 +328,21 @@ namespace Interferometry.forms
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             ZArrayDescriptor[] source = new ZArrayDescriptor[8];
-            for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
+
+            for (int i = 0; i < 8; i++)
+            {
+                source[i] = imageContainersList[i].getzArrayDescriptor();
+            }
+
             Tabl_Sub Tabl_Sub = new Tabl_Sub(source);
+            Tabl_Sub.arraySubbed = ArraySubbed;
             Tabl_Sub.Show();
         }
-
-
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void ArraySubbed(ZArrayDescriptor result, int imageNumber)
+        {
+            imageContainersList[imageNumber].setzArrayDescriptor(result);
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                    ATAN2
         private void createWrappedPhase(object sender, RoutedEventArgs e)

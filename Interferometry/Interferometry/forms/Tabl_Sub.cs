@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Interferometry.math_classes;
 using rab1;
 
+public delegate void ArraySubbed(ZArrayDescriptor result, int imageNumber);
+
 namespace Interferometry.forms
 {
     public partial class Tabl_Sub : Form
@@ -17,6 +19,8 @@ namespace Interferometry.forms
         private int m2 = 2;
         private int m3 = 3;
         private ZArrayDescriptor[] source;
+
+        public ArraySubbed arraySubbed;
         
         public Tabl_Sub(ZArrayDescriptor[] newSource)
         {
@@ -29,10 +33,16 @@ namespace Interferometry.forms
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            if (arraySubbed == null)
+            {
+                return;
+            }
+
             m1 = Convert.ToInt32(textBox1_sub.Text);
             m2 = Convert.ToInt32(textBox2_sub.Text);
             m3 = Convert.ToInt32(textBox3_sub.Text);
-            source[m3] = FiltrClass.Sub(source, m1, m2);
+            ZArrayDescriptor result = FiltrClass.Sub(source, m1, m2);
+            arraySubbed(result, m3);
             Close();
         }
     }
