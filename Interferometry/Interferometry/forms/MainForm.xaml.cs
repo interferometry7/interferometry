@@ -324,6 +324,18 @@ namespace Interferometry.forms
             cosinusValue = newCosinusValue;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                    Вычитание двух массивов
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            ZArrayDescriptor[] source = new ZArrayDescriptor[8];
+            for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
+            Tabl_Sub Tabl_Sub = new Tabl_Sub(source);
+            Tabl_Sub.Show();
+        }
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                    ATAN2
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
@@ -601,6 +613,8 @@ namespace Interferometry.forms
                 z = newZ;
             }
         }
+
+       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -84,6 +84,12 @@
     <Compile Include="forms\BackgroundImagesGeneratorForm.designer.cs">
       <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\Tabl_Sub.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Tabl_Sub.Designer.cs">
+      <DependentUpon>Tabl_Sub.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\PointsChooseForm.xaml.cs">
       <DependentUpon>PointsChooseForm.xaml</DependentUpon>
     </Compile>
@@ -117,6 +123,7 @@
     <Compile Include="FrameworkManager.cs" />
     <Compile Include="ImageGetter.cs" />
     <Compile Include="ImageHelper.cs" />
+    <Compile Include="math_classes\FiltrClass.cs" />
     <Compile Include="math_classes\SinClass1.cs" />
     <Compile Include="math_classes\ZArrayDescriptor.cs" />
     <Compile Include="Utils.cs" />
@@ -164,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\TableGenerateForm.resx">
       <DependentUpon>TableGenerateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Tabl_Sub.resx">
+      <DependentUpon>Tabl_Sub.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\UnwrapForm.resx">
       <DependentUpon>UnwrapForm.cs</DependentUpon>

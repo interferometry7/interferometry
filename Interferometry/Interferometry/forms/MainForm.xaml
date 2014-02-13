@@ -31,6 +31,7 @@
                     <Button Content="Определить плоскость" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button8" VerticalAlignment="Top" Width="188" />
                     <Button Content="Удаление фазовой неоднозначности" Height="23" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Click="unwrapClicked" HorizontalAlignment="Left" Width="225" />
                     <Button Content="Вычитание опорной плоскости" Height="23" HorizontalAlignment="Left" Margin="200,43,0,0" Name="choosePoinsButton" VerticalAlignment="Top" Width="225" Click="choosePointsClicked" IsDefault="True" />
+                    <Button Content="Вычитание " Height="23" HorizontalAlignment="Right" Margin="0,6,255,0" Name="button1" VerticalAlignment="Top" Width="82" Click="button1_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Графики" Name="tabItem4">
