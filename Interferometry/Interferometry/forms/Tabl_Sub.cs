@@ -15,9 +15,9 @@ namespace Interferometry.forms
 {
     public partial class Tabl_Sub : Form
     {
-        private int m1 = 1;
-        private int m2 = 2;
-        private int m3 = 3;
+        private int m1 = 0;
+        private int m2 = 1;
+        private int m3 = 2;
         private ZArrayDescriptor[] source;
 
         public ArraySubbed arraySubbed;
@@ -41,6 +41,8 @@ namespace Interferometry.forms
             m1 = Convert.ToInt32(textBox1_sub.Text);
             m2 = Convert.ToInt32(textBox2_sub.Text);
             m3 = Convert.ToInt32(textBox3_sub.Text);
+            if (source[m1] == null) { MessageBox.Show("Z-массив " + m1 + " пуст"); Close(); return; }
+            if (source[m2] == null) { MessageBox.Show("Z-массив " + m2 + " пуст"); Close(); return; }
             ZArrayDescriptor result = FiltrClass.Sub(source, m1, m2);
             arraySubbed(result, m3);
             Close();

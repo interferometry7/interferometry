@@ -21,7 +21,7 @@ namespace rab1
 
         public static ZArrayDescriptor Sub(ZArrayDescriptor[] img, int m1, int m2)
         {
-
+                     
             int w1 = img[m1].width;
             int h1 = img[m1].height;
 
