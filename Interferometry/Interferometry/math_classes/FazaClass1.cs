@@ -108,6 +108,7 @@ namespace Interferometry
            
             double pi = Math.PI;
             double pi2 = sineNumber / (Math.PI * 2);
+            double tg;
             //                     x>0              atan(y/x)
             //                     x<0  y>=0        atan(y/x) + pi
             // atan2(y,x) =        x<0  y<0         atan(y/x) - pi
@@ -129,14 +130,18 @@ namespace Interferometry
                     double ay = (i1 - i4) + (i2 - i3);
                     double ax = (i2 + i3) - (i1 + i4);
                     double c = 3 * (i2 - i3) - (i1 - i4);
-                    double tg = Math.Atan(Math.Sqrt(ay * c) / (ax));
-                    if (ax > 0)             result[i, j] = (long)((tg   + pi) * pi2);
-                    if (ax < 0 && ay>=0)    result[i, j] = (long)((tg   + pi + pi) * pi2);
-                    if (ax < 0 && ay<0)     result[i, j] = (long)((tg   + pi - pi) * pi2);
-                    if (ax == 0 && ay > 0)  result[i, j] = (long)((pi/2 +pi) * pi2);
-                    if (ax == 0 && ay < 0)  result[i, j] = (long)((-pi/2+pi) * pi2);
-                    if (ax == 0 && ay == 0) result[i, j] = 0;
 
+                    if (ax == 0 && ay > 0)  { result[i, j] = (long)((pi / 2 + pi/2) * pi2);  continue; }
+                    if (ax == 0 && ay < 0)  { result[i, j] = (long)((-pi / 2 + pi/2) * pi2); continue; }
+                    if (ax == 0 && ay == 0) { result[i, j] = 0;                              continue; }
+
+
+                    tg = Math.Atan(Math.Sqrt(ay * c) / (ax));
+                    //if (ax > 0)            { result[i, j] = (long)((tg        + pi/2) * pi2);  continue;}
+                    if (ax < 0 && ay>=0)   { result[i, j] = (long)((tg   + pi + pi/2) * pi2);  continue;}
+                    //if (ax < 0 && ay<0)    { result[i, j] = (long)((tg   - pi + pi/2) * pi2);  continue;}
+                   
+                    
                     // ------                                     Формула расшифровки
 
                    
