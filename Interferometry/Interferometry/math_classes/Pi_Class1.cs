@@ -411,10 +411,7 @@ namespace rab1
 
             int w = img[0].width;
             int h = img[0].height;  
-            ZArrayDescriptor result = new ZArrayDescriptor(); 
-            result.array = new long[w, h];
-            result.width = w;
-            result.height = h;
+            
 
             int NOD=China(sN1, sN2);                                     // Проверка на взаимную простоту
                                                                          // Вычисление формулы sN1, sN2 -> в глобальные n1, n2
@@ -430,7 +427,10 @@ namespace rab1
                                                                          //  РАСШИФРОВКА (Заполнение Z[,])
             rash_2pi(img[1], img[0], img[2], NOD, sdvg_x, n1, n2, Diag, Z);
 
-           
+            ZArrayDescriptor result = new ZArrayDescriptor();
+            result.array = new long[w, h];
+            result.width = w;
+            result.height = h;
             for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
@@ -529,6 +529,7 @@ namespace rab1
             int i00 = i2 + (n1 * NOD - i1);
             //int ll = glbl_faze2[i0]-i0;                                 
             int l = (glbl_faze2[i0]*NOD - i00);
+            //l = 0;
             l = (int)((double)l / s2);
                                                  //if ((l < 0) && (glbl_faze2[i0]!=0)) MessageBox.Show(" i0 = " + i0 + " glbl_faze2[i0] = " + glbl_faze2[i0]);
             int ib = i1 - l ;               // Уточнение ---------------------------------------------------------------

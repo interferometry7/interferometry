@@ -279,14 +279,14 @@ namespace Interferometry.forms
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
            
-            if ((imageContainersList[8].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 9 пусто"); return; }
-            if ((imageContainersList[9].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 10 пусто"); return; }
+            if ((imageContainersList[11].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 12 пусто"); return; }
+            if ((imageContainersList[12].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 13 пусто"); return; }
            // if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
 
             ZArrayDescriptor[] imagesF = new ZArrayDescriptor[3];
 
-            imagesF[0] = imageContainersList[8].getzArrayDescriptor();
-            imagesF[1] = imageContainersList[9].getzArrayDescriptor();
+            imagesF[0] = imageContainersList[11].getzArrayDescriptor();
+            imagesF[1] = imageContainersList[12].getzArrayDescriptor();
            // imagesF[2] = imageContainersList[10].getzArrayDescriptor();  
 
             UnwrapForm unwrapForm = new UnwrapForm(imagesF);
@@ -296,7 +296,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapFormOnImageUnwrapped(ZArrayDescriptor unwrappedPhase)
         {
-            imageContainersList[10].setzArrayDescriptor(unwrappedPhase);
+            imageContainersList[13].setzArrayDescriptor(unwrappedPhase);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,12 +344,12 @@ namespace Interferometry.forms
             imageContainersList[imageNumber].setzArrayDescriptor(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //                    ATAN2
+        //                    ATAN2 (получение фазы по массиву интенсивностей)
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
             
-            ZArrayDescriptor[] source = new ZArrayDescriptor[8];
-            for (int i = 0; i < 8; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
+            ZArrayDescriptor[] source = new ZArrayDescriptor[10];
+            for (int i = 0; i < 10; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
 
             TableFaza TableFaza = new TableFaza(source);
             TableFaza.atan_Unwrapped += AtanFormOnImage;
@@ -360,9 +360,9 @@ namespace Interferometry.forms
         {
             //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
             ZArrayDescriptor unwrappedPhaseImage1 = d.result1; 
-            imageContainersList[8].setzArrayDescriptor(unwrappedPhaseImage1);
+            imageContainersList[11].setzArrayDescriptor(unwrappedPhaseImage1);
             ZArrayDescriptor unwrappedPhaseImage2 = d.result2;
-            imageContainersList[9].setzArrayDescriptor(unwrappedPhaseImage2);
+            imageContainersList[12].setzArrayDescriptor(unwrappedPhaseImage2);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //              Построить таблицу остатков
@@ -371,12 +371,12 @@ namespace Interferometry.forms
         {
             ZArrayDescriptor[] imagesForTable = new ZArrayDescriptor[3];
 
-            if ((imageContainersList[8].getzArrayDescriptor() == null) ) { MessageBox.Show("Изображениe 9 пусто");  return; }
-            if ((imageContainersList[9].getzArrayDescriptor() == null))  { MessageBox.Show("Изображениe 10 пусто"); return; }
-            if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
+            if ((imageContainersList[11].getzArrayDescriptor() == null) ) { MessageBox.Show("Изображениe 12 пусто");  return; }
+            if ((imageContainersList[12].getzArrayDescriptor() == null))  { MessageBox.Show("Изображениe 13 пусто");  return; }
+            if ((imageContainersList[10].getzArrayDescriptor() == null))  { MessageBox.Show("Изображениe 11 пусто");  return; }
             
-            imagesForTable[0] = imageContainersList[8].getzArrayDescriptor();
-            imagesForTable[1] = imageContainersList[9].getzArrayDescriptor();
+            imagesForTable[0] = imageContainersList[11].getzArrayDescriptor();
+            imagesForTable[1] = imageContainersList[12].getzArrayDescriptor();
             imagesForTable[2] = imageContainersList[10].getzArrayDescriptor();
 
 

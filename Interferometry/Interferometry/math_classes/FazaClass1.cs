@@ -21,7 +21,7 @@ namespace Interferometry
             long[,] result = new long[w1, h1];                        // массив для значений фаз
 
             int n_sdv = img.Length;                                   // Число фазовых сдвигов
-
+            //MessageBox.Show(" n_sdv =  " + n_sdv );   
             double[] i_sdv = new double[n_sdv];
             double[] v_sdv = new double[n_sdv];                                  // Вектор коэффициентов
             double[] k_sin = new double[n_sdv];
@@ -94,5 +94,71 @@ namespace Interferometry
 
             return wrappedPhase;
         }
+
+
+        public static ZArrayDescriptor ATAN_Carre(ZArrayDescriptor[] img, int sineNumber)
+        {
+
+            int w1 = img[0].width;
+            int h1 = img[0].height;
+            long[,] result = new long[w1, h1];                        // массив для значений фаз
+
+            //int n_sdv = img.Length;                                   // Число фазовых сдвигов
+            //MessageBox.Show(" n_sdv =  " + n_sdv );   
+           
+            double pi = Math.PI;
+            double pi2 = sineNumber / (Math.PI * 2);
+            //                     x>0              atan(y/x)
+            //                     x<0  y>=0        atan(y/x) + pi
+            // atan2(y,x) =        x<0  y<0         atan(y/x) - pi
+            //                     x=0  y>0          pi/2
+            //                     x=0  y<0          -pi/2
+            //                     x=0  y=0          undefined
+            int all = w1;
+            int done = 0;
+            PopupProgressBar.show();
+
+            for (int i = 0; i < w1; i++)
+            {
+                for (int j = 0; j < h1; j++)
+                {
+                    long i1 =  img[0].array[i, j];
+                    long i2 =  img[1].array[i, j];
+                    long i3 =  img[2].array[i, j];
+                    long i4 =  img[3].array[i, j];
+                    double ay = (i1 - i4) + (i2 - i3);
+                    double ax = (i2 + i3) - (i1 + i4);
+                    double c = 3 * (i2 - i3) - (i1 - i4);
+                    double tg = Math.Atan(Math.Sqrt(ay * c) / (ax));
+                    if (ax > 0)             result[i, j] = (long)((tg   + pi) * pi2);
+                    if (ax < 0 && ay>=0)    result[i, j] = (long)((tg   + pi + pi) * pi2);
+                    if (ax < 0 && ay<0)     result[i, j] = (long)((tg   + pi - pi) * pi2);
+                    if (ax == 0 && ay > 0)  result[i, j] = (long)((pi/2 +pi) * pi2);
+                    if (ax == 0 && ay < 0)  result[i, j] = (long)((-pi/2+pi) * pi2);
+                    if (ax == 0 && ay == 0) result[i, j] = 0;
+
+                    // ------                                     Формула расшифровки
+
+                   
+                   
+                }
+
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+
+            PopupProgressBar.close();
+
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
+            wrappedPhase.array = result;
+            wrappedPhase.width = w1;
+            wrappedPhase.height = h1;
+
+            return wrappedPhase;
+        }
+
+
+
+
     }
 }

@@ -22,7 +22,7 @@
             </TabItem>
             <TabItem Header="Получение фазы" Name="tabItem2">
                 <Grid>
-                    <Button Content="Atan 1234 -&gt;9 5678 -&gt;10" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button4" VerticalAlignment="Top" Width="178" Click="createWrappedPhase" />
+                    <Button Content="Atan2" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button4" VerticalAlignment="Top" Width="178" Click="createWrappedPhase" />
                 </Grid>
             </TabItem>
             <TabItem Header="Восстановление фазы" Name="tabItem3">
