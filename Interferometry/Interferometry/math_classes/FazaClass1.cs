@@ -103,13 +103,13 @@ namespace Interferometry
             int h1 = img[0].height;
             long[,] result = new long[w1, h1];                        // массив для значений фаз
 
-            //int n_sdv = img.Length;                                   // Число фазовых сдвигов
-            //MessageBox.Show(" n_sdv =  " + n_sdv );   
+                                            // Число фазовых сдвигов
+            MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
            
             double pi = Math.PI;
             double pi2 = sineNumber / (Math.PI * 2);
             double tg;
-            //                     x>0              atan(y/x)
+            //                     x>0  y>0         atan(y/x)
             //                     x<0  y>=0        atan(y/x) + pi
             // atan2(y,x) =        x<0  y<0         atan(y/x) - pi
             //                     x=0  y>0          pi/2
@@ -123,7 +123,7 @@ namespace Interferometry
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    long i1 =  img[0].array[i, j];
+                    long i1 = img[0].array[i, j];       // ------         Формула расшифровки
                     long i2 =  img[1].array[i, j];
                     long i3 =  img[2].array[i, j];
                     long i4 =  img[3].array[i, j];
@@ -131,18 +131,20 @@ namespace Interferometry
                     double ax = (i2 + i3) - (i1 + i4);
                     double c = 3 * (i2 - i3) - (i1 - i4);
 
-                    if (ax == 0 && ay > 0)  { result[i, j] = (long)((pi / 2 + pi/2) * pi2);  continue; }
-                    if (ax == 0 && ay < 0)  { result[i, j] = (long)((-pi / 2 + pi/2) * pi2); continue; }
-                    if (ax == 0 && ay == 0) { result[i, j] = 0;                              continue; }
-
+                    result[i, j] = 0;
+                    if (ax == 0 && ay > 0)  { result[i, j] = (long)((pi / 2 + pi) * pi2);  continue; }
+                    if (ax == 0 && ay < 0)  { result[i, j] = (long)((-pi / 2 + pi) * pi2); continue; }
+                    if (ax >= 0 && ay == 0) { result[i, j] = 0;                            continue; }
+                    if (ax < 0 &&  ay == 0) { result[i, j] = (long)(pi * pi2); continue; }
 
                     tg = Math.Atan(Math.Sqrt(ay * c) / (ax));
-                    //if (ax > 0)            { result[i, j] = (long)((tg        + pi/2) * pi2);  continue;}
-                    if (ax < 0 && ay>=0)   { result[i, j] = (long)((tg   + pi + pi/2) * pi2);  continue;}
+
+                    //if ((ax > 0) && (ay > 0)) { result[i, j] =  (long)(tg * pi2); continue; } 
+                    //if (ax < 0 && ay>=0)   { result[i, j] = (long)((tg   + pi + pi/2) * pi2);  continue;}
                     //if (ax < 0 && ay<0)    { result[i, j] = (long)((tg   - pi + pi/2) * pi2);  continue;}
-                   
+
                     
-                    // ------                                     Формула расшифровки
+                   
 
                    
                    
