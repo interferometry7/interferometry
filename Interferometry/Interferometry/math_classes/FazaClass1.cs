@@ -128,7 +128,7 @@ namespace Interferometry
                     long i3 =  img[2].array[i, j];
                     long i4 =  img[3].array[i, j];
                     double ay = (i1 - i4) + (i2 - i3);
-                    double ax = (i2 + i3) - (i1 + i4);
+                    double ax = (i2 + i3) - (i1 + i4) +0.00000000000001;
                     double c = 3 * (i2 - i3) - (i1 - i4);
 
                     result[i, j] = 0;

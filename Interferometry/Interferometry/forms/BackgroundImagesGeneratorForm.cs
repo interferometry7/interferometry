@@ -42,7 +42,7 @@ namespace rab1
         private int phaseShift5Value;
 
         private StripesForm formForStripes;
-        private int numberOfImageInSeries = 8;
+        private int numberOfImageInSeries = 9;
 
         public event OneImageOfSeries oneImageOfSeries;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ namespace rab1
             }
             else
             {
-                if (numberOfImageInSeries == 8)
+                if (numberOfImageInSeries == 9)
                 {
                     if (imageNumber == 1)
                     {
@@ -154,7 +154,7 @@ namespace rab1
                         drawLines(numberOfSin2Value/10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
                     }
                 }
-                else if (numberOfImageInSeries == 11)
+                else if (numberOfImageInSeries == 12)
                 {
                     if (imageNumber == 1)
                     {
@@ -294,13 +294,13 @@ namespace rab1
         private void radioButton8_CheckedChanged(object sender, EventArgs e)
         {
             phaseShift5.Visible = true;
-            numberOfImageInSeries = 11;
+            numberOfImageInSeries = 12;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton7_CheckedChanged(object sender, EventArgs e)
         {
             phaseShift5.Visible = false;
-            numberOfImageInSeries = 8;
+            numberOfImageInSeries = 9;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
