@@ -108,8 +108,11 @@ namespace Interferometry
             //MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
            
             double pi = Math.PI;
-            double pi2 = sineNumber / (Math.PI * 2);
+            double pi34 = 3 * pi / 4;
+            double pi2 = sineNumber / (Math.PI * 2.5);
             double tg;
+            double max = -99999;
+            double min = 99999;
             //                     x>0  y>0         atan(y/x)
             //                     x<0  y>=0        atan(y/x) + pi
             // atan2(y,x) =        x<0  y<0         atan(y/x) - pi
@@ -132,11 +135,11 @@ namespace Interferometry
                     double ax = (i2 + i3) - (i1 + i4);
                     double c = 3 * (i2 - i3) - (i1 - i4);
 
-                    
-                    if ( (ax == 0) && (ay > 0) )  { result[i, j] = (long)((pi / 2 + pi)  * pi2);  continue; }
-                    if ( (ax == 0) && (ay < 0) )  { result[i, j] = (long)((-pi / 2 + pi) * pi2); continue; }
-                    if ( (ax >= 0) && (ay == 0))  { result[i, j] = 0;                            continue; }
-                    if ( (ax < 0) &&  (ay == 0))  { result[i, j] = (long)(pi * pi2);             continue; }
+                    double  r = 0;
+                    if ( (ax == 0) && (ay > 0) )  { r = (-pi / 2); }
+                    if ((ax == 0) && (ay < 0))    { r = (+pi / 2); }
+                    if ((ax >= 0) && (ay == 0))   { r = 0;       }
+                   // if ((ax < 0) && (ay == 0))    { r = (-pi); }
 
                     double x = Math.Abs(ax);
                     double y = Math.Abs(ay * c);
@@ -145,21 +148,29 @@ namespace Interferometry
                    // if (tg == Double.NaN) MessageBox.Show(" Double.NaN  ");
                    // if (tg == Double.NegativeInfinity) MessageBox.Show(" NegativeInfinity  ");
                    // if (tg == Double.PositiveInfinity) MessageBox.Show(" PositiveInfinity  "); 
-                     
+                                       
                    
-                    if (ax > 0) 
-                    {
-                        if (ay > 0) { result[i, j] = (long)((2*pi - tg )* pi2); }   else { result[i, j] = (long)(( tg) * pi2); }
-                        continue;
-                    }
+                   if (ax > 0) 
+                   {
+                       if (ay > 0) { r = (-tg + 2 * pi); }
+                       if (ay < 0) { r = ( tg );         }
+                   }
                    
-                  if (ax < 0)
+                    if (ax < 0)
                     {
-                      if (ay > 0)   { result[i, j] = (long)((tg + pi) * pi2); } else  { result[i, j] = (long)((-tg + pi) * pi2);  }
-                      continue;
+                        if (ay > 0) { r = ( tg + pi);  } 
+                        if (ay < 0) { r = (-tg + pi ); }
                     }
-                                 
-                  
+
+                    //long r1 = (long)((r - pi34) * pi2);
+                    //if (r1 < 0) r1 += (sineNumber+1);
+
+
+                    if (r > max) max = r;
+                    if (r < min) min = r;
+                    long r1 = (long)((r + pi/2) * pi2);
+                    //if (r1 < 0) r1 += (sineNumber+1);
+                    result[i, j] = r1;
                 }
 
                 done++;
@@ -167,7 +178,7 @@ namespace Interferometry
             }
 
             PopupProgressBar.close();
-
+            MessageBox.Show(" max =  " + max + " min =  " + min);
             ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
             wrappedPhase.array = result;
             wrappedPhase.width = w1;
