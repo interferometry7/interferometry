@@ -138,23 +138,28 @@ namespace Interferometry
                     if ( (ax >= 0) && (ay == 0))  { result[i, j] = 0;                            continue; }
                     if ( (ax < 0) &&  (ay == 0))  { result[i, j] = (long)(pi * pi2);             continue; }
 
-                    double parameter = Math.Sqrt(ay*c)/(ax);
-
-                    tg = Math.Atan(parameter);
-                    //if (tg == Double.NaN) MessageBox.Show(" Double.NaN  ");   
-
-                    if ((ax > 0) && (ay > 0))
+                    double x = Math.Abs(ax);
+                    double y = Math.Abs(ay * c);
+                    double b = Math.Sqrt(y) /x;
+                    tg = Math.Atan(b); 
+                   // if (tg == Double.NaN) MessageBox.Show(" Double.NaN  ");
+                   // if (tg == Double.NegativeInfinity) MessageBox.Show(" NegativeInfinity  ");
+                   // if (tg == Double.PositiveInfinity) MessageBox.Show(" PositiveInfinity  "); 
+                     
+                   
+                    if (ax > 0) 
                     {
-                        result[i, j] =  (long)(tg * pi2);
-                    } 
-                    //if (ax < 0 && ay>=0)   { result[i, j] = (long)((tg   + pi + pi/2) * pi2);  continue;}
-                    //if (ax < 0 && ay<0)    { result[i, j] = (long)((tg   - pi + pi/2) * pi2);  continue;}
-
-                    
+                        if (ay > 0) { result[i, j] = (long)((2*pi - tg )* pi2); }   else { result[i, j] = (long)(( tg) * pi2); }
+                        continue;
+                    }
                    
-
-                   
-                   
+                  if (ax < 0)
+                    {
+                      if (ay > 0)   { result[i, j] = (long)((tg + pi) * pi2); } else  { result[i, j] = (long)((-tg + pi) * pi2);  }
+                      continue;
+                    }
+                                 
+                  
                 }
 
                 done++;
