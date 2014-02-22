@@ -123,7 +123,7 @@ namespace Interferometry.forms
         /// Загрузить 8 изображений
         private void loadEightImages(object sender, RoutedEventArgs e)
         {
-            ImageSource[] newSources = FilesHelper.loadEightImages();
+            ImageSource[] newSources = FilesHelper.loadBunchImages(8);
 
             int all = 7;
             int done = 0;
@@ -135,6 +135,34 @@ namespace Interferometry.forms
                 {
                     imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
                     imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
+                    //imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    newSources[i] = null;
+                    GC.Collect();
+                    done++;
+                    PopupProgressBar.setProgress(done, all);
+                }
+            }
+            PopupProgressBar.close();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Загрузить 10 изображений
+        private void loadTenImagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            ImageSource[] newSources = FilesHelper.loadBunchImages(10);
+
+            int all = 9;
+            int done = 0;
+            PopupProgressBar.show();
+
+            if (newSources != null)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
+                    //imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    newSources[i] = null;
+                    GC.Collect();
                     done++;
                     PopupProgressBar.setProgress(done, all);
                 }
@@ -232,8 +260,8 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void redrawButton_Click(object sender, RoutedEventArgs e)
         {
-            minSlider.Value = Convert.ToInt32(minTextBox.Text);
-            maxSlider.Value = Convert.ToInt32(maxTextBox.Text);
+            minSlider.Value = Convert.ToInt64(minTextBox.Text);
+            maxSlider.Value = Convert.ToInt64(maxTextBox.Text);
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor, (long)minSlider.Value, (long)maxSlider.Value);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,7 +272,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void maxSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            maxTextBox.Text = "" + Convert.ToInt32(maxSlider.Value);
+            maxTextBox.Text = "" + Convert.ToInt64(maxSlider.Value);
 
             if (minSlider.Value > maxSlider.Value)
             {
@@ -278,16 +306,13 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
-           
             if ((imageContainersList[11].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 12 пусто"); return; }
             if ((imageContainersList[12].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 13 пусто"); return; }
-           // if ((imageContainersList[10].getzArrayDescriptor() == null)) { MessageBox.Show("Изображениe 11 пусто"); return; }
 
             ZArrayDescriptor[] imagesF = new ZArrayDescriptor[3];
 
             imagesF[0] = imageContainersList[11].getzArrayDescriptor();
-            imagesF[1] = imageContainersList[12].getzArrayDescriptor();
-           // imagesF[2] = imageContainersList[10].getzArrayDescriptor();  
+            imagesF[1] = imageContainersList[12].getzArrayDescriptor(); 
 
             UnwrapForm unwrapForm = new UnwrapForm(imagesF);
             unwrapForm.imageUnwrapped += unwrapFormOnImageUnwrapped;
@@ -621,8 +646,6 @@ namespace Interferometry.forms
                 z = newZ;
             }
         }
-
-       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -25,7 +25,7 @@ namespace Interferometry
         public static BitmapImage loadImage()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            openFileDialog.Filter = "All files (*.*)|*.*|bmp files (*.bmp)|*.bmp";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
@@ -91,13 +91,13 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static BitmapImage[] loadEightImages()
+        public static BitmapImage[] loadBunchImages(int number)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            openFileDialog.Filter = "All files (*.*)|*.*|bmp files (*.bmp)|*.bmp";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
-            BitmapImage[] result = new BitmapImage[8];
+            BitmapImage[] result = new BitmapImage[number];
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -108,7 +108,7 @@ namespace Interferometry
                     {
                         using (myStream)
                         {
-                            for (int i = 0; i < 8; i++)
+                            for (int i = 0; i < number; i++)
                             {
                                 String fileName;
 
@@ -130,6 +130,7 @@ namespace Interferometry
                                 result[i] = newBitmapImage;
                             }
 
+                            myStream.Close();
                             return result;
                         }
                     }
@@ -255,7 +256,7 @@ namespace Interferometry
         public static void saveImage(ImageSource someImage)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            saveFileDialog.Filter = "All files (*.*)|*.*|bmp files (*.bmp)|*.bmp";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
 
@@ -345,7 +346,7 @@ namespace Interferometry
         public static void saveImages(ImageSource[] imagesToSave)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            saveFileDialog.Filter = "All files (*.*)|*.*|bmp files (*.bmp)|*.bmp";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
 
