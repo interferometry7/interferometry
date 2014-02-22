@@ -89,7 +89,7 @@ namespace Interferometry.forms
             d.result1 = FazaClass.ATAN_1234(firstSource, fz, sineNumber2);
 
             ZArrayDescriptor[] secondSource = new ZArrayDescriptor[5];
-            for (int i = 5; i < 9; i++) { secondSource[i - 5] = source[i]; }
+            for (int i = 5; i < 10; i++) { secondSource[i - 5] = source[i]; }
             d.result2 = FazaClass.ATAN_1234(secondSource, fz, sineNumber1);
 
             Close();
