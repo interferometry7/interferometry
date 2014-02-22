@@ -18,6 +18,7 @@ namespace Interferometry
             
             int w1 = img[0].width;
             int h1 = img[0].height;
+           // MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1); 
             long[,] result = new long[w1, h1];                        // массив для значений фаз
 
             int n_sdv = img.Length;                                   // Число фазовых сдвигов
@@ -104,7 +105,7 @@ namespace Interferometry
             long[,] result = new long[w1, h1];                        // массив для значений фаз
 
                                             // Число фазовых сдвигов
-            MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
+            //MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
            
             double pi = Math.PI;
             double pi2 = sineNumber / (Math.PI * 2);
@@ -128,18 +129,24 @@ namespace Interferometry
                     long i3 =  img[2].array[i, j];
                     long i4 =  img[3].array[i, j];
                     double ay = (i1 - i4) + (i2 - i3);
-                    double ax = (i2 + i3) - (i1 + i4) +0.00000000000001;
+                    double ax = (i2 + i3) - (i1 + i4);
                     double c = 3 * (i2 - i3) - (i1 - i4);
 
-                    result[i, j] = 0;
-                    if (ax == 0 && ay > 0)  { result[i, j] = (long)((pi / 2 + pi) * pi2);  continue; }
-                    if (ax == 0 && ay < 0)  { result[i, j] = (long)((-pi / 2 + pi) * pi2); continue; }
-                    if (ax >= 0 && ay == 0) { result[i, j] = 0;                            continue; }
-                    if (ax < 0 &&  ay == 0) { result[i, j] = (long)(pi * pi2); continue; }
+                    
+                    if ( (ax == 0) && (ay > 0) )  { result[i, j] = (long)((pi / 2 + pi)  * pi2);  continue; }
+                    if ( (ax == 0) && (ay < 0) )  { result[i, j] = (long)((-pi / 2 + pi) * pi2); continue; }
+                    if ( (ax >= 0) && (ay == 0))  { result[i, j] = 0;                            continue; }
+                    if ( (ax < 0) &&  (ay == 0))  { result[i, j] = (long)(pi * pi2);             continue; }
 
-                    tg = Math.Atan(Math.Sqrt(ay * c) / (ax));
+                    double parameter = Math.Sqrt(ay*c)/(ax);
 
-                    //if ((ax > 0) && (ay > 0)) { result[i, j] =  (long)(tg * pi2); continue; } 
+                    tg = Math.Atan(parameter);
+                    //if (tg == Double.NaN) MessageBox.Show(" Double.NaN  ");   
+
+                    if ((ax > 0) && (ay > 0))
+                    {
+                        result[i, j] =  (long)(tg * pi2);
+                    } 
                     //if (ax < 0 && ay>=0)   { result[i, j] = (long)((tg   + pi + pi/2) * pi2);  continue;}
                     //if (ax < 0 && ay<0)    { result[i, j] = (long)((tg   - pi + pi/2) * pi2);  continue;}
 

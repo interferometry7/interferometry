@@ -113,22 +113,6 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public Size GetElementPixelSize(UIElement element)
-        {
-            Matrix transformToDevice;
-            var source = PresentationSource.FromVisual(element);
-            if (source != null)
-                transformToDevice = source.CompositionTarget.TransformToDevice;
-            else
-                using (var source2 = new HwndSource(new HwndSourceParameters()))
-                    transformToDevice = source2.CompositionTarget.TransformToDevice;
-
-            if (element.DesiredSize == new Size())
-                element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-
-            return (Size)transformToDevice.Transform((Vector)element.DesiredSize);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void grid1_MouseEnter(object sender, MouseEventArgs e)
         {
             if (zArrayDescriptor == null)

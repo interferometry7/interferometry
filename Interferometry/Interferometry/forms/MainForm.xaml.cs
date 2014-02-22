@@ -227,7 +227,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void minSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            minTextBox.Text = "" + Convert.ToInt32(minSlider.Value);
+            minTextBox.Text = "" + Convert.ToInt64(minSlider.Value);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void redrawButton_Click(object sender, RoutedEventArgs e)
