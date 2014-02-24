@@ -109,7 +109,7 @@ namespace Interferometry
            
             double pi = Math.PI;
             double pi34 = 3 * pi / 4;
-            double pi2 = sineNumber / (Math.PI * 2.5);
+            double pi2 = sineNumber / (Math.PI * 2);
             double tg;
             double max = -99999;
             double min = 99999;
@@ -136,10 +136,10 @@ namespace Interferometry
                     double c = 3 * (i2 - i3) - (i1 - i4);
 
                     double  r = 0;
-                    if ( (ax == 0) && (ay > 0) )  { r = (-pi / 2); }
-                    if ((ax == 0) && (ay < 0))    { r = (+pi / 2); }
-                    if ((ax >= 0) && (ay == 0))   { r = 0;       }
-                   // if ((ax < 0) && (ay == 0))    { r = (-pi); }
+                    if ( (ax == 0) && (ay > 0) )  { r = (-pi/2 + pi + pi/4); }
+                    if ((ax == 0) && (ay < 0))    { r = (+pi / 2 + pi + pi / 4); }
+                    if ((ax >= 0) && (ay == 0))   { r = 0 + pi + pi / 4; }
+                    if ((ax < 0) && (ay == 0))    { r = (-pi + pi + pi / 4); }
 
                     double x = Math.Abs(ax);
                     double y = Math.Abs(ay * c);
@@ -152,14 +152,14 @@ namespace Interferometry
                    
                    if (ax > 0) 
                    {
-                       if (ay > 0) { r = (-tg + 2 * pi); }
-                       if (ay < 0) { r = ( tg );         }
+                     if (ay > 0) { r = (-tg +   pi +  pi/4); }
+                     if (ay < 0) { r = ( tg +   pi +  pi/4); }
                    }
                    
                     if (ax < 0)
                     {
-                        if (ay > 0) { r = ( tg + pi);  } 
-                        if (ay < 0) { r = (-tg + pi ); }
+                        if (ay > 0) { r = (tg  + pi / 4); }
+                        if (ay < 0) { r = (-tg + pi / 4); if (r < 0) r += 2*pi; }
                     }
 
                     //long r1 = (long)((r - pi34) * pi2);
@@ -168,7 +168,7 @@ namespace Interferometry
 
                     if (r > max) max = r;
                     if (r < min) min = r;
-                    long r1 = (long)((r + pi/2) * pi2);
+                    long r1 = (long)((r ) * pi2);
                     //if (r1 < 0) r1 += (sineNumber+1);
                     result[i, j] = r1;
                 }
