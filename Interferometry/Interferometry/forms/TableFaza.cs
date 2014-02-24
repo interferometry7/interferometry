@@ -103,7 +103,8 @@ namespace Interferometry.forms
         {
             sineNumber1 = Convert.ToInt32(sineNumbers1.Text);
             sineNumber2 = Convert.ToInt32(sineNumbers2.Text);
-
+            
+      
             ZArrayDescriptor[] firstSource = new ZArrayDescriptor[4];
             for (int i = 0; i < 4; i++) { firstSource[i] = source[i]; }
             Res d = new Res();
@@ -116,6 +117,45 @@ namespace Interferometry.forms
             Close();
             atan_Unwrapped(d);
         }
+        // --------------------------------------------------------------------------------------------
+        //                   Carre с углом сдвига
+        // --------------------------------------------------------------------------------------------
+        private void button3_Click(object sender, EventArgs e)
+        {
+            sineNumber1 = Convert.ToInt32(sineNumbers1.Text);
+            sineNumber2 = Convert.ToInt32(sineNumbers2.Text);
+            double a = Convert.ToDouble(textBox1_fz.Text);
+
+            ZArrayDescriptor[] firstSource = new ZArrayDescriptor[4];
+            for (int i = 0; i < 4; i++) { firstSource[i] = source[i]; }
+            Res d = new Res();
+            d.result1 = FazaClass.ATAN_CarreA(firstSource, sineNumber2, a);
+
+            ZArrayDescriptor[] secondSource = new ZArrayDescriptor[4];
+            for (int i = 4; i < 8; i++) { secondSource[i - 4] = source[i]; }
+            d.result2 = FazaClass.ATAN_CarreA(secondSource, sineNumber1, a);
+
+            Close();
+            atan_Unwrapped(d);
+        }
+        // --------------------------------------------------------------------------------------------
+        //                   Carre определение угла сдвига
+        // --------------------------------------------------------------------------------------------
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
+            ZArrayDescriptor[] firstSource = new ZArrayDescriptor[4];
+            for (int i = 0; i < 4; i++) { firstSource[i] = source[i]; }
+            Res d = new Res();
+            d.result1 = FazaClass.ATAN_CarreAlpha(firstSource);
+
+            ZArrayDescriptor[] secondSource = new ZArrayDescriptor[4];
+            for (int i = 4; i < 8; i++) { secondSource[i - 4] = source[i]; }
+            d.result2 = FazaClass.ATAN_CarreAlpha(secondSource);
+
+            Close();
+            atan_Unwrapped(d);
+        }
 
 
 
@@ -124,6 +164,9 @@ namespace Interferometry.forms
             public  ZArrayDescriptor result1;
             public  ZArrayDescriptor result2;
         }
+
+        
+       
 
        
 

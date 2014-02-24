@@ -178,7 +178,7 @@ namespace Interferometry
             }
 
             PopupProgressBar.close();
-            MessageBox.Show(" max =  " + max + " min =  " + min);
+            //MessageBox.Show(" max =  " + max + " min =  " + min);
             ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
             wrappedPhase.array = result;
             wrappedPhase.width = w1;
@@ -187,8 +187,106 @@ namespace Interferometry
             return wrappedPhase;
         }
 
+        public static ZArrayDescriptor ATAN_CarreA(ZArrayDescriptor[] img, int sineNumber, double a)
+        {
+
+            int w1 = img[0].width;
+            int h1 = img[0].height;
+            long[,] result = new long[w1, h1];                        // массив для значений фаз
+
+            // Число фазовых сдвигов
+            //MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
+
+            double pi = Math.PI;
+            double pi2 = sineNumber / (Math.PI * 2);
+           
+            int all = w1;
+            int done = 0;
+            PopupProgressBar.show();
+
+            for (int i = 0; i < w1; i++)
+            {
+                for (int j = 0; j < h1; j++)
+                {
+                    long i1 = img[0].array[i, j];       // ------         Формула расшифровки
+                    long i2 = img[1].array[i, j];
+                    long i3 = img[2].array[i, j];
+                    long i4 = img[3].array[i, j];
+                    double ay = (i1 - i4) + (i2 - i3);
+                    ay = ay * Math.Atan(a);
+                    double ax = (i2 + i3) - (i1 + i4);
 
 
+                    result[i, j] = (long)((Math.Atan2(ax, ay) + pi) * pi2);
+                    
+                }
+
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+
+            PopupProgressBar.close();
+           
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
+            wrappedPhase.array = result;
+            wrappedPhase.width = w1;
+            wrappedPhase.height = h1;
+
+            return wrappedPhase;
+        }
+
+        public static ZArrayDescriptor ATAN_CarreAlpha(ZArrayDescriptor[] img)
+        {
+
+            int w1 = img[0].width;
+            int h1 = img[0].height;
+            long[,] result = new long[w1, h1];                        // массив для значений фаз
+
+            // Число фазовых сдвигов
+            //MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
+
+            double t=360;
+            double pi2 =t/(2* Math.PI);
+            long r;
+            long max = -900;
+            long min = 9999;
+
+            int all = w1;
+            int done = 0;
+            PopupProgressBar.show();
+
+            for (int i = 0; i < w1; i++)
+            {
+                for (int j = 0; j < h1; j++)
+                {
+                    long i1 = img[0].array[i, j];       // ------         Формула расшифровки
+                    long i2 = img[1].array[i, j];
+                    long i3 = img[2].array[i, j];
+                    long i4 = img[3].array[i, j];
+                    double y = Math.Abs(3 * (i2 - i3) - (i1 - i4));
+                    double x = Math.Abs((i1 - i4) + (i2 - i3));
+                    double b;
+                    if (x != 0) b = Math.Sqrt(y / x); else b = 0;
+                    double tg = Math.Atan(b);
+                    r = (long)(tg * pi2);
+                    if (r > max) max = r;      if (r < min) min = r;
+                    result[i, j] =(long) (tg*pi2);
+
+                }
+
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+
+            PopupProgressBar.close();
+            MessageBox.Show(" max =  " + max + " min =  " + min);
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
+            wrappedPhase.array = result;
+            wrappedPhase.width = w1;
+            wrappedPhase.height = h1;
+
+            return wrappedPhase;
+        }
 
     }
 }
