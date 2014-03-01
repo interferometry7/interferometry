@@ -39,22 +39,22 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.sineParameterSaveButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.phaseShift5 = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.panel4 = new System.Windows.Forms.Panel();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.okButton = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.phaseShift5 = new System.Windows.Forms.TextBox();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.radioButton9 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -164,6 +164,14 @@
             this.panel2.Size = new System.Drawing.Size(433, 54);
             this.panel2.TabIndex = 9;
             // 
+            // phaseShift5
+            // 
+            this.phaseShift5.Location = new System.Drawing.Point(365, 14);
+            this.phaseShift5.Name = "phaseShift5";
+            this.phaseShift5.Size = new System.Drawing.Size(55, 20);
+            this.phaseShift5.TabIndex = 8;
+            this.phaseShift5.Visible = false;
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -221,40 +229,28 @@
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Enabled = false;
-            this.radioButton4.Location = new System.Drawing.Point(14, 69);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(37, 17);
-            this.radioButton4.TabIndex = 12;
-            this.radioButton4.Text = "Bit";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
-            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.radioButton9);
             this.panel4.Controls.Add(this.radioButton6);
             this.panel4.Controls.Add(this.label4);
             this.panel4.Controls.Add(this.radioButton5);
             this.panel4.Controls.Add(this.radioButton3);
-            this.panel4.Controls.Add(this.radioButton4);
             this.panel4.Location = new System.Drawing.Point(157, 144);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(155, 157);
+            this.panel4.Size = new System.Drawing.Size(155, 142);
             this.panel4.TabIndex = 13;
             // 
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(14, 118);
+            this.radioButton6.Location = new System.Drawing.Point(14, 89);
             this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(63, 17);
+            this.radioButton6.Size = new System.Drawing.Size(72, 17);
             this.radioButton6.TabIndex = 15;
             this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "dithered";
+            this.radioButton6.Text = "дизеринг";
             this.radioButton6.UseVisualStyleBackColor = true;
             this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
             // 
@@ -270,7 +266,7 @@
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(14, 93);
+            this.radioButton5.Location = new System.Drawing.Point(14, 64);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(130, 17);
             this.radioButton5.TabIndex = 13;
@@ -280,7 +276,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(464, 269);
+            this.okButton.Location = new System.Drawing.Point(464, 254);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(145, 32);
             this.okButton.TabIndex = 14;
@@ -299,13 +295,16 @@
             this.panel5.Size = new System.Drawing.Size(145, 117);
             this.panel5.TabIndex = 15;
             // 
-            // label5
+            // radioButton8
             // 
-            this.label5.Location = new System.Drawing.Point(3, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(135, 38);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Количество снимков для каждого числа синусоид";
+            this.radioButton8.AutoSize = true;
+            this.radioButton8.Location = new System.Drawing.Point(6, 82);
+            this.radioButton8.Name = "radioButton8";
+            this.radioButton8.Size = new System.Drawing.Size(31, 17);
+            this.radioButton8.TabIndex = 2;
+            this.radioButton8.Text = "5";
+            this.radioButton8.UseVisualStyleBackColor = true;
+            this.radioButton8.CheckedChanged += new System.EventHandler(this.radioButton8_CheckedChanged);
             // 
             // radioButton7
             // 
@@ -320,30 +319,31 @@
             this.radioButton7.UseVisualStyleBackColor = true;
             this.radioButton7.CheckedChanged += new System.EventHandler(this.radioButton7_CheckedChanged);
             // 
-            // radioButton8
+            // label5
             // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(6, 82);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(31, 17);
-            this.radioButton8.TabIndex = 2;
-            this.radioButton8.Text = "5";
-            this.radioButton8.UseVisualStyleBackColor = true;
-            this.radioButton8.CheckedChanged += new System.EventHandler(this.radioButton8_CheckedChanged);
+            this.label5.Location = new System.Drawing.Point(3, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(135, 38);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Количество снимков для каждого числа синусоид";
             // 
-            // phaseShift5
+            // radioButton9
             // 
-            this.phaseShift5.Location = new System.Drawing.Point(365, 14);
-            this.phaseShift5.Name = "phaseShift5";
-            this.phaseShift5.Size = new System.Drawing.Size(55, 20);
-            this.phaseShift5.TabIndex = 8;
-            this.phaseShift5.Visible = false;
+            this.radioButton9.AutoSize = true;
+            this.radioButton9.Location = new System.Drawing.Point(14, 112);
+            this.radioButton9.Name = "radioButton9";
+            this.radioButton9.Size = new System.Drawing.Size(139, 17);
+            this.radioButton9.TabIndex = 16;
+            this.radioButton9.TabStop = true;
+            this.radioButton9.Text = "битовые изображения";
+            this.radioButton9.UseVisualStyleBackColor = true;
+            this.radioButton9.CheckedChanged += new System.EventHandler(this.radioButton9_CheckedChanged);
             // 
             // BackgroundImagesGeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 311);
+            this.ClientSize = new System.Drawing.Size(621, 295);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.panel4);
@@ -386,7 +386,6 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.Button okButton;
@@ -399,5 +398,6 @@
         private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox phaseShift5;
+        private System.Windows.Forms.RadioButton radioButton9;
     }
 }

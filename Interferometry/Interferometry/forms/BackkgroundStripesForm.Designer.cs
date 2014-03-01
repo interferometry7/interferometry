@@ -40,7 +40,7 @@
             this.stripesImage.Location = new System.Drawing.Point(0, 0);
             this.stripesImage.Margin = new System.Windows.Forms.Padding(0);
             this.stripesImage.Name = "stripesImage";
-            this.stripesImage.Size = new System.Drawing.Size(593, 434);
+            this.stripesImage.Size = new System.Drawing.Size(871, 710);
             this.stripesImage.TabIndex = 0;
             this.stripesImage.TabStop = false;
             // 
@@ -48,7 +48,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 435);
+            this.ClientSize = new System.Drawing.Size(664, 545);
             this.Controls.Add(this.stripesImage);
             this.Name = "BackkgroundStripesForm";
             this.Text = "BackkgroundStripesForm";

@@ -24,7 +24,11 @@ namespace rab1
             /// <summary>
             /// Полосы с дизерингом
             /// </summary>
-            dithered
+            dithered,
+            /// <summary>
+            /// Битовые полосы
+            /// </summary>
+            bits
         };
 
         private int stripOrientation = 0;
@@ -43,7 +47,13 @@ namespace rab1
         private int phaseShift5Value;
 
         private BackkgroundStripesForm formForStripes;
-        private int numberOfImageInSeries = 9;
+        private int numberOfImageInSeries = 8;
+
+        /// <summary>
+        /// Массив для хранения битовых изображений
+        /// </summary>
+        private Image[] imagesContainer = new Image[8];
+        private int currentBitImageNumber = 0;
 
         public event OneImageOfSeries oneImageOfSeries;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +94,10 @@ namespace rab1
             {
                 result = SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
             }
+            else if (stripeType == StripeType.bits)
+            {
+                result = SinClass1.drawBitImage(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, 1);
+            }
 
             formForStripes.setImage(result);
         }
@@ -103,6 +117,8 @@ namespace rab1
         private void okClicked(object sender, EventArgs e)
         {
             imageNumber = 0;
+            currentBitImageNumber = 0;
+            imagesContainer = new Image[8];
             updateInitialImage();
 
             ImageGetter.sharedInstance().imageReceived += imageTaken;
@@ -111,12 +127,46 @@ namespace rab1
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void imageTaken(Image newImage)
         {
-            imageNumber++;
-
-            if (oneImageOfSeries != null)
+            if (stripeType != StripeType.bits)
             {
-                oneImageOfSeries(newImage, imageNumber);
+                imageNumber++;
+
+                if (oneImageOfSeries != null)
+                {
+                    oneImageOfSeries(newImage, imageNumber);
+                }
             }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    if (imagesContainer[i] == null)
+                    {
+                        imagesContainer[i] = newImage;
+                        break;
+                    }
+                }
+
+                currentBitImageNumber++;
+
+                if (imagesContainer[7] == null)
+                {
+                    
+                }
+                else
+                {
+                    Image result = SinClass1.bit8sin(imagesContainer);
+                    imageNumber++;
+
+                    if (oneImageOfSeries != null)
+                    {
+                        oneImageOfSeries(result, imageNumber);
+                    }
+
+                    currentBitImageNumber = 0;
+                    imagesContainer = new Image[8];
+                }
+            }           
 
             if (imageNumber >= numberOfImageInSeries)
             {
@@ -124,9 +174,13 @@ namespace rab1
             }
             else
             {
-                if (numberOfImageInSeries == 9)
+                if (numberOfImageInSeries == 8)
                 {
-                    if (imageNumber == 1)
+                    if (imageNumber == 0)
+                    {
+                        drawLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                    }
+                    else if (imageNumber == 1)
                     {
                         drawLines(numberOfSin1Value/10, phaseShift2Value, imageWidth, imageHeight, stripOrientation);
                     }
@@ -155,7 +209,7 @@ namespace rab1
                         drawLines(numberOfSin2Value/10, phaseShift4Value, imageWidth, imageHeight, stripOrientation);
                     }
                 }
-                else if (numberOfImageInSeries == 12)
+                else if (numberOfImageInSeries == 10)
                 {
                     if (imageNumber == 1)
                     {
@@ -215,6 +269,10 @@ namespace rab1
             {
                 result = SinClass1.drawDitheredLines(N_sin, f1, max_x, max_y, XY);
             }
+            else if (stripeType == StripeType.bits)
+            {
+                result = SinClass1.drawBitImage(N_sin, f1, max_x, max_y, XY, currentBitImageNumber + 1);
+            }
 
             formForStripes.setImage(result);
         }
@@ -254,15 +312,6 @@ namespace rab1
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-            if (((RadioButton)sender).Checked == true)
-            {
-                stripeType = StripeType.sine;
-                updateInitialImage();
-            }
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked == true)
@@ -295,13 +344,22 @@ namespace rab1
         private void radioButton8_CheckedChanged(object sender, EventArgs e)
         {
             phaseShift5.Visible = true;
-            numberOfImageInSeries = 12;
+            numberOfImageInSeries = 10;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void radioButton7_CheckedChanged(object sender, EventArgs e)
         {
             phaseShift5.Visible = false;
-            numberOfImageInSeries = 9;
+            numberOfImageInSeries = 8;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void radioButton9_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                stripeType = StripeType.bits;
+                updateInitialImage();
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
