@@ -126,6 +126,9 @@
     <Compile Include="forms\TableGenerateForm.designer.cs">
       <DependentUpon>TableGenerateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\VisualisationWindow.xaml.cs">
+      <DependentUpon>VisualisationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrameworkManager.cs" />
     <Compile Include="ImageGetter.cs" />
     <Compile Include="ImageHelper.cs" />
@@ -213,6 +216,10 @@
     <Page Include="forms\PointsChooseForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\VisualisationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

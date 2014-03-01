@@ -645,6 +645,15 @@ namespace Interferometry.forms
                 z = newZ;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (zArrayDescriptor != null)
+            {
+                VisualisationWindow visualisationWindow = new VisualisationWindow(zArrayDescriptor);
+                visualisationWindow.Show();
+            }
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
