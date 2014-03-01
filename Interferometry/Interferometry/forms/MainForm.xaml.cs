@@ -46,8 +46,7 @@ namespace Interferometry.forms
             /// <summary>
             /// При клике по изображению строится таблица
             /// </summary>
-            tableBuildMode
-            ,
+            tableBuildMode,
             /// <summary>
             /// При клике по изображению строится график по двум первым изображениям
             /// </summary>

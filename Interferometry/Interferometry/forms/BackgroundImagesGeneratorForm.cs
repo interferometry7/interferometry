@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using Interferometry;
 using Interferometry.forms;
 
 public delegate void OneImageOfSeries(Image newImage, int imageNumber);
@@ -41,7 +42,7 @@ namespace rab1
         private int phaseShift4Value;
         private int phaseShift5Value;
 
-        private StripesForm formForStripes;
+        private BackkgroundStripesForm formForStripes;
         private int numberOfImageInSeries = 9;
 
         public event OneImageOfSeries oneImageOfSeries;
@@ -61,7 +62,7 @@ namespace rab1
 
             convertValues();
 
-            formForStripes = new StripesForm();
+            formForStripes = new BackkgroundStripesForm();
             updateInitialImage();
             formForStripes.Show();
         }
@@ -73,7 +74,7 @@ namespace rab1
 
             if (stripeType == StripeType.sine)
             {
-                result = SinClass1.sin_f(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                result = SinClass1.drawSine(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
             }
             else if (stripeType == StripeType.lines)
             {
@@ -204,7 +205,7 @@ namespace rab1
 
             if (stripeType == StripeType.sine)
             {
-                result = SinClass1.sin_f(N_sin, f1, max_x, max_y, XY);
+                result = SinClass1.drawSine(N_sin, f1, max_x, max_y, XY);
             }
             else if (stripeType == StripeType.lines)
             {

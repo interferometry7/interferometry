@@ -11,7 +11,7 @@ namespace rab1
     {
 
        // 
-        public static Bitmap sin_f(double N_sin, double f1, int max_x, int max_y, int XY)    // sin b/w
+        public static Bitmap drawSine(double N_sin, double f1, int max_x, int max_y, int XY)    // sin b/w
         {
             int i, j;
             byte r;
