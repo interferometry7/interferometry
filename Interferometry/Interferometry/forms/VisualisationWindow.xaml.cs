@@ -22,7 +22,7 @@ namespace Interferometry.forms
             InitializeComponent();
 
             // prepare points
-            Point3D[,] points = new Point3D[array.height, array.width];
+            Point3D[,] points = new Point3D[array.width, array.height];
             for (int i = 0; i < array.width; ++i)
                 for (int j = 0; j < array.height; ++j)
                     points[i, j] = new Point3D(i, array.array[i, j], j);
@@ -39,7 +39,7 @@ namespace Interferometry.forms
                     surface.Children.Add(createTriangle(points[i, j + 1], points[i + 1, j], points[i + 1, j + 1]));
                     surface.Children.Add(createTriangle(points[i + 1, j + 1], points[i + 1, j], points[i, j + 1]));
                 }
-                System.Console.WriteLine("buidling on row: " + i);
+                System.Console.WriteLine("buidling on row: " + i + "/" + array.width);
             }
             System.Console.WriteLine("model building done");
 
