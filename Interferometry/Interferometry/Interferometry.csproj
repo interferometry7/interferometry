@@ -75,6 +75,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="custom_visual_components\CustomPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="custom_visual_components\ImageContainer.xaml.cs">
       <DependentUpon>ImageContainer.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,12 @@
     <Compile Include="forms\BackgroundImagesGeneratorForm.designer.cs">
       <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\BackkgroundStripesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\BackkgroundStripesForm.Designer.cs">
+      <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\Tabl_Sub.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,9 +101,6 @@
     </Compile>
     <Compile Include="forms\PointsChooseForm.xaml.cs">
       <DependentUpon>PointsChooseForm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="forms\StripesForm.xaml.cs">
-      <DependentUpon>StripesForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="forms\TableFaza.cs">
       <SubType>Form</SubType>
@@ -160,6 +166,9 @@
     <EmbeddedResource Include="forms\BackgroundImagesGeneratorForm.resx">
       <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\BackkgroundStripesForm.resx">
+      <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\GraphForm.resx">
       <DependentUpon>GraphForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,10 +211,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="forms\PointsChooseForm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="forms\StripesForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

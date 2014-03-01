@@ -13,10 +13,11 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using System.Threading;
 using System.IO;
+using rab1;
 
-public delegate void ImageReceived(Image newImage);  
+public delegate void ImageReceived(Image newImage);
 
-namespace rab1
+namespace Interferometry
 {
     class ImageGetter
     {
@@ -135,7 +136,10 @@ namespace rab1
             }
 
             //изображение получено
-            imageReceived(e.GetImage());
+            if (imageReceived != null)
+            {
+                imageReceived(e.GetImage());
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void catchShootException(Exception exception)
