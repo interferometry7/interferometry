@@ -18,28 +18,39 @@ namespace rab1
             double nx = max_x + 1;
             double pi = Math.PI;
             double af = pi * 2 * N_sin / nx;
-            Bitmap bmp_sin = new Bitmap(max_x, max_y);
+            Bitmap result = new Bitmap(max_x, max_y);
 
-          
 
-            if (XY == 0)  // Полосы ориентированы перпендикулярно оси X
+
+            if (XY == 0) // Полосы ориентированы перпендикулярно оси X
+            {
                 for (i = 0; i < max_x; i++)
+                {
                     for (j = 0; j < max_y; j++)
                     {
-                        r = (byte)((Math.Sin(af * i + 1 + pi * f1 / 180) + 1) * 127); if (r > 255) r = 0;
-                        bmp_sin.SetPixel(i, j, Color.FromArgb(r, r, r));
+                        r = (byte) ((Math.Sin(af*i + 1 + pi*f1/180) + 1)*127);
+                        if (r > 255) r = 0;
+                        result.SetPixel(i, j, Color.FromArgb(r, r, r));
 
                     }
+                }
+            }
+
             if (XY == 1) // Полосы ориентированы перпендикулярно оси y
+            {
                 for (i = 0; i < max_y; i++)
+                {
                     for (j = 0; j < max_x; j++)
                     {
-                        r = (byte)((Math.Sin(af * i + 1 + pi * f1 / 180) + 1) * 127); if (r > 255) r = 0;
-                        bmp_sin.SetPixel(j, i, Color.FromArgb(r, r, r));
+                        r = (byte) ((Math.Sin(af*i + 1 + pi*f1/180) + 1)*127);
+                        if (r > 255) r = 0;
+                        result.SetPixel(j, i, Color.FromArgb(r, r, r));
 
                     }
+                }
+            }
 
-            return bmp_sin;
+            return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Bitmap drawLines(double N_sin, double f1, int max_x, int max_y, int XY)    // sin b/w
