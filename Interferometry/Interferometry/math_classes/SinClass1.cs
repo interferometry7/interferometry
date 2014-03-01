@@ -297,6 +297,7 @@ namespace rab1
             double pi = Math.PI;
             double af = pi * 2 * N_sin / nx;
             Bitmap result = new Bitmap(width, height);
+            BitmapData bitmapData = ImageProcessor.getBitmapData(result);
 
             if (XY == 0)
             {
@@ -307,7 +308,7 @@ namespace rab1
                         r = (byte) ((Math.Sin(af*i + pi*f1/180) + 1)*127);
                         if (r > 255) r = 0;
                         r = BITMASK(r, MASK);
-                        result.SetPixel(i, j, Color.FromArgb(r, r, r));
+                        ImageProcessor.setPixel(bitmapData, i, j, Color.FromArgb(r, r, r));
                     }
                 }
             }
@@ -321,11 +322,12 @@ namespace rab1
                         r = (byte) ((Math.Sin(af*i + pi*f1/180) + 1)*127);
                         if (r > 255) r = 0;
                         r = BITMASK(r, MASK);
-                        result.SetPixel(j, i, Color.FromArgb(r, r, r));
+                        ImageProcessor.setPixel(bitmapData, j, i, Color.FromArgb(r, r, r));
                     }
                 }
             }
 
+            result.UnlockBits(bitmapData);
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -544,7 +546,15 @@ namespace rab1
             int width = img[7].Width;
             int height = img[7].Height;
             Bitmap result = new Bitmap(width, height);
-            
+            BitmapData bitmapData = ImageProcessor.getBitmapData(result);
+
+            BitmapData[] imagesData = new BitmapData[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                imagesData[i] = ImageProcessor.getBitmapData((Bitmap)img[i]);
+            }
+
             int[] cr = new int[height];
             int[] cb = new int[height];
             int[] cg = new int[height];
@@ -558,11 +568,9 @@ namespace rab1
 
             for (int i = 0; i < width; i++)
             {
-                
-
                 for (int j = 0; j < height; j++)
                 {
-                    c = result.GetPixel(i, j); 
+                    c = ImageProcessor.getPixel(i, j, bitmapData); 
                     cr[j] = c.R; 
                     cg[j] = c.G; 
                     cb[j] = c.B;
@@ -574,7 +582,7 @@ namespace rab1
                 {
                     for (int j = 0; j < height; j++)
                     {
-                        c = ((Bitmap)img[k]).GetPixel(i, j); 
+                        c = ImageProcessor.getPixel(i, j, imagesData[k]); 
                         cr1[j] = c.R; 
                         cg1[j] = c.G; 
                         cb1[j] = c.B;
@@ -592,12 +600,18 @@ namespace rab1
                 { 
                     if (cr[j] > 255) cr[j] = 255; 
                     if (cg[j] > 255) cg[j] = 255; 
-                    if (cb[j] > 255) cb[j] = 255; 
+                    if (cb[j] > 255) cb[j] = 255;
 
-                    result.SetPixel(i, j, Color.FromArgb(cr[j], cb[j], cg[j])); 
+                    ImageProcessor.setPixel(bitmapData, i, j, Color.FromArgb(cr[j], cb[j], cg[j])); 
                 }
             }
-           
+
+            for (int i = 0; i < 8; i++)
+            {
+                ((Bitmap)img[i]).UnlockBits(imagesData[i]); ;
+            }
+
+            result.UnlockBits(bitmapData);
             return result;
         }
     }
