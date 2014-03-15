@@ -654,6 +654,85 @@ namespace Interferometry.forms
                 visualisationWindow.Show();
             }
         }
+
+        private void button1231_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainImage.Source == null) { MessageBox.Show("Главное изображение пустое"); return; }
+            if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
+            int w = zArrayDescriptor.width;
+            int h = zArrayDescriptor.height;
+            Int64 min = Int64.MaxValue;
+            Int64 max = Int64.MinValue;
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    Int64 k = zArrayDescriptor.array[i, j];
+                    if (k > max) max = k; if (k < min) min = k;
+                }
+            }
+            // MessageBox.Show(" max = " + max + " min = " + min);
+            int all = w;
+            int done = 0;
+            PopupProgressBar.show();
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    Int64 k = zArrayDescriptor.array[i, j];
+                    if (k > max) max = k; if (k < min) min = k;
+                    zArrayDescriptor.array[i, j] = (k - min) * 255 / (max - min);
+                }
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+            PopupProgressBar.close();
+        }
+
+        private void button121_Click(object sender, RoutedEventArgs e)
+        {
+            // if (mainImage.Source == null) { MessageBox.Show("Главное изображение пустое"); return; }
+            // if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
+            ZArrayDescriptor[] source = new ZArrayDescriptor[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                source[i] = imageContainersList[i].getzArrayDescriptor();
+            }
+            int all = 8;
+            int done = 0;
+            PopupProgressBar.show();
+            for (int ii = 0; ii < 8; ii++)
+            {
+                int w = source[ii].width;
+                int h = source[ii].height;
+                Int64 min = Int64.MaxValue;
+                Int64 max = Int64.MinValue;
+                for (int i = 0; i < w; i++)
+                {
+                    for (int j = 0; j < h; j++)
+                    {
+                        Int64 k = source[ii].array[i, j];
+                        if (k > max) max = k; if (k < min) min = k;
+                    }
+                }
+                // MessageBox.Show(" max = " + max + " min = " + min);
+
+                for (int i = 0; i < w; i++)
+                {
+                    for (int j = 0; j < h; j++)
+                    {
+                        Int64 k = source[ii].array[i, j];
+                        if (k > max) max = k; if (k < min) min = k;
+                        source[ii].array[i, j] = (k - min) * 255 / (max - min);
+                    }
+
+                }
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+            PopupProgressBar.close();
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
