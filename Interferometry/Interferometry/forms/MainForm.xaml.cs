@@ -734,5 +734,24 @@ namespace Interferometry.forms
             PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void smoothButton_Click(object sender, RoutedEventArgs e)
+        {
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
+            filtrationForm.imageFiltered += FiltrationFormOnImageFiltered;
+            filtrationForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void FiltrationFormOnImageFiltered(Bitmap filtratedImage)
+        {
+            setZArray(Utils.getArrayFromImage(filtratedImage));
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void midianFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
+            filtrationForm.imageFiltered += FiltrationFormOnImageFiltered;
+            filtrationForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

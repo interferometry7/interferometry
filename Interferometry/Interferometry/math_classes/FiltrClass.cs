@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -50,7 +51,7 @@ namespace rab1
             return wrappedPhase;
         }
 
-/*
+
 
         public static void Transp(PictureBox pictureBox01)
         {
@@ -88,7 +89,7 @@ namespace rab1
            PopupProgressBar.close();
        }
         // -------------------------------------------------------------------------------------------- Фильтрация 121
-        public static Image Filt_121(Image image, int k_filt)
+        public static Bitmap Filt_121(Bitmap image, int k_filt)
         {
             if (image == null)
             {
@@ -175,7 +176,7 @@ namespace rab1
             return s;
          }
 
-       public static Image Filt_Mediana(Image image, int k_filt)
+       public static Bitmap Filt_Mediana(Bitmap image, int k_filt)
        {
            if (image == null)
            {
@@ -325,7 +326,5 @@ namespace rab1
            }
            pictureBox01.Image = bmp2;
        }
- * */
-
     }
 }

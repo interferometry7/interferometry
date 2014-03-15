@@ -65,6 +65,14 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="Фильтрация" Name="tabItem6">
+                <Grid>
+                    <Button x:Name="smoothButton" Content="Сглаживание" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="23
+                            " Click="smoothButton_Click" />
+                    <Button x:Name="midianFilterButton" Content="Медианный" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="midianFilterButton_Click" />
+
+                </Grid>
+            </TabItem>
 
 
         </TabControl>

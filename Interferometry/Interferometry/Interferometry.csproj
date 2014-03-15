@@ -93,6 +93,10 @@
     <Compile Include="forms\BackkgroundStripesForm.Designer.cs">
       <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\FiltrationForm.cs" />
+    <Compile Include="forms\FiltrationForm.designer.cs">
+      <DependentUpon>FiltrationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\Tabl_Sub.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\BackkgroundStripesForm.resx">
       <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FiltrationForm.resx">
+      <DependentUpon>FiltrationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\GraphForm.resx">
       <DependentUpon>GraphForm.cs</DependentUpon>
