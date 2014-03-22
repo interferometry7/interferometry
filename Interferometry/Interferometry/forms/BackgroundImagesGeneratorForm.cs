@@ -31,6 +31,18 @@ namespace rab1
             bits
         };
 
+        public enum BitImageType
+        {
+            /// <summary>
+            /// Режим по умолчанию. Неинвертированные полосы
+            /// </summary>
+            simple,
+            /// <summary>
+            /// Инвертированные полосы
+            /// </summary>
+            inverted
+        };
+
         private int stripOrientation = 0;
         private StripeType stripeType = StripeType.sine;
         private int imageWidth = 800;
@@ -96,7 +108,7 @@ namespace rab1
             }
             else if (stripeType == StripeType.bits)
             {
-                result = SinClass1.drawBitImage(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, 1);
+                result = SinClass1.drawBitImage(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, 1, BitImageType.simple);
             }
 
             formForStripes.setImage(result);
@@ -271,7 +283,7 @@ namespace rab1
             }
             else if (stripeType == StripeType.bits)
             {
-                result = SinClass1.drawBitImage(N_sin, f1, max_x, max_y, XY, currentBitImageNumber + 1);
+                result = SinClass1.drawBitImage(N_sin, f1, max_x, max_y, XY, currentBitImageNumber + 1, BitImageType.simple);
             }
 
             formForStripes.setImage(result);

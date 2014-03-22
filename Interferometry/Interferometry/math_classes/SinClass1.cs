@@ -289,7 +289,7 @@ namespace rab1
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static Bitmap drawBitImage(double N_sin, double f1, int width, int height, int XY, int MASK)    // bit b/w
+        public static Bitmap drawBitImage(double N_sin, double f1, int width, int height, int XY, int MASK, BackgroundImagesGeneratorForm.BitImageType type)    // bit b/w
         {
             int i, j;
             byte r;

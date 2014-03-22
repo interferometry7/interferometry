@@ -32,9 +32,6 @@ namespace Interferometry
         private ZArrayDescriptor zArrayDescriptor;
 
         public ImageContainerDelegate myDelegate;
-        BackgroundWorker worker = new BackgroundWorker();
-
-
 
         //Interface Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +96,7 @@ namespace Interferometry
             if (newSource != null)
             {
                 progressBar.Visibility = Visibility.Visible;
-                
+                BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork+=loadImageAsync;
                 worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
                 worker.RunWorkerAsync(newSource);
