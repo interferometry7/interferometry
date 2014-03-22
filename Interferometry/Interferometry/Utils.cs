@@ -73,6 +73,7 @@ namespace Interferometry
             newBitmap.UnlockBits(data);
 
             BitmapSource result = FilesHelper.bitmapToBitmapImage(newBitmap);
+            result.Freeze();
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

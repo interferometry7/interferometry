@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace Interferometry
         private ZArrayDescriptor zArrayDescriptor;
 
         public ImageContainerDelegate myDelegate;
+        BackgroundWorker worker = new BackgroundWorker();
+
+
 
         //Interface Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +52,18 @@ namespace Interferometry
         public void setzArrayDescriptorWithoutImageGenerating(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setImage(BitmapImage bitmapImage)
+        {
+            if (bitmapImage != null)
+            {
+                progressBar.Visibility = Visibility.Visible;
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += loadImageAsync;
+                worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
+                worker.RunWorkerAsync(bitmapImage);
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImageWithoutArrayGenerating(ImageSource imageSource)
@@ -74,7 +90,7 @@ namespace Interferometry
 
 
 
-        //Private Methods
+        //GUI Methods
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void onImageClick(object sender, MouseButtonEventArgs e)
         {
@@ -82,19 +98,12 @@ namespace Interferometry
 
             if (newSource != null)
             {
-                setImage(FilesHelper.bitmapImageToBitmap(newSource));
+                progressBar.Visibility = Visibility.Visible;
+                
+                worker.DoWork+=loadImageAsync;
+                worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
+                worker.RunWorkerAsync(newSource);
             }
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void setImage(Bitmap bitmap)
-        {
-            if (bitmap == null)
-            {
-                return;
-            }
-
-            zArrayDescriptor = Utils.getArrayFromImage(bitmap);
-            setzArrayDescriptor(zArrayDescriptor);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void exportImageButton_Click(object sender, RoutedEventArgs e)
@@ -134,6 +143,32 @@ namespace Interferometry
             {
                 popup.IsOpen = false;
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        //Private Methods
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadImageAsync(object sender, DoWorkEventArgs doWorkEventArgs)
+        {
+            BitmapImage newSource = (BitmapImage)doWorkEventArgs.Argument;
+
+            if (newSource == null)
+            {
+                return;
+            }
+
+            zArrayDescriptor = Utils.getArrayFromImage(newSource);
+            ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
+            doWorkEventArgs.Result = imageSource;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
+        {
+            ImageSource qwe = (ImageSource)runWorkerCompletedEventArgs.Result;
+            image.Source = qwe;
+            progressBar.Visibility = Visibility.Hidden;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

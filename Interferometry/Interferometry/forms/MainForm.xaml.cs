@@ -122,51 +122,13 @@ namespace Interferometry.forms
         /// Загрузить 8 изображений
         private void loadEightImages(object sender, RoutedEventArgs e)
         {
-            ImageSource[] newSources = FilesHelper.loadBunchImages(8);
-
-            int all = 7;
-            int done = 0;
-            PopupProgressBar.show();
-
-            if (newSources != null)
-            {
-                for (int i = 0; i < 8; i++)
-                {
-                    imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
-                    imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
-                    //imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
-                    newSources[i] = null;
-                    GC.Collect();
-                    done++;
-                    PopupProgressBar.setProgress(done, all);
-                }
-            }
-            PopupProgressBar.close();
+            loadBunchOfImages(8);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Загрузить 10 изображений
         private void loadTenImagesButton_Click(object sender, RoutedEventArgs e)
         {
-            ImageSource[] newSources = FilesHelper.loadBunchImages(10);
-
-            int all = 9;
-            int done = 0;
-            PopupProgressBar.show();
-
-            if (newSources != null)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
-                    imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
-                    //imageContainersList[i].setzArrayDescriptor(Utils.getArrayFromImage((BitmapSource)newSources[i]));
-                    newSources[i] = null;
-                    GC.Collect();
-                    done++;
-                    PopupProgressBar.setProgress(done, all);
-                }
-            }
-            PopupProgressBar.close();
+            loadBunchOfImages(10);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void saveButtonClicked(object sender, RoutedEventArgs e)
@@ -221,7 +183,7 @@ namespace Interferometry.forms
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    imageContainersList[i].setzArrayDescriptor(loadedArrays[i]);
+                    //imageContainersList[i].setzArrayDescriptor(loadedArrays[i]);
                     done++;
                     PopupProgressBar.setProgress(done, all);
                 }
@@ -485,6 +447,11 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void setZArray(ZArrayDescriptor arrayDescriptor)
         {
+            if (arrayDescriptor == null)
+            {
+                return;
+            }
+
             zArrayDescriptor = new ZArrayDescriptor(arrayDescriptor);
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
 
@@ -650,7 +617,25 @@ namespace Interferometry.forms
         {
             if (zArrayDescriptor != null)
             {
-                VisualisationWindow visualisationWindow = new VisualisationWindow(zArrayDescriptor);
+                int multiplier = 40;
+
+                ZArrayDescriptor descriptorForVisualization = new ZArrayDescriptor();
+                descriptorForVisualization.array = new long[zArrayDescriptor.width / multiplier, zArrayDescriptor.height / multiplier];
+                descriptorForVisualization.width = zArrayDescriptor.width / multiplier;
+                descriptorForVisualization.height = zArrayDescriptor.height / multiplier;
+
+                for (int i = 0; i < zArrayDescriptor.width; i = i + multiplier)
+                {
+                    for (int j = 0; j < zArrayDescriptor.height; j = j + multiplier)
+                    {
+                        if ((i / multiplier < descriptorForVisualization.width) && (j / multiplier < descriptorForVisualization.height))
+                        {
+                            descriptorForVisualization.array[i / multiplier, j / multiplier] = zArrayDescriptor.array[i, j];
+                        }
+                    }
+                }
+
+                VisualisationWindow visualisationWindow = new VisualisationWindow(descriptorForVisualization);
                 visualisationWindow.Show();
             }
         }
@@ -751,6 +736,29 @@ namespace Interferometry.forms
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
             filtrationForm.imageFiltered += FiltrationFormOnImageFiltered;
             filtrationForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadBunchOfImages(int numberOfImages)
+        {
+            ImageSource[] newSources = FilesHelper.loadBunchImages(numberOfImages);
+
+            int all = numberOfImages - 1;
+            int done = 0;
+            PopupProgressBar.show();
+
+            if (newSources != null)
+            {
+                for (int i = 0; i < numberOfImages; i++)
+                {
+                    //imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
+                    //imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
+                    imageContainersList[i].setImage((BitmapImage) newSources[i]);
+                    newSources[i] = null;
+                    done++;
+                    PopupProgressBar.setProgress(done, all);
+                }
+            }
+            PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Height="78" Width="114">
-    
+
     <Grid Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*" />
@@ -13,7 +13,7 @@
             <RowDefinition Height="100*" />
             <RowDefinition Height="100*" />
         </Grid.RowDefinitions>
-        
+
         <Button Content="&lt;-" HorizontalAlignment="Left" Margin="23,6,0,3" Name="exportImageButton" Width="25" Click="exportImageButton_Click" />
         <Button Content="-&gt;" HorizontalAlignment="Left" Margin="23,3,0,6" Name="loadImageButton" Width="25" Grid.Row="1" Click="loadImageClicked" />
         <Grid Margin="50,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick" MouseEnter="grid1_MouseEnter" MouseLeave="grid1_MouseLeave">
@@ -25,6 +25,28 @@
                     </TextBlock>
                 </Border>
             </Popup>
+            <Grid  HorizontalAlignment="Right" Width="58" Background="#59000000">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Grid.Row="1" Margin="12,3,0,3" Width="36" IsIndeterminate="True" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+                    <ProgressBar.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="-1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ProgressBar.RenderTransform>
+                </ProgressBar>
+            </Grid>
+
+
+
+
         </Grid>
         <Label Content="Label" Height="28" HorizontalAlignment="Left" Name="imageNumberLabel" VerticalAlignment="Top" Width="21" FontSize="10" Margin="0,16,0,0" Grid.RowSpan="2" />
     </Grid>
