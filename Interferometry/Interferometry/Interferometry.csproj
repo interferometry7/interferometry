@@ -49,6 +49,10 @@
     <Reference Include="Emgu.Util">
       <HintPath>libs\Emgu.Util.dll</HintPath>
     </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -93,7 +97,9 @@
     <Compile Include="forms\BackkgroundStripesForm.Designer.cs">
       <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\FiltrationForm.cs" />
+    <Compile Include="forms\FiltrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\FiltrationForm.designer.cs">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
     </Compile>
@@ -140,6 +146,11 @@
     <Compile Include="math_classes\SinClass1.cs" />
     <Compile Include="math_classes\ZArrayDescriptor.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="visualisation\FreeCamera.cs" />
+    <Compile Include="visualisation\Mesh.cs" />
+    <Compile Include="visualisation\PerspectiveProjeciton.cs" />
+    <Compile Include="visualisation\ShaderWrapper.cs" />
+    <Compile Include="visualisation\VisualisationWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="custom_visual_components\PopupProgressBar.cs" />
@@ -207,6 +218,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="visualisation\shaders\shader.frag" />
+    <None Include="visualisation\shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="libs\" />
