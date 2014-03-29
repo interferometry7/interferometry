@@ -56,17 +56,18 @@ namespace Interferometry.Visualisation
             CreateProgram();
 
             cam = new FreeCamera(new Vector3(0, 0, 1), new Vector3(0, 0, -5));
-            proj = new PerspectiveProjeciton(3.14159f / 4, 0.01f, 100f, (float)this.Width / this.Height);
+            proj = new PerspectiveProjeciton(3.14159f / 4, 0.01f, 5000f, (float)this.Width / this.Height);
 
             GL.Enable(EnableCap.DepthTest);
             GL.DepthMask(true);
             GL.DepthFunc(DepthFunction.Lequal);
             GL.DepthRange(0.0f, 1.0f);
-            GL.Enable(EnableCap.DepthClamp);
-            
+            //GL.Enable(EnableCap.DepthClamp);
+            /*
             GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.CullFace(CullFaceMode.Back);
+            */
         }
 
         float shift = 0.01f;

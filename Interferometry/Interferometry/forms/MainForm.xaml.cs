@@ -617,7 +617,7 @@ namespace Interferometry.forms
         {
             if (zArrayDescriptor != null)
             {
-                int multiplier = 40;
+                int multiplier = 5;
 
                 ZArrayDescriptor descriptorForVisualization = new ZArrayDescriptor();
                 descriptorForVisualization.array = new long[zArrayDescriptor.width / multiplier, zArrayDescriptor.height / multiplier];
@@ -630,13 +630,13 @@ namespace Interferometry.forms
                     {
                         if ((i / multiplier < descriptorForVisualization.width) && (j / multiplier < descriptorForVisualization.height))
                         {
-                            descriptorForVisualization.array[i / multiplier, j / multiplier] = zArrayDescriptor.array[i, j];
+                            descriptorForVisualization.array[i / multiplier, j / multiplier] = -zArrayDescriptor.array[i, j];
                         }
                     }
                 }
 
-                Interferometry.Visualisation.VisualisationWindow visualisationWindow =
-                    new Interferometry.Visualisation.VisualisationWindow(zArrayDescriptor, 1280, 720, 0, false);
+                Visualisation.VisualisationWindow visualisationWindow =
+                    new Visualisation.VisualisationWindow(descriptorForVisualization, 1280, 720, 0, false);
                 visualisationWindow.Run();
             }
         }
