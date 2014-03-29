@@ -617,7 +617,7 @@ namespace Interferometry.forms
         {
             if (zArrayDescriptor != null)
             {
-                int multiplier = 5;
+                int multiplier = 4;
 
                 ZArrayDescriptor descriptorForVisualization = new ZArrayDescriptor();
                 descriptorForVisualization.array = new long[zArrayDescriptor.width / multiplier, zArrayDescriptor.height / multiplier];

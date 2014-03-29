@@ -19,23 +19,20 @@ namespace rab1
             double af = PI * 2 * waveNumbers / width;
             Bitmap result = new Bitmap(width, height);
 
-            if (XY == 0) // Полосы ориентированы перпендикулярно оси X
+            for (i = 0; i < width; i++)
             {
-                for (i = 0; i < width; i++)
+                for (j = 0; j < height; j++)
                 {
-                    for (j = 0; j < height; j++)
+                    if (XY == 0)
                     {
-                        colorComponent = (int) ((Math.Sin(af*i + PI*phaseShift/180) + 1) * 255.0/2.0);
-
-                        if (XY == 0)
-                        {
-                            result.SetPixel(i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
-                        }
-                        else
-                        {
-                            result.SetPixel(j, i, Color.FromArgb(colorComponent, colorComponent, colorComponent));
-                        }
+                        colorComponent = (int) ((Math.Sin(af*i + PI*phaseShift/180) + 1)*255.0/2.0);
                     }
+                    else
+                    {
+                        colorComponent = (int)((Math.Sin(af * j + PI * phaseShift / 180) + 1) * 255.0 / 2.0);
+                    }
+
+                    result.SetPixel(i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
                 }
             }
 
@@ -299,31 +296,27 @@ namespace rab1
             Bitmap result = new Bitmap(width, height);
             BitmapData bitmapData = ImageProcessor.getBitmapData(result);
 
-            if (XY == 0)
+            for (i = 0; i < width; i++)
             {
-                for (i = 0; i < width; i++)
+                for (j = 0; j < height; j++)
                 {
-                    for (j = 0; j < height; j++)
+                    if (XY == 0)
                     {
-                        r = (byte) ((Math.Sin(af*i + pi*f1/180) + 1)*127);
-                        if (r > 255) r = 0;
-                        r = BITMASK(r, MASK);
-                        ImageProcessor.setPixel(bitmapData, i, j, Color.FromArgb(r, r, r));
+                        r = (byte)((Math.Sin(af * i + pi * f1 / 180) + 1) * 127);
                     }
-                }
-            }
+                    else
+                    {
+                        r = (byte)((Math.Sin(af * j + pi * f1 / 180) + 1) * 127);
+                    }
 
-            if (XY == 1)
-            {
-                for (i = 0; i < height; i++)
-                {
-                    for (j = 0; j < width; j++)
+                    if (r > 255)
                     {
-                        r = (byte) ((Math.Sin(af*i + pi*f1/180) + 1)*127);
-                        if (r > 255) r = 0;
-                        r = BITMASK(r, MASK);
-                        ImageProcessor.setPixel(bitmapData, j, i, Color.FromArgb(r, r, r));
+                        r = 0;
                     }
+
+                    r = BITMASK(r, MASK);
+
+                    ImageProcessor.setPixel(bitmapData, i, j, Color.FromArgb(r, r, r));
                 }
             }
 
