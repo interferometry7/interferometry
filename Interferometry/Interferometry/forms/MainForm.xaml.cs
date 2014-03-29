@@ -635,8 +635,9 @@ namespace Interferometry.forms
                     }
                 }
 
-                VisualisationWindow visualisationWindow = new VisualisationWindow(descriptorForVisualization);
-                visualisationWindow.Show();
+                Interferometry.Visualisation.VisualisationWindow visualisationWindow =
+                    new Interferometry.Visualisation.VisualisationWindow(zArrayDescriptor, 1280, 720, 0, false);
+                visualisationWindow.Run();
             }
         }
 
