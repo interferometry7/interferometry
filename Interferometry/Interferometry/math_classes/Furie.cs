@@ -28,53 +28,54 @@ namespace rab1
 
             Complex[] array = new Complex[w1];
             Complex[] ar    = new Complex[w1];
-          
-                        int all = 5;
-                        int done = 0;
-                        PopupProgressBar.show();
-                        for (int j=0; j<5; j++)
-                          { 
-                            for (int i = 0; i < w1; i++)
-                             {
-                              double r = img.array[i, j];
-                              Complex s = new Complex(r, 0);
-                              array[i] = s;
+            Complex[] ar1 = new Complex[w1];
+                            
+                                      int all = h1;
+                                      int done = 0;
+                                      PopupProgressBar.show();
+                                      for (int j=0; j<h1; j++)
+                                        { 
+                                          for (int i = 0; i < w1; i++)
+                                           {
+                                            double r = img.array[i, j];
+                                            Complex s = new Complex(r, 0);
+                                            array[i] = s;
                 
-                               ar = Furie(array);
-                             }
-                
-                            //MessageBox.Show(" j =  " + j ); 
-                            for (int i = 0; i < w1; i++)
-                            {
-                              Spectr.array[i, j] = Convert.ToInt64(Math.Sqrt(ar[i].Real*ar[i].Real + ar[i].Imaginary*ar[i].Imaginary));
+                               
+                                           }
+                                          ar = Furie(array);
+                                          Complex nc = new Complex(0, 0);
+                                            for (int i = 30;   i < 42;   i++) ar[i] = nc;
+                                            for (int i = 2006; i < 2018; i++) ar[i] = nc;
+                                            ar1 = Furie_invers(ar);
+                                          //MessageBox.Show(" j =  " + j ); 
+                                          for (int i = 0; i < w1; i++)
+                                          {
+                                            Spectr.array[i, j] = Convert.ToInt64(Math.Sqrt(ar1[i].Real*ar1[i].Real + ar1[i].Imaginary*ar1[i].Imaginary));
                   
-                            }
-                            done++;
-                            PopupProgressBar.setProgress(done, all);
-                          }
-           
-             /*         
-                      for (int j = 100; j < 200; j++)
-                        {
-                            for (int i = 0; i < w1; i++)
-                            {
-                                Spectr.array[i, j] = img.array[i, j];
+                                          }
+                                          done++;
+                                          PopupProgressBar.setProgress(done, all);
+                                        }
 
-                            }
-
-                        }
-
-                         double af = Math.PI * 2 * 80 / w1;
-                        for (int j = 0; j < h1; j++)
-                        {
-                            for (int i = 0; i < w1; i++)
-                            {
-                                Spectr.array[i, j] = (int)((Math.Sin(af * i + Math.PI) + 1) * 255.0 / 2.0);
-                      
-                            }
-
-                        }
-             *  */
+ /* 
+             for (int j = 100; j < 200; j++)
+                 {
+                  for (int i = 0; i < w1; i++)
+                  {
+                     Spectr.array[i, j] = img.array[i, j];
+                  }
+                 }
+  
+             double af = Math.PI * 2 * 60 / w1;
+             for (int j = 0; j < h1; j++)
+                 {
+                  for (int i = 0; i < w1; i++)
+                  {
+                     Spectr.array[i, j] = (int)((Math.Sin(af * i + Math.PI) + 1) * 255.0 / 2.0);
+                  }
+                }
+  */
             PopupProgressBar.close();
           return Spectr;
         
@@ -129,10 +130,7 @@ namespace rab1
                     }
                     u = u*w;
                 }
-            }
-      
-           // int nr = (n - array.Length) / 2;
-            //if (nr < 0) nr = 0;
+            }      
            
             for (i = 0; i < array.Length; i++)
             {
@@ -143,13 +141,15 @@ namespace rab1
             return array;
         }
 
-        public static Complex[] Furie_Inverse(Complex[] array)
+        public static Complex[] Furie_invers(Complex[] array)
         {
 
             int m = Convert.ToInt32(Math.Ceiling(Math.Log(array.Length) / Math.Log(2))); // n=2**m
             int n = Convert.ToInt32(Math.Pow(2.0, m));
+            //MessageBox.Show(" n =  " + n + " m =  " + m); 
 
-            Complex[] a = new Complex[array.Length]; array.CopyTo(a, 0);
+            Complex[] a = new Complex[n];
+            array.CopyTo(a, 0);
 
             Complex u, w, t;
             int i, j, ip, l;
@@ -189,10 +189,14 @@ namespace rab1
                     u = u * w;
                 }
             }
-            int nr = n/2 - array.Length/2;
-            if (nr < 0) nr = 0;
-            for (i = nr; i < array.Length; i++) a[i] = a[i] / Math.Sqrt(n);
-            return a;
+
+            for (i = 0; i < array.Length; i++)
+            {
+                array[i] = a[i] / Math.Sqrt(n);
+
+            }
+
+            return array;
         }
 
     }
