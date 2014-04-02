@@ -720,6 +720,8 @@ namespace Interferometry.forms
             PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                 СГЛАЖИВАНИЕ
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void smoothButton_Click(object sender, RoutedEventArgs e)
         {
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
@@ -732,12 +734,28 @@ namespace Interferometry.forms
             setZArray(Utils.getArrayFromImage(filtratedImage));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                             МЕДИАННАЯ ФИЛЬТРАЦИЯ
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void midianFilterButton_Click(object sender, RoutedEventArgs e)
         {
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
             filtrationForm.imageFiltered += FiltrationFormOnImageFiltered;
             filtrationForm.Show();
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                 Фурье-преобразование
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void Furie_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainImage.Source == null) { MessageBox.Show("Главное изображение пустое"); return; }
+            if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
+            setZArray(FurieClass.BPF(zArrayDescriptor));
+            
+        }
+        
+        
+        
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadBunchOfImages(int numberOfImages)
         {

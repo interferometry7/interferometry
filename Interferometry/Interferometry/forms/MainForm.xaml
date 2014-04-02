@@ -7,7 +7,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="612*" />
         </Grid.ColumnDefinitions>
-        <TabControl Height="100" Name="tabControl1" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <TabControl Height="100" Name="tabControl1" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="12,0,10,0">
             <TabItem Header="Работа с файлами" Name="tabItem1">
                 <Grid>
                     <Button Content="Загрузить изображение" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="loadImageButton" VerticalAlignment="Top" Width="144" Click="loadImageClicked" />
@@ -29,13 +29,18 @@
             </TabItem>
             <TabItem Header="Восстановление фазы" Name="tabItem3">
                 <Grid>
-                    <Button Content="Построить таблицу остатков" Height="23" HorizontalAlignment="Left" Margin="7,6,0,0" Name="button7" VerticalAlignment="Top" Width="188" Click="buildTableClicked" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="531*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="221*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Построить таблицу остатков" Height="23" HorizontalAlignment="Left" Margin="7,10,0,0" Name="button7" VerticalAlignment="Top" Width="188" Click="buildTableClicked" />
                     <Button Content="Определить плоскость" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="button8" VerticalAlignment="Top" Width="188" />
                     <Button Content="Удаление фазовой неоднозначности" Height="23" Margin="200,6,0,0" Name="button9" VerticalAlignment="Top" Click="unwrapClicked" HorizontalAlignment="Left" Width="225" />
                     <Button Content="Вычитание опорной плоскости" Height="23" HorizontalAlignment="Left" Margin="200,43,0,0" Name="choosePoinsButton" VerticalAlignment="Top" Width="225" Click="choosePointsClicked" IsDefault="True" />
-                    <Button Content="Вычитание " Height="23" HorizontalAlignment="Left" Margin="430,6,0,0" Name="button1" VerticalAlignment="Top" Width="141" Click="button1_Click" />
-                    <Button Content="Выравнивание яркости 1" Height="23" HorizontalAlignment="Left" Margin="430,43,0,0" Name="button1231" VerticalAlignment="Top" Width="141" Click="button1231_Click" />
-                    <Button Content="Выравнивание яркости 8" Height="23" HorizontalAlignment="Left" Margin="576,6,0,0" Name="button121" VerticalAlignment="Top" Width="145" Click="button121_Click" />
+                    <Button Content="Вычитание " Height="23" HorizontalAlignment="Left" Margin="430,6,0,0" Name="button1" VerticalAlignment="Top" Width="141" Click="button1_Click" Grid.ColumnSpan="3" />
+                    <Button Content="Выравнивание яркости 1" Height="23" HorizontalAlignment="Left" Margin="19,43,0,0" Name="button1231" VerticalAlignment="Top" Width="141" Click="button1231_Click" Grid.Column="2" />
+                    <Button Content="Выравнивание яркости 8" Height="23" HorizontalAlignment="Left" Margin="15,6,0,0" Name="button121" VerticalAlignment="Top" Width="145" Click="button121_Click" Grid.Column="2" />
                 </Grid>
             </TabItem>
             <TabItem Header="Графики" Name="tabItem4">
@@ -67,9 +72,14 @@
             </TabItem>
             <TabItem Header="Фильтрация" Name="tabItem6">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="59*"/>
+                    </Grid.ColumnDefinitions>
                     <Button x:Name="smoothButton" Content="Сглаживание" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="23
                             " Click="smoothButton_Click" />
                     <Button x:Name="midianFilterButton" Content="Медианный" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="midianFilterButton_Click" />
+                    <Button x:Name="FurieButton_Copy" Content="Фурье-преобразование" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Furie_Click" Grid.Column="1" />
 
                 </Grid>
             </TabItem>

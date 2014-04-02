@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
@@ -143,6 +144,7 @@
     <Compile Include="FrameworkManager.cs" />
     <Compile Include="ImageGetter.cs" />
     <Compile Include="ImageHelper.cs" />
+    <Compile Include="math_classes\Furie.cs" />
     <Compile Include="math_classes\FiltrClass.cs" />
     <Compile Include="math_classes\SinClass1.cs" />
     <Compile Include="math_classes\ZArrayDescriptor.cs" />

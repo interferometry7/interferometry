@@ -39,7 +39,7 @@ namespace rab1
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    wrappedPhase.array[i, j] = img[m1].array[i, j] - img[m2].array[i, j];
+                    wrappedPhase.array[i, j] = img[m1-1].array[i, j] - img[m2-1].array[i, j];
                 }
 
                 done++;
