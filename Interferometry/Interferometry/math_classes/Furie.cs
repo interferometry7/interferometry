@@ -198,7 +198,104 @@ namespace rab1
 
             return array;
         }
+        //-----------------------------------------------------------------------------------
+        //     Фильтрация методом наименьших квадратов
+        //-----------------------------------------------------------------------------------
+        public static ZArrayDescriptor MNK(ZArrayDescriptor img)
+        {
 
+            int w1 = img.width;
+            int h1 = img.height;
+            //MessageBox.Show(" w1 =  " + w1 + " h1 =  " + h1); 
+            ZArrayDescriptor Spectr = new ZArrayDescriptor();
+            Spectr.width = w1;
+            Spectr.height = h1;
+            Spectr.array = new long[w1, h1];
+
+            long[] array = new long[w1];
+            long[] ar    = new long[w1];
+           
+
+          
+            int all = h1;
+            int done = 0;
+            PopupProgressBar.show();
+            for (int j = 0; j < h1; j++)
+            {
+                for (int i = 0; i < w1; i++) { array[i] = Convert.ToInt64(img.array[i, j]); }
+                ar = MNK_line(array);
+                for (int i = 0; i < w1; i++) { Spectr.array[i, j] = ar[i];       }
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+
+            
+            PopupProgressBar.close();
+            return Spectr;
+
+        }
+
+        public static Int64[] MNK_line( long[] array)
+        {
+            int N = array.Length;
+            double[] S = new double[4];
+            double[] A = new double[4];
+            for (int i = 0; i < N; i++) { S[i] = 0; A[i] = 0; }
+            for (int i = 0; i < N; i++)
+            {
+                double y = array[i];
+                S[0] = S[0] + y;
+                S[1] = S[1] + y*i;
+                S[2] = S[2] + y * i * i;
+                S[3] = S[3] + y * i * i * i;
+            }
+            double[,] m = new double[4, 4];
+            m = m_MNK4(N);
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    A[i] = A[i] + m[i, j]*S[j];
+                }
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                array[i] = Convert.ToInt64(A[0] + A[1] * i + A[2] * i * i + A[3] * i * i * i);
+            }
+
+
+
+            return array;
+        }
+
+        private static double[,] m_MNK4(int N)
+        {  
+            double[,] m = new double[4,4];
+            double N2 = N * N;
+            double N3 = N2 * N;
+            double N4 = N3 * N;
+            double N5 = N4 * N;
+            double N6 = N5 * N;
+            double N7 = N6 * N;
+            double B1 = N4 + 6 * N3 + 11 * N2 + 6 * N;
+            double B2 = 14 * N5 - N7 - 49 * N3 + 36 * N2;
+            double B3 = N6 + N5 - 13 * N4 - 13 * N3 + 36 * N2 + 36 * N;
+
+            double B03 = B3 / 4200;
+            double B13 = B3 * (15 * N - 15) / 4200;
+            double B33 = B3 * (3 * N - 3) / 4200;
+
+            m[0, 0] = (16 * N3 - 24 * N2 + 56 * N - 24) / B1; m[0, 1] = -(120 * N2 - 120 * N + 100) / B1;  m[0, 2] = (240 * N - 120) / B1;  m[0, 3] = -(140) / B1;
+
+            m[1, 0] = m[0,1];                                 m[1, 1] = -(1200*N4 -5400*N3 +8400 * N2 - 6000 * N + 2200) / B2; 
+            m[1, 2] = -(2700*N2-6300*N+3000) / B3;            m[1, 3] = -(1680*N2-4200 * N +3080) / B2; 
+
+            m[2, 0] = m[0,2];   m[2, 1] = m[1, 2];   m[2, 2] = -(6480*N2-12600 *N+4680) / B2;    m[2, 3] = -(4200) / B3;
+
+            m[3, 0] = (N2 - 5 * N + 6) / (B03*30); m[3, 1] = (6 * N2 - 15 * N + 11) / B13; m[3, 2] = -1 / B03; m[3, 3] = 2 / B33; 
+            return m;
+        }
     }
 
 }

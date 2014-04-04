@@ -80,6 +80,7 @@
                             " Click="smoothButton_Click" />
                     <Button x:Name="midianFilterButton" Content="Медианный" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="midianFilterButton_Click" />
                     <Button x:Name="FurieButton_Copy" Content="Фурье-преобразование" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Furie_Click" Grid.Column="1" />
+                    <Button x:Name="MNKButton_Copy1" Content="МНК" HorizontalAlignment="Left" Margin="8,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="MNK_Click" Grid.Column="1" />
 
                 </Grid>
             </TabItem>
