@@ -20,6 +20,19 @@ namespace Interferometry.Visualisation
         PerspectiveProjeciton proj;
         int projLoc, viewLoc;
 
+        public VisualisationWindow(math_classes.ZArrayDescriptor desc, ICamera cam, int fsaa_samples = 0, bool vsync = false)
+            : base(100, 100, new GraphicsMode(32, 24, 0, fsaa_samples))
+        {
+            this.Width = DisplayDevice.Default.Width;
+            this.Height = DisplayDevice.Default.Height - 70;
+            this.Location = new System.Drawing.Point(0, 0);
+
+            this.cam = cam;
+            mesh = new Mesh(desc);
+            if (!vsync)
+                this.VSync = VSyncMode.Off;
+        }
+
         public VisualisationWindow(math_classes.ZArrayDescriptor desc, ICamera cam, int width, int height, int fsaa_samples, bool vsync)
             : base(width, height, new GraphicsMode(32, 24, 0, fsaa_samples))
         {
