@@ -149,7 +149,9 @@
     <Compile Include="math_classes\SinClass1.cs" />
     <Compile Include="math_classes\ZArrayDescriptor.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="visualisation\BoundCamera.cs" />
     <Compile Include="visualisation\FreeCamera.cs" />
+    <Compile Include="visualisation\ICamera.cs" />
     <Compile Include="visualisation\Mesh.cs" />
     <Compile Include="visualisation\PerspectiveProjeciton.cs" />
     <Compile Include="visualisation\ShaderWrapper.cs" />

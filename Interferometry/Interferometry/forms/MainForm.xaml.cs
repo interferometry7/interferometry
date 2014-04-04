@@ -636,7 +636,9 @@ namespace Interferometry.forms
                 }
 
                 Visualisation.VisualisationWindow visualisationWindow =
-                    new Visualisation.VisualisationWindow(descriptorForVisualization, 1280, 720, 0, false);
+                    new Visualisation.VisualisationWindow(zArrayDescriptor,
+                        new Visualisation.BoundCamera(new OpenTK.Vector3(zArrayDescriptor.width/2, zArrayDescriptor.height/2, 0), 0, 1.47f, 1000.0f),
+                        1280, 720, 0, false);
                 visualisationWindow.Run();
             }
         }
