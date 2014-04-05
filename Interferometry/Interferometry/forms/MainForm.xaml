@@ -67,6 +67,7 @@
                     <Button x:Name="makePhotoButton" Content="Сделать один снимок" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="23
                             " Click="makePhotoButton_Click"/>
                     <Button x:Name="makePhotoSeriesButton" Content="Сделать серию снимков" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="makePhotoSeriesButton_Click"/>
+                    <Button x:Name="makePhotoSeriesButton_Copy" Content="Сделать много снимков" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="157" Height="23                             " Click="makeManuShots"/>
 
                 </Grid>
             </TabItem>

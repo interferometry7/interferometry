@@ -1,0 +1,11 @@
+﻿<Window x:Class="Interferometry.forms.ShotSeriesForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShotSeriesForm" Height="287" Width="493">
+    <Grid>
+        <Button Content="Начать съемку" HorizontalAlignment="Left" Margin="202,185,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click" Height="28" RenderTransformOrigin="0.306,0.607"/>
+        <TextBlock x:Name="shotNumbersLabel" HorizontalAlignment="Left" Margin="177,57,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top"/>
+        <Label Content="Количество фото" HorizontalAlignment="Left" Margin="27,52,0,0" VerticalAlignment="Top" Width="130"/>
+
+    </Grid>
+</Window>

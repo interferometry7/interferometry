@@ -17,7 +17,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
@@ -104,6 +104,9 @@
     </Compile>
     <Compile Include="forms\FiltrationForm.designer.cs">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\ShotSeriesForm.xaml.cs">
+      <DependentUpon>ShotSeriesForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="forms\Tabl_Sub.cs">
       <SubType>Form</SubType>
@@ -239,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="forms\PointsChooseForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\ShotSeriesForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

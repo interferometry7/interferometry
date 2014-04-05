@@ -54,6 +54,7 @@ namespace Interferometry.forms
         };
 
         private List<ImageContainer> imageContainersList;
+        private Grid scrollerContent;
         private ZArrayDescriptor zArrayDescriptor;
 
         private bool needPointsCapture = false;
@@ -77,28 +78,16 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Grid newScrollerContent = new Grid();
-            newScrollerContent.HorizontalAlignment = HorizontalAlignment.Stretch;
-            newScrollerContent.VerticalAlignment = VerticalAlignment.Stretch;
+            scrollerContent = new Grid();
+            scrollerContent.HorizontalAlignment = HorizontalAlignment.Stretch;
+            scrollerContent.VerticalAlignment = VerticalAlignment.Stretch;
 
             for (int i = 0; i < 14; i++)
             {
-                ImageContainer newImageContainer = new ImageContainer();
-                newImageContainer.myDelegate = this;
-                newImageContainer.HorizontalAlignment = HorizontalAlignment.Stretch;
-                newImageContainer.VerticalAlignment = VerticalAlignment.Stretch;
-                newImageContainer.Width = Double.NaN;
-                newImageContainer.Height = Double.NaN;
-                newImageContainer.setImageNumberLabel(i + 1);
-
-                RowDefinition newRowDefinition = new RowDefinition();
-                newScrollerContent.RowDefinitions.Add(newRowDefinition);
-                newScrollerContent.Children.Add(newImageContainer);
-                Grid.SetRow(newImageContainer, i);
-                imageContainersList.Add(newImageContainer);
+                addImageContainer(i, scrollerContent);
             }
 
-            imageContainersScroller.Content = newScrollerContent;
+            imageContainersScroller.Content = scrollerContent;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       
@@ -419,9 +408,36 @@ namespace Interferometry.forms
             newForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void makeManuShots(object sender, RoutedEventArgs e)
+        {
+            ShotSeriesForm newForm = new ShotSeriesForm();
+            newForm.oneShotOfSeries+= NewFormOnOneShotOfSeries;
+            newForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void NewFormOnOneShotOfSeries(System.Drawing.Image newImage, int imageNumber)
+        {
+            //FilesHelper.saveImage(FilesHelper.bitmapToBitmapImage((Bitmap) newImage));
+
+            ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap)newImage);
+
+            if (imageContainersList.Count < imageNumber)
+            {
+                addImageContainer(imageContainersList.Count, scrollerContent);
+            }
+
+            imageContainersList[imageNumber - 1].setzArrayDescriptor(result);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void oneImageOfSeriesTaken(System.Drawing.Image newImage, int imageNumber)
         {
             ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap) newImage);
+
+            if (imageContainersList.Count < imageNumber)
+            {
+                addImageContainer(imageContainersList.Count, scrollerContent);
+            }
+
             imageContainersList[imageNumber - 1].setzArrayDescriptor(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -617,24 +633,6 @@ namespace Interferometry.forms
         {
             if (zArrayDescriptor != null)
             {
-                int multiplier = 4;
-
-                ZArrayDescriptor descriptorForVisualization = new ZArrayDescriptor();
-                descriptorForVisualization.array = new long[zArrayDescriptor.width / multiplier, zArrayDescriptor.height / multiplier];
-                descriptorForVisualization.width = zArrayDescriptor.width / multiplier;
-                descriptorForVisualization.height = zArrayDescriptor.height / multiplier;
-
-                for (int i = 0; i < zArrayDescriptor.width; i = i + multiplier)
-                {
-                    for (int j = 0; j < zArrayDescriptor.height; j = j + multiplier)
-                    {
-                        if ((i / multiplier < descriptorForVisualization.width) && (j / multiplier < descriptorForVisualization.height))
-                        {
-                            descriptorForVisualization.array[i / multiplier, j / multiplier] = -zArrayDescriptor.array[i, j];
-                        }
-                    }
-                }
-
                 Visualisation.VisualisationWindow visualisationWindow =
                     new Visualisation.VisualisationWindow(zArrayDescriptor,
                         new Visualisation.BoundCamera(
@@ -659,7 +657,7 @@ namespace Interferometry.forms
                     if (k > max) max = k; if (k < min) min = k;
                 }
             }
-            // MessageBox.Show(" max = " + max + " min = " + min);
+
             int all = w;
             int done = 0;
             PopupProgressBar.show();
@@ -704,7 +702,6 @@ namespace Interferometry.forms
                         if (k > max) max = k; if (k < min) min = k;
                     }
                 }
-                // MessageBox.Show(" max = " + max + " min = " + min);
 
                 for (int i = 0; i < w; i++)
                 {
@@ -753,7 +750,6 @@ namespace Interferometry.forms
             if (mainImage.Source == null) { MessageBox.Show("Главное изображение пустое"); return; }
             if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
             setZArray(FurieClass.BPF(zArrayDescriptor));
-            
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                               Фильтрация методом наименьших квадратов
@@ -765,8 +761,6 @@ namespace Interferometry.forms
             setZArray(FurieClass.MNK(zArrayDescriptor));
 
         }
-        
-        
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadBunchOfImages(int numberOfImages)
         {
@@ -780,8 +774,6 @@ namespace Interferometry.forms
             {
                 for (int i = 0; i < numberOfImages; i++)
                 {
-                    //imageContainersList[i].setzArrayDescriptorWithoutImageGenerating(Utils.getArrayFromImage((BitmapSource)newSources[i]));
-                    //imageContainersList[i].setImageWithoutArrayGenerating(newSources[i]);
                     imageContainersList[i].setImage((BitmapImage) newSources[i]);
                     newSources[i] = null;
                     done++;
@@ -790,8 +782,23 @@ namespace Interferometry.forms
             }
             PopupProgressBar.close();
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void addImageContainer(int i, Grid newScrollerContent)
+        {
+            ImageContainer newImageContainer = new ImageContainer();
+            newImageContainer.myDelegate = this;
+            newImageContainer.HorizontalAlignment = HorizontalAlignment.Stretch;
+            newImageContainer.VerticalAlignment = VerticalAlignment.Stretch;
+            newImageContainer.Width = Double.NaN;
+            newImageContainer.Height = Double.NaN;
+            newImageContainer.setImageNumberLabel(i + 1);
 
-       
+            RowDefinition newRowDefinition = new RowDefinition();
+            newScrollerContent.RowDefinitions.Add(newRowDefinition);
+            newScrollerContent.Children.Add(newImageContainer);
+            Grid.SetRow(newImageContainer, i);
+            imageContainersList.Add(newImageContainer);
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
