@@ -117,7 +117,6 @@ namespace Interferometry.Visualisation
         {
             Vector3[,] vertexPositions = new Vector3[desc.width, desc.height];
             Vector3[,] normals = new Vector3[desc.width, desc.height];
-
             // this cycle to be optimized (?)
             for (int i = 0; i < desc.width - 1; ++i)
             {
@@ -160,17 +159,17 @@ namespace Interferometry.Visualisation
                 {
                     Vector3.Multiply(ref normals[i, j], 0.166666666f, out normals[i, j]);
                     invertIfNegative(ref normals[i, j]);
-                    
+                    /*
                     colors[ptr].V1 = (byte)(127.0f * normals[i, j].X);
                     colors[ptr].V2 = (byte)(127.0f * normals[i, j].Y);
                     colors[ptr].V3 = (byte)(127.0f * normals[i, j].Z);
-
-                    /*
+                    */
+                    
                     // colour by normal z-value (grayscale)
                     colors[ptr].V1 = (byte)(127.0f * normals[i, j].Z);
                     colors[ptr].V2 = (byte)(127.0f * normals[i, j].Z);
                     colors[ptr].V3 = (byte)(127.0f * normals[i, j].Z);
-                    */
+                    
 
                     colors[ptr++].V4 = 0x7f;
                 }
@@ -181,8 +180,8 @@ namespace Interferometry.Visualisation
 
             // data arrangement
             Vector3[] positions = new Vector3[desc.width * desc.height];
-            uint[] elements = new uint[2 * desc.width * desc.height + desc.width - 1];
-            vertexCount = 2* desc.width * desc.height + desc.width - 1;
+            uint[] elements = new uint[2 * (desc.width - 1) * desc.height + (desc.width - 1) * 2];
+            vertexCount = 2 * (desc.width - 1) * desc.height + (desc.width - 1) * 2;
 
             ptr = 0;
             for (int i = 0; i < desc.width; ++i)
@@ -195,12 +194,14 @@ namespace Interferometry.Visualisation
             ptr = 0;
             for (uint i = 0; i < desc.width - 1; ++i)
             {
-                for (uint j = 0; j < desc.height; ++j)
+                uint j;
+                for (j = 0; j < desc.height; ++j)
                 {
                     elements[ptr++] = (uint)(i * desc.height + j);
                     elements[ptr++] = (uint)((i + 1) * desc.height + j);
                 }
-                elements[ptr++] = restartIndex;
+                elements[ptr++] = (uint) ((i + 1)*desc.height + j - 1);
+                elements[ptr++] = (uint) ((i + 1)*desc.height);
             }
 
             arrangeData(positions, colors, elements);

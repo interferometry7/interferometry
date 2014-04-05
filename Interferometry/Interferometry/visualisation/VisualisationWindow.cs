@@ -71,8 +71,8 @@ namespace Interferometry.Visualisation
 
             proj = new PerspectiveProjeciton(3.14159f / 4, 2.0f, 5000.0f, (float)this.Width / this.Height);
 
-            GL.Enable(EnableCap.PrimitiveRestart);
-            GL.PrimitiveRestartIndex(Mesh.restartIndex);
+            //GL.Enable(EnableCap.PrimitiveRestart);
+            //GL.PrimitiveRestartIndex(Mesh.restartIndex);
 
             GL.Enable(EnableCap.DepthTest);
             GL.DepthMask(true);
