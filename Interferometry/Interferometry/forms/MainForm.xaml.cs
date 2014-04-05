@@ -762,7 +762,7 @@ namespace Interferometry.forms
         {
             if (mainImage.Source == null) { MessageBox.Show("Главное изображение пустое"); return; }
             if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
-            setZArray(FurieClass.BPF(zArrayDescriptor));
+            setZArray(FurieClass.MNK(zArrayDescriptor));
 
         }
         

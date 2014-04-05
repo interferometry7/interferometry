@@ -240,7 +240,7 @@ namespace rab1
             int N = array.Length;
             double[] S = new double[4];
             double[] A = new double[4];
-            for (int i = 0; i < N; i++) { S[i] = 0; A[i] = 0; }
+            for (int i = 0; i < 4; i++) { S[i] = 0; A[i] = 0; }
             for (int i = 0; i < N; i++)
             {
                 double y = array[i];
@@ -255,10 +255,19 @@ namespace rab1
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    A[i] = A[i] + m[i, j]*S[j];
+                    A[i] = A[i] + m[i, j] * S[j];
                 }
             }
 
+
+
+/*
+            for (int i = 0; i < 4; i++)
+            {
+                MessageBox.Show("   " + m[i, 0] + "  " + m[i, 1] + "   " + m[i, 2] + "   " + m[i, 3]); 
+            }
+ * */
+            //MessageBox.Show(" A[0] =  " + A[0] + " A[1] =  " + A[1] + " A[2] =  " + A[2] + " A[3] =  " + A[3]); 
             for (int i = 0; i < N; i++)
             {
                 array[i] = Convert.ToInt64(A[0] + A[1] * i + A[2] * i * i + A[3] * i * i * i);
@@ -293,7 +302,7 @@ namespace rab1
 
             m[2, 0] = m[0,2];   m[2, 1] = m[1, 2];   m[2, 2] = -(6480*N2-12600 *N+4680) / B2;    m[2, 3] = -(4200) / B3;
 
-            m[3, 0] = (N2 - 5 * N + 6) / (B03*30); m[3, 1] = (6 * N2 - 15 * N + 11) / B13; m[3, 2] = -1 / B03; m[3, 3] = 2 / B33; 
+            m[3, 0] = -(N2 - 5 * N + 6) / (B03*30); m[3, 1] = (6 * N2 - 15 * N + 11) / B13; m[3, 2] = -1 / B03; m[3, 3] = 2 / B33; 
             return m;
         }
     }
