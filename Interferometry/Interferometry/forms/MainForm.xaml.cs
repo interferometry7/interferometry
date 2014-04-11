@@ -633,8 +633,9 @@ namespace Interferometry.forms
         {
             if (zArrayDescriptor != null)
             {
+                Visualisation.Mesh.ZArrayToObject(zArrayDescriptor, Visualisation.Mesh.ColoringMethod.Fullcolor, "oo.obj");
                 Visualisation.VisualisationWindow visualisationWindow =
-                    new Visualisation.VisualisationWindow(zArrayDescriptor,
+                    new Visualisation.VisualisationWindow(zArrayDescriptor, Visualisation.Mesh.ColoringMethod.Grayscale,
                         new Visualisation.BoundCamera(
                             new OpenTK.Vector3(zArrayDescriptor.width/2, zArrayDescriptor.height/2, 0), 0, 1.47f, 1000.0f));
                 visualisationWindow.Run();
