@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -32,7 +33,7 @@ namespace Interferometry.forms
         private int imageWidth = 800;
         private int imageHeight = 600;
 
-        private int shotNumbers;
+        private double shotNumbers;
         private int imageNumber;
 
         private BackkgroundStripesForm formForStripes;
@@ -51,13 +52,13 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void updateInitialImage()
         {
-            Bitmap result = SinClass1.drawSine(167/10, 0, imageWidth, imageHeight, 0);
+            Bitmap result = SinClass1.drawSine(167 / 10, 0, imageWidth, imageHeight, 0);
             formForStripes.setImage(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            shotNumbers = Convert.ToInt32(shotNumbersLabel.Text);
+            shotNumbers = Convert.ToDouble(shotNumbersLabel.Text);
 
             imageNumber = 0;
             updateInitialImage();
@@ -70,10 +71,10 @@ namespace Interferometry.forms
         {
             imageNumber++;
 
-            if (oneShotOfSeries != null)
+            /*if (oneShotOfSeries != null)
             {
                 oneShotOfSeries(newImage, imageNumber);
-            }
+            }*/
 
             if (imageNumber >= shotNumbers)
             {
@@ -81,7 +82,20 @@ namespace Interferometry.forms
                 return;
             }
 
-            Bitmap result = SinClass1.drawSine(167/10, (360 / shotNumbers) * imageNumber, imageWidth, imageHeight, 0);
+            double shift = (360.0/shotNumbers)*imageNumber;
+
+            if (imageNumber == 1)
+            {
+                File.Delete("CalculatedPhaseShifts.txt");
+            }
+
+            FileStream fs = new FileStream("CalculatedPhaseShifts.txt", FileMode.Append);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.WriteLine(shift.ToString());
+            sw.Close();
+            fs.Close();
+
+            Bitmap result = SinClass1.drawSine(167/10, shift, imageWidth, imageHeight, 0);
             formForStripes.setImage(result);
             ImageGetter.sharedInstance().getImage();
         }
