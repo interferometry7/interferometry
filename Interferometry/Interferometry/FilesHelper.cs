@@ -58,6 +58,21 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static String getPathToObjFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "obj files (*.obj)|*.obj|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                return openFileDialog.FileName;
+            }
+
+            return null;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static ZArrayDescriptor loadZArray()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

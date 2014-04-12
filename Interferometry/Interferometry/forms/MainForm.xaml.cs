@@ -633,7 +633,6 @@ namespace Interferometry.forms
         {
             if (zArrayDescriptor != null)
             {
-                Visualisation.Mesh.ZArrayToObject(zArrayDescriptor, Visualisation.Mesh.ColoringMethod.Fullcolor, "oo.obj");
                 Visualisation.VisualisationWindow visualisationWindow =
                     new Visualisation.VisualisationWindow(zArrayDescriptor, Visualisation.Mesh.ColoringMethod.Grayscale,
                         new Visualisation.BoundCamera(
@@ -799,6 +798,19 @@ namespace Interferometry.forms
             newScrollerContent.Children.Add(newImageContainer);
             Grid.SetRow(newImageContainer, i);
             imageContainersList.Add(newImageContainer);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadObjClicked(object sender, RoutedEventArgs e)
+        {
+            String path = FilesHelper.getPathToObjFile();
+
+            if (path != null)
+            {
+                Visualisation.VisualisationWindow visualisationWindow =
+                    new Visualisation.VisualisationWindow(path,
+                        new Visualisation.BoundCamera(new OpenTK.Vector3(0, 0, 0), 0, 1.47f, 1000.0f));
+                visualisationWindow.Run();
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
