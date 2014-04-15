@@ -713,10 +713,137 @@ namespace Interferometry.forms
                     }
 
                 }
+
                 done++;
                 PopupProgressBar.setProgress(done, all);
             }
             PopupProgressBar.close();
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                 Вырезать 8 кадров по 11 кадру
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void Cut_Click(object sender, RoutedEventArgs e)
+        {
+            ZArrayDescriptor source = new ZArrayDescriptor();
+            if (imageContainersList[10].getzArrayDescriptor() == null) { MessageBox.Show("11 изображение пустое"); return; }
+           
+            
+            source = imageContainersList[10].getzArrayDescriptor();                                 // 11 кадр
+            int w = source.width;
+            int h = source.height;
+            int x_begin = w, x_end = 0;
+            int y_begin = h, y_end = 0;
+            for (int j = 0; j < h; j++)
+            {
+                long x = 0;
+                for (int i = 0; i < w; i++)
+                {
+                    x = source.array[i, j];
+                    if ( x > 0) { if (x_end < i) x_end = i;}
+                }
+                x = w - 1;
+                for (int i = w-1; i >= 0; i--)
+                {
+                    x = source.array[i, j];
+                    if ( x > 0) { if (x_begin > i) x_begin = i; }
+                }
+
+            }
+            
+          
+            for (int i = 0; i < w; i++)
+            {
+                long x = 0;
+                for (int j = 0; j < h; j++)
+                {
+                    x = source.array[i, j];
+                    if (x > 0) { if (y_end < j) y_end = j; }
+                }
+                x = w - 1;
+                for (int j = h - 1; j >= 0; j--)
+                {
+                    x = source.array[i, j];
+                    if (x > 0) { if (y_begin > j) y_begin = j; }
+                }
+
+            }
+      
+            //MessageBox.Show("x0 "+ x_begin+"x1 "+ x_end+"y0 "+ y_begin+"y1 "+y_end);
+
+            ZArrayDescriptor[] zsc = new ZArrayDescriptor[8];
+            for (int i = 0; i < 8; i++) { zsc[i] = imageContainersList[i].getzArrayDescriptor(); }  // 8 кадров
+           
+            int all  = 8;
+            int done = 0;
+            PopupProgressBar.show();
+            for (int ii = 0; ii < 8; ii++)
+            {
+
+                ZArrayDescriptor zar = new ZArrayDescriptor();
+                zar.array = new long[x_end - x_begin, y_end - y_begin];
+                zar.width = x_end - x_begin;
+                zar.height = y_end - y_begin;
+                
+                if (imageContainersList[ii].getzArrayDescriptor() == null) { continue; }
+              
+               for (int i = 0; i < x_end - x_begin; i++)
+                {
+                    for (int j = 0; j < y_end - y_begin; j++)
+                    {
+                        zar.array[i, j] = zsc[ii].array[i + x_begin, j + y_begin];
+                    }
+
+                }
+              
+             
+               imageContainersList[ii].setzArrayDescriptor(zar);
+              
+
+                done++;
+                PopupProgressBar.setProgress(done, all);
+                
+            }
+            PopupProgressBar.close();
+
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                 Вырезать 14-й кадр по 11 кадру
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void Cut14_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (imageContainersList[10].getzArrayDescriptor() == null) { MessageBox.Show("11 изображение пустое"); return; }
+            if (imageContainersList[13].getzArrayDescriptor() == null) { MessageBox.Show("14 изображение пустое"); return; }
+            
+            ZArrayDescriptor zsc1 = new ZArrayDescriptor();
+            zsc1 = imageContainersList[13].getzArrayDescriptor();   // 14 кадр
+            int w = zsc1.width;
+            int h = zsc1.height;
+
+            ZArrayDescriptor zsc2 = new ZArrayDescriptor();
+            zsc2 = imageContainersList[10].getzArrayDescriptor();   // 14 кадр
+           
+           ZArrayDescriptor zar = new ZArrayDescriptor();
+           zar.array = new long[w, h];
+           zar.width = w;
+           zar.height = h;
+
+           for (int i = 0; i < w; i++)
+             {
+               for (int j = 0; j < h; j++)
+                 {
+                        if (zsc2.array[i, j] <= 0) {zar.array[i, j] = 0; } else { zar.array[i, j] = zsc1.array[i, j];}
+                 }
+
+             }
+
+
+                imageContainersList[13].setzArrayDescriptor(zar);         
+            
+
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                                 СГЛАЖИВАНИЕ
@@ -812,6 +939,8 @@ namespace Interferometry.forms
                 visualisationWindow.Run();
             }
         }
+
+       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
