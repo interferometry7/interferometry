@@ -7,19 +7,14 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Interferometry.forms;
 using Interferometry.math_classes;
 using rab1;
-
-//public delegate void ImageProcessed(Bitmap resultBitmap);
-//public delegate void ImageProcessedForOpenGL(List<Point3D> points);
-
 
 namespace rab1
 {
     public class FiltrClass
     {
-        //public static event ImageProcessed imageProcessed;
-
         public static ZArrayDescriptor Sub(ZArrayDescriptor[] img, int m1, int m2)
         {
                      
@@ -89,38 +84,35 @@ namespace rab1
            PopupProgressBar.close();
        }
         // -------------------------------------------------------------------------------------------- Фильтрация 121
-        public static Bitmap Filt_121(Bitmap image, int k_filt)
+        public static ZArrayDescriptor Filt_121(ZArrayDescriptor imageDescriptor, int k_filt)
         {
-            if (image == null)
-            {
-                MessageBox.Show("Изображение пустое"); 
-                return null;
-            }
-
             int r1;
             int k = k_filt;
             int k_cntr;
 
-            int w1 = image.Width;
-            int h1 = image.Height;
+            int w1 = imageDescriptor.width;
+            int h1 = imageDescriptor.height;
 
             int max = w1; if (h1 > max) max = h1;
 
             int[] k_x = new int[max];
             int[] k_x1 = new int[max];
 
-            Bitmap bmp1 = new Bitmap(image, w1, h1);
-            Bitmap bmp2 = new Bitmap(w1, h1);
-
-            Color c;
-
             int all = w1 + h1;
             int done = 0;
             PopupProgressBar.show();
 
+            ZArrayDescriptor someBuffer = new ZArrayDescriptor();
+            someBuffer.width = imageDescriptor.width;
+            someBuffer.height = imageDescriptor.height;
+            someBuffer.array = new long[someBuffer.width, someBuffer.height];
+
             for (int i = 0; i < w1; i++)
             {
-                for (int j = 0; j < h1; j++) { c = bmp1.GetPixel(i, j); k_x[j] = (int)((double)(c.R + c.G + c.B) / 3); }
+                for (int j = 0; j < h1; j++)
+                {
+                    k_x[j] = (int) imageDescriptor.array[i, j];
+                }
                 k_cntr = 1;
                 for (int ik = k; ik > 0; ik /= 2)
                 {
@@ -130,26 +122,36 @@ namespace rab1
                 for (int j = 0; j < h1; j++)
                 {
                     if (k_cntr == 1) r1 = k_x[j]; else r1 = k_x1[j];
-                    bmp2.SetPixel(i, j, Color.FromArgb(r1, r1, r1));
+                    someBuffer.array[i, j] = r1;
                 }
 
                 done++;
                 PopupProgressBar.setProgress(done, all);
             }
 
+            ZArrayDescriptor result = new ZArrayDescriptor();
+            result.width = imageDescriptor.width;
+            result.height = imageDescriptor.height;
+            result.array = new long[result.width, result.height];
+
             for (int j = 0; j < h1; j++)
             {
-                for (int i = 0; i < w1; i++) { c = bmp2.GetPixel(i, j); k_x[i] = (int)((double)(c.R + c.G + c.B) / 3); }
+                for (int i = 0; i < w1; i++)
+                {
+                    k_x[i] = (int) someBuffer.array[i, j];
+                }
+
                 k_cntr = 1;
                 for (int ik = k; ik > 0; ik /= 2)
                 {
                     if (k_cntr == 1) { for (int i = ik; i < w1 - ik; i++)   k_x1[i] = (k_x[i - ik] + (k_x[i] << 1) + k_x[i + ik]) >> 2; k_cntr = 2; }
                     else { for (int i = ik; i < w1 - ik; i++)   k_x[i] = (k_x1[i - ik] + (k_x1[i] << 1) + k_x1[i + ik]) >> 2; k_cntr = 1; }
                 }
+
                 for (int i = 0; i < w1; i++)
                 {
                     if (k_cntr == 1) r1 = k_x[i]; else r1 = k_x1[i];
-                    bmp1.SetPixel(i, j, Color.FromArgb(r1, r1, r1));
+                    result.array[i, j] = r1;
                 }
 
                 done++;
@@ -157,7 +159,7 @@ namespace rab1
             }           
 
             PopupProgressBar.close();
-            return bmp1;
+            return result;
         }
  // -------------------------------------------------------------------------------------------------- Медианная фильтрация
        static int[] f_x = new int[100];
@@ -176,25 +178,19 @@ namespace rab1
             return s;
          }
 
-       public static Bitmap Filt_Mediana(Bitmap image, int k_filt)
+       public static ZArrayDescriptor Filt_Mediana(ZArrayDescriptor imageDescriptor, int k_filt)
        {
-           if (image == null)
+           if (imageDescriptor == null)
            {
-               MessageBox.Show("Изображение пустое");
                return null;
            }
 
-           int s = 0;
+           int s;
            int k = k_filt;
            int k2 = k / 2;
 
-           int w1 = image.Width;
-           int h1 = image.Height;
-
-           Bitmap bmp1 = new Bitmap(image, w1, h1);
-           Bitmap bmp2 = new Bitmap(w1, h1);
-
-           Color c;
+           int w1 = imageDescriptor.width;
+           int h1 = imageDescriptor.height;
 
            int max = w1; if (h1 > max) max = h1;
            int[] k_x1 = new int[max];
@@ -204,15 +200,29 @@ namespace rab1
            int done = 0;
            PopupProgressBar.show();
 
+           ZArrayDescriptor result = new ZArrayDescriptor();
+           result.width = imageDescriptor.width;
+           result.height = imageDescriptor.height;
+           result.array = new long[result.width, result.height];
+           
            for (int i = 0; i < w1; i++)
            {
-               for (int j = 0; j < h1; j++) { c = bmp1.GetPixel(i, j); k_x1[j] = (c.R + c.G + c.B) / 3; }
+               for (int j = 0; j < h1; j++)
+               {
+                   k_x1[j] = (int) imageDescriptor.array[i, j];
+               }
+
                for (int j = 0; j < h1 - k; j++)
                {
                    for (int m = 0; m < k; m++) { f_x[m] = k_x1[j + m]; }
                    k_x2[j] = filt_median(k);
                }
-               for (int j = 0; j < h1 - k; j++) { s = k_x2[j]; bmp2.SetPixel(i, j + k2, Color.FromArgb(s, s, s)); }
+
+               for (int j = 0; j < h1 - k; j++)
+               {
+                   s = k_x2[j];
+                   result.array[i, j + k2] = s;
+               }
 
                done++;
                PopupProgressBar.setProgress(done, all);
@@ -220,20 +230,29 @@ namespace rab1
 
            for (int j = 0; j < h1; j++)
            {
-               for (int i = 0; i < w1; i++) { c = bmp1.GetPixel(i, j); k_x1[i] = (c.R + c.G + c.B) / 3; }
+               for (int i = 0; i < w1; i++)
+               { 
+                   k_x1[i] = (int) imageDescriptor.array[i, j];
+               }
+
                for (int i = 0; i < w1 - k; i++)
                {
                    for (int m = 0; m < k; m++) { f_x[m] = k_x1[i + m]; }
                    k_x2[i] = filt_median(k);
                }
-               for (int i = 0; i < w1 - k; i++) { s = k_x2[i]; bmp2.SetPixel(i + k2, j, Color.FromArgb(s, s, s)); }
+
+               for (int i = 0; i < w1 - k; i++)
+               {
+                   s = k_x2[i];
+                   result.array[i + k2, j] = s;
+               }
 
                done++;
                PopupProgressBar.setProgress(done, all);
            }
 
            PopupProgressBar.close();
-           return bmp2;
+           return result;
        }
 
 //---------------------------------------------------------------------------------------------------------------------- Собель

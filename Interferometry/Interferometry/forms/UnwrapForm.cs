@@ -2,10 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Interferometry.math_classes;
+using rab1;
 
 public delegate void ImageUnwrapped(ZArrayDescriptor unwrappedImage);
 
-namespace rab1.Forms
+namespace Interferometry.Forms
 {
     public partial class UnwrapForm : Form
     {

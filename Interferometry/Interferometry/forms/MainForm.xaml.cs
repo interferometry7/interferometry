@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Interferometry.Forms;
 using Interferometry.interfaces;
 using Interferometry.math_classes;
 using rab1;
@@ -811,10 +812,8 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                                 Вырезать 14-й кадр по 11 кадру
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         private void Cut14_Click(object sender, RoutedEventArgs e)
         {
-            
             if (imageContainersList[10].getzArrayDescriptor() == null) { MessageBox.Show("11 изображение пустое"); return; }
             if (imageContainersList[13].getzArrayDescriptor() == null) { MessageBox.Show("14 изображение пустое"); return; }
             
@@ -839,32 +838,29 @@ namespace Interferometry.forms
                  }
 
              }
-
-
-                imageContainersList[13].setzArrayDescriptor(zar);         
             
-
+            imageContainersList[13].setzArrayDescriptor(zar);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                                 СГЛАЖИВАНИЕ
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void smoothButton_Click(object sender, RoutedEventArgs e)
         {
-            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, zArrayDescriptor);
             filtrationForm.imageFiltered += FiltrationFormOnImageFiltered;
             filtrationForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void FiltrationFormOnImageFiltered(Bitmap filtratedImage)
+        private void FiltrationFormOnImageFiltered(ZArrayDescriptor filtratedImage)
         {
-            setZArray(Utils.getArrayFromImage(filtratedImage));
+            setZArray(filtratedImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                             МЕДИАННАЯ ФИЛЬТРАЦИЯ
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void midianFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)));
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, zArrayDescriptor);
             filtrationForm.imageFiltered += FiltrationFormOnImageFiltered;
             filtrationForm.Show();
         }
@@ -887,6 +883,19 @@ namespace Interferometry.forms
             if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
             setZArray(FurieClass.MNK(zArrayDescriptor));
 
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Построение фигур Лиссажу
+        private void lissaguButton_Click(object sender, RoutedEventArgs e)
+        {
+            LissajousForm firstForm = new LissajousForm();
+            ZArrayDescriptor[] parameter = new ZArrayDescriptor[4];
+            parameter[0] = imageContainersList[0].getzArrayDescriptor();
+            parameter[1] = imageContainersList[1].getzArrayDescriptor();
+            parameter[2] = imageContainersList[2].getzArrayDescriptor();
+            parameter[3] = imageContainersList[3].getzArrayDescriptor();
+            firstForm.setImages(parameter);
+            firstForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadBunchOfImages(int numberOfImages)
@@ -939,8 +948,6 @@ namespace Interferometry.forms
                 visualisationWindow.Run();
             }
         }
-
-       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

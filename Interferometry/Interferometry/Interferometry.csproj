@@ -105,6 +105,9 @@
     <Compile Include="forms\FiltrationForm.designer.cs">
       <DependentUpon>FiltrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\LissajousForm.xaml.cs">
+      <DependentUpon>LissajousForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\ShotSeriesForm.xaml.cs">
       <DependentUpon>ShotSeriesForm.xaml</DependentUpon>
     </Compile>
@@ -233,6 +236,10 @@
     <Folder Include="libs\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="forms\LissajousForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="forms\MainForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Interferometry.math_classes;
 
-public delegate void ImageFiltered(Bitmap filtratedImage);
+public delegate void ImageFiltered(ZArrayDescriptor filtratedImage);
 
 namespace rab1.Forms
 {
@@ -15,12 +16,12 @@ namespace rab1.Forms
         };
 
         private readonly FiltrationType filtrationType;
-        private readonly Bitmap image;
+        private readonly ZArrayDescriptor image;
 
         public event ImageFiltered imageFiltered;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public FiltrationForm(FiltrationType filtrationType, Bitmap image)
+        public FiltrationForm(FiltrationType filtrationType, ZArrayDescriptor image)
         {
             InitializeComponent();
 
@@ -51,7 +52,7 @@ namespace rab1.Forms
                 return;
             }
 
-            Bitmap result;
+            ZArrayDescriptor result;
 
             if (filtrationType == FiltrationType.Smoothing)
             {
