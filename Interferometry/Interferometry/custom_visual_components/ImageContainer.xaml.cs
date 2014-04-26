@@ -57,8 +57,10 @@ namespace Interferometry
             {
                 progressBar.Visibility = Visibility.Visible;
                 BackgroundWorker worker = new BackgroundWorker();
+                worker.WorkerReportsProgress = true;
                 worker.DoWork += loadImageAsync;
                 worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
+                worker.ProgressChanged += WorkerOnProgressChanged;
                 worker.RunWorkerAsync(bitmapImage);
             }
         }
@@ -163,9 +165,14 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
-            ImageSource qwe = (ImageSource)runWorkerCompletedEventArgs.Result;
-            image.Source = qwe;
+            ImageSource result = (ImageSource)runWorkerCompletedEventArgs.Result;
+            image.Source = result;
             progressBar.Visibility = Visibility.Hidden;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void WorkerOnProgressChanged(object sender, ProgressChangedEventArgs progressChangedEventArgs)
+        {
+            
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

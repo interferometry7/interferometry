@@ -113,12 +113,15 @@ namespace rab1
                 {
                     k_x[j] = (int) imageDescriptor.array[i, j];
                 }
+
                 k_cntr = 1;
+
                 for (int ik = k; ik > 0; ik /= 2)
                 {
                     if (k_cntr == 1) { for (int j = ik; j < h1 - ik; j++)   k_x1[j] = (k_x[j - ik] + (k_x[j] << 1) + k_x[j + ik]) >> 2; k_cntr = 2; }
                     else { for (int j = ik; j < h1 - ik; j++)   k_x[j] = (k_x1[j - ik] + (k_x1[j] << 1) + k_x1[j + ik]) >> 2; k_cntr = 1; }
                 }
+
                 for (int j = 0; j < h1; j++)
                 {
                     if (k_cntr == 1) r1 = k_x[j]; else r1 = k_x1[j];
@@ -142,6 +145,7 @@ namespace rab1
                 }
 
                 k_cntr = 1;
+
                 for (int ik = k; ik > 0; ik /= 2)
                 {
                     if (k_cntr == 1) { for (int i = ik; i < w1 - ik; i++)   k_x1[i] = (k_x[i - ik] + (k_x[i] << 1) + k_x[i + ik]) >> 2; k_cntr = 2; }

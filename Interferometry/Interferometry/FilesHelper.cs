@@ -225,7 +225,7 @@ namespace Interferometry
                 enc.Save(outStream);
                 Bitmap bitmap = new Bitmap(outStream);
 
-                return new Bitmap(bitmap);
+                return bitmap;
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,7 +243,7 @@ namespace Interferometry
                 enc.Save(outStream);
                 Bitmap bitmap = new Bitmap(outStream);
 
-                return new Bitmap(bitmap);
+                return bitmap;
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
