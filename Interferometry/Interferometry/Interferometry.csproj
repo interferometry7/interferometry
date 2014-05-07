@@ -111,6 +111,12 @@
     <Compile Include="forms\ShotSeriesForm.xaml.cs">
       <DependentUpon>ShotSeriesForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\Faza2Pi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Faza2Pi.Designer.cs">
+      <DependentUpon>Faza2Pi.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\Tabl_Sub.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Graphic.resx">
       <DependentUpon>Graphic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Faza2Pi.resx">
+      <DependentUpon>Faza2Pi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\TableFaza.resx">
       <DependentUpon>TableFaza.cs</DependentUpon>

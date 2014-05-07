@@ -248,12 +248,9 @@ namespace Interferometry.forms
                 redrawButton_Click(null, null);
             }
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-
-
-        //Методы из пункта "Восстановление фазы"
-        //Удаление фазовой неоднозначности
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+        //         Методы из пункта "Восстановление фазы"
+        //           Удаление фазовой неоднозначности
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void unwrapClicked(object sender, RoutedEventArgs e)
         {
@@ -274,6 +271,36 @@ namespace Interferometry.forms
         {
             imageContainersList[13].setzArrayDescriptor(unwrappedPhase);
         }
+        ///////////////////////////////////////////////////////// 
+        //           Восстановление полной фазы 
+        //           Полная фаза в 14 кадре
+        //           1. в 12 кадре -> 10
+        //           2. в 11 кадре -> 11
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void unwrap2pi(object sender, RoutedEventArgs e)
+        {
+            ZArrayDescriptor[] source = new ZArrayDescriptor[3];
+            source[0] = imageContainersList[11].getzArrayDescriptor();  // 12 кадр ATAN2
+            source[1] = imageContainersList[12].getzArrayDescriptor();  // 13 кадр ATAN2
+            source[2] = imageContainersList[13].getzArrayDescriptor();  // 14 кадр 2Pi
+
+            Faza2Pi Faza2Pi = new Faza2Pi(source);
+            Faza2Pi.Pi2_Unwrapped += PiFormOnImage;
+            Faza2Pi.Show();
+
+        }
+
+        private void PiFormOnImage(Faza2Pi.Res1 d)
+        {
+            //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
+            ZArrayDescriptor unwrappedPhaseImage1 = d.result1;
+            imageContainersList[9].setzArrayDescriptor(unwrappedPhaseImage1);
+            ZArrayDescriptor unwrappedPhaseImage2 = d.result2;
+            imageContainersList[10].setzArrayDescriptor(unwrappedPhaseImage2);
+        }
+
+
+       
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //                    Вычитание опорной плоскости
@@ -948,6 +975,8 @@ namespace Interferometry.forms
                 visualisationWindow.Run();
             }
         }
+
+     
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

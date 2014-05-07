@@ -13,6 +13,53 @@ namespace Interferometry
 {
     public class FazaClass
     {
+        //----------------------------------------------------------------------------------------------
+        // Восстановление полной фазы по известной востановленной целочисленным методом
+        //----------------------------------------------------------------------------------------------
+        public static ZArrayDescriptor Pi2_V(ZArrayDescriptor f1, ZArrayDescriptor fp, int sineNumber, int sdvg)
+        {
+            int w1 = f1.width;
+            int h1 = f1.height;
+            long[,] result = new long[w1, h1];
+
+            int all = w1;
+            int done = 0;
+            PopupProgressBar.show();
+
+            for (int i = 0; i < w1-4; i++)
+            {
+                for (int j = 0; j < h1; j++)
+                {
+                    long a = f1.array[i, j]; a += sdvg; if (a > sineNumber) a -= sineNumber;
+                    long b = fp.array[i, j];
+
+                    while (Math.Abs(a - b) >= sineNumber)
+                    {
+                        if (a < b) a += sineNumber;
+                        if (a > b) a -= sineNumber;
+                    }
+                    if (Math.Abs(a - b) >= 80)
+                    {
+                        if (a < b) a += sineNumber;
+                        if (a > b) a -= sineNumber;
+
+                    } 
+                    result[i, j] = a;
+
+                }
+                done++;
+                PopupProgressBar.setProgress(done, all);
+            }
+
+            PopupProgressBar.close();
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
+            wrappedPhase.array = result;
+            wrappedPhase.width = w1;
+            wrappedPhase.height = h1;
+
+            return wrappedPhase;
+        }
+        
         public static ZArrayDescriptor ATAN_1234(ZArrayDescriptor[] img, double[] fzz, int sineNumber)
         {
             
