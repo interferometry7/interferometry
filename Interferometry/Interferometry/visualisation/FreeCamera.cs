@@ -39,38 +39,39 @@ namespace Interferometry.Visualisation
 
         public void rotLeft(float phi)
         {
-            Vector3 up = Vector3.Cross(lookAt, worldUp);
-            Vector3.Cross(ref up, ref lookAt, out up);
+            Matrix4 rot = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), phi);
 
-            Matrix4 rot = Matrix4.CreateFromAxisAngle(up, phi);
             Vector4 l = new Vector4(lookAt, 1.0f);
             Vector4.Transform(ref l, ref rot, out l);
-
             lookAt.X = l.X;
             lookAt.Y = l.Y;
             lookAt.Z = l.Z;
+
+            l = new Vector4(worldUp, 1.0f);
+            Vector4.Transform(ref l, ref rot, out l);
+            worldUp.X = l.X;
+            worldUp.Y = l.Y;
+            worldUp.Z = l.Z;
 
             modified = true;
         }
 
         public void rotDown(float phi)
         {
-            // check if lookAt is almost parallel to worldUp
-            // if they're parallel, some unpleasant effects occures
-            float psi = Vector3.CalculateAngle(lookAt, worldUp);
-            if (psi < 0.04f || psi > 3.1f)
-                return;
-
             Vector3 right = Vector3.Cross(lookAt, worldUp);
-            
-
             Matrix4 rot = Matrix4.CreateFromAxisAngle(right, phi);
+
             Vector4 l = new Vector4(lookAt, 1.0f);
             Vector4.Transform(ref l, ref rot, out l);
-
             lookAt.X = l.X;
             lookAt.Y = l.Y;
             lookAt.Z = l.Z;
+
+            l = new Vector4(worldUp, 1.0f);
+            Vector4.Transform(ref l, ref rot, out l);
+            worldUp.X = l.X;
+            worldUp.Y = l.Y;
+            worldUp.Z = l.Z;
 
             modified = true;
         }
@@ -86,7 +87,7 @@ namespace Interferometry.Visualisation
             Vector3 right = Vector3.Cross(lookAt, worldUp);
             Vector3.Multiply(ref right, shift, out right);
             Vector3.Add(ref move, ref right, out move);
-            
+
             modified = true;
         }
 
@@ -115,7 +116,7 @@ namespace Interferometry.Visualisation
             {
                 move.X = move.Y = move.Z = 0;
                 modified = true;
-            }            
+            }
         }
     }
 }

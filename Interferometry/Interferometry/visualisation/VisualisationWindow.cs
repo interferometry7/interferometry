@@ -15,10 +15,11 @@ namespace Interferometry.Visualisation
         int shaderProgram;
 
         Vector2 oldMousePos;
-        Mesh mesh;
+        SceneNode node;
         ICamera cam;
         PerspectiveProjeciton proj;
-        int projLoc, viewLoc;
+        Mesh mesh;
+        int projLoc, viewLoc, modelLoc;
 
         public VisualisationWindow(string obj_path, ICamera cam, int fsaa_samples = 0, bool vsync = false)
             : base(100, 100, new GraphicsMode(32, 24, 0, fsaa_samples))
@@ -51,7 +52,7 @@ namespace Interferometry.Visualisation
         {
             this.cam = cam;
             this.mesh = Mesh.FromZArray(desc, method);
-            if(!vsync)
+            if (!vsync)
                 this.VSync = VSyncMode.Off;
         }
 
@@ -75,6 +76,7 @@ namespace Interferometry.Visualisation
 
             projLoc = GL.GetUniformLocation(shaderProgram, "projection");
             viewLoc = GL.GetUniformLocation(shaderProgram, "view");
+            modelLoc = GL.GetUniformLocation(shaderProgram, "model");
         }
 
         protected override void OnLoad(EventArgs e)
@@ -82,6 +84,7 @@ namespace Interferometry.Visualisation
             base.OnLoad(e);
             CreateProgram();
 
+            node = new SceneNode(mesh, modelLoc);
             proj = new PerspectiveProjeciton(3.14159f / 4, 2.0f, 5000.0f, (float)this.Width / this.Height);
 
             //GL.Enable(EnableCap.PrimitiveRestart);
@@ -92,31 +95,31 @@ namespace Interferometry.Visualisation
             GL.DepthFunc(DepthFunction.Lequal);
             GL.DepthRange(0.0f, 1.0f);
             //GL.Enable(EnableCap.DepthClamp);
-            
+
             //GL.Enable(EnableCap.CullFace);
             //GL.FrontFace(FrontFaceDirection.Ccw);
             //GL.CullFace(CullFaceMode.Back);
         }
 
-        float shift = 5.0f;
+        float shift = 2.5f;
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             cam.update();
 
             if (Mouse[MouseButton.Left])
             {
-                cam.rotLeft((oldMousePos.X - Mouse.X) / this.Width * (float) Math.PI);
-                cam.rotDown((oldMousePos.Y - Mouse.Y) / this.Height * (float) Math.PI);
+                cam.rotLeft((oldMousePos.X - Mouse.X) / this.Width * (float)Math.PI);
+                cam.rotDown((oldMousePos.Y - Mouse.Y) / this.Height * (float)Math.PI);
             }
 
             if (Mouse[MouseButton.Right])
-                cam.onMouseRightPressed(Math.Sign(Mouse.Y - oldMousePos.Y) 
+                cam.onMouseRightPressed(Math.Sign(Mouse.Y - oldMousePos.Y)
                     * Vector2.Subtract(oldMousePos, new Vector2(Mouse.X, Mouse.Y)).Length);
 
             oldMousePos.X = Mouse.X;
             oldMousePos.Y = Mouse.Y;
 
-            shift += 0.1f *shift * (float)Mouse.WheelDelta;
+            shift += 0.1f * shift * (float)Mouse.WheelDelta;
             if (shift < 0.003)
                 shift = 0.003f;
 
@@ -148,6 +151,22 @@ namespace Interferometry.Visualisation
                     proj.FieldOfView = 0.01f;
                 setProjectionUniform();
             }
+
+            if (Keyboard[Key.I])
+                node.rotate(new Vector3(1.0f, 0.0f, 0.0f), shift / 70);
+            if (Keyboard[Key.K])
+                node.rotate(new Vector3(1.0f, 0.0f, 0.0f), -shift / 70);
+            if (Keyboard[Key.J])
+                node.rotate(new Vector3(0.0f, 1.0f, 0.0f), shift / 70);
+            if (Keyboard[Key.L])
+                node.rotate(new Vector3(0.0f, 1.0f, 0.0f), -shift / 70);
+            if (Keyboard[Key.U])
+                node.rotate(new Vector3(0.0f, 0.0f, 1.0f), shift / 70);
+            if (Keyboard[Key.O])
+                node.rotate(new Vector3(0.0f, 0.0f, 1.0f), -shift / 70);
+
+            if (Keyboard[Key.Escape])
+                this.Exit();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -159,7 +178,7 @@ namespace Interferometry.Visualisation
             GL.UseProgram(shaderProgram);
             Matrix4 hack = cam.getMatrix();
             GL.UniformMatrix4(viewLoc, false, ref hack);
-            mesh.render();
+            node.render();
             GL.UseProgram(0);
 
             SwapBuffers();

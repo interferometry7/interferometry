@@ -170,26 +170,43 @@ namespace Interferometry.Visualisation
             Vector3[,] vertexPositions = new Vector3[desc.width, desc.height];
             Vector3[,] normals = new Vector3[desc.width, desc.height];
 
+            int z_max = 0, z_min = 0;
+            for (int i = 0; i < desc.width; ++i)
+                for (int j = 0; j < desc.height; ++j)
+                {
+                    if (desc.array[i, j] > z_max)
+                        z_max = (int)desc.array[i, j];
+                    if (desc.array[i, j] < z_min)
+                        z_min = (int)desc.array[i, j];
+                }
+
+            int zCenterShift = (z_max + z_min) / 2;
+            int xCenterShift = desc.width / 2;
+            int yCenterShift = desc.height / 2;
+
             // this cycle to be optimized (?)
             for (int i = 0; i < desc.width - 1; ++i)
             {
                 for (int j = 0; j < desc.height - 1; ++j)
                 {
-                    vertexPositions[i + 1, j + 1] = new Vector3(i + 1, j + 1, desc.array[i + 1, j + 1]);
-                    vertexPositions[i + 1, j] = new Vector3(i + 1, j, desc.array[i + 1, j]);
-                    vertexPositions[i, j] = new Vector3(i, j, desc.array[i, j]);
+                    int x = i - xCenterShift;
+                    int y = yCenterShift - j;
 
-                    vertexPositions[i, j + 1] = new Vector3(i, j + 1, desc.array[i, j + 1]);
-                    vertexPositions[i + 1, j + 1] = new Vector3(i + 1, j + 1, desc.array[i + 1, j + 1]);
-                    vertexPositions[i, j] = new Vector3(i, j, desc.array[i, j]);
+                    vertexPositions[i + 1, j + 1] = new Vector3(x + 1, y + 1, desc.array[i + 1, j + 1] - zCenterShift);
+                    vertexPositions[i + 1, j] = new Vector3(x + 1, y, desc.array[i + 1, j] - zCenterShift);
+                    vertexPositions[i, j] = new Vector3(x, y, desc.array[i, j] - zCenterShift);
+
+                    vertexPositions[i, j + 1] = new Vector3(x, y + 1, desc.array[i, j + 1] - zCenterShift);
+                    vertexPositions[i + 1, j + 1] = new Vector3(x + 1, y + 1, desc.array[i + 1, j + 1] - zCenterShift);
+                    vertexPositions[i, j] = new Vector3(x, y, desc.array[i, j] - zCenterShift);
 
                     Vector3 norm1 = Vector3.Cross(
-                        Vector3.Subtract(vertexPositions[i + 1, j + 1], vertexPositions[i, j]),
-                        Vector3.Subtract(vertexPositions[i + 1, j], vertexPositions[i, j])).Normalized();
+                        vertexPositions[i + 1, j + 1] - vertexPositions[i, j],
+                        vertexPositions[i + 1, j] - vertexPositions[i, j]).Normalized();
 
                     Vector3 norm2 = Vector3.Cross(
-                        Vector3.Subtract(vertexPositions[i, j + 1], vertexPositions[i, j]),
-                        Vector3.Subtract(vertexPositions[i + 1, j + 1], vertexPositions[i, j])).Normalized();
+                        vertexPositions[i, j + 1] - vertexPositions[i, j],
+                        vertexPositions[i + 1, j + 1] - vertexPositions[i, j]).Normalized();
 
                     Vector3.Add(ref normals[i, j], ref norm1, out normals[i, j]);
                     Vector3.Add(ref normals[i + 1, j], ref norm1, out normals[i + 1, j]);
@@ -309,11 +326,10 @@ namespace Interferometry.Visualisation
 
         private static void AddNormal(List<Vector3> vertices, List<Vector3> normals, int i1, int i2, int i3)
         {
-            Vector3 normal = Vector3.Cross(Vector3.Subtract(vertices[i1], vertices[i2]),
-                Vector3.Subtract(vertices[i3], vertices[i2])).Normalized();
-            normals[i1] = Vector3.Add(normals[i1], normal);
-            normals[i2] = Vector3.Add(normals[i2], normal);
-            normals[i3] = Vector3.Add(normals[i3], normal);
+            Vector3 normal = Vector3.Cross(vertices[i1] - vertices[i2], vertices[i3] - vertices[i2]).Normalized();
+            normals[i1] += normal;
+            normals[i2] += normal;
+            normals[i3] += normal;
         }
 
         public static List<Mesh> FromObject(string path)
@@ -357,7 +373,8 @@ namespace Interferometry.Visualisation
                 {
                     case "v":
                         if (tok.Length < 4)
-                            throw new Exception(); // FIXME
+                            throw new Exception("Parsing error at line " + lineno + ": expected at least 4 tokens");
+
                         vertices.Add(new Vector3(float.Parse(tok[1], System.Globalization.CultureInfo.InvariantCulture),
                             float.Parse(tok[2], System.Globalization.CultureInfo.InvariantCulture),
                             float.Parse(tok[3], System.Globalization.CultureInfo.InvariantCulture)));
@@ -365,7 +382,7 @@ namespace Interferometry.Visualisation
                         break;
                     case "f":
                         if (tok.Length < 4)
-                            throw new Exception(); // FIXME
+                            throw new Exception("Parsing error at line " + lineno + ": expected at least 4 tokens");
 
                         int i1 = ParseIndex(int.Parse(tok[1].Split('/')[0]), vertices.Count);
                         int i2 = ParseIndex(int.Parse(tok[2].Split('/')[0]), vertices.Count);
@@ -417,7 +434,7 @@ namespace Interferometry.Visualisation
             for (int i = 0; i < normals.Count; ++i)
             {
                 Vector3 n = normals[i].Normalized();
-                calcGrayscale(ref n, ref colors[i]);
+                calcFullcolor(ref n, ref colors[i]);
             }
 
             // arrange

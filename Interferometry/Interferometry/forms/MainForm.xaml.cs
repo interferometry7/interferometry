@@ -663,8 +663,7 @@ namespace Interferometry.forms
             {
                 Visualisation.VisualisationWindow visualisationWindow =
                     new Visualisation.VisualisationWindow(zArrayDescriptor, Visualisation.Mesh.ColoringMethod.Grayscale,
-                        new Visualisation.BoundCamera(
-                            new OpenTK.Vector3(zArrayDescriptor.width/2, zArrayDescriptor.height/2, 0), 0, 1.47f, 1000.0f));
+                        new Visualisation.BoundCamera(new OpenTK.Vector3(0, 0, 0), 0, 1.47f, 1000.0f));
                 visualisationWindow.Run();
             }
         }
