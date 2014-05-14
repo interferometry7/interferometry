@@ -399,6 +399,7 @@ namespace rab1
         public static void pi2_frml2(ZArrayDescriptor[] img, int sN1, int sN2, int Diag, bool rb, int pr_obr, int sdvg_x, int X, int Y)
         {
             int NOD = China(sN1, sN2);
+            MessageBox.Show(" M1 = " + M1 + " N1 =  " + N1 + " M2 =  " + M2 + " N2 =  " + N2 + " M1*N1 =  " + M1*N1 + " M2*N2 =  " + M2*N2);
             Graph_China2(img, NOD, Diag, rb, pr_obr, sdvg_x, X, Y);            // Вычисление формулы => n1, n2, NOD
                                       // Построение таблицы
         }

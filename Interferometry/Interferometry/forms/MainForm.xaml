@@ -44,7 +44,7 @@
                     <Button Content="Выравнивание яркости 1" Height="23" HorizontalAlignment="Left" Margin="806,38,0,0" Name="button1231" VerticalAlignment="Top" Width="145" Click="button1231_Click" Grid.Column="1" />
                     <Button Content="Выравнивание яркости 8" Height="23" HorizontalAlignment="Left" Margin="806,10,0,0" Name="button121" VerticalAlignment="Top" Width="145" Click="button121_Click" Grid.Column="1" />
                     <Button Content="Фигуры Лиссажу" Height="23" HorizontalAlignment="Left" x:Name="lissaguButton" VerticalAlignment="Top" Width="141" Margin="646,10,0,0" Click="lissaguButton_Click" Grid.ColumnSpan="2" />
-                    <Button Content="Восстановление полной фазы" Height="23" Margin="222,10,0,0" x:Name="button9_2pi" VerticalAlignment="Top" Click="unwrap2pi" HorizontalAlignment="Left" Width="204" Grid.Column="1" />
+                    <Button Content="Восстановление полной фазы по atan" Height="23" Margin="222,10,0,0" x:Name="button9_2pi" VerticalAlignment="Top" Click="unwrap2pi" HorizontalAlignment="Left" Width="204" Grid.Column="1" />
                 </Grid>
             </TabItem>
             <TabItem Header="Графики" Name="tabItem4">
