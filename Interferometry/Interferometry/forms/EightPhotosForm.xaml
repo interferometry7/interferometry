@@ -1,0 +1,11 @@
+﻿<Window x:Class="Interferometry.forms.EightPhotosForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EightPhotosForm" Height="246" Width="432" Closed="Window_Closed">
+    <Grid>
+        <Label Content="Количество синусоид" HorizontalAlignment="Left" Margin="21,32,0,0" VerticalAlignment="Top" Width="132"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="158,32,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Начать съемку" HorizontalAlignment="Left" Margin="158,153,0,0" VerticalAlignment="Top" Width="120" Click="startShooting"/>
+
+    </Grid>
+</Window>

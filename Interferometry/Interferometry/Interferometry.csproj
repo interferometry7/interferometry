@@ -99,6 +99,9 @@
     <Compile Include="forms\BackkgroundStripesForm.Designer.cs">
       <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\EightPhotosForm.xaml.cs">
+      <DependentUpon>EightPhotosForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\FiltrationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,6 +249,10 @@
     <Folder Include="libs\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="forms\EightPhotosForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="forms\LissajousForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

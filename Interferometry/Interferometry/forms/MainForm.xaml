@@ -90,7 +90,8 @@
                     <Button x:Name="makePhotoButton" Content="Сделать один снимок" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="23
                             " Click="makePhotoButton_Click"/>
                     <Button x:Name="makePhotoSeriesButton" Content="Сделать серию снимков" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="makePhotoSeriesButton_Click"/>
-                    <Button x:Name="makePhotoSeriesButton_Copy" Content="Сделать много снимков" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="157" Height="23                             " Click="makeManuShots"/>
+                    <Button x:Name="makePhotoSeriesButton_Copy" Content="Сделать много снимков" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="200" Height="23                             " Click="makeManuShots"/>
+                    <Button Content="Сделать 8 снимков (новый метод)" HorizontalAlignment="Left" Margin="153,38,0,0" VerticalAlignment="Top" Width="200" Height="23" Click="Button_Click_1"/>
 
                 </Grid>
             </TabItem>

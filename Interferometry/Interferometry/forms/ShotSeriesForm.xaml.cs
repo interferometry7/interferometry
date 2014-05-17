@@ -71,11 +71,6 @@ namespace Interferometry.forms
         {
             imageNumber++;
 
-            /*if (oneShotOfSeries != null)
-            {
-                oneShotOfSeries(newImage, imageNumber);
-            }*/
-
             if (imageNumber >= shotNumbers)
             {
                 ImageGetter.sharedInstance().imageReceived -= imageTaken;
