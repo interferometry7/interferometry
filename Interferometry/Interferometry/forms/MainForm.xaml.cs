@@ -877,6 +877,29 @@ namespace Interferometry.forms
             filtrationForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void smooth8Images(object sender, RoutedEventArgs e)
+        {
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, null);
+            filtrationForm.filterParametersChoosed += FiltrationFormOnFilterParametersChoosed;
+            filtrationForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void medianSmooth8Images(object sender, RoutedEventArgs e)
+        {
+            FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, null);
+            filtrationForm.filterParametersChoosed += FiltrationFormOnFilterParametersChoosed;
+            filtrationForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void FiltrationFormOnFilterParametersChoosed(FiltrationForm.FiltrationType filtrationType, int filtrationOrder)
+        {
+            for(int i = 0; i < imageContainersList.Count; i++)
+            {
+                ImageContainer currentContainer = imageContainersList[i];
+                currentContainer.filterImage(filtrationType, filtrationOrder);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void FiltrationFormOnImageFiltered(ZArrayDescriptor filtratedImage)
         {
             setZArray(filtratedImage);
@@ -974,8 +997,6 @@ namespace Interferometry.forms
                 visualisationWindow.Run();
             }
         }
-
-     
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

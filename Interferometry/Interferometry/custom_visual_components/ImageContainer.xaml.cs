@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -18,6 +20,7 @@ using System.Windows.Shapes;
 using Interferometry.interfaces;
 using Interferometry.math_classes;
 using rab1;
+using rab1.Forms;
 using Color = System.Drawing.Color;
 using Size = System.Windows.Size;
 
@@ -30,6 +33,7 @@ namespace Interferometry
     {
         private int imageNumber;
         private ZArrayDescriptor zArrayDescriptor;
+        private BackgroundWorker worker;
 
         public ImageContainerDelegate myDelegate;
 
@@ -56,8 +60,15 @@ namespace Interferometry
             if (bitmapImage != null)
             {
                 progressBar.Visibility = Visibility.Visible;
-                BackgroundWorker worker = new BackgroundWorker();
+
+                if (worker != null)
+                {
+                    worker.CancelAsync();
+                }
+
+                worker = new BackgroundWorker();
                 worker.WorkerReportsProgress = true;
+                worker.WorkerSupportsCancellation = true;
                 worker.DoWork += loadImageAsync;
                 worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
                 worker.ProgressChanged += WorkerOnProgressChanged;
@@ -86,6 +97,27 @@ namespace Interferometry
             return image.Source;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void filterImage(FiltrationForm.FiltrationType filtrationType, int order)
+        {
+            if (zArrayDescriptor == null)
+            {
+                return;
+            }
+
+            ZArrayDescriptor result = null;
+
+            if (filtrationType == FiltrationForm.FiltrationType.Smoothing)
+            {
+                result = FiltrClass.Filt_121(zArrayDescriptor, order);
+            }
+            else if (filtrationType == FiltrationForm.FiltrationType.Median)
+            {
+                result = FiltrClass.Filt_Mediana(zArrayDescriptor, order);
+            }
+
+            setzArrayDescriptor(result);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -98,6 +130,7 @@ namespace Interferometry
             if (newSource != null)
             {
                 progressBar.Visibility = Visibility.Visible;
+                progressBar.IsIndeterminate = true;
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork+=loadImageAsync;
                 worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
@@ -158,8 +191,18 @@ namespace Interferometry
                 return;
             }
 
+            var watch = Stopwatch.StartNew();
             zArrayDescriptor = Utils.getArrayFromImage(newSource);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            //MessageBox.Show("1 = " + elapsedMs);
+
+            watch = Stopwatch.StartNew();
             ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
+            watch.Stop();
+            elapsedMs = watch.ElapsedMilliseconds;
+            //MessageBox.Show("2 = " + elapsedMs);
+
             doWorkEventArgs.Result = imageSource;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

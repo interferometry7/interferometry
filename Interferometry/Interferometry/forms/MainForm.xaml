@@ -73,13 +73,14 @@
                     <Button x:Name="smoothButton" Content="Сглаживание" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="23
                             " Click="smoothButton_Click" />
                     <Button x:Name="midianFilterButton" Content="Медианный" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="midianFilterButton_Click" />
-                    <Button x:Name="FurieButton_Copy" Content="Фурье-преобразование" HorizontalAlignment="Left" Margin="461,10,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Furie_Click" />
-                    <Button x:Name="MNKButton_Copy1" Content="МНК" HorizontalAlignment="Left" Margin="461,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="MNK_Click" />
-                    <Button x:Name="Cut__8" Content="Вырезать 8 кадров по 11" HorizontalAlignment="Left" Margin="318,10,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Cut_Click" RenderTransformOrigin="0.696,0.478" />
-                    <Button x:Name="Cut__14_Copy" Content="Очистить 14-й кадр по 11" HorizontalAlignment="Left" Margin="318,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Cut14_Click" RenderTransformOrigin="0.696,0.478" />
-                    <Button Content="Вычитание" Height="23" HorizontalAlignment="Left" x:Name="button1" VerticalAlignment="Top" Width="141" Click="button1_Click" Margin="604,10,0,0" />
+                    <Button x:Name="FurieButton_Copy" Content="Фурье-преобразование" HorizontalAlignment="Left" Margin="529,10,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Furie_Click" />
+                    <Button x:Name="MNKButton_Copy1" Content="МНК" HorizontalAlignment="Left" Margin="529,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="MNK_Click" />
+                    <Button x:Name="Cut__8" Content="Вырезать 8 кадров по 11" HorizontalAlignment="Left" Margin="386,10,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Cut_Click" RenderTransformOrigin="0.696,0.478" />
+                    <Button x:Name="Cut__14_Copy" Content="Очистить 14-й кадр по 11" HorizontalAlignment="Left" Margin="386,38,0,0" VerticalAlignment="Top" Width="138" Height="23                             " Click="Cut14_Click" RenderTransformOrigin="0.696,0.478" />
+                    <Button Content="Вычитание" Height="23" HorizontalAlignment="Left" x:Name="button1" VerticalAlignment="Top" Width="141" Click="button1_Click" Margin="672,10,0,0" />
                     <Button Content="Сглаживание 8 изображений
-" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="160" Height="23"/>
+" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="228" Height="23" Click="smooth8Images"/>
+                    <Button Content="Медианное сглаживание 8 изображений" HorizontalAlignment="Left" Margin="153,38,0,0" VerticalAlignment="Top" Width="228" Height="23" Click="medianSmooth8Images"/>
 
 
                 </Grid>

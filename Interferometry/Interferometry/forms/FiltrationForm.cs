@@ -2,8 +2,10 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Interferometry.math_classes;
+using rab1.Forms;
 
 public delegate void ImageFiltered(ZArrayDescriptor filtratedImage);
+public delegate void FilterParametersChoosed(FiltrationForm.FiltrationType filtrationType, int filtrationOrder);
 
 namespace rab1.Forms
 {
@@ -19,6 +21,7 @@ namespace rab1.Forms
         private readonly ZArrayDescriptor image;
 
         public event ImageFiltered imageFiltered;
+        public event FilterParametersChoosed filterParametersChoosed;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public FiltrationForm(FiltrationType filtrationType, ZArrayDescriptor image)
@@ -49,6 +52,13 @@ namespace rab1.Forms
             else
             {
                 MessageBox.Show("Введите порядок фильтрации");
+                return;
+            }
+
+            if ((image == null) && (filterParametersChoosed != null))
+            {
+                filterParametersChoosed(filtrationType, filtrationOrder);
+                Close();
                 return;
             }
 

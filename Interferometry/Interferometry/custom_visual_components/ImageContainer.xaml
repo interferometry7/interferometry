@@ -25,14 +25,14 @@
                     </TextBlock>
                 </Border>
             </Popup>
-            <Grid  HorizontalAlignment="Right" Width="58" Background="#59000000">
+            <Grid Background="#59000000">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Grid.Row="1" Margin="12,3,0,3" Width="36" IsIndeterminate="True" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+                <ProgressBar x:Name="progressBar" Grid.Row="1" Margin="12,3,10,3" IsIndeterminate="True" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
                     <ProgressBar.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleY="-1"/>

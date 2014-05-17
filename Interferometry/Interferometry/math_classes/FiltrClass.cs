@@ -200,7 +200,7 @@ namespace rab1
            int[] k_x1 = new int[max];
            int[] k_x2 = new int[max];
 
-           int all = w1 + h1;
+           int all = (w1 + h1)*2;
            int done = 0;
            PopupProgressBar.show();
 
