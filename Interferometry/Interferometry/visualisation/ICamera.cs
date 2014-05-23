@@ -10,6 +10,7 @@ namespace Interferometry.Visualisation
     interface ICamera
     {
         Matrix4 getMatrix();
+        Vector3 getPosition();
 
         void rotLeft(float phi);
         void rotDown(float phi);
