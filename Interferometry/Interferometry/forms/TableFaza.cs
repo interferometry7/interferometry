@@ -157,15 +157,39 @@ namespace Interferometry.forms
             atan_Unwrapped(d);
         }
 
+        // --------------------------------------------------------------------------------------------
+        //                   8-точечный алгоритм
+        // --------------------------------------------------------------------------------------------
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            ZArrayDescriptor[] firstSource = new ZArrayDescriptor[8];
+            for (int i = 0; i < 8; i++) { firstSource[i] = source[i]; }
+            Res d = new Res();
+            d.result1 = FazaClass.ATAN_8(firstSource, sineNumber2);
+
+           
+           
+
+            Close();
+            atan_Unwrapped(d);
+        }
+
+
+       
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
 
         public class Res
         {
-            public  ZArrayDescriptor result1;
-            public  ZArrayDescriptor result2;
-        }
-
-        
+            public ZArrayDescriptor result1;
+            public ZArrayDescriptor result2;
+        } 
        
 
        

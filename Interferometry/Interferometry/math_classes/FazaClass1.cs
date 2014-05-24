@@ -328,6 +328,10 @@ namespace Interferometry
             return wrappedPhase;
         }
 
+        public static Bitmap ATAN_8(ZArrayDescriptor[] descriptors, int sineNumber)
+        {
+        }
+
         public static Bitmap Graph_ATAN(ZArrayDescriptor[] descriptors, double[] fzz)
         {
             int w1 = descriptors[0].width;

@@ -26,7 +26,11 @@
             </TabItem>
             <TabItem Header="Получение фазы" Name="tabItem2">
                 <Grid>
-                    <Button Content="Atan2" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button4" VerticalAlignment="Top" Width="178" Click="createWrappedPhase" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="174*"/>
+                        <ColumnDefinition Width="787*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Atan2" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button4" VerticalAlignment="Top" Width="178" Click="createWrappedPhase" Grid.ColumnSpan="2" />
                 </Grid>
             </TabItem>
             <TabItem Header="Восстановление фазы" Name="tabItem3">
