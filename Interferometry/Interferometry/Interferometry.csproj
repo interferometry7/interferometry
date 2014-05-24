@@ -93,19 +93,19 @@
     <Compile Include="custom_visual_components\ImageContainer.xaml.cs">
       <DependentUpon>ImageContainer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="forms\BackgroundImagesGeneratorForm.cs">
+    <Compile Include="forms\Camera\BackgroundImagesGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\BackgroundImagesGeneratorForm.designer.cs">
+    <Compile Include="forms\Camera\BackgroundImagesGeneratorForm.designer.cs">
       <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\BackkgroundStripesForm.cs">
+    <Compile Include="forms\Camera\BackkgroundStripesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\BackkgroundStripesForm.Designer.cs">
+    <Compile Include="forms\Camera\BackkgroundStripesForm.Designer.cs">
       <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\EightPhotosForm.xaml.cs">
+    <Compile Include="forms\Camera\EightPhotosForm.xaml.cs">
       <DependentUpon>EightPhotosForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="forms\FiltrationForm.cs">
@@ -117,7 +117,7 @@
     <Compile Include="forms\LissajousForm.xaml.cs">
       <DependentUpon>LissajousForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="forms\ShotSeriesForm.xaml.cs">
+    <Compile Include="forms\Camera\ShotSeriesForm.xaml.cs">
       <DependentUpon>ShotSeriesForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="forms\Faza2Pi.cs">
@@ -208,10 +208,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="forms\BackgroundImagesGeneratorForm.resx">
+    <EmbeddedResource Include="forms\Camera\BackgroundImagesGeneratorForm.resx">
       <DependentUpon>BackgroundImagesGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="forms\BackkgroundStripesForm.resx">
+    <EmbeddedResource Include="forms\Camera\BackkgroundStripesForm.resx">
       <DependentUpon>BackkgroundStripesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\FiltrationForm.resx">
@@ -257,7 +257,7 @@
     <Folder Include="libs\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="forms\EightPhotosForm.xaml">
+    <Page Include="forms\Camera\EightPhotosForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,7 +277,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="forms\ShotSeriesForm.xaml">
+    <Page Include="forms\Camera\ShotSeriesForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -174,7 +174,7 @@ J, L: вокруг вертикальной оси";
             Mouse.WheelChanged += Mouse_Wheel;
 
             canvas.ShouldDrawBackground = true;
-            canvas.BackgroundColor = System.Drawing.Color.FromArgb(122, 150, 170, 170);
+            canvas.BackgroundColor = System.Drawing.Color.FromArgb(0, 150, 170, 170);
 
             // controls
             radioCamera = new RadioButtonGroup(canvas);

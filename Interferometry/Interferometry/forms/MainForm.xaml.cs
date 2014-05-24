@@ -20,6 +20,7 @@ using Interferometry.interfaces;
 using Interferometry.math_classes;
 using rab1;
 using rab1.Forms;
+using Application = System.Windows.Application;
 using Color = System.Drawing.Color;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Image = System.Windows.Controls.Image;
@@ -445,8 +446,6 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void NewFormOnOneShotOfSeries(System.Drawing.Image newImage, int imageNumber)
         {
-            //FilesHelper.saveImage(FilesHelper.bitmapToBitmapImage((Bitmap) newImage));
-
             ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap)newImage);
 
             if (imageContainersList.Count < imageNumber)
@@ -472,6 +471,7 @@ namespace Interferometry.forms
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             EightPhotosForm newForm = new EightPhotosForm();
+            newForm.oneShotOfSeries += NewFormOnOneShotOfSeries;
             newForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1002,6 +1002,11 @@ namespace Interferometry.forms
                         new Visualisation.BoundCamera(new OpenTK.Vector3(0, 0, 0), 0, 1.47f, 1000.0f));
                 visualisationWindow.Run();
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

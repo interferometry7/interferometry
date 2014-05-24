@@ -166,7 +166,7 @@ namespace Interferometry.forms
             ZArrayDescriptor[] firstSource = new ZArrayDescriptor[8];
             for (int i = 0; i < 8; i++) { firstSource[i] = source[i]; }
             Res d = new Res();
-            d.result1 = FazaClass.ATAN_8(firstSource, sineNumber2);
+            //d.result1 = FazaClass.ATAN_8(firstSource, sineNumber2);
 
            
            

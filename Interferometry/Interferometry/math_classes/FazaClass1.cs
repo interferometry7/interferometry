@@ -330,6 +330,7 @@ namespace Interferometry
 
         public static Bitmap ATAN_8(ZArrayDescriptor[] descriptors, int sineNumber)
         {
+            return null;
         }
 
         public static Bitmap Graph_ATAN(ZArrayDescriptor[] descriptors, double[] fzz)
