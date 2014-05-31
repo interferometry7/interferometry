@@ -23,6 +23,7 @@ using Interferometry.math_classes;
 using rab1;
 using rab1.Forms;
 using Color = System.Drawing.Color;
+using Image = System.Drawing.Image;
 using Size = System.Windows.Size;
 
 namespace Interferometry
@@ -90,7 +91,8 @@ namespace Interferometry
         public void setzArrayDescriptor(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
-            image.Source = Utils.getImageFromArray(zArrayDescriptor);
+            Bitmap resizedImage = ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)), new Size(ActualWidth, ActualHeight));
+            image.Source = FilesHelper.bitmapToBitmapImage(resizedImage);
 
             if (Environment.Is64BitProcess == false)
             {
@@ -198,6 +200,24 @@ namespace Interferometry
 
 
         //Private Methods
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private static Bitmap ResizeImage(Bitmap imgToResize, Size size)
+        {
+            try
+            {
+                Bitmap b = new Bitmap((int)size.Width, (int)size.Height);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(imgToResize, 0, 0, (float)size.Width, (float)size.Height);
+                }
+                return b;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadImageAsync(object sender, DoWorkEventArgs doWorkEventArgs)
         {
