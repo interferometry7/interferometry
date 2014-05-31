@@ -96,19 +96,19 @@ namespace rab1
 
             if (stripeType == StripeType.sine)
             {
-                result = SinClass1.drawSine(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                result = SinClass1.drawSine(numberOfSin1Value / 10.0, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
             }
             else if (stripeType == StripeType.lines)
             {
-                result = SinClass1.drawLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                result = SinClass1.drawLines(numberOfSin1Value / 10.0, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
             }
             else if (stripeType == StripeType.dithered)
             {
-                result = SinClass1.drawDitheredLines(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
+                result = SinClass1.drawDitheredLines(numberOfSin1Value / 10.0, phaseShift1Value, imageWidth, imageHeight, stripOrientation);
             }
             else if (stripeType == StripeType.bits)
             {
-                result = SinClass1.drawBitImage(numberOfSin1Value / 10, phaseShift1Value, imageWidth, imageHeight, stripOrientation, 1, BitImageType.simple);
+                result = SinClass1.drawBitImage(numberOfSin1Value / 10.0, phaseShift1Value, imageWidth, imageHeight, stripOrientation, 1, BitImageType.simple);
             }
 
             formForStripes.setImage(result);

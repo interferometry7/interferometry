@@ -52,7 +52,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void updateInitialImage()
         {
-            Bitmap result = SinClass1.drawSine(167 / 10, 0, imageWidth, imageHeight, 0);
+            Bitmap result = SinClass1.drawSine(167.0 / 10.0, 0, imageWidth, imageHeight, 0);
             formForStripes.setImage(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ namespace Interferometry.forms
             sw.Close();
             fs.Close();
 
-            Bitmap result = SinClass1.drawSine(167/10, shift, imageWidth, imageHeight, 0);
+            Bitmap result = SinClass1.drawSine(167.0 / 10.0, shift, imageWidth, imageHeight, 0);
             formForStripes.setImage(result);
             ImageGetter.sharedInstance().getImage();
         }

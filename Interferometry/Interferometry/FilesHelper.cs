@@ -358,6 +358,35 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void saveFileWithName(ZArrayDescriptor descriptor, String fileName)
+        {
+            if ((descriptor == null) || (fileName == null))
+            {
+                return;
+            }
+
+            Stream stream = new FileStream(fileName, FileMode.Create);
+            BinaryFormatter serializer = new BinaryFormatter();
+            serializer.Serialize(stream, descriptor);
+            stream.Close();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static ZArrayDescriptor getFileWithName(String fileName)
+        {
+            try
+            {
+                Stream stream = new FileStream(fileName, FileMode.Open);
+                BinaryFormatter deserializer = new BinaryFormatter();
+                ZArrayDescriptor savedArray = (ZArrayDescriptor) deserializer.Deserialize(stream);
+                stream.Close();
+                return savedArray;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void saveImages(ImageSource[] imagesToSave)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -42,6 +43,11 @@ namespace Interferometry
         public ImageContainer()
         {
             InitializeComponent();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ~ImageContainer()
+        {
+            File.Delete(imageNumber + "_image");
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImageNumberLabel(int newImageNumber)
@@ -85,10 +91,21 @@ namespace Interferometry
         {
             zArrayDescriptor = newDescriptor;
             image.Source = Utils.getImageFromArray(zArrayDescriptor);
+
+            if (Environment.Is64BitProcess == false)
+            {
+                FilesHelper.saveFileWithName(zArrayDescriptor, imageNumber + "_image");
+                zArrayDescriptor = null;
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public ZArrayDescriptor getzArrayDescriptor()
         {
+            if (zArrayDescriptor == null)
+            {
+                zArrayDescriptor = FilesHelper.getFileWithName(imageNumber + "_image");
+            }
+
             return zArrayDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

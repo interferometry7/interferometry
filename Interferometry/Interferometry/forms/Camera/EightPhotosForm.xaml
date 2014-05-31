@@ -5,7 +5,13 @@
     <Grid>
         <Label Content="Количество снимков" HorizontalAlignment="Left" Margin="21,32,0,0" VerticalAlignment="Top" Width="132"/>
         <TextBox x:Name="shotsNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="158,32,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="56" PreviewTextInput="shotsNumberTextBox_PreviewTextInput"/>
+
+        <TextBox x:Name="firstSineNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="158,60,0,0" TextWrapping="Wrap" Text="167" VerticalAlignment="Top" Width="56" PreviewTextInput="shotsNumberTextBox_PreviewTextInput"/>
+
+        <TextBox x:Name="secondSineNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="158,88,0,0" TextWrapping="Wrap" Text="241" VerticalAlignment="Top" Width="56" PreviewTextInput="shotsNumberTextBox_PreviewTextInput"/>
         <Button Content="Начать съемку" HorizontalAlignment="Left" Margin="158,153,0,0" VerticalAlignment="Top" Width="120" Click="startShooting"/>
+        <Label Content="Первая длина волны" HorizontalAlignment="Left" Margin="21,60,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label Content="Вторая длина волны" HorizontalAlignment="Left" Margin="21,86,0,0" VerticalAlignment="Top" Width="132"/>
 
     </Grid>
 </Window>

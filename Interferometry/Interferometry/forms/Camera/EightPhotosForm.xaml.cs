@@ -23,10 +23,13 @@ namespace Interferometry.forms
     /// </summary>
     public partial class EightPhotosForm : Window
     {
-        private int imageWidth = 800;
-        private int imageHeight = 600;
+        private const int imageWidth = 800;
+        private const int imageHeight = 600;
 
-        private double shotNumbers = 8;
+        private double firstSinNumber = 167;
+        private double secondSinNumber = 241;
+
+        private int shotNumbers = 8;
         private int imageNumber;
 
         private BackkgroundStripesForm formForStripes;
@@ -46,13 +49,16 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void updateInitialImage()
         {
-            Bitmap result = SinClass1.drawSine(167 / 10, 0, imageWidth, imageHeight, 0);
+            firstSinNumber = Convert.ToDouble(firstSineNumberTextBox.Text);
+            secondSinNumber = Convert.ToDouble(secondSineNumberTextBox.Text);
+
+            Bitmap result = SinClass1.drawSine(firstSinNumber / 10.0, 0, imageWidth, imageHeight, 0);
             formForStripes.setImage(result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void startShooting(object sender, RoutedEventArgs e)
         {
-            shotNumbers = Convert.ToInt32(shotsNumberTextBox.Text);
+            shotNumbers = Convert.ToInt32(shotsNumberTextBox.Text) * 2;
 
             imageNumber = 0;
             updateInitialImage();
@@ -81,10 +87,21 @@ namespace Interferometry.forms
                 ImageGetter.sharedInstance().imageReceived -= imageTaken;
                 return;
             }
+            
+            Bitmap result;
 
-            double shift = (360.0 / shotNumbers) * imageNumber;
+            if (imageNumber < shotNumbers/2)
+            {
+                double shift = (360.0 / (shotNumbers / 2 - 1)) * (imageNumber);
+                result = SinClass1.drawSine(firstSinNumber / 10.0, shift, imageWidth, imageHeight, 0);
+            }
+            else
+            {
+                double shift = (360.0 / (shotNumbers / 2 - 1)) * (imageNumber - shotNumbers / 2);
+                result = SinClass1.drawSine(secondSinNumber / 10.0, shift, imageWidth, imageHeight, 0);
+            }
 
-            Bitmap result = SinClass1.drawSine(167 / 10, shift, imageWidth, imageHeight, 0);
+
             formForStripes.setImage(result);
             ImageGetter.sharedInstance().getImage();
         }
