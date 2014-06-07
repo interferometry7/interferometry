@@ -162,7 +162,12 @@
     <Compile Include="forms\VisualisationWindow.xaml.cs">
       <DependentUpon>VisualisationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\NewMethodForm.xaml.cs">
+      <DependentUpon>NewMethodForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrameworkManager.cs" />
+    <Compile Include="imageCacher\ImageCacheManager.cs" />
+    <Compile Include="imageCacher\ImageCacheUnit.cs" />
     <Compile Include="ImageGetter.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="math_classes\Furie.cs" />
@@ -284,6 +289,10 @@
     <Page Include="forms\VisualisationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="forms\NewMethodForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

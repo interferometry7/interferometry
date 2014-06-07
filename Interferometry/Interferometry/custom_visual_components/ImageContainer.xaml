@@ -16,7 +16,7 @@
 
         <Button Content="&lt;-" HorizontalAlignment="Left" Margin="23,6,0,3" Name="exportImageButton" Width="25" Click="exportImageButton_Click" />
         <Button Content="-&gt;" HorizontalAlignment="Left" Margin="23,3,0,6" Name="loadImageButton" Width="25" Grid.Row="1" Click="loadImageClicked" />
-        <Grid Margin="50,6,6,6" Name="grid1" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick" MouseEnter="grid1_MouseEnter" MouseLeave="grid1_MouseLeave">
+        <Grid Margin="50,6,6,6" x:Name="imageContainer" Grid.RowSpan="2" Background="#5A000000" MouseUp="onImageClick" MouseEnter="grid1_MouseEnter" MouseLeave="grid1_MouseLeave">
             <Image Name="image" />
             <Popup Name="popup" StaysOpen="False" Placement="Mouse" MaxWidth="150" MaxHeight="30">
                 <Border BorderBrush="White" BorderThickness="1" Background="Black">

@@ -358,7 +358,7 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void saveFileWithName(ZArrayDescriptor descriptor, String fileName)
+        public static void saveDescriptorWithName(ZArrayDescriptor descriptor, String fileName)
         {
             if ((descriptor == null) || (fileName == null))
             {
@@ -371,7 +371,7 @@ namespace Interferometry
             stream.Close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static ZArrayDescriptor getFileWithName(String fileName)
+        public static ZArrayDescriptor readDescriptorWithName(String fileName)
         {
             try
             {

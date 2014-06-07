@@ -351,18 +351,47 @@ namespace Interferometry.forms
         //                    ATAN2 (получение фазы по массиву интенсивностей)
         private void createWrappedPhase(object sender, RoutedEventArgs e)
         {
-            
             ZArrayDescriptor[] source = new ZArrayDescriptor[10];
-            for (int i = 0; i < 10; i++) source[i] = imageContainersList[i].getzArrayDescriptor();
+
+            for (int i = 0; i < 10; i++)
+            {
+                source[i] = imageContainersList[i].getzArrayDescriptor();
+            }
 
             TableFaza TableFaza = new TableFaza(source);
             TableFaza.atan_Unwrapped += AtanFormOnImage;
             TableFaza.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (Environment.Is64BitProcess == false)
+            {
+                List<String> fileNames = new List<String>();
+
+                for (int i = 0; i < 16; i++)
+                {
+                    fileNames.Add(imageContainersList[i].getFilePath());
+                }
+
+
+                NewMethodForm newMethodForm = new NewMethodForm();
+                newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
+                newMethodForm.Show();
+            }
+            else
+            {
+                ZArrayDescriptor[] source = new ZArrayDescriptor[10];
+
+                for (int i = 0; i < 10; i++)
+                {
+                    source[i] = imageContainersList[i].getzArrayDescriptor();
+                }
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AtanFormOnImage( TableFaza.Res d)
         {
-            //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
             ZArrayDescriptor unwrappedPhaseImage1 = d.result1; 
             imageContainersList[11].setzArrayDescriptor(unwrappedPhaseImage1);
             ZArrayDescriptor unwrappedPhaseImage2 = d.result2;
@@ -382,7 +411,6 @@ namespace Interferometry.forms
             imagesForTable[0] = imageContainersList[11].getzArrayDescriptor();
             imagesForTable[1] = imageContainersList[12].getzArrayDescriptor();
             imagesForTable[2] = imageContainersList[10].getzArrayDescriptor();
-
 
             TableGenerateForm tableGenerateForm = new TableGenerateForm(imagesForTable);
             tableGenerateForm.Show();

@@ -32,5 +32,13 @@ namespace Interferometry.math_classes
                 }
             }
         }
+
+        public ZArrayDescriptor(String fileName)
+        {
+            ZArrayDescriptor descriptorFromFile = FilesHelper.readDescriptorWithName(fileName);
+            array = descriptorFromFile.array;
+            width = descriptorFromFile.width;
+            height = descriptorFromFile.height;
+        }
     }
 }

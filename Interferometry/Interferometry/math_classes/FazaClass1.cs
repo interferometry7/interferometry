@@ -60,57 +60,46 @@ namespace Interferometry
             return wrappedPhase;
         }
         
-        public static ZArrayDescriptor ATAN_1234(ZArrayDescriptor[] img, double[] fzz, int sineNumber)
+        public static ZArrayDescriptor ATAN_1234(ZArrayDescriptor[] img, double[] phaseShifts, int sineNumber)
         {
-            
-            int w1 = img[0].width;
-            int h1 = img[0].height;
-            long[,] result = new long[w1, h1];                        // массив для значений фаз
+            int imagesWidth = img[0].width;
+            int imagesHeight = img[0].height;
+            long[,] result = new long[imagesWidth, imagesHeight];                        // массив для значений фаз
 
-            int n_sdv = img.Length;                                   // Число фазовых сдвигов   
-            double[] i_sdv = new double[n_sdv];
-            double[] v_sdv = new double[n_sdv];                                  // Вектор коэффициентов
-            double[] k_sin = new double[n_sdv];
-            double[] k_cos = new double[n_sdv];
+            int imagesNumber = img.Length;                                   // Число фазовых сдвигов   
+            double[] i_sdv = new double[imagesNumber];
+            double[] v_sdv = new double[imagesNumber];                                  // Вектор коэффициентов
+            double[] k_sin = new double[imagesNumber];
+            double[] k_cos = new double[imagesNumber];
 
             double pi = Math.PI;
-            double pi2 = sineNumber / (Math.PI * 2);
+            double pi2 = sineNumber / (Math.PI * 2.0);
 
-            for (int i = 0; i < n_sdv; i++)
+            for (int i = 0; i < imagesNumber; i++)
             {
-                k_sin[i] = Math.Sin(fzz[i] * pi / 180);                          // Перевод в радианы
-                k_cos[i] = Math.Cos(fzz[i] * pi / 180);
+                k_sin[i] = Math.Sin(phaseShifts[i] * pi / 180.0);                          // Перевод в радианы
+                k_cos[i] = Math.Cos(phaseShifts[i] * pi / 180.0);
             }
 
-            //int Gamma = 1;
-
-            int all = w1; 
+            int all = imagesWidth; 
             int done = 0; 
             PopupProgressBar.show();
 
-            for (int i = 0; i < w1; i++)
+            for (int i = 0; i < imagesWidth; i++)
             {
-                for (int j = 0; j < h1; j++)
+                for (int j = 0; j < imagesHeight; j++)
                 {
-                   // i_sdv[0] = (int)Math.Pow(img[0].array[i, j], Gamma);
-                   // i_sdv[1] = (int)Math.Pow(img[1].array[i, j], Gamma);
-                   // i_sdv[2] = (int)Math.Pow(img[2].array[i, j], Gamma);
-                   // i_sdv[3] = (int)Math.Pow(img[3].array[i, j], Gamma);
-                    for (int ii = 0; ii < n_sdv; ii++)
+                    for (int ii = 0; ii < imagesNumber; ii++)
                     {
                         i_sdv[ii] = img[ii].array[i, j];
                     }
-                   // i_sdv[0] = img[0].array[i, j];
-                   // i_sdv[1] = img[1].array[i, j];
-                   // i_sdv[2] = img[2].array[i, j];
-                   // i_sdv[3] = img[3].array[i, j];
 
                     // ------                                     Формула расшифровки
 
-                    v_sdv[0] = i_sdv[1] - i_sdv[n_sdv - 1];
-                    v_sdv[n_sdv - 1] = i_sdv[0] - i_sdv[n_sdv - 2];
+                    v_sdv[0] = i_sdv[1] - i_sdv[imagesNumber - 1];
+                    v_sdv[imagesNumber - 1] = i_sdv[0] - i_sdv[imagesNumber - 2];
 
-                    for (int ii = 1; ii < n_sdv - 1; ii++)
+                    for (int ii = 1; ii < imagesNumber - 1; ii++)
                     {
                         v_sdv[ii] = i_sdv[ii + 1] - i_sdv[ii - 1];
                     }
@@ -118,7 +107,7 @@ namespace Interferometry
                     double fz2;
                     double fz1 = fz2 = 0;
 
-                    for (int ii = 0; ii < n_sdv; ii++)
+                    for (int ii = 0; ii < imagesNumber; ii++)
                     {
                         fz1 += v_sdv[ii] * k_sin[ii];
                         fz2 += v_sdv[ii] * k_cos[ii];
@@ -135,8 +124,8 @@ namespace Interferometry
 
             ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
             wrappedPhase.array = result;
-            wrappedPhase.width = w1;
-            wrappedPhase.height = h1;
+            wrappedPhase.width = imagesWidth;
+            wrappedPhase.height = imagesHeight;
 
             return wrappedPhase;
         }

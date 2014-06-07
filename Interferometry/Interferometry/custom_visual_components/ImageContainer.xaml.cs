@@ -36,6 +36,8 @@ namespace Interferometry
         private int imageNumber;
         private ZArrayDescriptor zArrayDescriptor;
         private BackgroundWorker worker;
+        private int imageWidth;
+        private int imageHeight;
 
         public ImageContainerDelegate myDelegate;
 
@@ -48,7 +50,7 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ~ImageContainer()
         {
-            File.Delete(imageNumber + "_image");
+            File.Delete(getFilePath());
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImageNumberLabel(int newImageNumber)
@@ -60,6 +62,17 @@ namespace Interferometry
         public void setzArrayDescriptorWithoutImageGenerating(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
+
+            if (zArrayDescriptor != null)
+            {
+                imageWidth = zArrayDescriptor.width;
+                imageHeight = zArrayDescriptor.height;
+            }
+            else
+            {
+                imageWidth = 0;
+                imageHeight = 0;
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImage(BitmapImage bitmapImage)
@@ -91,13 +104,31 @@ namespace Interferometry
         public void setzArrayDescriptor(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
-            Bitmap resizedImage = ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)), new Size(ActualWidth, ActualHeight));
+            Bitmap resizedImage;
+
+            if ((imageContainer.ActualWidth != 0) && (imageContainer.ActualHeight != 0))
+            {
+                Size imageContainerSize = new Size(imageContainer.ActualWidth, imageContainer.ActualHeight);
+                resizedImage = ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)), imageContainerSize);
+            }
+            else
+            {
+                resizedImage = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor));
+            }
+
+
             image.Source = FilesHelper.bitmapToBitmapImage(resizedImage);
 
-            if (Environment.Is64BitProcess == false)
+            if (zArrayDescriptor != null)
             {
-                FilesHelper.saveFileWithName(zArrayDescriptor, imageNumber + "_image");
-                zArrayDescriptor = null;
+                imageWidth = zArrayDescriptor.width;
+                imageHeight = zArrayDescriptor.height;
+
+                if (Environment.Is64BitProcess == false)
+                {
+                    FilesHelper.saveDescriptorWithName(zArrayDescriptor, getFilePath());
+                    zArrayDescriptor = null;
+                }
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +136,7 @@ namespace Interferometry
         {
             if (zArrayDescriptor == null)
             {
-                zArrayDescriptor = FilesHelper.getFileWithName(imageNumber + "_image");
+                zArrayDescriptor = FilesHelper.readDescriptorWithName(getFilePath());
             }
 
             return zArrayDescriptor;
@@ -135,6 +166,21 @@ namespace Interferometry
             }
 
             setzArrayDescriptor(result);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public String getFilePath()
+        {
+            return imageNumber + "_image";
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public int getImageWidth()
+        {
+            return imageWidth;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public int getImageHeight()
+        {
+            return imageHeight;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,12 +221,12 @@ namespace Interferometry
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void grid1_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (zArrayDescriptor == null)
+            if ((imageWidth == 0) && (imageHeight == 0))
             {
                 return;
             }
 
-            popupText.Text = "" + zArrayDescriptor.width + "x" + zArrayDescriptor.height;
+            popupText.Text = "" + imageWidth + "x" + imageHeight;
 
             if (popup.IsOpen == false)
             {
@@ -230,14 +276,21 @@ namespace Interferometry
 
             var watch = Stopwatch.StartNew();
             zArrayDescriptor = Utils.getArrayFromImage(newSource);
+
+            if (zArrayDescriptor != null)
+            {
+                imageWidth = zArrayDescriptor.width;
+                imageHeight = zArrayDescriptor.height;
+            }
+
             watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
+            //var elapsedMs = watch.ElapsedMilliseconds;
             //MessageBox.Show("1 = " + elapsedMs);
 
             watch = Stopwatch.StartNew();
             ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
             watch.Stop();
-            elapsedMs = watch.ElapsedMilliseconds;
+            //elapsedMs = watch.ElapsedMilliseconds;
             //MessageBox.Show("2 = " + elapsedMs);
 
             doWorkEventArgs.Result = imageSource;

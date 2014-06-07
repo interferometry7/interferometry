@@ -19,21 +19,16 @@ namespace Interferometry.forms
     {
         private  int sineNumber1 = 167;
         private  int sineNumber2 = 241;
-        //private double[] fz = new double[5];
         private double[] fz = {0,90,180,270, 0};  
-
-        public event Atan_Unwrapped atan_Unwrapped;
         private ZArrayDescriptor[] source;
         private double[] fz1;
+
+        public event Atan_Unwrapped atan_Unwrapped;
 
         public TableFaza(ZArrayDescriptor[] newSource)
         {
             InitializeComponent();
-            //fz[0] = 0;
-            //fz[1] = 90;
-            //fz[2] = 180;
-            //fz[3] = 270;
-            //fz[4] = 0;
+
             textBox1_fz.Text = Convert.ToString(fz[0]);
             textBox2_fz.Text = Convert.ToString(fz[1]);
             textBox3_fz.Text = Convert.ToString(fz[2]);
@@ -56,15 +51,24 @@ namespace Interferometry.forms
             fz[1] = Convert.ToInt32(textBox2_fz.Text);
             fz[2] = Convert.ToInt32(textBox3_fz.Text);
             fz[3] = Convert.ToInt32(textBox4_fz.Text);
-            
 
             ZArrayDescriptor[] firstSource = new ZArrayDescriptor[4];
-            for (int i = 0; i < 4; i++)  { firstSource[i] = source[i]; }
+
+            for (int i = 0; i < 4; i++)
+            {
+                firstSource[i] = source[i];
+            }
+
             Res d = new Res();
             d.result1 = FazaClass.ATAN_1234(firstSource, fz, sineNumber2);
 
             ZArrayDescriptor[] secondSource = new ZArrayDescriptor[4];
-            for (int i = 4; i < 8; i++) { secondSource[i - 4] = source[i]; }
+
+            for (int i = 4; i < 8; i++)
+            {
+                secondSource[i - 4] = source[i];
+            }
+
             d.result2 = FazaClass.ATAN_1234(secondSource, fz, sineNumber1);
             
             Close();
