@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Interferometry.forms.MainForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Главное окно" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="681" Width="1001" xmlns:my="clr-namespace:Interferometry" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="Главное окно" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="629" Width="1001" xmlns:my="clr-namespace:Interferometry" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -27,12 +27,12 @@
             <TabItem Header="Получение фазы" Name="tabItem2">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="174*"/>
-                        <ColumnDefinition Width="787*"/>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="1056"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Atan2" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button4" VerticalAlignment="Top" Width="178" Click="createWrappedPhase" Grid.ColumnSpan="2" />
-                    <Button Content="Фигуры Лиссажу" Height="23" HorizontalAlignment="Left" x:Name="lissaguButton" VerticalAlignment="Top" Width="178" Margin="6,34,0,0" Click="lissaguButton_Click" Grid.ColumnSpan="2" />
-                    <Button Content="Новый метод" HorizontalAlignment="Left" Margin="15,6,0,0" VerticalAlignment="Top" Width="178" Grid.Column="1" Height="23" Click="Button_Click_2"/>
+                    <Button Content="Atan2" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button4" VerticalAlignment="Top" Width="178" Click="createWrappedPhase" Grid.Column="1" />
+                    <Button Content="Фигуры Лиссажу" Height="23" HorizontalAlignment="Left" x:Name="lissaguButton" VerticalAlignment="Top" Width="178" Margin="6,34,0,0" Click="lissaguButton_Click" Grid.Column="1" />
+                    <Button Content="Новый метод" Margin="190,6,0,0" VerticalAlignment="Top"  Height="23" Click="Button_Click_2" HorizontalAlignment="Left" Width="178" Grid.Column="1" />
                 </Grid>
             </TabItem>
             <TabItem Header="Восстановление фазы" Name="tabItem3">
@@ -110,7 +110,7 @@
                 <Image Name="mainImage" Stretch="None" MouseUp="mainImage_MouseUp" MouseMove="mainImage_MouseMove" />
             </Grid>
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1" HorizontalAlignment="Right" Margin="0,106,12,12" Name="imageContainersScroller" Width="129" Background="#5A000000" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+        <ScrollViewer Grid.Column="1" HorizontalAlignment="Right" Margin="0,106,12,44" Name="imageContainersScroller" Width="129" Background="#5A000000" VerticalScrollBarVisibility="Auto"></ScrollViewer>
         <Grid Grid.ColumnSpan="2" Margin="0,106,146,12" HorizontalAlignment="Right" Width="80" Background="#59000000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
@@ -126,5 +126,6 @@
             <TextBox x:Name="minTextBox" HorizontalAlignment="Left" Height="23" Margin="10,0,0,9" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Width="60" Grid.Row="1" KeyDown="minTextBox_KeyDown"/>
 
         </Grid>
+        <Button Content="+" Grid.Column="1" Margin="0,0,10,12" Name="button2" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="131" Click="button2_Click" />
     </Grid>
 </Window>

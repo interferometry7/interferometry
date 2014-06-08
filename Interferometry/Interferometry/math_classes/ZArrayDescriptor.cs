@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Interferometry.math_classes
 {
@@ -36,9 +37,26 @@ namespace Interferometry.math_classes
         public ZArrayDescriptor(String fileName)
         {
             ZArrayDescriptor descriptorFromFile = FilesHelper.readDescriptorWithName(fileName);
+
+            if (descriptorFromFile == null)
+            {
+                return;
+            }
+
             array = descriptorFromFile.array;
             width = descriptorFromFile.width;
             height = descriptorFromFile.height;
+        }
+
+        public void add(ZArrayDescriptor someDescriptor)
+        {
+            for (int i = 0; i < Math.Min(width, someDescriptor.width); i++)
+            {
+                for (int j = 0; j < Math.Min(height, someDescriptor.height); j++)
+                {
+                    array[i, j] = someDescriptor.array[i, j];
+                }
+            }
         }
     }
 }

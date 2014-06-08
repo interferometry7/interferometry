@@ -14,6 +14,8 @@ using Interferometry.imageCacher;
 using Interferometry.math_classes;
 using rab1;
 
+public delegate void ImageProcessedWithNewMethod(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult);
+
 namespace Interferometry.forms
 {
     /// <summary>
@@ -21,49 +23,109 @@ namespace Interferometry.forms
     /// </summary>
     public partial class NewMethodForm : Window
     {
-        private ImageCacheManager cacheManager;
+        private ImageCacheManager firstCacheManager;
+        private ImageCacheManager secondCacheManager;
         private int firstSineNumber = 167;
         private int secondSineNumber = 241;
 
+        public event ImageProcessedWithNewMethod imageProcessedWithNewMethod;
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public NewMethodForm()
         {
             InitializeComponent();
-            cacheManager = new ImageCacheManager();
+            firstCacheManager = new ImageCacheManager();
+            secondCacheManager = new ImageCacheManager();
 
             firstSineNumberTextBox.Text = Convert.ToString(firstSineNumber);
             secondSineNumberTextBox.Text = Convert.ToString(secondSineNumber);
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setFileNames(List<String> files, int imageWidth, int imageHeight)
         {
-            cacheManager.setFilePathes(files, imageWidth, imageHeight);
-        }
+            List<String> firstBunch = new List<string>(files.Count / 2);
 
+            for (int i = 0; i < files.Count/2; i++)
+            {
+                firstBunch.Add(files[i]);
+            }
+
+            firstCacheManager.setFilePathes(firstBunch, imageWidth, imageHeight);
+            List<String> secondBunch = new List<string>(files.Count / 2);
+            
+
+            for (int i = files.Count / 2; i < files.Count; i++)
+            {
+                secondBunch.Add(files[i]);
+            }
+
+            secondCacheManager.setFilePathes(secondBunch, imageWidth, imageHeight);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setDescriptors(List<ZArrayDescriptor> someDescriptors)
         {
-            cacheManager.setZArrayDescriptors(someDescriptors);
+            //cacheManager.setZArrayDescriptors(someDescriptors);
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double[] fz = new double[cacheManager.getImageNumber()];
-            int step = 360/cacheManager.getImageNumber();
+            if (imageProcessedWithNewMethod == null)
+            {
+                return;
+            }
 
-            for (int i = 0; i < cacheManager.getImageNumber(); i++)
+            ZArrayDescriptor firstResult = null;
+
+            double[] fz = new double[firstCacheManager.getImageNumber()];
+            int step = 360 / firstCacheManager.getImageNumber();
+
+            for (int i = 0; i < firstCacheManager.getImageNumber(); i++)
             {
                 fz[i] = step*i;
             }
 
-            for (int i = 0; i < cacheManager.getWidth(); i++)
+            for (int i = 0; i < firstCacheManager.getWidth(); i++)
             {
-                for (int j = 0; j < cacheManager.getHeight(); j++)
+                for (int j = 0; j < firstCacheManager.getHeight(); j++)
                 {
-                    ZArrayDescriptor[] descriptors = cacheManager.getArray(i, j);
-                    ZArrayDescriptor firstResult = FazaClass.ATAN_1234(descriptors, fz, firstSineNumber);
+                    ZArrayDescriptor[] descriptors = firstCacheManager.getArray(i, j);
 
-                    int a = (int) firstResult.array[0, 0];
+                    if (firstResult == null)
+                    {
+                        firstResult = new ZArrayDescriptor(FazaClass.ATAN_1234(descriptors, fz, firstSineNumber));
+                    }
+                    else
+                    {
+                        firstResult.add(FazaClass.ATAN_1234(descriptors, fz, firstSineNumber));
+                    }
+
                 }
             }
+
+
+
+            ZArrayDescriptor secondResult = null;
+
+            for (int i = 0; i < secondCacheManager.getWidth(); i++)
+            {
+                for (int j = 0; j < secondCacheManager.getHeight(); j++)
+                {
+                    ZArrayDescriptor[] descriptors = secondCacheManager.getArray(i, j);
+
+                    if (secondResult == null)
+                    {
+                        secondResult = new ZArrayDescriptor(FazaClass.ATAN_1234(descriptors, fz, firstSineNumber));
+                    }
+                    else
+                    {
+                        secondResult.add(FazaClass.ATAN_1234(descriptors, fz, firstSineNumber));
+                    }
+
+                }
+            }
+
+            imageProcessedWithNewMethod(firstResult, secondResult);
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

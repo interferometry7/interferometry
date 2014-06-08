@@ -377,6 +377,7 @@ namespace Interferometry.forms
 
                 NewMethodForm newMethodForm = new NewMethodForm();
                 newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
+                newMethodForm.imageProcessedWithNewMethod+= NewMethodFormOnImageProcessedWithNewMethod;
                 newMethodForm.Show();
             }
             else
@@ -388,6 +389,15 @@ namespace Interferometry.forms
                     source[i] = imageContainersList[i].getzArrayDescriptor();
                 }
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void NewMethodFormOnImageProcessedWithNewMethod(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
+        {
+            addImageContainer(imageContainersList.Count, scrollerContent);
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPartOfResult);
+
+            addImageContainer(imageContainersList.Count, scrollerContent);
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPartOfResult);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AtanFormOnImage( TableFaza.Res d)
@@ -1035,6 +1045,11 @@ namespace Interferometry.forms
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            addImageContainer(imageContainersList.Count, scrollerContent);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
