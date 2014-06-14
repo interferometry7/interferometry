@@ -6,7 +6,7 @@ namespace Interferometry.math_classes
     [Serializable()]
     public class ZArrayDescriptor
     {
-        public Int64[,] array;
+        public Int64[][] array;
         public int width;
         public int height;
 
@@ -21,7 +21,13 @@ namespace Interferometry.math_classes
                 return;
             }
 
-            array = new long[descriptorToCopy.width, descriptorToCopy.height];
+            array = new long[descriptorToCopy.width] [];
+
+            for (int i = 0; i < descriptorToCopy.width; i++)
+            {
+                array[i] = new long[descriptorToCopy.height];
+            }
+
             width = descriptorToCopy.width;
             height = descriptorToCopy.height;
 
@@ -29,7 +35,7 @@ namespace Interferometry.math_classes
             {
                 for (int j = 0; j < height; j++)
                 {
-                    array[i, j] = descriptorToCopy.array[i, j];
+                    array[i][j] = descriptorToCopy.array[i][j];
                 }
             }
         }
@@ -54,7 +60,7 @@ namespace Interferometry.math_classes
             {
                 for (int j = 0; j < Math.Min(height, someDescriptor.height); j++)
                 {
-                    array[i, j] = someDescriptor.array[i, j];
+                    array[i][j] = someDescriptor.array[i][j];
                 }
             }
         }

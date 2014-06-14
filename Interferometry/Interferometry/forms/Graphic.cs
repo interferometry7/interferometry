@@ -43,8 +43,8 @@ namespace rab1.Forms
             buf1_gl = new Int64[Math.Max(w1, h1)];
 
 
-            for (int i = 0; i < w1; i++) { buf1[i] = ZZ1.array[i, y]; buf_gl[i]  = buf1[i]; }
-            for (int i = 0; i < w1; i++) { buf2[i] = ZZ2.array[i, y]; buf1_gl[i] = buf2[i]; }
+            for (int i = 0; i < w1; i++) { buf1[i] = ZZ1.array[i][y]; buf_gl[i]  = buf1[i]; }
+            for (int i = 0; i < w1; i++) { buf2[i] = ZZ2.array[i][y]; buf1_gl[i] = buf2[i]; }
             MaxMin(buf1, buf2, w1);
 
             pc1.BackColor = Color.White;
@@ -71,8 +71,8 @@ namespace rab1.Forms
             Graph(buf2, w1, x, grBack, Color.Blue,1);                                      // 2 График по x
 
 
-            for (int i = 0; i < h1; i++) { buf1[i] = ZZ1.array[x, i]; buf_gl[i] = buf1[i]; }
-            for (int i = 0; i < h1; i++) { buf2[i] = ZZ2.array[x, i]; buf1_gl[i] = buf2[i]; }
+            for (int i = 0; i < h1; i++) { buf1[i] = ZZ1.array[x][i]; buf_gl[i] = buf1[i]; }
+            for (int i = 0; i < h1; i++) { buf2[i] = ZZ2.array[x][i]; buf1_gl[i] = buf2[i]; }
             MaxMin(buf1, buf2, h1);
            
             pictureBox1.BackColor = Color.White;
@@ -108,7 +108,7 @@ namespace rab1.Forms
             buf1_gl = new Int64[Math.Max(w1, h1)];
 
 
-            for (int i = 0; i < w1; i++) { buf[i] = ZZ.array[i, y]; buf_gl[i] = buf[i]; }
+            for (int i = 0; i < w1; i++) { buf[i] = ZZ.array[i][y]; buf_gl[i] = buf[i]; }
             pc1.BackColor = Color.White;
             pc1.Size = new Size(w1 + 16, hh + 32);
             pc1.BorderStyle = BorderStyle.Fixed3D;
@@ -132,7 +132,7 @@ namespace rab1.Forms
 
             Graph(buf, w1, x, grBack, drawColor);
 
-            for (int i = 0; i < h1; i++) { buf[i] = ZZ.array[x, i]; buf1_gl[i] = buf[i]; }
+            for (int i = 0; i < h1; i++) { buf[i] = ZZ.array[x][i]; buf1_gl[i] = buf[i]; }
             pictureBox1.BackColor = Color.White;
             pictureBox1.Size = new Size(w1 + 16, hh + 32);
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;

@@ -174,10 +174,10 @@ namespace Interferometry.Visualisation
             for (int i = 0; i < desc.width; ++i)
                 for (int j = 0; j < desc.height; ++j)
                 {
-                    if (desc.array[i, j] > z_max)
-                        z_max = (int)desc.array[i, j];
-                    if (desc.array[i, j] < z_min)
-                        z_min = (int)desc.array[i, j];
+                    if (desc.array[i][j] > z_max)
+                        z_max = (int)desc.array[i][j];
+                    if (desc.array[i][j] < z_min)
+                        z_min = (int)desc.array[i][j];
                 }
 
             int zCenterShift = (z_max + z_min) / 2;
@@ -192,13 +192,13 @@ namespace Interferometry.Visualisation
                     int x = i - xCenterShift;
                     int y = yCenterShift - j;
 
-                    vertexPositions[i + 1, j + 1] = new Vector3(x + 1, y + 1, desc.array[i + 1, j + 1] - zCenterShift);
-                    vertexPositions[i + 1, j] = new Vector3(x + 1, y, desc.array[i + 1, j] - zCenterShift);
-                    vertexPositions[i, j] = new Vector3(x, y, desc.array[i, j] - zCenterShift);
+                    vertexPositions[i + 1, j + 1] = new Vector3(x + 1, y + 1, desc.array[i + 1][j + 1] - zCenterShift);
+                    vertexPositions[i + 1, j] = new Vector3(x + 1, y, desc.array[i + 1][j] - zCenterShift);
+                    vertexPositions[i, j] = new Vector3(x, y, desc.array[i][j] - zCenterShift);
 
-                    vertexPositions[i, j + 1] = new Vector3(x, y + 1, desc.array[i, j + 1] - zCenterShift);
-                    vertexPositions[i + 1, j + 1] = new Vector3(x + 1, y + 1, desc.array[i + 1, j + 1] - zCenterShift);
-                    vertexPositions[i, j] = new Vector3(x, y, desc.array[i, j] - zCenterShift);
+                    vertexPositions[i, j + 1] = new Vector3(x, y + 1, desc.array[i][j + 1] - zCenterShift);
+                    vertexPositions[i + 1, j + 1] = new Vector3(x + 1, y + 1, desc.array[i + 1][j + 1] - zCenterShift);
+                    vertexPositions[i, j] = new Vector3(x, y, desc.array[i][j] - zCenterShift);
 
                     Vector3 norm1 = Vector3.Cross(
                         vertexPositions[i + 1, j + 1] - vertexPositions[i, j],

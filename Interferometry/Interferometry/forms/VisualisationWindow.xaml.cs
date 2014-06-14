@@ -25,7 +25,7 @@ namespace Interferometry.forms
             Point3D[,] points = new Point3D[array.width, array.height];
             for (int i = 0; i < array.width; ++i)
                 for (int j = 0; j < array.height; ++j)
-                    points[i, j] = new Point3D(i, array.array[i, j], j);
+                    points[i, j] = new Point3D(i, array.array[i][j], j);
 
             // build model
             Model3DGroup surface = new Model3DGroup();

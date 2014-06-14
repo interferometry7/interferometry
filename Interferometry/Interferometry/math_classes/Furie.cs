@@ -16,17 +16,22 @@ namespace rab1
     public class FurieClass
     {
       public static ZArrayDescriptor BPF(ZArrayDescriptor img)
-        {
+      {
 
             int w1 = img.width;
             int h1 = img.height;
-            //MessageBox.Show(" w1 =  " + w1 + " h1 =  " + h1); 
-            ZArrayDescriptor Spectr = new ZArrayDescriptor();
-            Spectr.width = w1;
-            Spectr.height = h1;
-            Spectr.array = new long[w1, h1];
 
-            Complex[] array = new Complex[w1];
+            ZArrayDescriptor spectr = new ZArrayDescriptor();
+            spectr.width = w1;
+            spectr.height = h1;
+            spectr.array = new long[w1] [];
+
+            for (int i = 0; i < w1; i++)
+            {
+                spectr.array[i] = new long[h1];
+            }
+
+          Complex[] array = new Complex[w1];
             Complex[] ar    = new Complex[w1];
             Complex[] ar1 = new Complex[w1];
                             
@@ -37,7 +42,7 @@ namespace rab1
                                         { 
                                           for (int i = 0; i < w1; i++)
                                            {
-                                            double r = img.array[i, j];
+                                            double r = img.array[i][j];
                                             Complex s = new Complex(r, 0);
                                             array[i] = s;
                 
@@ -48,10 +53,10 @@ namespace rab1
                                             for (int i = 30;   i < 42;   i++) ar[i] = nc;
                                             for (int i = 2006; i < 2018; i++) ar[i] = nc;
                                             ar1 = Furie_invers(ar);
-                                          //MessageBox.Show(" j =  " + j ); 
+
                                           for (int i = 0; i < w1; i++)
                                           {
-                                            Spectr.array[i, j] = Convert.ToInt64(Math.Sqrt(ar1[i].Real*ar1[i].Real + ar1[i].Imaginary*ar1[i].Imaginary));
+                                            spectr.array[i][j] = Convert.ToInt64(Math.Sqrt(ar1[i].Real*ar1[i].Real + ar1[i].Imaginary*ar1[i].Imaginary));
                   
                                           }
                                           done++;
@@ -77,7 +82,7 @@ namespace rab1
                 }
   */
             PopupProgressBar.close();
-          return Spectr;
+          return spectr;
         
         
         }
@@ -206,11 +211,15 @@ namespace rab1
 
             int w1 = img.width;
             int h1 = img.height;
-            //MessageBox.Show(" w1 =  " + w1 + " h1 =  " + h1); 
-            ZArrayDescriptor Spectr = new ZArrayDescriptor();
-            Spectr.width = w1;
-            Spectr.height = h1;
-            Spectr.array = new long[w1, h1];
+            ZArrayDescriptor spectr = new ZArrayDescriptor();
+            spectr.width = w1;
+            spectr.height = h1;
+            spectr.array = new long[w1][];
+
+            for (int i = 0; i < w1; i++)
+            {
+                spectr.array[i] = new long[h1];
+            }
 
             long[] array = new long[w1];
             long[] ar    = new long[w1];
@@ -222,16 +231,16 @@ namespace rab1
             PopupProgressBar.show();
             for (int j = 0; j < h1; j++)
             {
-                for (int i = 0; i < w1; i++) { array[i] = Convert.ToInt64(img.array[i, j]); }
+                for (int i = 0; i < w1; i++) { array[i] = Convert.ToInt64(img.array[i][j]); }
                 ar = MNK_line(array);
-                for (int i = 0; i < w1; i++) { Spectr.array[i, j] = ar[i];       }
+                for (int i = 0; i < w1; i++) { spectr.array[i][j] = ar[i];       }
                 done++;
                 PopupProgressBar.setProgress(done, all);
             }
 
             
             PopupProgressBar.close();
-            return Spectr;
+            return spectr;
 
         }
 

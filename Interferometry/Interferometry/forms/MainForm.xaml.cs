@@ -471,7 +471,7 @@ namespace Interferometry.forms
         private void OnImageReceived(System.Drawing.Image newImage)
         {
             ImageGetter.sharedInstance().imageReceived -= OnImageReceived;
-            imageContainersList[0].setzArrayDescriptor(Utils.getArrayFromImage((Bitmap) newImage));
+            imageContainersList[0].setBitmap((Bitmap) newImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void makePhotoSeriesButton_Click(object sender, RoutedEventArgs e)
@@ -585,7 +585,7 @@ namespace Interferometry.forms
                 {
                     int x = (int) e.GetPosition(mainImage).X;
                     int y = (int) e.GetPosition(mainImage).Y;
-                    int z = (int) zArrayDescriptor.array[x, y];
+                    int z = (int) zArrayDescriptor.array[x][y];
 
                     firstClick = new Point3D(x, y, z);
                     return;
@@ -594,7 +594,7 @@ namespace Interferometry.forms
                 {
                     int x = (int) e.GetPosition(mainImage).X;
                     int y = (int) e.GetPosition(mainImage).Y;
-                    int z = (int) zArrayDescriptor.array[x, y];
+                    int z = (int) zArrayDescriptor.array[x][y];
 
                     secondClick = new Point3D(x, y, z);
                 }
@@ -671,9 +671,9 @@ namespace Interferometry.forms
             {
                 if (zArrayDescriptor != null)
                 {
-                    int redComponent = (int) zArrayDescriptor.array[(int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y];
-                    int greenComponent = (int)zArrayDescriptor.array[(int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y];
-                    int blueComponent = (int)zArrayDescriptor.array[(int)e.GetPosition(mainImage).X, (int)e.GetPosition(mainImage).Y];
+                    int redComponent = (int) zArrayDescriptor.array[(int)e.GetPosition(mainImage).X][(int)e.GetPosition(mainImage).Y];
+                    int greenComponent = (int)zArrayDescriptor.array[(int)e.GetPosition(mainImage).X][(int)e.GetPosition(mainImage).Y];
+                    int blueComponent = (int)zArrayDescriptor.array[(int)e.GetPosition(mainImage).X][(int)e.GetPosition(mainImage).Y];
 
                     redComponentLabel.Content = Convert.ToString(redComponent);
                     greenComponentLabel.Content = Convert.ToString(greenComponent);
@@ -730,7 +730,7 @@ namespace Interferometry.forms
             {
                 for (int j = 0; j < h; j++)
                 {
-                    Int64 k = zArrayDescriptor.array[i, j];
+                    Int64 k = zArrayDescriptor.array[i][j];
                     if (k > max) max = k; if (k < min) min = k;
                 }
             }
@@ -742,9 +742,9 @@ namespace Interferometry.forms
             {
                 for (int j = 0; j < h; j++)
                 {
-                    Int64 k = zArrayDescriptor.array[i, j];
+                    Int64 k = zArrayDescriptor.array[i][j];
                     if (k > max) max = k; if (k < min) min = k;
-                    zArrayDescriptor.array[i, j] = (k - min) * 255 / (max - min);
+                    zArrayDescriptor.array[i][j] = (k - min) * 255 / (max - min);
                 }
                 done++;
                 PopupProgressBar.setProgress(done, all);
@@ -775,7 +775,7 @@ namespace Interferometry.forms
                 {
                     for (int j = 0; j < h; j++)
                     {
-                        Int64 k = source[ii].array[i, j];
+                        Int64 k = source[ii].array[i][j];
                         if (k > max) max = k; if (k < min) min = k;
                     }
                 }
@@ -784,9 +784,9 @@ namespace Interferometry.forms
                 {
                     for (int j = 0; j < h; j++)
                     {
-                        Int64 k = source[ii].array[i, j];
+                        Int64 k = source[ii].array[i][j];
                         if (k > max) max = k; if (k < min) min = k;
-                        source[ii].array[i, j] = (k - min) * 255 / (max - min);
+                        source[ii].array[i][j] = (k - min) * 255 / (max - min);
                     }
 
                 }
@@ -817,13 +817,13 @@ namespace Interferometry.forms
                 long x = 0;
                 for (int i = 0; i < w; i++)
                 {
-                    x = source.array[i, j];
+                    x = source.array[i][j];
                     if ( x > 0) { if (x_end < i) x_end = i;}
                 }
                 x = w - 1;
                 for (int i = w-1; i >= 0; i--)
                 {
-                    x = source.array[i, j];
+                    x = source.array[i][j];
                     if ( x > 0) { if (x_begin > i) x_begin = i; }
                 }
 
@@ -835,13 +835,13 @@ namespace Interferometry.forms
                 long x = 0;
                 for (int j = 0; j < h; j++)
                 {
-                    x = source.array[i, j];
+                    x = source.array[i][j];
                     if (x > 0) { if (y_end < j) y_end = j; }
                 }
                 x = w - 1;
                 for (int j = h - 1; j >= 0; j--)
                 {
-                    x = source.array[i, j];
+                    x = source.array[i][j];
                     if (x > 0) { if (y_begin > j) y_begin = j; }
                 }
 
@@ -859,7 +859,13 @@ namespace Interferometry.forms
             {
 
                 ZArrayDescriptor zar = new ZArrayDescriptor();
-                zar.array = new long[x_end - x_begin, y_end - y_begin];
+                zar.array = new long[x_end - x_begin][];
+
+                for (int i = 0; i < x_end - x_begin; i++)
+                {
+                    zar.array[i] = new long[y_end - y_begin];
+                }
+
                 zar.width = x_end - x_begin;
                 zar.height = y_end - y_begin;
                 
@@ -869,7 +875,7 @@ namespace Interferometry.forms
                 {
                     for (int j = 0; j < y_end - y_begin; j++)
                     {
-                        zar.array[i, j] = zsc[ii].array[i + x_begin, j + y_begin];
+                        zar.array[i][j] = zsc[ii].array[i + x_begin][j + y_begin];
                     }
 
                 }
@@ -902,15 +908,21 @@ namespace Interferometry.forms
             zsc2 = imageContainersList[10].getzArrayDescriptor();   // 14 кадр
            
            ZArrayDescriptor zar = new ZArrayDescriptor();
-           zar.array = new long[w, h];
-           zar.width = w;
+           zar.array = new long[w][];
+
+            for (int i = 0; i < w; i++)
+            {
+                zar.array[i] = new long[h];
+            }
+
+            zar.width = w;
            zar.height = h;
 
            for (int i = 0; i < w; i++)
              {
                for (int j = 0; j < h; j++)
                  {
-                        if (zsc2.array[i, j] <= 0) {zar.array[i, j] = 0; } else { zar.array[i, j] = zsc1.array[i, j];}
+                        if (zsc2.array[i][j] <= 0) {zar.array[i][j] = 0; } else { zar.array[i][j] = zsc1.array[i][j];}
                  }
 
              }

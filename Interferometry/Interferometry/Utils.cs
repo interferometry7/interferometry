@@ -61,7 +61,7 @@ namespace Interferometry
             {
                 for (int j = 0; j < newDescriptor.height; j++)
                 {
-                    int colorComponent = (int)((newDescriptor.array[i, j] - min) * multiplier);
+                    int colorComponent = (int)((newDescriptor.array[i][j] - min) * multiplier);
 
                     if (colorComponent > 255) { colorComponent = 255; }
                     if (colorComponent < 0) { colorComponent = 0; }
@@ -103,7 +103,13 @@ namespace Interferometry
             }
 
             ZArrayDescriptor result = new ZArrayDescriptor();
-            result.array = new long[newBitmap.Width, newBitmap.Height];
+            result.array = new long[newBitmap.Width][];
+
+            for (int i = 0; i < newBitmap.Width; i++)
+            {
+                result.array[i] = new long[newBitmap.Height];
+            }
+
             result.width = newBitmap.Width;
             result.height = newBitmap.Height;
 
@@ -114,7 +120,7 @@ namespace Interferometry
                 for (int j = 0; j < newBitmap.Height; j++)
                 {
                     Color currentColor = ImageProcessor.getPixel(i, j, data);
-                    result.array[i, j] = (currentColor.R + currentColor.G + currentColor.B) / 3;
+                    result.array[i][j] = (currentColor.R + currentColor.G + currentColor.B) / 3;
                 }
             }
 
@@ -139,7 +145,7 @@ namespace Interferometry
             {
                 for (int j = 0; j < newDescriptor.height; j++)
                 {
-                    max = Math.Max(max, newDescriptor.array[i, j]);
+                    max = Math.Max(max, newDescriptor.array[i][j]);
                 }
             }
 
@@ -162,7 +168,7 @@ namespace Interferometry
             {
                 for (int j = 0; j < newDescriptor.height; j++)
                 {
-                    min = Math.Min(min, newDescriptor.array[i, j]);
+                    min = Math.Min(min, newDescriptor.array[i][j]);
                 }
             }
 
@@ -175,14 +181,14 @@ namespace Interferometry
             {
                 for (int j = 0; j < someDescriptor.height; j++)
                 {
-                    if (someDescriptor.array[i, j] > max)
+                    if (someDescriptor.array[i][j] > max)
                     {
-                        someDescriptor.array[i, j] = max;
+                        someDescriptor.array[i][j] = max;
                     }
 
-                    if (someDescriptor.array[i, j] < min)
+                    if (someDescriptor.array[i][j] < min)
                     {
-                        someDescriptor.array[i, j] = min;
+                        someDescriptor.array[i][j] = min;
                     }
                 }
             }

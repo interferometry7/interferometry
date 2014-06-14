@@ -195,8 +195,8 @@ namespace rab1
             int is1;
             int is2;
 
-            is1 = (int)img[1].array[X, Y]; is1 += sdvg_x; if (is1 > n1) is1 -= n1;
-            is2 = (int)img[0].array[X, Y];  
+            is1 = (int)img[1].array[X][Y]; is1 += sdvg_x; if (is1 > n1) is1 -= n1;
+            is2 = (int)img[0].array[X][Y];  
             grBack.DrawRectangle(new Pen(Color.FromArgb(0, 255, 0)), x0 + is2 * scale, y0 + is1 * scale, 25, 25);
             //MessageBox.Show(" x = " + is2 + " Y =  " + is1);
             //--------------------------------------------------------------------------------------------------------------------
@@ -255,15 +255,15 @@ namespace rab1
             {
                 for (int j = 0; j <h; j++)
                 {
-                    if (img[2].array[i, j] == 0)
+                    if (img[2].array[i][j] == 0)
                     {
                         ims3[j] = 0;
                     }
                     else
                     {
                         ims3[j] = 1;                    
-                        ims1[j] = (int)(img[1].array[i, j] / NOD);
-                        ims2[j] = (int)(img[0].array[i, j] / NOD);
+                        ims1[j] = (int)(img[1].array[i][j] / NOD);
+                        ims2[j] = (int)(img[0].array[i][j] / NOD);
                     }
 
                 }
@@ -429,14 +429,20 @@ namespace rab1
             rash_2pi(img[1], img[0], img[2], NOD, sdvg_x, n1, n2, Diag, Z);
 
             ZArrayDescriptor result = new ZArrayDescriptor();
-            result.array = new long[w, h];
+            result.array = new long[w][];
+
+            for (int i = 0; i < w; i++)
+            {
+                result.array[i] = new long[h];
+            }
+
             result.width = w;
             result.height = h;
             for (int i = 0; i < w; i++)                                                                   //  Отображение точек на pictureBox01
             {
                 for (int j = 0; j < h; j++)
                 {
-                    result.array[i, j] = Z[i, j];
+                    result.array[i][j] = Z[i, j];
                 }
             }
             //Z_bmp(result, Z);                                           //  Z -> bmp с масштабированием (bmp3 - маска)
@@ -450,8 +456,8 @@ namespace rab1
         {
             double cos = Math.Cos(cosinusDegrees * Math.PI / 180);
             y2 = y1;
-            long z1 = descriptor.array[x1, y1];
-            long z2 = descriptor.array[x2, y2];
+            long z1 = descriptor.array[x1][y1];
+            long z2 = descriptor.array[x2][y2];
             //MessageBox.Show(" X1 = " + x1 + " X2 = " + x2 + " y1 = " + y1 + " y2 = " + y2);
             double tt = (z2 - z1)*cos / (double)(x2 - x1);
 
@@ -465,14 +471,19 @@ namespace rab1
             ZArrayDescriptor result = new ZArrayDescriptor();
             result.width = descriptor.width;
             result.height = descriptor.height;
-            result.array = new long[result.width, result.height];
+            result.array = new long[result.width][];
+
+            for (int i = 0; i < result.width; i++)
+            {
+                result.array[i] = new long[result.height];
+            }
 
 
             for (int i = 0; i < descriptor.width; i++)
             {
                 for (int j = 0; j < descriptor.height; j++)
                 {
-                    result.array[i, j] = descriptor.array[i, j] - s[i];
+                    result.array[i][j] = descriptor.array[i][j] - s[i];
                 }
             }
 
@@ -497,8 +508,8 @@ namespace rab1
             {
                 for (int j = 0; j < h; j++)
                 {      
-                   int i1 = (int)(bmp1.array[i, j]);
-                   int i2 = (int)(bmp2.array[i, j]);
+                   int i1 = (int)(bmp1.array[i][j]);
+                   int i2 = (int)(bmp2.array[i][j]);
                    Z[i, j] = GLBL_R(n1, n2, i1, i2, sdvg_x, NOD);
                 }
                 //MessageBox.Show(" i = " + i);

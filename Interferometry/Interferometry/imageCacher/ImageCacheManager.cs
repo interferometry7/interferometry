@@ -76,13 +76,18 @@ namespace Interferometry.imageCacher
                 ZArrayDescriptor newArray = new ZArrayDescriptor();
                 newArray.width = neededUnit.width;
                 newArray.height = neededUnit.height;
-                newArray.array = new long[neededUnit.width, neededUnit.height];
+                newArray.array = new long[neededUnit.width][];
+
+                for (int i = 0; i < neededUnit.width; i++)
+                {
+                    newArray.array[i] = new long[neededUnit.height];
+                }
 
                 for (int i = 0; i < neededUnit.width; i++)
                 {
                     for (int j = 0; j < neededUnit.height; j++)
                     {
-                        newArray.array[i, j] = savedArray.array[i + neededUnit.xStart, j + neededUnit.yStart];
+                        newArray.array[i][j] = savedArray.array[i + neededUnit.xStart][j + neededUnit.yStart];
                     }
                 }
 

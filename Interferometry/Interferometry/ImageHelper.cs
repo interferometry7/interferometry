@@ -38,16 +38,16 @@ namespace rab1
 
             for (int i = 0; i < w1; i++)
             {
-                bufr[i] = (int) (someImage.array[i, pointY] * ratio);
-                bufg[i] = (int)(someImage.array[i, pointY] * ratio);
-                bufb[i] = (int)(someImage.array[i, pointY] * ratio);
+                bufr[i] = (int) (someImage.array[i][pointY] * ratio);
+                bufg[i] = (int)(someImage.array[i][pointY] * ratio);
+                bufb[i] = (int)(someImage.array[i][pointY] * ratio);
             }
 
             for (int i = 0; i < h1; i++)
             {
-                bufyr[i] = (int)(someImage.array[pointX, i] * ratio);
-                bufyg[i] = (int)(someImage.array[pointX, i] * ratio);
-                bufyb[i] = (int)(someImage.array[pointX, i] * ratio);
+                bufyr[i] = (int)(someImage.array[pointX][i] * ratio);
+                bufyg[i] = (int)(someImage.array[pointX][i] * ratio);
+                bufyb[i] = (int)(someImage.array[pointX][i] * ratio);
             }
 
             Form fo = new GraphForm(pointX, pointY, w1, h1, bufr, bufyr, bufg, bufyg, bufb, bufyb);

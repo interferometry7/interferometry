@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Interferometry.forms;
 using Interferometry.math_classes;
-using rab1;
 
 namespace rab1
 {
@@ -28,13 +21,18 @@ namespace rab1
             ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
             wrappedPhase.width = w1;
             wrappedPhase.height = h1;
-            wrappedPhase.array = new long[w1, h1];
+            wrappedPhase.array = new long[w1][];
+
+            for (int i = 0; i < w1; i++)
+            {
+                wrappedPhase.array[i] = new long[h1];
+            }
 
             for (int i = 0; i < w1; i++)
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    wrappedPhase.array[i, j] = img[m1-1].array[i, j] - img[m2-1].array[i, j];
+                    wrappedPhase.array[i][j] = img[m1-1].array[i][j] - img[m2-1].array[i][j];
                 }
 
                 done++;
@@ -105,13 +103,18 @@ namespace rab1
             ZArrayDescriptor someBuffer = new ZArrayDescriptor();
             someBuffer.width = imageDescriptor.width;
             someBuffer.height = imageDescriptor.height;
-            someBuffer.array = new long[someBuffer.width, someBuffer.height];
+            someBuffer.array = new long[someBuffer.width][];
+
+            for (int i = 0; i < someBuffer.width; i++)
+            {
+                someBuffer.array[i] = new long[someBuffer.height];
+            }
 
             for (int i = 0; i < w1; i++)
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    k_x[j] = (int) imageDescriptor.array[i, j];
+                    k_x[j] = (int) imageDescriptor.array[i][j];
                 }
 
                 k_cntr = 1;
@@ -125,7 +128,7 @@ namespace rab1
                 for (int j = 0; j < h1; j++)
                 {
                     if (k_cntr == 1) r1 = k_x[j]; else r1 = k_x1[j];
-                    someBuffer.array[i, j] = r1;
+                    someBuffer.array[i][j] = r1;
                 }
 
                 done++;
@@ -135,13 +138,18 @@ namespace rab1
             ZArrayDescriptor result = new ZArrayDescriptor();
             result.width = imageDescriptor.width;
             result.height = imageDescriptor.height;
-            result.array = new long[result.width, result.height];
+            result.array = new long[result.width][];
+
+            for (int i = 0; i < result.width; i++)
+            {
+                result.array[i] = new long[result.height];
+            }
 
             for (int j = 0; j < h1; j++)
             {
                 for (int i = 0; i < w1; i++)
                 {
-                    k_x[i] = (int) someBuffer.array[i, j];
+                    k_x[i] = (int) someBuffer.array[i][j];
                 }
 
                 k_cntr = 1;
@@ -155,7 +163,7 @@ namespace rab1
                 for (int i = 0; i < w1; i++)
                 {
                     if (k_cntr == 1) r1 = k_x[i]; else r1 = k_x1[i];
-                    result.array[i, j] = r1;
+                    result.array[i][j] = r1;
                 }
 
                 done++;
@@ -207,13 +215,18 @@ namespace rab1
            ZArrayDescriptor result = new ZArrayDescriptor();
            result.width = imageDescriptor.width;
            result.height = imageDescriptor.height;
-           result.array = new long[result.width, result.height];
+           result.array = new long[result.width][];
+
+           for (int i = 0; i < result.width; i++)
+           {
+               result.array[i] = new long[result.height];
+           }
            
            for (int i = 0; i < w1; i++)
            {
                for (int j = 0; j < h1; j++)
                {
-                   k_x1[j] = (int) imageDescriptor.array[i, j];
+                   k_x1[j] = (int) imageDescriptor.array[i][j];
                }
 
                for (int j = 0; j < h1 - k; j++)
@@ -225,7 +238,7 @@ namespace rab1
                for (int j = 0; j < h1 - k; j++)
                {
                    s = k_x2[j];
-                   result.array[i, j + k2] = s;
+                   result.array[i][j + k2] = s;
                }
 
                done++;
@@ -236,7 +249,7 @@ namespace rab1
            {
                for (int i = 0; i < w1; i++)
                { 
-                   k_x1[i] = (int) imageDescriptor.array[i, j];
+                   k_x1[i] = (int) imageDescriptor.array[i][j];
                }
 
                for (int i = 0; i < w1 - k; i++)
@@ -248,7 +261,7 @@ namespace rab1
                for (int i = 0; i < w1 - k; i++)
                {
                    s = k_x2[i];
-                   result.array[i + k2, j] = s;
+                   result.array[i + k2][j] = s;
                }
 
                done++;

@@ -297,15 +297,31 @@ namespace Interferometry
 
             zArrayDescriptor = Utils.getArrayFromImage(newBitmap);
 
+            Bitmap resizedImage;
+
+            if ((imageContainer.ActualWidth != 0) && (imageContainer.ActualHeight != 0))
+            {
+                Size imageContainerSize = new Size(imageContainer.ActualWidth, imageContainer.ActualHeight);
+                resizedImage = ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)), imageContainerSize);
+            }
+            else
+            {
+                resizedImage = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor));
+            }
+
             if (zArrayDescriptor != null)
             {
                 imageWidth = zArrayDescriptor.width;
                 imageHeight = zArrayDescriptor.height;
+
+                if (Environment.Is64BitProcess == false)
+                {
+                    FilesHelper.saveDescriptorWithName(zArrayDescriptor, getFilePath());
+                    zArrayDescriptor = null;
+                }
             }
 
-            ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
-
-            doWorkEventArgs.Result = imageSource;
+            doWorkEventArgs.Result = FilesHelper.bitmapToBitmapImage(resizedImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadImageAsync(object sender, DoWorkEventArgs doWorkEventArgs)
@@ -319,15 +335,31 @@ namespace Interferometry
 
             zArrayDescriptor = Utils.getArrayFromImage(newSource);
 
+            Bitmap resizedImage;
+
+            if ((imageContainer.ActualWidth != 0) && (imageContainer.ActualHeight != 0))
+            {
+                Size imageContainerSize = new Size(imageContainer.ActualWidth, imageContainer.ActualHeight);
+                resizedImage = ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)), imageContainerSize);
+            }
+            else
+            {
+                resizedImage = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor));
+            }
+
             if (zArrayDescriptor != null)
             {
                 imageWidth = zArrayDescriptor.width;
                 imageHeight = zArrayDescriptor.height;
+
+                if (Environment.Is64BitProcess == false)
+                {
+                    FilesHelper.saveDescriptorWithName(zArrayDescriptor, getFilePath());
+                    zArrayDescriptor = null;
+                }
             }
 
-            ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
-
-            doWorkEventArgs.Result = imageSource;
+            doWorkEventArgs.Result = FilesHelper.bitmapToBitmapImage(resizedImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)

@@ -20,7 +20,12 @@ namespace Interferometry
         {
             int w1 = f1.width;
             int h1 = f1.height;
-            long[,] result = new long[w1, h1];
+            long[][] result = new long[w1][];
+
+            for (int i = 0; i < w1; i++)
+            {
+                result[i] = new long[h1];
+            }
 
             int all = w1;
             int done = 0;
@@ -30,8 +35,8 @@ namespace Interferometry
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    long a = f1.array[i, j]; a += sdvg; if (a > sineNumber) a -= sineNumber;
-                    long b = fp.array[i, j];
+                    long a = f1.array[i][j]; a += sdvg; if (a > sineNumber) a -= sineNumber;
+                    long b = fp.array[i][j];
 
                     while (Math.Abs(a - b) >= sineNumber)
                     {
@@ -44,7 +49,7 @@ namespace Interferometry
                         if (a > b) a -= sineNumber;
 
                     } 
-                    result[i, j] = a;
+                    result[i][j] = a;
 
                 }
                 done++;
@@ -64,7 +69,12 @@ namespace Interferometry
         {
             int imagesWidth = img[0].width;
             int imagesHeight = img[0].height;
-            long[,] result = new long[imagesWidth, imagesHeight];                        // массив для значений фаз
+            long[][] result = new long[imagesWidth][];                        // массив для значений фаз
+
+            for (int i = 0; i < imagesWidth; i++)
+            {
+                result[i] = new long[imagesHeight];
+            }
 
             int imagesNumber = img.Length;                                   // Число фазовых сдвигов   
             double[] i_sdv = new double[imagesNumber];
@@ -91,7 +101,7 @@ namespace Interferometry
                 {
                     for (int ii = 0; ii < imagesNumber; ii++)
                     {
-                        i_sdv[ii] = img[ii].array[i, j];
+                        i_sdv[ii] = img[ii].array[i][j];
                     }
 
                     // ------                                     Формула расшифровки
@@ -113,7 +123,7 @@ namespace Interferometry
                         fz2 += v_sdv[ii] * k_cos[ii];
                     }
 
-                    result[i, j] = (long) ((Math.Atan2(fz1, fz2) + pi) * pi2);
+                    result[i][j] = (long) ((Math.Atan2(fz1, fz2) + pi) * pi2);
                 }
 
                 done++;  
@@ -133,12 +143,16 @@ namespace Interferometry
 
         public static ZArrayDescriptor ATAN_Carre(ZArrayDescriptor[] img, int sineNumber)
         {
-
             int w1 = img[0].width;
             int h1 = img[0].height;
-            long[,] result = new long[w1, h1];                        // массив для значений фаз
+            long[][] result = new long[w1][];                        // массив для значений фаз
 
-                                            // Число фазовых сдвигов  
+            for (int i = 0; i < w1; i++)
+            {
+                result[i] = new long[h1];
+            }
+
+            // Число фазовых сдвигов  
            
             double pi = Math.PI;
             double pi2 = sineNumber / (Math.PI * 2);
@@ -159,10 +173,10 @@ namespace Interferometry
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    long i1 = img[0].array[i, j];       // ------         Формула расшифровки
-                    long i2 =  img[1].array[i, j];
-                    long i3 =  img[2].array[i, j];
-                    long i4 =  img[3].array[i, j];
+                    long i1 = img[0].array[i][j];       // ------         Формула расшифровки
+                    long i2 =  img[1].array[i][j];
+                    long i3 =  img[2].array[i][j];
+                    long i4 =  img[3].array[i][j];
                     double ay = (i1 - i4) + (i2 - i3);
                     double ax = (i2 + i3) - (i1 + i4);
                     double c = 3 * (i2 - i3) - (i1 - i4);
@@ -202,7 +216,7 @@ namespace Interferometry
                     if (r < min) min = r;
                     long r1 = (long)((r ) * pi2);
                     //if (r1 < 0) r1 += (sineNumber+1);
-                    result[i, j] = r1;
+                    result[i][j] = r1;
                 }
 
                 done++;
@@ -210,7 +224,7 @@ namespace Interferometry
             }
 
             PopupProgressBar.close();
-            //MessageBox.Show(" max =  " + max + " min =  " + min);
+
             ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
             wrappedPhase.array = result;
             wrappedPhase.width = w1;
@@ -224,7 +238,12 @@ namespace Interferometry
 
             int w1 = img[0].width;
             int h1 = img[0].height;
-            long[,] result = new long[w1, h1];                        // массив для значений фаз  
+            long[][] result = new long[w1][];                        // массив для значений фаз  
+
+            for (int i = 0; i < w1; i++)
+            {
+                result[i] = new long[h1];
+            }
 
             double pi = Math.PI;
             double pi2 = sineNumber / (Math.PI * 2);
@@ -237,16 +256,16 @@ namespace Interferometry
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    long i1 = img[0].array[i, j];       // ------         Формула расшифровки
-                    long i2 = img[1].array[i, j];
-                    long i3 = img[2].array[i, j];
-                    long i4 = img[3].array[i, j];
+                    long i1 = img[0].array[i][j];       // ------         Формула расшифровки
+                    long i2 = img[1].array[i][j];
+                    long i3 = img[2].array[i][j];
+                    long i4 = img[3].array[i][j];
                     double ay = (i1 - i4) + (i2 - i3);
                     ay = ay * Math.Atan(a);
                     double ax = (i2 + i3) - (i1 + i4);
 
 
-                    result[i, j] = (long)((Math.Atan2(ax, ay) + pi) * pi2);
+                    result[i][j] = (long)((Math.Atan2(ax, ay) + pi) * pi2);
                     
                 }
 
@@ -269,7 +288,12 @@ namespace Interferometry
 
             int w1 = img[0].width;
             int h1 = img[0].height;
-            long[,] result = new long[w1, h1];                        // массив для значений фаз
+            long[][] result = new long[w1][];                        // массив для значений фаз
+
+            for (int i = 0; i < w1; i++)
+            {
+                result[i] = new long[h1];
+            }
 
             // Число фазовых сдвигов
             //MessageBox.Show(" sineNumber =  " + sineNumber + " w1 =  " + w1 + " h1 =  " + h1);   
@@ -288,10 +312,10 @@ namespace Interferometry
             {
                 for (int j = 0; j < h1; j++)
                 {
-                    long i1 = img[0].array[i, j];       // ------         Формула расшифровки
-                    long i2 = img[1].array[i, j];
-                    long i3 = img[2].array[i, j];
-                    long i4 = img[3].array[i, j];
+                    long i1 = img[0].array[i][j];       // ------         Формула расшифровки
+                    long i2 = img[1].array[i][j];
+                    long i3 = img[2].array[i][j];
+                    long i4 = img[3].array[i][j];
                     double y = Math.Abs(3 * (i2 - i3) - (i1 - i4));
                     double x = Math.Abs((i1 - i4) + (i2 - i3));
                     double b;
@@ -299,7 +323,7 @@ namespace Interferometry
                     double tg = Math.Atan(b);
                     r = (long)(tg * pi2);
                     if (r > max) max = r;      if (r < min) min = r;
-                    result[i, j] =(long) (tg*pi2);
+                    result[i][j] =(long) (tg*pi2);
 
                 }
 
@@ -379,19 +403,19 @@ namespace Interferometry
 
                 for (int j = y0; j < y1; j++)
                 {
-                    r = (int) descriptors[0].array[i, j];
+                    r = (int) descriptors[0].array[i][j];
                     i_sdv[0] = r;
                     buffer1[i, j] = i_sdv[0];
 
-                    r = (int)descriptors[1].array[i, j];
+                    r = (int)descriptors[1].array[i][j];
                     i_sdv[1] = r;
                     buffer2[i, j] = i_sdv[1];
 
-                    r = (int)descriptors[2].array[i, j];
+                    r = (int)descriptors[2].array[i][j];
                     i_sdv[2] = r;
                     buffer3[i, j] = i_sdv[2];
 
-                    r = (int)descriptors[3].array[i, j];
+                    r = (int)descriptors[3].array[i][j];
                     i_sdv[3] = r;
                     buffer4[i, j] = i_sdv[3];
 
