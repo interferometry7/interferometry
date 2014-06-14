@@ -5,9 +5,9 @@
     <Grid>
         <TextBox x:Name="firstSineNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="secondSineNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="135,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Center" Margin="0,121,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        <Label Content="Число синусоид 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Число синусоид 2" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+        <Button Content="Ок" HorizontalAlignment="Center" Margin="0,121,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
 
     </Grid>
 </Window>

@@ -96,6 +96,27 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void setBitmap(Bitmap bitmap)
+        {
+            if (bitmap != null)
+            {
+                progressBar.Visibility = Visibility.Visible;
+
+                if (worker != null)
+                {
+                    worker.CancelAsync();
+                }
+
+                worker = new BackgroundWorker();
+                worker.WorkerReportsProgress = true;
+                worker.WorkerSupportsCancellation = true;
+                worker.DoWork += loadBitmapAsync;
+                worker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
+                worker.ProgressChanged += WorkerOnProgressChanged;
+                worker.RunWorkerAsync(bitmap);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setImageWithoutArrayGenerating(ImageSource imageSource)
         {
             image.Source = imageSource;
@@ -265,6 +286,28 @@ namespace Interferometry
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void loadBitmapAsync(object sender, DoWorkEventArgs doWorkEventArgs)
+        {
+            Bitmap newBitmap = (Bitmap)doWorkEventArgs.Argument;
+
+            if (newBitmap == null)
+            {
+                return;
+            }
+
+            zArrayDescriptor = Utils.getArrayFromImage(newBitmap);
+
+            if (zArrayDescriptor != null)
+            {
+                imageWidth = zArrayDescriptor.width;
+                imageHeight = zArrayDescriptor.height;
+            }
+
+            ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
+
+            doWorkEventArgs.Result = imageSource;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadImageAsync(object sender, DoWorkEventArgs doWorkEventArgs)
         {
             BitmapImage newSource = (BitmapImage)doWorkEventArgs.Argument;
@@ -274,7 +317,6 @@ namespace Interferometry
                 return;
             }
 
-            var watch = Stopwatch.StartNew();
             zArrayDescriptor = Utils.getArrayFromImage(newSource);
 
             if (zArrayDescriptor != null)
@@ -283,15 +325,7 @@ namespace Interferometry
                 imageHeight = zArrayDescriptor.height;
             }
 
-            watch.Stop();
-            //var elapsedMs = watch.ElapsedMilliseconds;
-            //MessageBox.Show("1 = " + elapsedMs);
-
-            watch = Stopwatch.StartNew();
             ImageSource imageSource = Utils.getImageFromArray(zArrayDescriptor);
-            watch.Stop();
-            //elapsedMs = watch.ElapsedMilliseconds;
-            //MessageBox.Show("2 = " + elapsedMs);
 
             doWorkEventArgs.Result = imageSource;
         }

@@ -365,6 +365,12 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            if (imageContainersList.Count < 16)
+            {
+                MessageBox.Show("Недостаточно изображений");
+                return;
+            }
+
             if (Environment.Is64BitProcess == false)
             {
                 List<String> fileNames = new List<String>();
@@ -484,14 +490,14 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void NewFormOnOneShotOfSeries(System.Drawing.Image newImage, int imageNumber)
         {
-            ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap)newImage);
+            //ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap)newImage);
 
             if (imageContainersList.Count < imageNumber)
             {
                 addImageContainer(imageContainersList.Count, scrollerContent);
             }
 
-            imageContainersList[imageNumber - 1].setzArrayDescriptor(result);
+            imageContainersList[imageNumber - 1].setBitmap((Bitmap) newImage);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void oneImageOfSeriesTaken(System.Drawing.Image newImage, int imageNumber)

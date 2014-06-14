@@ -18,6 +18,7 @@ namespace rab1
             const double PI = Math.PI;
             double af = PI * 2 * waveNumbers / width;
             Bitmap result = new Bitmap(width, height);
+            BitmapData bitmapData = ImageProcessor.getBitmapData(result);
 
             for (i = 0; i < width; i++)
             {
@@ -32,10 +33,11 @@ namespace rab1
                         colorComponent = (int)((Math.Sin(af * j + PI * phaseShift / 180) + 1) * 255.0 / 2.0);
                     }
 
-                    result.SetPixel(i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
+                    ImageProcessor.setPixel(bitmapData, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
                 }
             }
 
+            result.UnlockBits(bitmapData);
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
