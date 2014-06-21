@@ -61,12 +61,18 @@ namespace Interferometry.math_classes
                 }
             }*/
 
-
             double[] cArray = new double[phaseShifts.Count()];
 
             for (int i = 0; i < cArray.Count(); i++)
             {
                 cArray[i] = Math.Cos(phaseShifts[i]);
+            }
+
+            double[] sArray = new double[phaseShifts.Count()];
+
+            for (int i = 0; i < cArray.Count(); i++)
+            {
+                cArray[i] = Math.Sin(phaseShifts[i]);
             }
 
 

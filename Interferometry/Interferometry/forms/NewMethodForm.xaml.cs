@@ -90,8 +90,8 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double[] fz = new double[firstCacheManager.getImageNumber()];
-            int step = 360 / firstBunch.Count;
+            double[] fz = new double[firstBunch.Count];
+            double step = 360.0 / firstBunch.Count;
 
             for (int i = 0; i < fz.Count(); i++)
             {
