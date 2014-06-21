@@ -106,14 +106,13 @@ namespace Interferometry
             return null;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static BitmapImage[] loadBunchImages(int number)
+        public static BitmapImage[] loadBunchImages()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "All files (*.*)|*.*|bmp files (*.bmp)|*.bmp";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
-            BitmapImage[] result = new BitmapImage[number];
-
+            
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -123,29 +122,38 @@ namespace Interferometry
                     {
                         using (myStream)
                         {
-                            for (int i = 0; i < number; i++)
+                            String initialFilePath = openFileDialog.FileName;
+
+                            if (initialFilePath.Contains("1") == false)
                             {
-                                String fileName;
+                                throw new Exception("Выбрана не первое изображение в серии. В имени файла нет цифры \"1\"");
+                            }
 
-                                if (openFileDialog.FileName.Contains("1."))
-                                {
-                                    fileName = openFileDialog.FileName.Replace("1.", (i + 1) + ".");
-                                }
-                                else
-                                {
-                                    fileName = openFileDialog.FileName;
-                                }
+                            String initialFileName = Path.GetFileName(initialFilePath);
+                            String initialDirectory = Path.GetDirectoryName(initialFilePath);
+                            List<BitmapImage> temporartResult = new List<BitmapImage>();
 
+                            for (int i = 0; ; i++)
+                            {
+                                String currentFileName = initialFileName.Replace("1", "" + (i + 1));
+                                String currentFilePath = Path.Combine(initialDirectory, currentFileName);
+
+                                if (File.Exists(currentFilePath) == false)
+                                {
+                                    break;
+                                }
+                                
                                 BitmapImage newBitmapImage = new BitmapImage();
 
                                 newBitmapImage.BeginInit();
-                                newBitmapImage.UriSource = new Uri(fileName);
+                                newBitmapImage.UriSource = new Uri(currentFilePath);
                                 newBitmapImage.EndInit();
 
-                                result[i] = newBitmapImage;
+                                temporartResult.Add(newBitmapImage);
                             }
 
                             myStream.Close();
+                            BitmapImage[] result = temporartResult.ToArray();
                             return result;
                         }
                     }

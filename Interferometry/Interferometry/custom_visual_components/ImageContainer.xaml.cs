@@ -125,23 +125,26 @@ namespace Interferometry
         public void setzArrayDescriptor(ZArrayDescriptor newDescriptor)
         {
             zArrayDescriptor = newDescriptor;
-            Bitmap resizedImage;
-
-            if ((imageContainer.ActualWidth != 0) && (imageContainer.ActualHeight != 0))
-            {
-                Size imageContainerSize = new Size(imageContainer.ActualWidth, imageContainer.ActualHeight);
-                resizedImage = ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)), imageContainerSize);
-            }
-            else
-            {
-                resizedImage = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor));
-            }
-
-
-            image.Source = FilesHelper.bitmapToBitmapImage(resizedImage);
 
             if (zArrayDescriptor != null)
             {
+                Bitmap resizedImage;
+
+                if ((imageContainer.ActualWidth != 0) && (imageContainer.ActualHeight != 0))
+                {
+                    Size imageContainerSize = new Size(imageContainer.ActualWidth, imageContainer.ActualHeight);
+                    resizedImage =
+                        ResizeImage(FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor)),
+                            imageContainerSize);
+                }
+                else
+                {
+                    resizedImage = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(zArrayDescriptor));
+                }
+
+
+                image.Source = FilesHelper.bitmapToBitmapImage(resizedImage);
+
                 imageWidth = zArrayDescriptor.width;
                 imageHeight = zArrayDescriptor.height;
 
@@ -150,6 +153,10 @@ namespace Interferometry
                     FilesHelper.saveDescriptorWithName(zArrayDescriptor, getFilePath());
                     zArrayDescriptor = null;
                 }
+            }
+            else
+            {
+                image.Source = null;
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -86,7 +86,7 @@ namespace Interferometry.forms
 
             for (int i = 0; i < 14; i++)
             {
-                addImageContainer(i, scrollerContent);
+                addImageContainer(i);
             }
 
             imageContainersScroller.Content = scrollerContent;
@@ -113,13 +113,7 @@ namespace Interferometry.forms
         /// Загрузить 8 изображений
         private void loadEightImages(object sender, RoutedEventArgs e)
         {
-            loadBunchOfImages(8);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Загрузить 10 изображений
-        private void loadTenImagesButton_Click(object sender, RoutedEventArgs e)
-        {
-            loadBunchOfImages(10);
+            loadBunchOfImages();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void saveButtonClicked(object sender, RoutedEventArgs e)
@@ -399,10 +393,10 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void NewMethodFormOnImageProcessedWithNewMethod(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
         {
-            addImageContainer(imageContainersList.Count, scrollerContent);
+            addImageContainer(imageContainersList.Count);
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPartOfResult);
 
-            addImageContainer(imageContainersList.Count, scrollerContent);
+            addImageContainer(imageContainersList.Count);
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPartOfResult);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -494,7 +488,7 @@ namespace Interferometry.forms
 
             if (imageContainersList.Count < imageNumber)
             {
-                addImageContainer(imageContainersList.Count, scrollerContent);
+                addImageContainer(imageContainersList.Count);
             }
 
             imageContainersList[imageNumber - 1].setBitmap((Bitmap) newImage);
@@ -506,7 +500,7 @@ namespace Interferometry.forms
 
             if (imageContainersList.Count < imageNumber)
             {
-                addImageContainer(imageContainersList.Count, scrollerContent);
+                addImageContainer(imageContainersList.Count);
             }
 
             imageContainersList[imageNumber - 1].setzArrayDescriptor(result);
@@ -543,12 +537,14 @@ namespace Interferometry.forms
         {
             if (arrayDescriptor == null)
             {
-                return;
+                zArrayDescriptor = null;
+            }
+            else
+            {
+                zArrayDescriptor = new ZArrayDescriptor(arrayDescriptor);
             }
 
-            zArrayDescriptor = new ZArrayDescriptor(arrayDescriptor);
             mainImage.Source = Utils.getImageFromArray(zArrayDescriptor);
-
             adjustSliders();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1009,28 +1005,26 @@ namespace Interferometry.forms
             firstForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void loadBunchOfImages(int numberOfImages)
+        private void loadBunchOfImages()
         {
-            ImageSource[] newSources = FilesHelper.loadBunchImages(numberOfImages);
-
-            int all = numberOfImages - 1;
-            int done = 0;
-            PopupProgressBar.show();
-
+            ImageSource[] newSources = FilesHelper.loadBunchImages();
+            
             if (newSources != null)
             {
-                for (int i = 0; i < numberOfImages; i++)
+                for (int i = 0; i < newSources.Count(); i++)
                 {
+                    if (imageContainersList.Count < i + 1)
+                    {
+                        addImageContainer(imageContainersList.Count);
+                    }
+
                     imageContainersList[i].setImage((BitmapImage) newSources[i]);
                     newSources[i] = null;
-                    done++;
-                    PopupProgressBar.setProgress(done, all);
                 }
             }
-            PopupProgressBar.close();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void addImageContainer(int i, Grid newScrollerContent)
+        private void addImageContainer(int i)
         {
             ImageContainer newImageContainer = new ImageContainer();
             newImageContainer.myDelegate = this;
@@ -1041,8 +1035,8 @@ namespace Interferometry.forms
             newImageContainer.setImageNumberLabel(i + 1);
 
             RowDefinition newRowDefinition = new RowDefinition();
-            newScrollerContent.RowDefinitions.Add(newRowDefinition);
-            newScrollerContent.Children.Add(newImageContainer);
+            scrollerContent.RowDefinitions.Add(newRowDefinition);
+            scrollerContent.Children.Add(newImageContainer);
             Grid.SetRow(newImageContainer, i);
             imageContainersList.Add(newImageContainer);
         }
@@ -1067,7 +1061,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            addImageContainer(imageContainersList.Count, scrollerContent);
+            addImageContainer(imageContainersList.Count);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

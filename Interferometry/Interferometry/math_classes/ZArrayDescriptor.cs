@@ -6,7 +6,7 @@ namespace Interferometry.math_classes
     [Serializable()]
     public class ZArrayDescriptor
     {
-        public Int64[][] array;
+        public long[][] array;
         public int width;
         public int height;
 

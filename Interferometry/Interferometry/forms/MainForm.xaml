@@ -13,13 +13,12 @@
 
                     <Button Content="Загрузить изображение" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="loadImageButton" VerticalAlignment="Top" Width="144" Click="loadImageClicked" />
                     <Button Content="Сохранить изображение" Height="23" HorizontalAlignment="Left" Margin="6,43,0,0" Name="saveImageButton" VerticalAlignment="Top" Width="144" Click="saveButtonClicked" />
-                    <Button Content="Загрузить 8 изображений" Height="23" HorizontalAlignment="Left" Margin="263,6,0,0" Name="load8ImagesButton" VerticalAlignment="Top" Width="150" Click="loadEightImages" />
+                    <Button Content="Загрузить серию изображений" Height="23" HorizontalAlignment="Left" Margin="263,6,0,0" Name="load8ImagesButton" VerticalAlignment="Top" Width="313" Click="loadEightImages" />
                     <Button Content="Сохранить 8 изображений" Height="23" HorizontalAlignment="Left" Margin="263,43,0,0" x:Name="saveImagesButton" VerticalAlignment="Top" Width="150" Click="saveImagesClicked" />
                     <Button x:Name="loadArrayButton" Content="Загрузить массив" HorizontalAlignment="Left" Margin="156,6,0,0" VerticalAlignment="Top" Width="102" Height="23" Click="loadArrayClicked"/>
                     <Button x:Name="saveArrayButton" Content="Сохранить массив" HorizontalAlignment="Left" Margin="156,43,0,0" VerticalAlignment="Top" Width="102" Height="24" Click="saveArrayClicked"/>
                     <Button x:Name="loadArraysButton" Content="Загрузить 8 массивов" HorizontalAlignment="Left" Margin="581,6,0,0" Width="125" Height="23" VerticalAlignment="Top" Click="loadArraysClicked"/>
                     <Button Content="Сохранить 8 массивов" HorizontalAlignment="Left" Margin="581,43,0,0" VerticalAlignment="Top" Width="125" Height="24" Click="saveArraysClicked"/>
-                    <Button x:Name="loadTenImagesButton" Content="Загрузить 10 изображений" HorizontalAlignment="Left" Margin="418,6,0,0" VerticalAlignment="Top" Width="158" Height="23" Click="loadTenImagesButton_Click"/>
                     <Button Content="Визуализировать" HorizontalAlignment="Left" Margin="418,43,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Height="23"/>
                     <Button Content="Загрузить obj" HorizontalAlignment="Left" Margin="711,43,0,0" VerticalAlignment="Top" Width="123" Height="23" Click="loadObjClicked"/>
                 </Grid>

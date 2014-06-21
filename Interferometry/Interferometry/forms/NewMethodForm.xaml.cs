@@ -30,6 +30,11 @@ namespace Interferometry.forms
 
         public event ImageProcessedWithNewMethod imageProcessedWithNewMethod;
 
+
+
+        private List<String> firstBunch;
+        private List<String> secondBunch;
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public NewMethodForm()
         {
@@ -43,7 +48,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setFileNames(List<String> files, int imageWidth, int imageHeight)
         {
-            List<String> firstBunch = new List<string>(files.Count / 2);
+            /*List<String> firstBunch = new List<string>(files.Count / 2);
 
             for (int i = 0; i < files.Count/2; i++)
             {
@@ -59,7 +64,23 @@ namespace Interferometry.forms
                 secondBunch.Add(files[i]);
             }
 
-            secondCacheManager.setFilePathes(secondBunch, imageWidth, imageHeight);
+            secondCacheManager.setFilePathes(secondBunch, imageWidth, imageHeight);*/
+
+            firstBunch = new List<string>(files.Count / 2);
+
+            for (int i = 0; i < files.Count / 2; i++)
+            {
+                firstBunch.Add(files[i]);
+            }
+
+            
+            secondBunch = new List<string>(files.Count / 2);
+
+
+            for (int i = files.Count / 2; i < files.Count; i++)
+            {
+                secondBunch.Add(files[i]);
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setDescriptors(List<ZArrayDescriptor> someDescriptors)
@@ -69,7 +90,18 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (imageProcessedWithNewMethod == null)
+            double[] fz = new double[firstCacheManager.getImageNumber()];
+            int step = 360 / firstBunch.Count;
+
+            for (int i = 0; i < fz.Count(); i++)
+            {
+                fz[i] = step * i;
+            }
+
+            WrappedPhaseGetter wrappedPhaseGetter = new WrappedPhaseGetter(firstBunch, fz);
+            wrappedPhaseGetter.RunWorkerAsync();
+
+            /*if (imageProcessedWithNewMethod == null)
             {
                 return;
             }
@@ -124,7 +156,7 @@ namespace Interferometry.forms
                 }
             }
 
-            imageProcessedWithNewMethod(firstResult, secondResult);
+            imageProcessedWithNewMethod(firstResult, secondResult);*/
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
