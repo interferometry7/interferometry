@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Interferometry.math_classes
 {
-    [Serializable()]
+    [Serializable]
     public class ZArrayDescriptor
     {
         public long[][] array;

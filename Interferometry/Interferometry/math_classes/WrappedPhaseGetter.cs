@@ -23,7 +23,6 @@ namespace Interferometry.math_classes
             DoWork += processImage;
             RunWorkerCompleted += OnRunWorkerCompleted;
             ProgressChanged += OnProgressChanged;
-            RunWorkerAsync();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void processImage(object sender, DoWorkEventArgs doWorkEventArgs)
@@ -70,10 +69,75 @@ namespace Interferometry.math_classes
 
             double[] sArray = new double[phaseShifts.Count()];
 
-            for (int i = 0; i < cArray.Count(); i++)
+            for (int i = 0; i < sArray.Count(); i++)
             {
-                cArray[i] = Math.Sin(phaseShifts[i]);
+                sArray[i] = Math.Sin(phaseShifts[i]);
             }
+
+
+
+            phaseShifts = new double[4];
+            cArray = new []{1.0,2.0,3.0, 4.0};
+            sArray = new[] { 1.0, 2.0, 3.0 , 4.0};
+
+            int[][] matrixForInvertVectorCounting = new int[phaseShifts.Length][];
+
+            for (int i = 0; i < phaseShifts.Length; i++)
+            {
+                matrixForInvertVectorCounting[i] = new int[phaseShifts.Length];
+            }
+
+            int initialOnePosition = phaseShifts.Length - 2;
+            int initialMinusOnePosition = phaseShifts.Length - 1;
+
+            for (int i = 0; i < phaseShifts.Length; i++)
+            {
+                matrixForInvertVectorCounting[initialOnePosition][i] = 1;
+                matrixForInvertVectorCounting[initialMinusOnePosition][i] = -1;
+
+                initialOnePosition++;
+
+                if (initialOnePosition > phaseShifts.Length - 1)
+                {
+                    initialOnePosition -= phaseShifts.Length;
+                }
+
+                initialMinusOnePosition++;
+
+                if (initialMinusOnePosition > phaseShifts.Length - 1)
+                {
+                    initialMinusOnePosition -= phaseShifts.Length;
+                }
+            }
+
+            double[] reverseSArray = new double[phaseShifts.Length];
+            double[] reverseCArray = new double[phaseShifts.Length];
+
+            for (int i = 0; i < phaseShifts.Length; i++)
+            {
+                double cSum = 0;
+                double sSum = 0;
+
+                for (int j = 0; j < phaseShifts.Length; j++)
+                {
+                    cSum += matrixForInvertVectorCounting[j][i]*sArray[j];
+                    sSum += matrixForInvertVectorCounting[j][i]*cArray[j];
+                }
+
+                reverseSArray[i] = sSum;
+                reverseCArray[i] = cSum;
+            }
+
+
+            //проверка
+            double sumS = 0;
+            double sumC = 0;
+            for (int i = 0; i < phaseShifts.Length; i++)
+            {
+                sumS += sArray[i]*reverseSArray[i];
+                sumC += cArray[i] * reverseCArray[i];
+            }
+            //проверка
 
 
 
