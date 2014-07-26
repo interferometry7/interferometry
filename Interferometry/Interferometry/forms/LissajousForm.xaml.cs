@@ -20,11 +20,6 @@ namespace Interferometry.forms
     /// </summary>
     public partial class LissajousForm : Window
     {
-        private double phase1 = 0;
-        private double phase2 = 90;
-        private double phase3 = 180;
-        private double phase4 = 270;
-
         public LissajousForm()
         {
             InitializeComponent();
@@ -32,12 +27,15 @@ namespace Interferometry.forms
 
         public void setImages(ZArrayDescriptor[] someImages)
         {
-            double[] phases = new double[4];
-            phases[0] = phase1;
-            phases[1] = phase2;
-            phases[2] = phase3; 
-            phases[3] = phase4;
-            mainImage.Source = FilesHelper.bitmapToBitmapImage(FazaClass.Graph_ATAN(someImages, phases));
+            double[] phaseShifts = new double[someImages.Length];
+            double step = 360.0 / someImages.Length;
+
+            for (int i = 0; i < phaseShifts.Count(); i++)
+            {
+                phaseShifts[i] = step * i;
+            }
+
+            mainImage.Source = FilesHelper.bitmapToBitmapImage(FazaClass.Graph_ATAN(someImages, phaseShifts));
         }
     }
 }

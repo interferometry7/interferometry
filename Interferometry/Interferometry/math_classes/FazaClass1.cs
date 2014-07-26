@@ -7,8 +7,6 @@ using Interferometry.forms;
 using Interferometry.math_classes;
 using rab1;
 
-public delegate void ImageProcessed(Bitmap resultBitmap);
-
 namespace Interferometry
 {
     public class FazaClass
@@ -341,17 +339,12 @@ namespace Interferometry
             return wrappedPhase;
         }
 
-        public static Bitmap ATAN_8(ZArrayDescriptor[] descriptors, int sineNumber)
-        {
-            return null;
-        }
-
-        public static Bitmap Graph_ATAN(ZArrayDescriptor[] descriptors, double[] fzz)
+        public static Bitmap Graph_ATAN(ZArrayDescriptor[] descriptors, double[] phaseShifts)
         {
             int w1 = descriptors[0].width;
             int h1 = descriptors[0].height;
 
-            int n_sdv = 4;                                                       // Число фазовых сдвигов
+            int imagesCount = descriptors.Length;                                                      
 
             int[] i_sdv = new int[4];
             int[] v_sdv = new int[4];
@@ -370,15 +363,15 @@ namespace Interferometry
             double[] k_cos = new double[4];
             double[,] vvs = new double[4, 512];
             double[,] vvc = new double[4, 512];
-            double pi = Math.PI;
+            const double PI = Math.PI;
 
-            for (int i = 0; i < n_sdv; i++)
+            for (int i = 0; i < imagesCount; i++)
             {
-                k_sin[i] = Math.Sin(fzz[i] * pi / 180); 
-                k_cos[i] = Math.Cos(fzz[i] * pi / 180);
+                k_sin[i] = Math.Sin(phaseShifts[i] * PI / 180); 
+                k_cos[i] = Math.Cos(phaseShifts[i] * PI / 180);
             }
 
-            for (int ii = 0; ii < n_sdv; ii++)
+            for (int ii = 0; ii < imagesCount; ii++)
             {
                 for (int i = 0; i < 512; i++)
                 {
@@ -419,17 +412,17 @@ namespace Interferometry
                     i_sdv[3] = r;
                     buffer4[i, j] = i_sdv[3];
 
-                    v_sdv[0] = i_sdv[1] - i_sdv[n_sdv - 1] + 255;
-                    v_sdv[n_sdv - 1] = i_sdv[0] - i_sdv[n_sdv - 2] + 255;
+                    v_sdv[0] = i_sdv[1] - i_sdv[imagesCount - 1] + 255;
+                    v_sdv[imagesCount - 1] = i_sdv[0] - i_sdv[imagesCount - 2] + 255;
 
-                    for (int ii = 1; ii < n_sdv - 1; ii++)
+                    for (int ii = 1; ii < imagesCount - 1; ii++)
                     {
                         v_sdv[ii] = i_sdv[ii + 1] - i_sdv[ii - 1] + 255;
                     }
 
                     fz1 = fz2 = 0;
 
-                    for (int ii = 0; ii < n_sdv; ii++)
+                    for (int ii = 0; ii < imagesCount; ii++)
                     {
                         fz2 += vvs[ii, v_sdv[ii]];
                         fz1 += vvc[ii, v_sdv[ii]];
@@ -462,13 +455,13 @@ namespace Interferometry
                     i_sdv[2] = buffer3[i, j];
                     i_sdv[3] = buffer4[i, j];
 
-                    v_sdv[0] = i_sdv[1] - i_sdv[n_sdv - 1] + 255;
-                    v_sdv[n_sdv - 1] = i_sdv[0] - i_sdv[n_sdv - 2] + 255;
-                    for (int ii = 1; ii < n_sdv - 1; ii++) { v_sdv[ii] = i_sdv[ii + 1] - i_sdv[ii - 1] + 255; }
+                    v_sdv[0] = i_sdv[1] - i_sdv[imagesCount - 1] + 255;
+                    v_sdv[imagesCount - 1] = i_sdv[0] - i_sdv[imagesCount - 2] + 255;
+                    for (int ii = 1; ii < imagesCount - 1; ii++) { v_sdv[ii] = i_sdv[ii + 1] - i_sdv[ii - 1] + 255; }
 
 
                     fz1 = fz2 = 0;
-                    for (int ii = 0; ii < n_sdv; ii++)
+                    for (int ii = 0; ii < imagesCount; ii++)
                     {
                         fz2 += vvs[ii, v_sdv[ii]];
                         fz1 += vvc[ii, v_sdv[ii]];
