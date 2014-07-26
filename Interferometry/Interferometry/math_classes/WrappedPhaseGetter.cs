@@ -11,89 +11,65 @@ namespace Interferometry.math_classes
     {
         private List<String> imagesPath;
         private double[] phaseShifts;
+        private int imagesWidth;
+        private int imagesHeight;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public WrappedPhaseGetter(List<String> imagesPath, double[] phaseShifts)
+        public WrappedPhaseGetter(List<String> imagesPath, int imagesWidth, int imagesHeight)
         {
+            this.imagesWidth = imagesWidth;
+            this.imagesHeight = imagesHeight;
             this.imagesPath = imagesPath;
-            this.phaseShifts = phaseShifts;
+
+            phaseShifts = new double[imagesPath.Count];
+            double step = 360.0 / imagesPath.Count;
+
+            for (int i = 0; i < phaseShifts.Count(); i++)
+            {
+                phaseShifts[i] = step * i;
+            }
 
             WorkerReportsProgress = true;
             WorkerSupportsCancellation = true;
             DoWork += processImage;
-            RunWorkerCompleted += OnRunWorkerCompleted;
-            ProgressChanged += OnProgressChanged;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void processImage(object sender, DoWorkEventArgs doWorkEventArgs)
         {
-            /*for (int i = 1; (i <= 10); i++)
-            {
-                System.Threading.Thread.Sleep(500);
-                ReportProgress((i * 10));
-            }*/
-
             if ((CancellationPending == true))
             {
                 doWorkEventArgs.Cancel = true;
                 return;
             }
 
-            //TODO do smth
-
-            /*int width = -1;
-            int height = -1;
-
-            for (int i = 0; i < images.Count(); i++)
-            {
-                if (width == -1)
-                {
-                    width = images[i].width;
-                    height = images[i].height;
-                }
-                else
-                {
-                    if ((width != images[i].width) || (height != images[i].height))
-                    {
-                        throw new Exception("Размеры изображений не совпадают");
-                    }
-                }
-            }*/
-
             double[] cArray = new double[phaseShifts.Count()];
 
             for (int i = 0; i < cArray.Count(); i++)
             {
-                cArray[i] = Math.Cos(phaseShifts[i]);
+                cArray[i] = Math.Cos(phaseShifts[i] * (Math.PI /180.0));
             }
 
             double[] sArray = new double[phaseShifts.Count()];
 
             for (int i = 0; i < sArray.Count(); i++)
             {
-                sArray[i] = Math.Sin(phaseShifts[i]);
+                sArray[i] = Math.Sin(phaseShifts[i] * (Math.PI / 180.0));
             }
 
-
-
-            phaseShifts = new double[4];
-            cArray = new []{1.0,2.0,3.0, 4.0};
-            sArray = new[] { 1.0, 2.0, 3.0 , 4.0};
-
-            int[][] matrixForInvertVectorCounting = new int[phaseShifts.Length][];
+            int[][] transformationMatrix = new int[phaseShifts.Length][];
 
             for (int i = 0; i < phaseShifts.Length; i++)
             {
-                matrixForInvertVectorCounting[i] = new int[phaseShifts.Length];
+                transformationMatrix[i] = new int[phaseShifts.Length];
             }
 
-            int initialOnePosition = phaseShifts.Length - 2;
+            int initialOnePosition = 1;
             int initialMinusOnePosition = phaseShifts.Length - 1;
 
             for (int i = 0; i < phaseShifts.Length; i++)
             {
-                matrixForInvertVectorCounting[initialOnePosition][i] = 1;
-                matrixForInvertVectorCounting[initialMinusOnePosition][i] = -1;
+                transformationMatrix[initialOnePosition][i] = 1;
+                transformationMatrix[initialMinusOnePosition][i] = -1;
 
                 initialOnePosition++;
 
@@ -110,49 +86,93 @@ namespace Interferometry.math_classes
                 }
             }
 
-            double[] reverseSArray = new double[phaseShifts.Length];
-            double[] reverseCArray = new double[phaseShifts.Length];
+            double[] sinComponents = new double[phaseShifts.Length];
+            double[] cosComponents = new double[phaseShifts.Length];
 
             for (int i = 0; i < phaseShifts.Length; i++)
             {
-                double cSum = 0;
                 double sSum = 0;
+                double cSum = 0;
 
                 for (int j = 0; j < phaseShifts.Length; j++)
                 {
-                    cSum += matrixForInvertVectorCounting[j][i]*sArray[j];
-                    sSum += matrixForInvertVectorCounting[j][i]*cArray[j];
+                    double matrixComponent = transformationMatrix[i][j];
+                    double sArrayComponent = sArray[j];
+                    double cArrayComponent = cArray[j];
+
+                    sSum += matrixComponent * sArrayComponent;
+                    cSum += matrixComponent * cArrayComponent;
                 }
 
-                reverseSArray[i] = sSum;
-                reverseCArray[i] = cSum;
+                sinComponents[i] = sSum;
+                cosComponents[i] = cSum;
             }
 
+            double[][] sinResults = new double[imagesWidth][];
 
-            //проверка
-            double sumS = 0;
-            double sumC = 0;
-            for (int i = 0; i < phaseShifts.Length; i++)
+            for (int i = 0; i < imagesWidth; i++)
             {
-                sumS += sArray[i]*reverseSArray[i];
-                sumC += cArray[i] * reverseCArray[i];
+                sinResults[i] = new double[imagesHeight];
             }
-            //проверка
+
+            double[][] cosResults = new double[imagesWidth][];
+
+            for (int i = 0; i < imagesWidth; i++)
+            {
+                cosResults[i] = new double[imagesHeight];
+            }
 
 
+            for (int i = 0; i < imagesPath.Count; i++)
+            {
+                ZArrayDescriptor currentDerscriptor = new ZArrayDescriptor(imagesPath[i]);
 
+                for (int x = 0; x < currentDerscriptor.width; x++)
+                {
+                    for (int y = 0; y < currentDerscriptor.height; y++)
+                    {
+                        long currentImageIntencity = currentDerscriptor.array[x][y];
+                        sinResults[x][y] += currentImageIntencity*sinComponents[i];
+                        cosResults[x][y] += currentImageIntencity * cosComponents[i];
+                    }
+                }
+            }
 
-            doWorkEventArgs.Result = null;
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void OnProgressChanged(object sender, ProgressChangedEventArgs progressChangedEventArgs)
-        {
-            String progress = (progressChangedEventArgs.ProgressPercentage + "%");
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void OnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
-        {
+            long[][] result = new long[imagesWidth][];
 
+            for (int i = 0; i < imagesWidth; i++)
+            {
+                result[i] = new long[imagesHeight];
+            }
+
+            double min = Double.MaxValue;
+            double max = Double.MinValue;
+
+            long minDegree = long.MaxValue;
+            long maxDegree = long.MinValue;
+
+            for (int x = 0; x < imagesWidth; x++)
+            {
+                for (int y = 0; y < imagesHeight; y++)
+                {
+                    double atanResult = Math.Atan2(sinResults[x][y], cosResults[x][y]);
+
+                    min = Math.Min(min, atanResult);
+                    max = Math.Max(max, atanResult);
+
+                    result[x][y] = (long) (atanResult*180/Math.PI + 180.0);
+
+                    minDegree = Math.Min(minDegree, result[x][y]);
+                    maxDegree = Math.Max(maxDegree, result[x][y]);
+                }
+            }
+
+            ZArrayDescriptor resultDescriptor = new ZArrayDescriptor();
+            resultDescriptor.array = result;
+            resultDescriptor.width = imagesWidth;
+            resultDescriptor.height = imagesHeight;
+
+            doWorkEventArgs.Result = resultDescriptor;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
