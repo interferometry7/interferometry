@@ -365,30 +365,18 @@ namespace Interferometry.forms
                 return;
             }
 
-            if (Environment.Is64BitProcess == false)
+            List<String> fileNames = new List<String>();
+
+            for (int i = 0; i < 16; i++)
             {
-                List<String> fileNames = new List<String>();
-
-                for (int i = 0; i < 16; i++)
-                {
-                    fileNames.Add(imageContainersList[i].getFilePath());
-                }
-
-
-                NewMethodForm newMethodForm = new NewMethodForm();
-                newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
-                newMethodForm.imageProcessedWithNewMethod+= NewMethodFormOnImageProcessedWithNewMethod;
-                newMethodForm.Show();
+                fileNames.Add(imageContainersList[i].getFilePath());
             }
-            else
-            {
-                ZArrayDescriptor[] source = new ZArrayDescriptor[10];
 
-                for (int i = 0; i < 10; i++)
-                {
-                    source[i] = imageContainersList[i].getzArrayDescriptor();
-                }
-            }
+
+            NewMethodForm newMethodForm = new NewMethodForm();
+            newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
+            newMethodForm.imageProcessedWithNewMethod += NewMethodFormOnImageProcessedWithNewMethod;
+            newMethodForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void NewMethodFormOnImageProcessedWithNewMethod(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
@@ -995,14 +983,31 @@ namespace Interferometry.forms
         /// Построение фигур Лиссажу
         private void lissaguButton_Click(object sender, RoutedEventArgs e)
         {
-            LissajousForm firstForm = new LissajousForm();
-            ZArrayDescriptor[] parameter = new ZArrayDescriptor[4];
-            parameter[0] = imageContainersList[0].getzArrayDescriptor();
-            parameter[1] = imageContainersList[1].getzArrayDescriptor();
-            parameter[2] = imageContainersList[2].getzArrayDescriptor();
-            parameter[3] = imageContainersList[3].getzArrayDescriptor();
-            firstForm.setImages(parameter);
+            if (imageContainersList.Count < 16)
+            {
+                MessageBox.Show("Недостаточно изображений");
+                return;
+            }
+
+            List<String> fileNames = new List<String>();
+
+            for (int i = 0; i < 16; i++)
+            {
+                fileNames.Add(imageContainersList[i].getFilePath());
+            }
+
+            LissajousForm firstForm = new LissajousForm(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
+            firstForm.lissajousImageBuilded += FirstFormOnLissajousImageBuilded;
             firstForm.Show();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void FirstFormOnLissajousImageBuilded(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
+        {
+            addImageContainer(imageContainersList.Count);
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPartOfResult);
+
+            addImageContainer(imageContainersList.Count);
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPartOfResult);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void loadBunchOfImages()

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
+using Interferometry.forms;
 
 namespace Interferometry.math_classes
 {
-    class WrappedPhaseGetter : BackgroundWorker
+    class LissajousImageBuilder : BackgroundWorker
     {
         private List<String> imagesPath;
         private double[] phaseShifts;
@@ -15,7 +16,7 @@ namespace Interferometry.math_classes
         private int imagesHeight;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public WrappedPhaseGetter(List<String> imagesPath, int imagesWidth, int imagesHeight)
+        public LissajousImageBuilder(List<String> imagesPath, int imagesWidth, int imagesHeight)
         {
             this.imagesWidth = imagesWidth;
             this.imagesHeight = imagesHeight;
@@ -138,42 +139,67 @@ namespace Interferometry.math_classes
                 }
             }
 
-            long[][] result = new long[imagesWidth][];
-
-            for (int i = 0; i < imagesWidth; i++)
+            for (int x = 0; x < imagesWidth; x++)
             {
-                result[i] = new long[imagesHeight];
+                for (int y = 0; y < imagesHeight; y++)
+                {
+                    sinResults[x][y] = sinResults[x][y] /** 180.0 / Math.PI*/;
+                    cosResults[x][y] = cosResults[x][y] /** 180.0 / Math.PI*/;
+                }
             }
 
-            double min = Double.MaxValue;
-            double max = Double.MinValue;
 
-            long minDegree = long.MaxValue;
-            long maxDegree = long.MinValue;
+            double maxSin = Double.MinValue;
+            double maxCos = Double.MinValue;
+
+            double minSin = Double.MaxValue;
+            double minCos = Double.MaxValue;
+
+
 
             for (int x = 0; x < imagesWidth; x++)
             {
                 for (int y = 0; y < imagesHeight; y++)
                 {
-                    double atanResult = Math.Atan2(sinResults[x][y], cosResults[x][y]);
+                    maxSin = Math.Max(maxSin, sinResults[x][y]);
+                    maxCos = Math.Max(maxCos, cosResults[x][y]);
 
-                    min = Math.Min(min, atanResult);
-                    max = Math.Max(max, atanResult);
-
-                    result[x][y] = (long) (atanResult*180.0/Math.PI + 180.0);
-
-                    minDegree = Math.Min(minDegree, result[x][y]);
-                    maxDegree = Math.Max(maxDegree, result[x][y]);
+                    minSin = Math.Min(minSin, sinResults[x][y]);
+                    minCos = Math.Min(minCos, cosResults[x][y]);
                 }
             }
 
+            int resultWidth = (int) (maxCos - minCos) + 1;
+            int resultHeight = (int)(maxSin - minSin) + 1;
+
+            long[][] result = new long[resultWidth][];
+
+            for (int i = 0; i < resultWidth; i++)
+            {
+                result[i] = new long[resultHeight];
+            }
+
+            for (int x = 0; x < imagesWidth; x++)
+            {
+                for (int y = 0; y < imagesHeight; y++)
+                {
+                    int sin = (int) sinResults[x][y];
+                    int cos = (int) cosResults[x][y];
+
+                    int currentSin = (int) ((int) sinResults[x][y] - minSin);
+                    int currentCos = (int) ((int) cosResults[x][y] - minCos);
+                    result[currentCos][currentSin]+= 1;
+                }
+            }
+
+
+
             ZArrayDescriptor resultDescriptor = new ZArrayDescriptor();
             resultDescriptor.array = result;
-            resultDescriptor.width = imagesWidth;
-            resultDescriptor.height = imagesHeight;
+            resultDescriptor.width = resultWidth;
+            resultDescriptor.height = resultHeight;
 
             doWorkEventArgs.Result = resultDescriptor;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -172,6 +172,9 @@
     <Compile Include="ImageHelper.cs" />
     <Compile Include="math_classes\Furie.cs" />
     <Compile Include="math_classes\FiltrClass.cs" />
+    <Compile Include="math_classes\LissajousImageBuilder.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="math_classes\SinClass1.cs" />
     <Compile Include="math_classes\WrappedPhaseGetter.cs">
       <SubType>Component</SubType>

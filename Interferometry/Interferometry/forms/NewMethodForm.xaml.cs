@@ -24,9 +24,6 @@ namespace Interferometry.forms
     /// </summary>
     public partial class NewMethodForm : Window
     {
-        private const int firstSineNumber = 167;
-        private const int secondSineNumber = 241;
-
         public event ImageProcessedWithNewMethod imageProcessedWithNewMethod;
 
         private List<String> firstBunch;
@@ -42,9 +39,6 @@ namespace Interferometry.forms
         public NewMethodForm()
         {
             InitializeComponent();
-
-            firstSineNumberTextBox.Text = Convert.ToString(firstSineNumber);
-            secondSineNumberTextBox.Text = Convert.ToString(secondSineNumber);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void setFileNames(List<String> files, int imageWidth, int imageHeight)
