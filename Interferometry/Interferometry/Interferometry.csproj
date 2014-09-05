@@ -126,6 +126,9 @@
     <Compile Include="forms\Faza2Pi.Designer.cs">
       <DependentUpon>Faza2Pi.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\NewUnwrapMethodForm.xaml.cs">
+      <DependentUpon>NewUnwrapMethodForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\Tabl_Sub.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +176,9 @@
     <Compile Include="math_classes\Furie.cs" />
     <Compile Include="math_classes\FiltrClass.cs" />
     <Compile Include="math_classes\LissajousImageBuilder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="math_classes\NewMethodUnwrapper.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="math_classes\SinClass1.cs" />
@@ -281,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="custom_visual_components\ImageContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\NewUnwrapMethodForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
