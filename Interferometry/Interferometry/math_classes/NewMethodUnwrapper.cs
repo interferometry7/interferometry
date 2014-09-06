@@ -13,8 +13,8 @@ namespace Interferometry.math_classes
         private List<ZArrayDescriptor> someImages;
         private List<int> sineNumbers;
         private int M = 1;
-        private List<double> Mi;
-        private List<double> MiInverted;
+        private List<int> Mi;
+        private List<int> MiInverted;
 
         public NewMethodUnwrapper(List<ZArrayDescriptor> someImages, List<int> sineNumbers)
         {
@@ -38,23 +38,33 @@ namespace Interferometry.math_classes
                 M *= currentSineNumber;
             }
 
-            Mi = new List<double>(sineNumbers.Count);
-            MiInverted = new List<double>(sineNumbers.Count);
+            Mi = new List<int>(sineNumbers.Count);
+            MiInverted = new List<int>(sineNumbers.Count);
 
             for(int i = 0; i < sineNumbers.Count; i++)
             {
                 Mi.Add(M / sineNumbers[i]);
-                MiInverted.Add((1.0/Mi[i])%sineNumbers[i]);
+
+                for (int desiredValue = 0; ;desiredValue++)
+                {
+                    int temp = desiredValue*Mi[i];
+
+                    if (temp%sineNumbers[i] == 1)
+                    {
+                        MiInverted.Add(desiredValue);
+                        break;
+                    }
+                }
             }
             
             ZArrayDescriptor resultDescriptor = new ZArrayDescriptor();
-            resultDescriptor.width = width;
-            resultDescriptor.height = height;
-            resultDescriptor.array = new long[width][];
+            resultDescriptor.width = sineNumbers[0];
+            resultDescriptor.height = sineNumbers[1];
+            resultDescriptor.array = new long[resultDescriptor.width][];
 
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < resultDescriptor.width; i++)
             {
-                resultDescriptor.array[i] = new long[height];
+                resultDescriptor.array[i] = new long[resultDescriptor.height];
             }
 
             for (int x = 0; x < width; x++)
@@ -62,15 +72,17 @@ namespace Interferometry.math_classes
                 for (int y = 0; y < height; y++)
                 {
                     long resultPoint = 0;
+                    List<long> currentImageValues = new List<long>();
 
                     for(int i = 0; i < someImages.Count; i++)
                     {
                         ZArrayDescriptor currentDescriptor = someImages[i];
                         long currentIntencity = currentDescriptor.array[x][y];
-                        resultPoint += (long)(currentIntencity * Mi[i] * MiInverted[i]);
+                        currentImageValues.Add(currentIntencity);
+                        resultPoint += (currentIntencity%sineNumbers[i]) * Mi[i] * MiInverted[i];
                     }
 
-                    resultDescriptor.array[x][y] = resultPoint;
+                    resultDescriptor.array[currentImageValues[0] % sineNumbers[0]] [currentImageValues[1] % sineNumbers[1]] = resultPoint % M;
                 }
             }
 
