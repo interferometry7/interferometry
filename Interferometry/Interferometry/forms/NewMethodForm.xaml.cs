@@ -35,16 +35,22 @@ namespace Interferometry.forms
         private ZArrayDescriptor firstResult;
         private ZArrayDescriptor secondResult;
 
+        private int firstSineNumber;
+        private int secondSineNumber;
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public NewMethodForm()
         {
             InitializeComponent();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void setFileNames(List<String> files, int imageWidth, int imageHeight)
+        public void setFileNames(List<String> files, int imageWidth, int imageHeight, int firstSineNumber, int secondSineNumber)
         {
             imagesWidth = imageWidth;
             imagesHeight = imageHeight;
+
+            this.firstSineNumber = firstSineNumber;
+            this.secondSineNumber = secondSineNumber;
 
             firstBunch = new List<string>(files.Count / 2);
 
@@ -63,11 +69,11 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WrappedPhaseGetter wrappedPhaseGetter = new WrappedPhaseGetter(firstBunch, imagesWidth, imagesHeight);
+            WrappedPhaseGetter wrappedPhaseGetter = new WrappedPhaseGetter(firstBunch, imagesWidth, imagesHeight, firstSineNumber);
             wrappedPhaseGetter.RunWorkerCompleted+=WrappedPhaseGetterOnRunWorkerCompleted;
             wrappedPhaseGetter.RunWorkerAsync();
 
-            WrappedPhaseGetter secondWrappedPhaseGetter = new WrappedPhaseGetter(secondBunch, imagesWidth, imagesHeight);
+            WrappedPhaseGetter secondWrappedPhaseGetter = new WrappedPhaseGetter(secondBunch, imagesWidth, imagesHeight, secondSineNumber);
             secondWrappedPhaseGetter.RunWorkerCompleted += SecondWrappedPhaseGetterOnRunWorkerCompleted;
             secondWrappedPhaseGetter.RunWorkerAsync();
         }

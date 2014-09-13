@@ -56,16 +56,11 @@ namespace Interferometry.math_classes
                     }
                 }
             }
-            
-            ZArrayDescriptor resultDescriptor = new ZArrayDescriptor();
-            resultDescriptor.width = 1000;
-            resultDescriptor.height = 1000;
-            resultDescriptor.array = new long[resultDescriptor.width][];
 
-            for (int i = 0; i < resultDescriptor.width; i++)
-            {
-                resultDescriptor.array[i] = new long[resultDescriptor.height];
-            }
+            ZArrayDescriptor resultDescriptor = new ZArrayDescriptor(Utils.maxLong(someImages[0].array, someImages[0].width, someImages[0].height) + 1,
+                Utils.maxLong(someImages[1].array, someImages[1].width, someImages[1].height) + 1);
+
+            int pointsNumber = 0;
 
             for (int x = 0; x < width; x++)
             {
@@ -82,7 +77,11 @@ namespace Interferometry.math_classes
                         resultPoint += (currentPhase%sineNumbers[i]) * Mi[i] * MiInverted[i];
                     }
 
-                    resultDescriptor.array[currentImageValues[0]] [currentImageValues[1]] = resultPoint;
+                    //if (resultPoint < sineNumbers[0] * sineNumbers[1] * 10)
+                    {
+                        pointsNumber++;
+                        resultDescriptor.array[currentImageValues[0]][currentImageValues[1]] += 1;
+                    }
                 }
             }
 

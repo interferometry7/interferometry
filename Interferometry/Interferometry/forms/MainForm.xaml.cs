@@ -391,7 +391,7 @@ namespace Interferometry.forms
 
 
             NewMethodForm newMethodForm = new NewMethodForm();
-            newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
+            newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight(), 1670, 2410);
             newMethodForm.imageProcessedWithNewMethod += NewMethodFormOnImageProcessedWithNewMethod;
             newMethodForm.Show();
         }

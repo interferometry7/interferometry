@@ -13,13 +13,15 @@ namespace Interferometry.math_classes
         private double[] phaseShifts;
         private int imagesWidth;
         private int imagesHeight;
+        private int scaleTo;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public WrappedPhaseGetter(List<String> imagesPath, int imagesWidth, int imagesHeight)
+        public WrappedPhaseGetter(List<String> imagesPath, int imagesWidth, int imagesHeight, int scaleTo)
         {
             this.imagesWidth = imagesWidth;
             this.imagesHeight = imagesHeight;
             this.imagesPath = imagesPath;
+            this.scaleTo = scaleTo;
 
             phaseShifts = new double[imagesPath.Count];
             double step = 360.0 / imagesPath.Count;
@@ -56,35 +58,9 @@ namespace Interferometry.math_classes
                 sArray[i] = Math.Sin(phaseShifts[i] * (Math.PI / 180.0));
             }
 
-            int[][] transformationMatrix = new int[phaseShifts.Length][];
-
-            for (int i = 0; i < phaseShifts.Length; i++)
-            {
-                transformationMatrix[i] = new int[phaseShifts.Length];
-            }
-
-            int initialOnePosition = 1;
-            int initialMinusOnePosition = phaseShifts.Length - 1;
-
-            for (int i = 0; i < phaseShifts.Length; i++)
-            {
-                transformationMatrix[initialOnePosition][i] = 1;
-                transformationMatrix[initialMinusOnePosition][i] = -1;
-
-                initialOnePosition++;
-
-                if (initialOnePosition > phaseShifts.Length - 1)
-                {
-                    initialOnePosition -= phaseShifts.Length;
-                }
-
-                initialMinusOnePosition++;
-
-                if (initialMinusOnePosition > phaseShifts.Length - 1)
-                {
-                    initialMinusOnePosition -= phaseShifts.Length;
-                }
-            }
+            //матрица трансформации для получения ортогонального вектора
+            int[][] transformationMatrix = Utils.createIntArray(phaseShifts.Length, phaseShifts.Length);
+            buildTransformationMatrix(transformationMatrix);
 
             double[] sinComponents = new double[phaseShifts.Length];
             double[] cosComponents = new double[phaseShifts.Length];
@@ -108,20 +84,8 @@ namespace Interferometry.math_classes
                 cosComponents[i] = cSum;
             }
 
-            double[][] sinResults = new double[imagesWidth][];
-
-            for (int i = 0; i < imagesWidth; i++)
-            {
-                sinResults[i] = new double[imagesHeight];
-            }
-
-            double[][] cosResults = new double[imagesWidth][];
-
-            for (int i = 0; i < imagesWidth; i++)
-            {
-                cosResults[i] = new double[imagesHeight];
-            }
-
+            double[][] sinResults = Utils.createDoubleArray(imagesWidth, imagesHeight);
+            double[][] cosResults = Utils.createDoubleArray(imagesWidth, imagesHeight);
 
             for (int i = 0; i < imagesPath.Count; i++)
             {
@@ -132,38 +96,23 @@ namespace Interferometry.math_classes
                     for (int y = 0; y < currentDerscriptor.height; y++)
                     {
                         long currentImageIntencity = currentDerscriptor.array[x][y];
-                        sinResults[x][y] += currentImageIntencity*sinComponents[i];
+                        sinResults[x][y] += currentImageIntencity * sinComponents[i];
                         cosResults[x][y] += currentImageIntencity * cosComponents[i];
                     }
                 }
             }
 
-            long[][] result = new long[imagesWidth][];
-
-            for (int i = 0; i < imagesWidth; i++)
-            {
-                result[i] = new long[imagesHeight];
-            }
-
-            double min = Double.MaxValue;
-            double max = Double.MinValue;
-
-            long minDegree = long.MaxValue;
-            long maxDegree = long.MinValue;
+            long[][] result = Utils.createLongArray(imagesWidth, imagesHeight);
 
             for (int x = 0; x < imagesWidth; x++)
             {
                 for (int y = 0; y < imagesHeight; y++)
                 {
                     double atanResult = Math.Atan2(sinResults[x][y], cosResults[x][y]);
+                    //double atanResultDegrees = (atanResult * 180.0) / Math.PI;
+                    //atanResultDegrees *= scaleTo;
 
-                    min = Math.Min(min, atanResult);
-                    max = Math.Max(max, atanResult);
-
-                    result[x][y] = (long) (atanResult*180.0/Math.PI + 180.0);
-
-                    minDegree = Math.Min(minDegree, result[x][y]);
-                    maxDegree = Math.Max(maxDegree, result[x][y]);
+                    result[x][y] = (long)(((atanResult + Math.PI) / (2.0 * Math.PI)) * scaleTo);
                 }
             }
 
@@ -173,6 +122,32 @@ namespace Interferometry.math_classes
             resultDescriptor.height = imagesHeight;
 
             doWorkEventArgs.Result = resultDescriptor;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void buildTransformationMatrix(int[][] transformationMatrix)
+        {
+            int initialOnePosition = 1;
+            int initialMinusOnePosition = phaseShifts.Length - 1;
+
+            for (int i = 0; i < phaseShifts.Length; i++)
+            {
+                transformationMatrix[initialOnePosition][i] = 1;
+                transformationMatrix[initialMinusOnePosition][i] = -1;
+
+                initialOnePosition++;
+
+                if (initialOnePosition > phaseShifts.Length - 1)
+                {
+                    initialOnePosition -= phaseShifts.Length;
+                }
+
+                initialMinusOnePosition++;
+
+                if (initialMinusOnePosition > phaseShifts.Length - 1)
+                {
+                    initialMinusOnePosition -= phaseShifts.Length;
+                }
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

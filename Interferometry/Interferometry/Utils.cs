@@ -4,10 +4,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Interferometry.forms;
 using Interferometry.math_classes;
 using rab1;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Interferometry
 {
@@ -194,6 +196,72 @@ namespace Interferometry
             }
 
             return someDescriptor;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static long[][] createLongArray(int width, int height)
+        {
+             long[][] array = new long[width][];
+
+            for (int i = 0; i < width; i++)
+            {
+                array[i] = new long[height];
+            }
+
+            return array;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static double[][] createDoubleArray(int width, int height)
+        {
+            double[][] array = new double[width][];
+
+            for (int i = 0; i < width; i++)
+            {
+                array[i] = new double[height];
+            }
+
+            return array;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static int[][] createIntArray(int width, int height)
+        {
+            int[][] array = new int[width][];
+
+            for (int i = 0; i < width; i++)
+            {
+                array[i] = new int[height];
+            }
+
+            return array;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static int maxInt(int[][] someArray, int width, int height)
+        {
+            int result = int.MinValue;
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    result = Math.Max(result, someArray[i][j]);
+                }
+            }
+
+            return result;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static long maxLong(long[][] someArray, int width, int height)
+        {
+            long result = long.MinValue;
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    result = Math.Max(result, someArray[i][j]);
+                }
+            }
+
+            return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

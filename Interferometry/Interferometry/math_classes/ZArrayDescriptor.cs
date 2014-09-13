@@ -14,6 +14,20 @@ namespace Interferometry.math_classes
         {
         }
 
+        public ZArrayDescriptor(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+            array = Utils.createLongArray(this.width, this.height);
+        }
+
+        public ZArrayDescriptor(long width, long height)
+        {
+            this.width = (int) width;
+            this.height = (int) height;
+            array = Utils.createLongArray(this.width, this.height);
+        }
+
         public ZArrayDescriptor(ZArrayDescriptor descriptorToCopy)
         {
             if (descriptorToCopy == null)
