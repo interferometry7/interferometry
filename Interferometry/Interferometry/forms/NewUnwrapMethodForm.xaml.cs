@@ -39,9 +39,9 @@ namespace Interferometry.forms
 
         private void startClicked(object sender, RoutedEventArgs e)
         {
-            NewMethodUnwrapper lissajousImageBuilder = new NewMethodUnwrapper(someImages, sineNumbers);
-            lissajousImageBuilder.RunWorkerCompleted += imagesUnwrapped;
-            lissajousImageBuilder.RunWorkerAsync();
+            NewMethodUnwrapper newMethodUnwrapper = new NewMethodUnwrapper(someImages, sineNumbers);
+            newMethodUnwrapper.RunWorkerCompleted += imagesUnwrapped;
+            newMethodUnwrapper.RunWorkerAsync();
         }
 
         private void imagesUnwrapped(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)

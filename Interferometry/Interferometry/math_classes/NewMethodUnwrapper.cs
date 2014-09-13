@@ -58,8 +58,8 @@ namespace Interferometry.math_classes
             }
             
             ZArrayDescriptor resultDescriptor = new ZArrayDescriptor();
-            resultDescriptor.width = sineNumbers[0];
-            resultDescriptor.height = sineNumbers[1];
+            resultDescriptor.width = 1000;
+            resultDescriptor.height = 1000;
             resultDescriptor.array = new long[resultDescriptor.width][];
 
             for (int i = 0; i < resultDescriptor.width; i++)
@@ -77,12 +77,12 @@ namespace Interferometry.math_classes
                     for(int i = 0; i < someImages.Count; i++)
                     {
                         ZArrayDescriptor currentDescriptor = someImages[i];
-                        long currentIntencity = currentDescriptor.array[x][y];
-                        currentImageValues.Add(currentIntencity);
-                        resultPoint += (currentIntencity%sineNumbers[i]) * Mi[i] * MiInverted[i];
+                        long currentPhase = currentDescriptor.array[x][y];
+                        currentImageValues.Add(currentPhase);
+                        resultPoint += (currentPhase%sineNumbers[i]) * Mi[i] * MiInverted[i];
                     }
 
-                    resultDescriptor.array[currentImageValues[0] % sineNumbers[0]] [currentImageValues[1] % sineNumbers[1]] = resultPoint % M;
+                    resultDescriptor.array[currentImageValues[0]] [currentImageValues[1]] = resultPoint;
                 }
             }
 
