@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Interferometry;
 using Interferometry.forms;
+using Interferometry.math_classes;
 
 public delegate void OneImageOfSeries(Image newImage, int imageNumber);
 

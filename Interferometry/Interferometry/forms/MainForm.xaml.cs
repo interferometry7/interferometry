@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Interferometry.Forms;
+using Interferometry.forms.Camera;
 using Interferometry.interfaces;
 using Interferometry.math_classes;
 using rab1;
@@ -1084,6 +1085,52 @@ namespace Interferometry.forms
         private void button2_Click(object sender, RoutedEventArgs e)
         {
             addImageContainer(imageContainersList.Count);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void createTestWrappedPhases(object sender, RoutedEventArgs e)
+        {
+            const int VALUE_TO_SCALE = 256;
+
+            ZArrayDescriptor firstPhase = new ZArrayDescriptor(900, 900);
+            const double FIRST_PHASE_MAX = 167.0;
+
+            for (int i = 0; i < firstPhase.width; i++)
+            {
+                //double sineValueInRadians = Math.Sin(i * (Math.PI / 180.0));
+                //long resultScaledValue = (long)(((sineValueInRadians + 1.0) / 2) * VALUE_TO_SCALE);
+                long resultScaledValue = i;
+
+                resultScaledValue = (long)(resultScaledValue % FIRST_PHASE_MAX);
+
+                for (int j = 0; j < firstPhase.height; j++)
+                {
+                    firstPhase.array[i][j] = resultScaledValue;
+                }
+            }
+
+            addImageContainer(imageContainersList.Count);
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPhase);
+
+
+            ZArrayDescriptor secondPhase = new ZArrayDescriptor(900, 900);
+            const double SECOND_PHASE_MAX = 241.0;
+
+            for (int i = 0; i < secondPhase.width; i++)
+            {
+                //double sineValueInRadians = Math.Sin(i * (Math.PI / 180.0));
+                //long resultScaledValue = (long)(((sineValueInRadians + 1.0) / 2) * VALUE_TO_SCALE);
+                long resultScaledValue = i;
+
+                resultScaledValue = (long)(resultScaledValue % SECOND_PHASE_MAX);
+
+                for (int j = 0; j < secondPhase.height; j++)
+                {
+                    secondPhase.array[i][j] = resultScaledValue;
+                }
+            }
+
+            addImageContainer(imageContainersList.Count);
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPhase);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

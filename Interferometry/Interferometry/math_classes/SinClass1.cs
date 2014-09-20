@@ -1,20 +1,16 @@
 ﻿using System;
-
 using System.Drawing;
-using System.Windows.Forms;
 using System.Drawing.Imaging;
-using Interferometry.forms;
+using rab1;
 
-namespace rab1
+namespace Interferometry.math_classes
 {
-    public class SinClass1
+    public static class SinClass1
     {
-
-       // 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
         public static Bitmap drawSine(double waveNumbers, double phaseShift, int width, int height, int XY)    // sin b/w
         {
             int i, j;
-            int colorComponent;
             const double PI = Math.PI;
             double af = PI * 2 * waveNumbers / width;
             Bitmap result = new Bitmap(width, height);
@@ -24,6 +20,7 @@ namespace rab1
             {
                 for (j = 0; j < height; j++)
                 {
+                    int colorComponent;
                     if (XY == 0)
                     {
                         colorComponent = (int) ((Math.Sin(af*i + PI*phaseShift/180) + 1)*255.0/2.0);
@@ -342,199 +339,6 @@ namespace rab1
             return k;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-
-// Кнопка ok
-        public static void b1_RGB(double N_sin, double N_fz, int XY, int rb, int MASK, int max_x, int  max_y,  PictureBox pc1, int wrt)
-        {
-            
-            int i, j;
-            double N =  N_sin;                         // число синусоид
-            double N1 = max_x / N;  // Число точек в одном периоде
-            double N2 = N1 / 255;
-            double pi = Math.PI;         
-
-            byte r, g, b;
-            double nx = max_x + 1;
-
-            double af = pi * 2 * N / nx;
-            Bitmap bmp_sin = new Bitmap(max_x, max_y);
-
-            if (rb == 1 && MASK == 0)      //  Sinus (Цветное Все биты)
-            {
-                if (XY == 1)  // Полосы ориентированы перпендикулярно оси X
-                    for (i = 0; i < max_x; i++)
-                        for (j = 0; j < max_y; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i) + 1) * 127); if (r > 255) r = 0;
-                            g = (byte)((Math.Sin(af * i + 2 * pi / 3) + 1) * 127); if (g > 255) g = 0;
-                            b = (byte)((Math.Sin(af * i + 4 * pi / 3) + 1) * 127); if (b > 255) b = 0;
-                            bmp_sin.SetPixel(i, j, Color.FromArgb(r, g, b)); 
-                            
-                        }
-                if (XY == 0) // Полосы ориентированы перпендикулярно оси y
-                    for (i = 0; i < max_y; i++)
-                        for (j = 0; j < max_x; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i) + 1) * 127); if (r > 255) r = 0;
-                            g = (byte)((Math.Sin(af * i + 2 * pi / 3) + 1) * 127); if (g > 255) g = 0;
-                            b = (byte)((Math.Sin(af * i + 4 * pi / 3) + 1) * 127); if (b > 255) b = 0;
-                            bmp_sin.SetPixel(j, i, Color.FromArgb(r, g, b)); 
-                            
-                        }
-            }
-
-
-            if (rb != 1 && MASK == 0)      //  Sinus ( ч/б)
-            {
-                if (XY == 1)  // Полосы ориентированы перпендикулярно оси X
-                    for (i = 0; i < max_x; i++)
-                        for (j = 0; j < max_y; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i + pi * N_fz / 180) + 1) * 127); if (r > 255) r = 0;                           
-                            bmp_sin.SetPixel(i, j, Color.FromArgb(r, r, r));
-
-                        }
-                if (XY == 0) // Полосы ориентированы перпендикулярно оси y
-                    for (i = 0; i < max_y; i++)
-                        for (j = 0; j < max_x; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i + pi * N_fz / 180) + 1) * 127); if (r > 255) r = 0;                           
-                            bmp_sin.SetPixel(j, i, Color.FromArgb(r, r, r));
-
-                        }
-            }
-
-            if (rb == 1 && MASK != 0)            // По битам (Три цвета)
-            {
-                if (XY == 1)
-                    for (i = 0; i < max_x; i++)
-                        for (j = 0; j < max_y; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i + pi * N_fz / 180) + 1) * 127); if (r > 255) r = 0;
-                            g = (byte)((Math.Sin(af * i + 2 * pi / 3) + 1) * 127);      if (g > 255) g = 0;
-                            b = (byte)((Math.Sin(af * i + 4 * pi / 3) + 1) * 127);      if (b > 255) b = 0;
-
-                            if (MASK != 0) { r = BITMASK(r, MASK); b = BITMASK(b, MASK); g = BITMASK(g, MASK); }
-                            bmp_sin.SetPixel(i, j, Color.FromArgb(r, g, b));
-                        }
-                if (XY == 0)
-                    for (i = 0; i < max_y; i++)
-                        for (j = 0; j < max_x; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i + pi * N_fz / 180) + 1) * 127); if (r > 255) r = 0;
-                            if (MASK != 0) r = BITMASK(r, MASK);
-                            g = (byte)((Math.Sin(af * i + 2 * pi / 3) + 1) * 127); if (g > 255) g = 0;
-                            if (MASK != 0) g = BITMASK(g, MASK);
-                            b = (byte)((Math.Sin(af * i + 4 * pi / 3) + 1) * 127); if (b > 255) b = 0;
-                            if (MASK != 0) b = BITMASK(b, MASK);
-
-
-                            bmp_sin.SetPixel(j, i, Color.FromArgb(r, g, b));
-                        }
-            }
-            if (rb != 1 && MASK != 0)            // По битам ч/б
-            {
-                if (XY == 1)
-                    for (i = 0; i < max_x; i++)
-                        for (j = 0; j < max_y; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i + pi * N_fz / 180) + 1) * 127); if (r > 255) r = 0;                       
-                            r = BITMASK(r, MASK);                             
-                            bmp_sin.SetPixel(i, j, Color.FromArgb(r, r, 0));
-                        }
-                if (XY == 0)
-                    for (i = 0; i < max_y; i++)
-                        for (j = 0; j < max_x; j++)
-                        {
-                            r = (byte)((Math.Sin(af * i + pi * N_fz / 180) + 1) * 127); if (r > 255) r = 0;
-                            r = BITMASK(r, MASK);                          
-                            bmp_sin.SetPixel(j, i, Color.FromArgb(r, r, 0));
-                        }
-            }
-            pc1.Image = bmp_sin;
-            if (wrt == 1)
-            {
-                string string_dialog = "D:\\Студенты\\Эксперимент";
-                System.Windows.Forms.SaveFileDialog dialog1 = new System.Windows.Forms.SaveFileDialog();
-                dialog1.InitialDirectory = string_dialog;
-                dialog1.Filter = "JPEG (*.jpg)|*.jpg|Bitmap(*.bmp)|*.bmp";
-
-                if (dialog1.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        pc1.Image.Save(dialog1.FileName);
-                        dialog1.InitialDirectory = dialog1.FileName;
-                        //string_dialog = dialog1.FileName;
-                    }
-                    catch (Exception ex) { MessageBox.Show(" Ошибка при записи файла " + ex.Message); }
-                }                          
-
-                
-            }
-    
-        }
-        // --------------------------------------------------------------------------------------------------- Объединение 8 битов
-        public static Bitmap bit8(Image[] img)
-         {            
-            int width = img[7].Width;
-            int height = img[7].Height;
-            Bitmap result = new Bitmap(width, height);
-
-            Color  c;
-            int r1, g1, b1;
-            int[] cr = new int[height];
-            int[] cb = new int[height];
-            int[] cg = new int[height];
-
-            int[] cr1 = new int[height];
-            int[] cb1 = new int[height];
-            int[] cg1 = new int[height];                                                  
-
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++) 
-                { 
-                    c = result.GetPixel(i, j); 
-                    cr[j] = c.R; 
-                    cg[j] = c.G; 
-                    cb[j] = c.B; 
-                }
-
-                for (int k = 0; k < 8; k++)
-                {
-                    for (int j = 0; j < height; j++)
-                    {
-                        c = ((Bitmap)img[k]).GetPixel(i, j); 
-                        cr1[j] = c.R; 
-                        cg1[j] = c.G; 
-                        cb1[j] = c.B;
-                    }
-
-                    if (k != 0)
-                    {
-                        for (int j = 0; j < height; j++)
-                        {
-                            r1 = ((cr1[j] > 127) ? 1 : 0) << k;
-                            g1 = ((cg1[j] > 127) ? 1 : 0) << k;
-                            b1 = ((cb1[j] > 127) ? 1 : 0) << k;
-                            cr[j] |= r1;
-                            cg[j] |= g1;
-                            cb[j] |= b1;
-                        }
-                    }
-                }
-
-                for (int j = 0; j < height; j++)
-                {
-                    result.SetPixel(i, j, Color.FromArgb(cr[j], cg[j], cb[j]));
-                }
-            }
-
-            return result;
-         }
-
         // ------------------------------------------------------------------------------------------------------ 8 bit Cуммирование
         public static Bitmap bit8sin(Image[] img)
         {
@@ -557,12 +361,11 @@ namespace rab1
             int[] cr1 = new int[height];
             int[] cb1 = new int[height];
             int[] cg1 = new int[height];
-                                                           
-            int kk;
-            Color c;
 
             for (int i = 0; i < width; i++)
             {
+                Color c;
+
                 for (int j = 0; j < height; j++)
                 {
                     c = ImageProcessor.getPixel(i, j, bitmapData); 
@@ -571,7 +374,7 @@ namespace rab1
                     cb[j] = c.B;
                 }
 
-                kk = 8;
+                int kk = 8;
 
                 for (int k = 0; k < 8; k++, kk--)
                 {
@@ -609,5 +412,6 @@ namespace rab1
             result.UnlockBits(bitmapData);
             return result;
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

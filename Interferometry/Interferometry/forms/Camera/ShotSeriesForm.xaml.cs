@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Interferometry.math_classes;
 using rab1;
 using Image = System.Drawing.Image;
 

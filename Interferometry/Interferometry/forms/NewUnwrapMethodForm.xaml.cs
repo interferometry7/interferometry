@@ -51,6 +51,8 @@ namespace Interferometry.forms
                 ZArrayDescriptor result = (ZArrayDescriptor) runWorkerCompletedEventArgs.Result;
                 imagesUnwrappedWithNewMethod(result);
             }
+
+            Close();
         }
     }
 }
