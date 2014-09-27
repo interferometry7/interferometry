@@ -266,25 +266,25 @@ namespace rab1
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void drawLines(double N_sin, double f1, int max_x, int max_y, int XY)
+        private void drawLines(double N_sin, double phaseShift, int max_x, int max_y, int XY)
         {
             Bitmap result = null;
 
             if (stripeType == StripeType.sine)
             {
-                result = SinClass1.drawSine(N_sin, f1, max_x, max_y, XY);
+                result = SinClass1.drawSine(N_sin, phaseShift, max_x, max_y, XY);
             }
             else if (stripeType == StripeType.lines)
             {
-                result = SinClass1.drawLines(N_sin, f1, max_x, max_y, XY);
+                result = SinClass1.drawLines(N_sin, phaseShift, max_x, max_y, XY);
             }
             else if (stripeType == StripeType.dithered)
             {
-                result = SinClass1.drawDitheredLines(N_sin, f1, max_x, max_y, XY);
+                result = SinClass1.drawDitheredLines(N_sin, phaseShift, max_x, max_y, XY);
             }
             else if (stripeType == StripeType.bits)
             {
-                result = SinClass1.drawBitImage(N_sin, f1, max_x, max_y, XY, currentBitImageNumber + 1, BitImageType.simple);
+                result = SinClass1.drawBitImage(N_sin, phaseShift, max_x, max_y, XY, currentBitImageNumber + 1, BitImageType.simple);
             }
 
             formForStripes.setImage(result);

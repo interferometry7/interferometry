@@ -60,7 +60,7 @@ namespace Interferometry.math_classes
             int firstImageMax = (int) Utils.maxLong(someImages[0].array, someImages[0].width, someImages[0].height);
             int secondImageMax = (int) Utils.maxLong(someImages[1].array, someImages[1].width, someImages[1].height);
 
-            ZArrayDescriptor resultDescriptor = new ZArrayDescriptor(firstImageMax + 1, secondImageMax + 1);
+            ZArrayDescriptor resultDescriptor = new ZArrayDescriptor(secondImageMax / 5 + 1, firstImageMax / 5 + 1);
 
             for (int x = 0; x < width; x++)
             {
@@ -77,7 +77,7 @@ namespace Interferometry.math_classes
                         resultPoint += currentPhase * Mi[i] * MiInverted[i];
                     }
 
-                    resultDescriptor.array[currentImageValues[0]][currentImageValues[1]] = resultPoint;
+                    resultDescriptor.array[currentImageValues[1]/5][currentImageValues[0]/5] = resultPoint;
                 }
             }
 

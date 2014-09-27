@@ -85,9 +85,9 @@ namespace Interferometry.forms
             scrollerContent.HorizontalAlignment = HorizontalAlignment.Stretch;
             scrollerContent.VerticalAlignment = VerticalAlignment.Stretch;
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 16; i++)
             {
-                addImageContainer(i);
+                addImageContainer();
             }
 
             imageContainersScroller.Content = scrollerContent;
@@ -299,7 +299,7 @@ namespace Interferometry.forms
 
         private void NewUnwrapMethodFormOnImagesUnwrappedWithNewMethod(ZArrayDescriptor result)
         {
-            addImageContainer(imageContainersList.Count);
+            addImageContainer();
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(result);
         }
 
@@ -385,10 +385,19 @@ namespace Interferometry.forms
 
             List<String> fileNames = new List<String>();
 
-            for (int i = 0; i < 16; i++)
+            List<int> testImageNumbers = new List<int>();
+
+            for (int i = 0; i < 8; i++)
             {
                 fileNames.Add(imageContainersList[i].getFilePath());
+                testImageNumbers.Add(i);
             }
+
+            /*for (int i = 8; i < 12; i++)
+            {
+                fileNames.Add(imageContainersList[i].getFilePath());
+                testImageNumbers.Add(i);
+            }*/
 
 
             NewMethodForm newMethodForm = new NewMethodForm();
@@ -399,10 +408,10 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void NewMethodFormOnImageProcessedWithNewMethod(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
         {
-            addImageContainer(imageContainersList.Count);
+            addImageContainer();
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPartOfResult);
 
-            addImageContainer(imageContainersList.Count);
+            addImageContainer();
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPartOfResult);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -494,7 +503,7 @@ namespace Interferometry.forms
 
             if (imageContainersList.Count < imageNumber)
             {
-                addImageContainer(imageContainersList.Count);
+                addImageContainer();
             }
 
             imageContainersList[imageNumber - 1].setBitmap((Bitmap) newImage);
@@ -506,7 +515,7 @@ namespace Interferometry.forms
 
             if (imageContainersList.Count < imageNumber)
             {
-                addImageContainer(imageContainersList.Count);
+                addImageContainer();
             }
 
             imageContainersList[imageNumber - 1].setzArrayDescriptor(result);
@@ -995,7 +1004,6 @@ namespace Interferometry.forms
             if (mainImage.Source == null) { MessageBox.Show("Главное изображение пустое"); return; }
             if (zArrayDescriptor == null) { MessageBox.Show("Z-массив пуст"); return; }
             setZArray(FurieClass.MNK(zArrayDescriptor));
-
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Построение фигур Лиссажу
@@ -1015,16 +1023,16 @@ namespace Interferometry.forms
             }
 
             LissajousForm firstForm = new LissajousForm(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight());
-            firstForm.lissajousImageBuilded += FirstFormOnLissajousImageBuilded;
+            firstForm.lissajousImageBuilded += firstFormOnLissajousImageBuilded;
             firstForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void FirstFormOnLissajousImageBuilded(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
+        private void firstFormOnLissajousImageBuilded(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
         {
-            addImageContainer(imageContainersList.Count);
+            addImageContainer();
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPartOfResult);
 
-            addImageContainer(imageContainersList.Count);
+            addImageContainer();
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPartOfResult);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1038,7 +1046,7 @@ namespace Interferometry.forms
                 {
                     if (imageContainersList.Count < i + 1)
                     {
-                        addImageContainer(imageContainersList.Count);
+                        addImageContainer();
                     }
 
                     imageContainersList[i].setImage((BitmapImage) newSources[i]);
@@ -1047,7 +1055,98 @@ namespace Interferometry.forms
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void addImageContainer(int i)
+        
+
+        
+        //Вкладка "Тестирование"
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void createIdelSinSignals_Click(object sender, RoutedEventArgs e)
+        {
+            const double FIRST_PHASE = 167.0;
+            const double NUMBER_OF_IMAGES_IN_SERIES = 4;
+
+            for (int imageNumber = 0; imageNumber < NUMBER_OF_IMAGES_IN_SERIES; imageNumber++)
+            {
+                ZArrayDescriptor newSineImage = createSineImage(imageNumber, FIRST_PHASE, NUMBER_OF_IMAGES_IN_SERIES);
+                imageContainersList[imageNumber].setzArrayDescriptor(newSineImage);
+            }
+
+            const double SECOND_PHASE = 241.0;
+
+            for (int imageNumber = 0; imageNumber < NUMBER_OF_IMAGES_IN_SERIES; imageNumber++)
+            {
+                ZArrayDescriptor newSineImage = createSineImage(imageNumber, SECOND_PHASE, NUMBER_OF_IMAGES_IN_SERIES);
+                imageContainersList[(int) (NUMBER_OF_IMAGES_IN_SERIES + imageNumber)].setzArrayDescriptor(newSineImage);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private static ZArrayDescriptor createSineImage(int imageNumber, double phase, double totalImages)
+        {
+            double phaseShiftInDegrees = (360.0 / totalImages) * imageNumber;
+            double phaseShiftInRadians = (phaseShiftInDegrees*Math.PI)/180.0;
+
+            ZArrayDescriptor newSineImage = new ZArrayDescriptor(1024, 1024);
+
+            for (int i = 0; i < newSineImage.width; i++)
+            {
+                double x = i / (phase / 10.0);
+                double resultValue = Math.Sin(x + phaseShiftInRadians);
+                resultValue = (resultValue + 1.0)/2.0;
+                resultValue = Math.Pow(resultValue, 2.2);
+                resultValue *= 255.0;
+
+                for (int j = 0; j < newSineImage.height; j++)
+                {
+                    newSineImage.array[i][j] = (long) resultValue;
+                }
+            }
+            return newSineImage;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void createTestWrappedPhases(object sender, RoutedEventArgs e)
+        {
+            ZArrayDescriptor firstPhase = new ZArrayDescriptor(900, 900);
+            const double FIRST_PHASE_MAX = 167.0;
+
+            for (int i = 0; i < firstPhase.width; i++)
+            {
+                long resultScaledValue = i;
+                resultScaledValue = (long)(resultScaledValue % FIRST_PHASE_MAX);
+
+                for (int j = 0; j < firstPhase.height; j++)
+                {
+                    firstPhase.array[i][j] = resultScaledValue;
+                }
+            }
+
+            addImageContainer();
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPhase);
+
+
+            ZArrayDescriptor secondPhase = new ZArrayDescriptor(900, 900);
+            const double SECOND_PHASE_MAX = 241.0;
+
+            for (int i = 0; i < secondPhase.width; i++)
+            {
+                long resultScaledValue = i;
+                resultScaledValue = (long)(resultScaledValue % SECOND_PHASE_MAX);
+
+                for (int j = 0; j < secondPhase.height; j++)
+                {
+                    secondPhase.array[i][j] = resultScaledValue;
+                }
+            }
+
+            addImageContainer();
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPhase);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        //Private Methods
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void addImageContainer()
         {
             ImageContainer newImageContainer = new ImageContainer();
             newImageContainer.myDelegate = this;
@@ -1055,12 +1154,12 @@ namespace Interferometry.forms
             newImageContainer.VerticalAlignment = VerticalAlignment.Stretch;
             newImageContainer.Width = Double.NaN;
             newImageContainer.Height = Double.NaN;
-            newImageContainer.setImageNumberLabel(i + 1);
+            newImageContainer.setImageNumberLabel(imageContainersList.Count + 1);
 
             RowDefinition newRowDefinition = new RowDefinition();
             scrollerContent.RowDefinitions.Add(newRowDefinition);
             scrollerContent.Children.Add(newImageContainer);
-            Grid.SetRow(newImageContainer, i);
+            Grid.SetRow(newImageContainer, imageContainersList.Count);
             imageContainersList.Add(newImageContainer);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1084,53 +1183,7 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            addImageContainer(imageContainersList.Count);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void createTestWrappedPhases(object sender, RoutedEventArgs e)
-        {
-            const int VALUE_TO_SCALE = 256;
-
-            ZArrayDescriptor firstPhase = new ZArrayDescriptor(900, 900);
-            const double FIRST_PHASE_MAX = 167.0;
-
-            for (int i = 0; i < firstPhase.width; i++)
-            {
-                //double sineValueInRadians = Math.Sin(i * (Math.PI / 180.0));
-                //long resultScaledValue = (long)(((sineValueInRadians + 1.0) / 2) * VALUE_TO_SCALE);
-                long resultScaledValue = i;
-
-                resultScaledValue = (long)(resultScaledValue % FIRST_PHASE_MAX);
-
-                for (int j = 0; j < firstPhase.height; j++)
-                {
-                    firstPhase.array[i][j] = resultScaledValue;
-                }
-            }
-
-            addImageContainer(imageContainersList.Count);
-            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPhase);
-
-
-            ZArrayDescriptor secondPhase = new ZArrayDescriptor(900, 900);
-            const double SECOND_PHASE_MAX = 241.0;
-
-            for (int i = 0; i < secondPhase.width; i++)
-            {
-                //double sineValueInRadians = Math.Sin(i * (Math.PI / 180.0));
-                //long resultScaledValue = (long)(((sineValueInRadians + 1.0) / 2) * VALUE_TO_SCALE);
-                long resultScaledValue = i;
-
-                resultScaledValue = (long)(resultScaledValue % SECOND_PHASE_MAX);
-
-                for (int j = 0; j < secondPhase.height; j++)
-                {
-                    secondPhase.array[i][j] = resultScaledValue;
-                }
-            }
-
-            addImageContainer(imageContainersList.Count);
-            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPhase);
+            addImageContainer();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

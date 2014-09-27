@@ -18,16 +18,8 @@ namespace rab1
             int done = 0;
             PopupProgressBar.show();
 
-            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor();
-            wrappedPhase.width = w1;
-            wrappedPhase.height = h1;
-            wrappedPhase.array = new long[w1][];
-
-            for (int i = 0; i < w1; i++)
-            {
-                wrappedPhase.array[i] = new long[h1];
-            }
-
+            ZArrayDescriptor wrappedPhase = new ZArrayDescriptor(w1, h1);
+            
             for (int i = 0; i < w1; i++)
             {
                 for (int j = 0; j < h1; j++)
@@ -100,16 +92,8 @@ namespace rab1
             int done = 0;
             PopupProgressBar.show();
 
-            ZArrayDescriptor someBuffer = new ZArrayDescriptor();
-            someBuffer.width = imageDescriptor.width;
-            someBuffer.height = imageDescriptor.height;
-            someBuffer.array = new long[someBuffer.width][];
-
-            for (int i = 0; i < someBuffer.width; i++)
-            {
-                someBuffer.array[i] = new long[someBuffer.height];
-            }
-
+            ZArrayDescriptor someBuffer = new ZArrayDescriptor(imageDescriptor.width, imageDescriptor.height);
+            
             for (int i = 0; i < w1; i++)
             {
                 for (int j = 0; j < h1; j++)
@@ -135,16 +119,8 @@ namespace rab1
                 PopupProgressBar.setProgress(done, all);
             }
 
-            ZArrayDescriptor result = new ZArrayDescriptor();
-            result.width = imageDescriptor.width;
-            result.height = imageDescriptor.height;
-            result.array = new long[result.width][];
-
-            for (int i = 0; i < result.width; i++)
-            {
-                result.array[i] = new long[result.height];
-            }
-
+            ZArrayDescriptor result = new ZArrayDescriptor(imageDescriptor.width, imageDescriptor.height);
+            
             for (int j = 0; j < h1; j++)
             {
                 for (int i = 0; i < w1; i++)
