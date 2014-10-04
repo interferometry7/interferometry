@@ -1080,7 +1080,7 @@ namespace Interferometry.forms
                 double x = i / (phase / 10.0);
                 double resultValue = Math.Sin(x + phaseShiftInRadians);
                 resultValue = (resultValue + 1.0)/2.0;
-                resultValue = Math.Pow(resultValue, 2.2);
+                resultValue = Math.Pow(resultValue, 2.5);
                 resultValue *= 255.0;
 
                 for (int j = 0; j < newSineImage.height; j++)
@@ -1179,8 +1179,8 @@ namespace Interferometry.forms
                 }
             }
 
-            double standardXDeviation = xDeviation/(notIdealTable.width*notIdealTable.height);
-            double standardYDeviation = yDeviation / (notIdealTable.width * notIdealTable.height);
+            double standardXDeviation = Math.Sqrt(xDeviation/(notIdealTable.width*notIdealTable.height));
+            double standardYDeviation = Math.Sqrt(yDeviation / (notIdealTable.width * notIdealTable.height));
             double sum = standardXDeviation + standardYDeviation;
 
             MessageBox.Show(this, "Среднеквадратичное отклонение = " + sum);
