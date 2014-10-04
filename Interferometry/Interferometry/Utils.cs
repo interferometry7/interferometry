@@ -264,5 +264,20 @@ namespace Interferometry
             return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static long maxFromArray(ZArrayDescriptor someArray)
+        {
+            long result = long.MinValue;
+
+            for (int i = 0; i < someArray.width; i++)
+            {
+                for (int j = 0; j < someArray.height; j++)
+                {
+                    result = Math.Max(result, someArray.array[i][j]);
+                }
+            }
+
+            return result;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

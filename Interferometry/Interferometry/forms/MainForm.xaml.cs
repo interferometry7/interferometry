@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Printing;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Interferometry.Forms;
 using Interferometry.forms.Camera;
 using Interferometry.interfaces;
@@ -22,12 +14,10 @@ using Interferometry.math_classes;
 using rab1;
 using rab1.Forms;
 using Application = System.Windows.Application;
-using Color = System.Drawing.Color;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
-using Image = System.Windows.Controls.Image;
-using ListBox = System.Windows.Forms.ListBox;
 using MessageBox = System.Windows.MessageBox;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Point = System.Drawing.Point;
 
 namespace Interferometry.forms
 {
@@ -229,7 +219,7 @@ namespace Interferometry.forms
             minSlider.Maximum = maxSlider.Value;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void maxTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void maxTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -237,7 +227,7 @@ namespace Interferometry.forms
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void minTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void minTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -401,7 +391,7 @@ namespace Interferometry.forms
 
 
             NewMethodForm newMethodForm = new NewMethodForm();
-            newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight(), 1670, 2410);
+            newMethodForm.setFileNames(fileNames, imageContainersList[0].getImageWidth(), imageContainersList[0].getImageHeight(), 167, 241);
             newMethodForm.imageProcessedWithNewMethod += NewMethodFormOnImageProcessedWithNewMethod;
             newMethodForm.Show();
         }
@@ -499,8 +489,6 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void NewFormOnOneShotOfSeries(System.Drawing.Image newImage, int imageNumber)
         {
-            //ZArrayDescriptor result = Utils.getArrayFromImage((Bitmap)newImage);
-
             if (imageContainersList.Count < imageNumber)
             {
                 addImageContainer();
@@ -1092,7 +1080,7 @@ namespace Interferometry.forms
                 double x = i / (phase / 10.0);
                 double resultValue = Math.Sin(x + phaseShiftInRadians);
                 resultValue = (resultValue + 1.0)/2.0;
-                resultValue = Math.Pow(resultValue, 1);
+                resultValue = Math.Pow(resultValue, 2.2);
                 resultValue *= 255.0;
 
                 for (int j = 0; j < newSineImage.height; j++)
@@ -1139,6 +1127,93 @@ namespace Interferometry.forms
 
             addImageContainer();
             imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPhase);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void generateTable(object sender, RoutedEventArgs e)
+        {
+            ZArrayDescriptor table = new ZArrayDescriptor(241, 167);
+            List<int> phases = new List<int>();
+            phases.Add(241);
+            phases.Add(167);
+
+            RemainderTheoremImplementator theoremImplementator = new RemainderTheoremImplementator(phases);
+
+            for (int i = 0; i < table.width; i++)
+            {
+                for (int j = 0; j < table.height; j++)
+                {
+                    List<long> input = new List<long>();
+                    input.Add(i);
+                    input.Add(j);
+                    long result = theoremImplementator.getSolution(input);
+                    table.array[i][j] = result;
+                }
+            }
+
+            addImageContainer();
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(table);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void compareTables(object sender, RoutedEventArgs e)
+        {
+            ZArrayDescriptor table = FilesHelper.loadZArray();
+            ZArrayDescriptor notIdealTable = imageContainersList[18].getzArrayDescriptor();
+            double xDeviation = 0;
+            double yDeviation = 0;
+
+            for (int x = 0; x < notIdealTable.width; x++)
+            {
+                for (int y = 0; y < notIdealTable.height; y++)
+                {
+                    long currentValue = notIdealTable.array[x][y];
+
+                    if (currentValue == 0)
+                    {
+                        continue;
+                    }
+
+                    Point nearestPoint = getNearestPoint(table, x, y);
+
+                    xDeviation += Math.Pow(nearestPoint.X - x, 2);
+                    yDeviation += Math.Pow(nearestPoint.Y - y, 2);
+                }
+            }
+
+            double standardXDeviation = xDeviation/(notIdealTable.width*notIdealTable.height);
+            double standardYDeviation = yDeviation / (notIdealTable.width * notIdealTable.height);
+            double sum = standardXDeviation + standardYDeviation;
+
+            MessageBox.Show(this, "Среднеквадратичное отклонение = " + sum);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private Point getNearestPoint(ZArrayDescriptor someArray, int a, int b)
+        {
+            Point result = new Point();
+            double distance = Double.MaxValue;
+
+            for (int x = 0; x < someArray.width; x++)
+            {
+                for (int y = 0; y < someArray.height; y++)
+                {
+                    long currentValue = someArray.array[x][y];
+
+                    if (currentValue == 0)
+                    {
+                        continue;
+                    }
+
+                    double currentDistance = Math.Sqrt(Math.Pow((a - x), 2) + Math.Pow((b - y), 2));
+
+                    if (currentDistance < distance)
+                    {
+                        distance = currentDistance;
+                        result.X = x;
+                        result.Y = y;
+                    }
+                }
+            }
+
+            return result;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

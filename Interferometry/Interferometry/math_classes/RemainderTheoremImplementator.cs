@@ -49,12 +49,7 @@ namespace Interferometry.math_classes
                 i++;
             }
 
-            return resultPoint;
-        }
-
-        public int getM()
-        {
-            return M;
+            return resultPoint % M;
         }
     }
 }

@@ -106,10 +106,12 @@
 
             <TabItem Header="Тесты" Name="testTabs" >
                 <Grid>
-                    <Button x:Name="createIdelSinSignals" Content="Сделать идеальные синусоиды" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="209" Height="23
+                    <Button x:Name="createIdelSinSignals" Content="Сгенерировать синусоиды" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="209" Height="23
                             " Click="createIdelSinSignals_Click" />
 
                     <Button Content="Создание тестовых свернутых фаз" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="209" Height="23" Click="createTestWrappedPhases"/>
+                    <Button Content="Сгенерировать идеальную таблицу" HorizontalAlignment="Left" Margin="224,10,0,0" VerticalAlignment="Top" Width="209" Height="22" Click="generateTable"/>
+                    <Button Content="Сравнить таблицу с идеальной" HorizontalAlignment="Left" Margin="224,38,0,0" VerticalAlignment="Top" Width="209" Height="23" Click="compareTables"/>
 
                 </Grid>
             </TabItem>

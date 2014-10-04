@@ -30,9 +30,9 @@ namespace Interferometry.math_classes
 
             //описание - https://ru.wikipedia.org/wiki/%D0%9A%D0%B8%D1%82%D0%B0%D0%B9%D1%81%D0%BA%D0%B0%D1%8F_%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%BE%D0%B1_%D0%BE%D1%81%D1%82%D0%B0%D1%82%D0%BA%D0%B0%D1%85
             RemainderTheoremImplementator theoremImplementator = new RemainderTheoremImplementator(sineNumbers);
-            
-            int firstImageMax = (int) Utils.maxLong(someImages[0].array, someImages[0].width, someImages[0].height);
-            int secondImageMax = (int) Utils.maxLong(someImages[1].array, someImages[1].width, someImages[1].height);
+
+            int firstImageMax = (int)Utils.maxFromArray(someImages[0]);
+            int secondImageMax = (int)Utils.maxFromArray(someImages[1]);
 
             ZArrayDescriptor resultDescriptor = new ZArrayDescriptor(secondImageMax + 1, firstImageMax + 1);
 
@@ -50,7 +50,7 @@ namespace Interferometry.math_classes
                     }
 
                     long resultPoint = theoremImplementator.getSolution(currentImageValues);
-                    resultDescriptor.array[currentImageValues[1]][currentImageValues[0]] = resultPoint % theoremImplementator.getM();
+                    resultDescriptor.array[currentImageValues[1]][currentImageValues[0]] = resultPoint;
                 }
             }
 
