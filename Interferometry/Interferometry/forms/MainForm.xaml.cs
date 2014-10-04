@@ -1075,12 +1075,22 @@ namespace Interferometry.forms
 
             ZArrayDescriptor newSineImage = new ZArrayDescriptor(1024, 1024);
 
+            Random random = new Random(123);
+
             for (int i = 0; i < newSineImage.width; i++)
             {
                 double x = i / (phase / 10.0);
-                double resultValue = Math.Sin(x + phaseShiftInRadians);
+
+                
+                const int multiplier = 100;
+                const int PERCENT_VALUE = 1;
+                int percent = random.Next(0, PERCENT_VALUE * multiplier);
+                float randomValue = (float)(percent * 2.0f * Math.PI / multiplier / 100);
+
+                double resultValue = Math.Sin(x + phaseShiftInRadians + randomValue);
                 resultValue = (resultValue + 1.0)/2.0;
-                resultValue = Math.Pow(resultValue, 2.5);
+
+                //resultValue = Math.Pow(resultValue, 1.5);
                 resultValue *= 255.0;
 
                 for (int j = 0; j < newSineImage.height; j++)
@@ -1157,9 +1167,14 @@ namespace Interferometry.forms
         private void compareTables(object sender, RoutedEventArgs e)
         {
             ZArrayDescriptor table = FilesHelper.loadZArray();
+
+            if (table == null)
+            {
+                return;
+            }
+
             ZArrayDescriptor notIdealTable = imageContainersList[18].getzArrayDescriptor();
-            double xDeviation = 0;
-            double yDeviation = 0;
+            double deviation = 0;
 
             for (int x = 0; x < notIdealTable.width; x++)
             {
@@ -1174,16 +1189,11 @@ namespace Interferometry.forms
 
                     Point nearestPoint = getNearestPoint(table, x, y);
 
-                    xDeviation += Math.Pow(nearestPoint.X - x, 2);
-                    yDeviation += Math.Pow(nearestPoint.Y - y, 2);
+                    deviation += Math.Sqrt(Math.Pow((nearestPoint.X - x), 2) + Math.Pow((nearestPoint.Y - y), 2));
                 }
             }
 
-            double standardXDeviation = Math.Sqrt(xDeviation/(notIdealTable.width*notIdealTable.height));
-            double standardYDeviation = Math.Sqrt(yDeviation / (notIdealTable.width * notIdealTable.height));
-            double sum = standardXDeviation + standardYDeviation;
-
-            MessageBox.Show(this, "Среднеквадратичное отклонение = " + sum);
+            MessageBox.Show(this, "Среднеквадратичное отклонение = " + deviation);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private Point getNearestPoint(ZArrayDescriptor someArray, int a, int b)
