@@ -953,18 +953,18 @@ namespace Interferometry.forms
         private void smooth8Images(object sender, RoutedEventArgs e)
         {
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Smoothing, null);
-            filtrationForm.filterParametersChoosed += FiltrationFormOnFilterParametersChoosed;
+            filtrationForm.filterParametersChoosed += filtrationFormOnFilterParametersChoosed;
             filtrationForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void medianSmooth8Images(object sender, RoutedEventArgs e)
         {
             FiltrationForm filtrationForm = new FiltrationForm(FiltrationForm.FiltrationType.Median, null);
-            filtrationForm.filterParametersChoosed += FiltrationFormOnFilterParametersChoosed;
+            filtrationForm.filterParametersChoosed += filtrationFormOnFilterParametersChoosed;
             filtrationForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void FiltrationFormOnFilterParametersChoosed(FiltrationForm.FiltrationType filtrationType, int filtrationOrder)
+        private void filtrationFormOnFilterParametersChoosed(FiltrationForm.FiltrationType filtrationType, int filtrationOrder)
         {
             for(int i = 0; i < imageContainersList.Count; i++)
             {
