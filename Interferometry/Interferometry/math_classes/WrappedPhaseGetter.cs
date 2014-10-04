@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Windows.Controls;
 
 namespace Interferometry.math_classes
 {
     class WrappedPhaseGetter : BackgroundWorker
     {
-        private List<String> imagesPath;
-        private double[] phaseShifts;
-        private int imagesWidth;
-        private int imagesHeight;
-        private int scaleTo;
+        private readonly List<String> imagesPath;
+        private readonly double[] phaseShifts;
+        private readonly int imagesWidth;
+        private readonly int imagesHeight;
+        private readonly int scaleTo;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public WrappedPhaseGetter(List<String> imagesPath, int imagesWidth, int imagesHeight, int scaleTo)

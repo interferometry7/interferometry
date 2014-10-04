@@ -181,6 +181,7 @@
     <Compile Include="math_classes\NewMethodUnwrapper.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="math_classes\RemainderTheoremImplementator.cs" />
     <Compile Include="math_classes\SinClass1.cs" />
     <Compile Include="math_classes\WrappedPhaseGetter.cs">
       <SubType>Component</SubType>
