@@ -111,6 +111,9 @@
     <Compile Include="forms\CompareForm.xaml.cs">
       <DependentUpon>CompareForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\DistortSineGeneratorForm.xaml.cs">
+      <DependentUpon>DistortSineGeneratorForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\FiltrationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="forms\CompareForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\DistortSineGeneratorForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

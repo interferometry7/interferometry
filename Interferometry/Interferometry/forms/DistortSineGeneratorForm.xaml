@@ -1,0 +1,13 @@
+﻿<Window x:Class="Interferometry.forms.DistortSineGeneratorForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DistortSineGeneratorForm" Height="194" Width="442">
+    <Grid>
+        <Button Content="Сгенерировать" HorizontalAlignment="Left" Margin="155,0,0,10" Width="123" Height="32" VerticalAlignment="Bottom" Click="generateImages"/>
+        <TextBox x:Name="amplitudePercentField" HorizontalAlignment="Left" Height="23" Margin="214,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="phasePercentField" HorizontalAlignment="Left" Height="23" Margin="214,50,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Амплитудный шум (в процентах)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Фазовый шум (в процентах)" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

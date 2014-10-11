@@ -61,8 +61,6 @@ namespace Interferometry.forms
         /// </summary>
         private double cosinusValue = 0;
 
-        private static Random random = new Random((new DateTime()).Millisecond);
-
         //Life Cycle
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public MainForm()
@@ -1050,54 +1048,22 @@ namespace Interferometry.forms
         
         //Вкладка "Тестирование"
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void createIdelSinSignals_Click(object sender, RoutedEventArgs e)
+        private void generateSinImages(object sender, RoutedEventArgs e)
         {
-            const double FIRST_PHASE = 167.0;
-            const double NUMBER_OF_IMAGES_IN_SERIES = 4;
-
-            for (int imageNumber = 0; imageNumber < NUMBER_OF_IMAGES_IN_SERIES; imageNumber++)
-            {
-                ZArrayDescriptor newSineImage = createSineImage(imageNumber, FIRST_PHASE, NUMBER_OF_IMAGES_IN_SERIES);
-                imageContainersList[imageNumber].setzArrayDescriptor(newSineImage);
-            }
-
-            const double SECOND_PHASE = 241.0;
-
-            for (int imageNumber = 0; imageNumber < NUMBER_OF_IMAGES_IN_SERIES; imageNumber++)
-            {
-                ZArrayDescriptor newSineImage = createSineImage(imageNumber, SECOND_PHASE, NUMBER_OF_IMAGES_IN_SERIES);
-                imageContainersList[(int) (NUMBER_OF_IMAGES_IN_SERIES + imageNumber)].setzArrayDescriptor(newSineImage);
-            }
+            DistortSineGeneratorForm distortSineGeneratorForm = new DistortSineGeneratorForm();
+            distortSineGeneratorForm.distortedImageCreated+= DistortedImageCreated;
+            distortSineGeneratorForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private static ZArrayDescriptor createSineImage(int imageNumber, double phase, double totalImages)
+        private void DistortedImageCreated(List<ZArrayDescriptor> sinesArray)
         {
-            double phaseShiftInDegrees = (360.0 / totalImages) * imageNumber;
-            double phaseShiftInRadians = (phaseShiftInDegrees*Math.PI)/180.0;
+            int i = 0;
 
-            ZArrayDescriptor newSineImage = new ZArrayDescriptor(1024, 1024);
-
-            for (int i = 0; i < newSineImage.width; i++)
+            foreach (ZArrayDescriptor currentDescriptor in sinesArray)
             {
-                double x = i / (phase / 10.0);
-
-                const float multiplier = 100.0f;
-                const float PERCENT_VALUE = 10.0f;
-                const float INITIAL_VALUE = 1.0f;
-                int percent = random.Next((int) (-(PERCENT_VALUE * multiplier) / 2.0f), (int) ((PERCENT_VALUE * multiplier) / 2.0f));
-                float randomValue = percent * INITIAL_VALUE / multiplier / 100.0f;
-
-                double resultValue = Math.Sin(x + phaseShiftInRadians);
-                resultValue = (resultValue + 1.0) / 2.0 + randomValue + ((PERCENT_VALUE) / 2.0f / 100.0f) * INITIAL_VALUE;
-
-                resultValue *= 255.0;
-
-                for (int j = 0; j < newSineImage.height; j++)
-                {
-                    newSineImage.array[i][j] = (long) resultValue;
-                }
+                imageContainersList[i].setzArrayDescriptor(currentDescriptor);
+                i++;
             }
-            return newSineImage;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void openCompareForm(object sender, RoutedEventArgs e)
