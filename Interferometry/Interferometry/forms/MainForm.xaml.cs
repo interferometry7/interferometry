@@ -61,6 +61,8 @@ namespace Interferometry.forms
         /// </summary>
         private double cosinusValue = 0;
 
+        private static Random random = new Random((new DateTime()).Millisecond);
+
         //Life Cycle
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public MainForm()
@@ -1075,22 +1077,19 @@ namespace Interferometry.forms
 
             ZArrayDescriptor newSineImage = new ZArrayDescriptor(1024, 1024);
 
-            Random random = new Random(123);
-
             for (int i = 0; i < newSineImage.width; i++)
             {
                 double x = i / (phase / 10.0);
 
-                
-                const int multiplier = 100;
-                const int PERCENT_VALUE = 1;
-                int percent = random.Next(0, PERCENT_VALUE * multiplier);
-                float randomValue = (float)(percent * 2.0f * Math.PI / multiplier / 100);
+                const float multiplier = 100.0f;
+                const float PERCENT_VALUE = 10.0f;
+                const float INITIAL_VALUE = 1.0f;
+                int percent = random.Next((int) (-(PERCENT_VALUE * multiplier) / 2.0f), (int) ((PERCENT_VALUE * multiplier) / 2.0f));
+                float randomValue = percent * INITIAL_VALUE / multiplier / 100.0f;
 
-                double resultValue = Math.Sin(x + phaseShiftInRadians + randomValue);
-                resultValue = (resultValue + 1.0)/2.0;
+                double resultValue = Math.Sin(x + phaseShiftInRadians);
+                resultValue = (resultValue + 1.0) / 2.0 + randomValue + ((PERCENT_VALUE) / 2.0f / 100.0f) * INITIAL_VALUE;
 
-                //resultValue = Math.Pow(resultValue, 1.5);
                 resultValue *= 255.0;
 
                 for (int j = 0; j < newSineImage.height; j++)
@@ -1099,6 +1098,12 @@ namespace Interferometry.forms
                 }
             }
             return newSineImage;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void openCompareForm(object sender, RoutedEventArgs e)
+        {
+            CompareForm compareForm = new CompareForm();
+            compareForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void createTestWrappedPhases(object sender, RoutedEventArgs e)

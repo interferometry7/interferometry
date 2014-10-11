@@ -108,6 +108,9 @@
     <Compile Include="forms\Camera\EightPhotosForm.xaml.cs">
       <DependentUpon>EightPhotosForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\CompareForm.xaml.cs">
+      <DependentUpon>CompareForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\FiltrationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,6 +279,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="forms\Camera\EightPhotosForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\CompareForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

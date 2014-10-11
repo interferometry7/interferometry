@@ -16,10 +16,18 @@ namespace Interferometry
     class Utils
     {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public enum RGBColor
+        {
+            Red,
+            Green, 
+            Blue,
+            Gray
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  Метод для получения изображения из массива
         /// </summary>
-        public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor)
+        public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor, RGBColor color)
         {
             if (newDescriptor == null)
             {
@@ -31,17 +39,33 @@ namespace Interferometry
 
             if (max - min == 0)
             {
-                max = 1; 
-                min = 0; 
+                max = 1;
+                min = 0;
             }
 
-            return getImageFromArray(newDescriptor, min, max);
+            return getImageFromArray(newDescriptor, min, max, color);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  Метод для получения изображения из массива
+        /// </summary>
+        public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor)
+        {
+            return getImageFromArray(newDescriptor, RGBColor.Gray);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  Метод для получения изображения из массива
         /// </summary>
         public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor, long min, long max)
+        {
+            return getImageFromArray(newDescriptor, min, max, RGBColor.Gray);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  Метод для получения изображения из массива
+        /// </summary>
+        public static BitmapSource getImageFromArray(ZArrayDescriptor newDescriptor, long min, long max, RGBColor color)
         {
             if (newDescriptor == null)
             {
@@ -68,7 +92,22 @@ namespace Interferometry
                     if (colorComponent > 255) { colorComponent = 255; }
                     if (colorComponent < 0) { colorComponent = 0; }
 
-                    ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
+                    if (color == RGBColor.Red)
+                    {
+                        ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, 0, 0));
+                    }
+                    else if (color == RGBColor.Green)
+                    {
+                        ImageProcessor.setPixel(data, i, j, Color.FromArgb(0, colorComponent, 0));
+                    }
+                    else if (color == RGBColor.Blue)
+                    {
+                        ImageProcessor.setPixel(data, i, j, Color.FromArgb(0, 0, colorComponent));
+                    }
+                    else
+                    {
+                        ImageProcessor.setPixel(data, i, j, Color.FromArgb(colorComponent, colorComponent, colorComponent));
+                    }
                 }
             }
 
@@ -275,6 +314,39 @@ namespace Interferometry
                     result = Math.Max(result, someArray.array[i][j]);
                 }
             }
+
+            return result;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static Bitmap mergeBitmaps(Bitmap firstBitmap, Bitmap secondBitmap)
+        {
+            BitmapData firstData = ImageProcessor.getBitmapData(firstBitmap);
+            BitmapData secondData = ImageProcessor.getBitmapData(secondBitmap);
+
+            int minWidth = Math.Min(firstBitmap.Width, secondBitmap.Width);
+            int minHeight = Math.Min(firstBitmap.Height, secondBitmap.Height);
+
+            Bitmap result = new Bitmap(minWidth, minHeight);
+            BitmapData resultData = ImageProcessor.getBitmapData(result);
+
+            for (int x = 0; x < minWidth; x++)
+            {
+                for (int y = 0; y < minHeight; y++)
+                {
+                    Color firstColor = ImageProcessor.getPixel(x, y, firstData);
+                    Color secondColor = ImageProcessor.getPixel(x, y, secondData);
+
+                    int redComponent = Math.Min(firstColor.R + secondColor.R, 255);
+                    int greenComponent = Math.Min(firstColor.G + secondColor.G, 255);
+                    int blueComponent = Math.Min(firstColor.B + secondColor.B, 255);
+
+                    ImageProcessor.setPixel(resultData, x, y, Color.FromArgb(redComponent, greenComponent, blueComponent));
+                }
+            }
+
+            firstBitmap.UnlockBits(firstData);
+            secondBitmap.UnlockBits(secondData);
+            result.UnlockBits(resultData);
 
             return result;
         }
