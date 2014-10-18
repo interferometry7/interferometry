@@ -290,7 +290,7 @@ namespace Interferometry.forms
         private void NewUnwrapMethodFormOnImagesUnwrappedWithNewMethod(ZArrayDescriptor result)
         {
             addImageContainer();
-            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(result);
+            imageContainersList[18].setzArrayDescriptor(result);
         }
 
         private void PiFormOnImage(Faza2Pi.Res1 d)
@@ -399,10 +399,10 @@ namespace Interferometry.forms
         private void NewMethodFormOnImageProcessedWithNewMethod(ZArrayDescriptor firstPartOfResult, ZArrayDescriptor secondPartOfResult)
         {
             addImageContainer();
-            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(firstPartOfResult);
+            imageContainersList[16].setzArrayDescriptor(firstPartOfResult);
 
             addImageContainer();
-            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(secondPartOfResult);
+            imageContainersList[17].setzArrayDescriptor(secondPartOfResult);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AtanFormOnImage( TableFaza.Res d)

@@ -21,7 +21,7 @@ namespace Interferometry.forms
     /// </summary>
     public partial class DistortSineGeneratorForm : Window
     {
-        private static Random random = new Random((new DateTime()).Millisecond);
+        private static readonly Random random = new Random((new DateTime()).Millisecond);
 
         const double FIRST_PHASE = 167.0;
         const double SECOND_PHASE = 241.0;
@@ -69,7 +69,7 @@ namespace Interferometry.forms
             double phaseDistortionPercent)
         {
             double phaseShiftInDegrees = (360.0 / totalImages) * imageNumber;
-            double phaseShiftInRadians = (phaseShiftInDegrees * Math.PI) / 180.0;
+            double phaseShiftInRadians = Utils.degreeToRadian(phaseShiftInDegrees);
 
             ZArrayDescriptor newSineImage = new ZArrayDescriptor(1024, 1024);
 
@@ -77,13 +77,19 @@ namespace Interferometry.forms
             {
                 double x = i / (phase / 10.0);
 
-                const float multiplier = 100.0f;
-                const float INITIAL_VALUE = 1.0f;
-                int percent = random.Next((int)(-(amplitudeDistortionPercent * multiplier) / 2.0f), (int)((amplitudeDistortionPercent * multiplier) / 2.0f));
-                float randomValue = percent * INITIAL_VALUE / multiplier / 100.0f;
+                const double multiplier = 100.0;
 
-                double resultValue = Math.Sin(x + phaseShiftInRadians + 2 * Math.PI * phaseDistortionPercent / 100.0);
-                resultValue = (resultValue + 1.0) / 2.0 + randomValue + ((amplitudeDistortionPercent) / 2.0f / 100.0f) * INITIAL_VALUE;
+                const double AMPLITUDE_INITIAL_VALUE = 1.0;
+                int amplitudeRandomPercent = random.Next((int)(-(amplitudeDistortionPercent * multiplier) / 2.0f), (int)((amplitudeDistortionPercent * multiplier) / 2.0f));
+                double amplitudeRandomValue = amplitudeRandomPercent * AMPLITUDE_INITIAL_VALUE / multiplier / 100.0f;
+
+                const double PHASE_INITIAL_VALUE = 360.0;
+                int phaseRandomPercent = random.Next((int)(-(phaseDistortionPercent * multiplier) / 2.0), (int)((phaseDistortionPercent * multiplier) / 2.0));
+                double phaseRandomValueInDegrees = phaseRandomPercent * PHASE_INITIAL_VALUE / multiplier / 100.0;
+                double phaseRandomValueInRadians = Utils.degreeToRadian(phaseRandomValueInDegrees);
+
+                double resultValue = Math.Sin(x + phaseShiftInRadians + phaseRandomValueInRadians);
+                resultValue = (resultValue + 1.0) / 2.0 + amplitudeRandomValue + ((amplitudeDistortionPercent) / 2.0 / 100.0) * AMPLITUDE_INITIAL_VALUE;
 
                 resultValue *= 255.0;
 
