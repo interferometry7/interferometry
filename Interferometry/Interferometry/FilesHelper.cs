@@ -260,6 +260,11 @@ namespace Interferometry
 
         public static BitmapSource bitmapToBitmapImage(Bitmap source)
         {
+            if (source == null)
+            {
+                return null;
+            }
+
             IntPtr ip = source.GetHbitmap();
             BitmapSource bs;
             try

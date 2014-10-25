@@ -9,12 +9,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Interferometry.Forms;
 using Interferometry.forms.Camera;
+using Interferometry.forms.Unwrapping;
 using Interferometry.interfaces;
 using Interferometry.math_classes;
 using rab1;
 using rab1.Forms;
 using Application = System.Windows.Application;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using ListBox = System.Windows.Forms.ListBox;
 using MessageBox = System.Windows.MessageBox;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Drawing.Point;
@@ -1165,6 +1167,12 @@ namespace Interferometry.forms
             }
 
             MessageBox.Show(this, "Среднеквадратичное отклонение = " + deviation);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void lineNumbersButtonClicked(object sender, RoutedEventArgs e)
+        {
+            TableAnalyzeForm tableAnalyzeForm = new TableAnalyzeForm(zArrayDescriptor);
+            tableAnalyzeForm.Show();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private Point getNearestPoint(ZArrayDescriptor someArray, int a, int b)

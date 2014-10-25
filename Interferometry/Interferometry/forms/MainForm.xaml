@@ -113,6 +113,7 @@
                     <Button Content="Сгенерировать идеальную таблицу" HorizontalAlignment="Left" Margin="224,10,0,0" VerticalAlignment="Top" Width="209" Height="22" Click="generateTable"/>
                     <Button Content="Сравнить таблицу с идеальной" HorizontalAlignment="Left" Margin="224,38,0,0" VerticalAlignment="Top" Width="209" Height="23" Click="compareTables"/>
                     <Button Content="Открыть форму для сравнения" HorizontalAlignment="Left" Margin="438,10,0,0" VerticalAlignment="Top" Width="191" Height="23" Click="openCompareForm"/>
+                    <Button Content="Нумерация полос" HorizontalAlignment="Left" Margin="438,38,0,0" VerticalAlignment="Top" Width="191" Height="23" Click="lineNumbersButtonClicked"/>
 
                 </Grid>
             </TabItem>
