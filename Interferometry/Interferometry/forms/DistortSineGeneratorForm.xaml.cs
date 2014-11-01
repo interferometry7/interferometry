@@ -39,18 +39,19 @@ namespace Interferometry.forms
         {
             double amplitudePercent = Convert.ToDouble(amplitudePercentField.Text);
             double phasePercent = Convert.ToDouble(phasePercentField.Text);
+            double gammaCorrection = Convert.ToDouble(gammaCorrectionField.Text);
 
             List<ZArrayDescriptor> sinesArray = new List<ZArrayDescriptor>();
 
             for (int imageNumber = 0; imageNumber < NUMBER_OF_IMAGES_IN_SERIES; imageNumber++)
             {
-                ZArrayDescriptor newSineImage = createSineImage(imageNumber, FIRST_PHASE, NUMBER_OF_IMAGES_IN_SERIES, amplitudePercent, phasePercent);
+                ZArrayDescriptor newSineImage = createSineImage(imageNumber, FIRST_PHASE, NUMBER_OF_IMAGES_IN_SERIES, amplitudePercent, phasePercent, gammaCorrection);
                 sinesArray.Add(newSineImage);
             }
 
             for (int imageNumber = 0; imageNumber < NUMBER_OF_IMAGES_IN_SERIES; imageNumber++)
             {
-                ZArrayDescriptor newSineImage = createSineImage(imageNumber, SECOND_PHASE, NUMBER_OF_IMAGES_IN_SERIES, amplitudePercent, phasePercent);
+                ZArrayDescriptor newSineImage = createSineImage(imageNumber, SECOND_PHASE, NUMBER_OF_IMAGES_IN_SERIES, amplitudePercent, phasePercent, gammaCorrection);
                 sinesArray.Add(newSineImage);
             }
 
@@ -66,7 +67,8 @@ namespace Interferometry.forms
             double phase, 
             int totalImages,
             double amplitudeDistortionPercent,
-            double phaseDistortionPercent)
+            double phaseDistortionPercent,
+            double gammaCorrection)
         {
             double phaseShiftInDegrees = (360.0 / totalImages) * imageNumber;
             double phaseShiftInRadians = Utils.degreeToRadian(phaseShiftInDegrees);
@@ -91,6 +93,7 @@ namespace Interferometry.forms
                 double resultValue = Math.Sin(x + phaseShiftInRadians + phaseRandomValueInRadians);
                 resultValue = (resultValue + 1.0) / 2.0 + amplitudeRandomValue + ((amplitudeDistortionPercent) / 2.0 / 100.0) * AMPLITUDE_INITIAL_VALUE;
 
+                resultValue = Math.Pow(resultValue, gammaCorrection);
                 resultValue *= 255.0;
 
                 for (int j = 0; j < newSineImage.height; j++)
