@@ -45,40 +45,106 @@ namespace Interferometry.forms.Unwrapping
                 return;
             }
 
-            ZArrayDescriptor firstDiag = getDiagonal(descriptorToAnalyze);
+            List<ZArrayDescriptor> diagonals = new List<ZArrayDescriptor>();
+            Point startPoint = new Point(0, 0);
+            Bitmap resultBitmap = null;
 
-            //Bitmap firstBitmap = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(descriptorToAnalyze));
-            Bitmap secondBitmap = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(firstDiag, Utils.RGBColor.Red));
-            //Bitmap result = Utils.mergeBitmaps(firstBitmap, secondBitmap);
-
-            imageView.Source = FilesHelper.bitmapToBitmapImage(secondBitmap);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private ZArrayDescriptor getDiagonal(ZArrayDescriptor someDescriptor)
-        {
-            ZArrayDescriptor copyDescriptor = new ZArrayDescriptor(someDescriptor);
-
-            ZArrayDescriptor result = new ZArrayDescriptor(copyDescriptor.width, copyDescriptor.height);
-            Point startPoint = new Point(-1, -1);
-
-            for (int x = 0; x < copyDescriptor.width; x++)
+            for (int i = 0; i < 10; i++)
             {
-                for (int y = 0; y < copyDescriptor.height; y++)
+                ZArrayDescriptor nextDiag = getDiagonal(descriptorToAnalyze, startPoint);
+
+                Bitmap nextBitmap = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(nextDiag, Utils.RGBColor.Red));
+
+                if (resultBitmap == null)
                 {
-                    if (copyDescriptor.array[x][y] != 0)
+                    resultBitmap = nextBitmap;
+                }
+                else
+                {
+                    resultBitmap = Utils.mergeBitmaps(resultBitmap, nextBitmap);
+                }
+
+                Point bottomPoint = new Point(0, 0);
+
+                for (int x = 0; x < nextDiag.width; x++)
+                {
+                    for (int y = 0; y < nextDiag.height; y++)
                     {
-                        startPoint = new Point(x, y);
-                        goto ExitOfLoops;
+                        if (nextDiag.array[x][y] == 0)
+                        {
+                            continue;
+                        }
+
+                        if (y > bottomPoint.Y)
+                        {
+                            bottomPoint = new Point(x, y);
+                        }
+                    }
+                }
+
+                int distanceToRightBorder = (int)(descriptorToAnalyze.width - bottomPoint.X);
+                int distanceToBottomBorder = (int)(descriptorToAnalyze.height - bottomPoint.Y);
+
+                if (distanceToRightBorder < distanceToBottomBorder)
+                {
+                    startPoint = new Point(0, bottomPoint.Y);
+                }
+                else
+                {
+                    startPoint = new Point(bottomPoint.X, 0);
+                }
+            }
+
+            imageView.Source = FilesHelper.bitmapToBitmapImage(resultBitmap);
+
+            /*ZArrayDescriptor firstDiag = getDiagonal(descriptorToAnalyze, new Point(0, 0));
+            Bitmap firstDiagBitmap = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(firstDiag, Utils.RGBColor.Red));
+
+            Point bottomPoint = new Point(0, 0);
+
+            for (int x = 0; x < firstDiag.width; x++)
+            {
+                for (int y = 0; y < firstDiag.height; y++)
+                {
+                    if (firstDiag.array[x][y] == 0)
+                    {
+                        continue;
+                    }
+
+                    if (y > bottomPoint.Y)
+                    {
+                        bottomPoint = new Point(x, y);
                     }
                 }
             }
 
-            ExitOfLoops:
+            Point secondPoint;
+            int distanceToRightBorder = (int) (descriptorToAnalyze.width - bottomPoint.X);
+            int distanceToBottomBorder = (int) (descriptorToAnalyze.height - bottomPoint.Y);
 
-            if ((startPoint.X == -1) && (startPoint.Y == -1))
+            if (distanceToRightBorder < distanceToBottomBorder)
             {
-                return null;
+                secondPoint = new Point(0, bottomPoint.Y);
             }
+            else
+            {
+                secondPoint = new Point(bottomPoint.X, 0);
+            }
+
+            ZArrayDescriptor secondDiag = getDiagonal(descriptorToAnalyze, secondPoint);
+            Bitmap secondDiagBitmap = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(secondDiag, Utils.RGBColor.Blue));
+
+            Bitmap result = Utils.mergeBitmaps(firstDiagBitmap, secondDiagBitmap);
+
+            imageView.Source = FilesHelper.bitmapToBitmapImage(result);*/
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private ZArrayDescriptor getDiagonal(ZArrayDescriptor someDescriptor, Point startPoint)
+        {
+            ZArrayDescriptor copyDescriptor = new ZArrayDescriptor(someDescriptor);
+
+            ZArrayDescriptor result = new ZArrayDescriptor(copyDescriptor.width, copyDescriptor.height);
+            startPoint = getNearestPointInDirection(startPoint, copyDescriptor, Direction.RightBottom);
 
             int maxNumberOfPoints = copyDescriptor.width * copyDescriptor.height;
 
@@ -137,36 +203,50 @@ namespace Interferometry.forms.Unwrapping
             List<Point> arrayForCheck = new List<Point>();
             arrayForCheck.Add(startPoint);
 
-            foreach (Point currentPoint in arrayForCheck)
+            List<Point> arrayForRemove = new List<Point>();
+            List<Point> arrayForAdd = new List<Point>();
+
+            while (arrayForCheck.Count > 0)
             {
-                int x = (int) currentPoint.X;
-                int y = (int) currentPoint.Y;
-
-                Console.WriteLine("x = " + x + "y = " + y);
-
-                if (x + 1 < someArray.width)
+                foreach (Point currentPoint in arrayForCheck)
                 {
-                    arrayForCheck.Add(new Point(x + 1, y));
+                    int x = (int) currentPoint.X;
+                    int y = (int) currentPoint.Y;
+
+                    if (x + 1 < someArray.width)
+                    {
+                        arrayForAdd.Add(new Point(x + 1, y));
+                    }
+
+                    if (y + 1 < someArray.height)
+                    {
+                        arrayForAdd.Add(new Point(x, y + 1));
+                    }
+
+                    if ((x + 1 < someArray.width) && (y + 1 < someArray.height))
+                    {
+                        arrayForAdd.Add(new Point(x + 1, y + 1));
+                    }
+
+                    if (someArray.array[x][y] == 0)
+                    {
+                        arrayForRemove.Add(currentPoint);
+                    }
+                    else
+                    {
+                        return currentPoint;
+                    }
                 }
 
-                if (y + 1 < someArray.height)
-                {
-                    arrayForCheck.Add(new Point(x, y + 1));
-                }
+                arrayForCheck.AddRange(arrayForAdd);
 
-                if ((x + 1 < someArray.width) && (y + 1 < someArray.height))
-                {
-                    arrayForCheck.Add(new Point(x + 1, y + 1));
-                }
-
-                if (someArray.array[x][y] == 0)
+                foreach (Point currentPoint in arrayForRemove)
                 {
                     arrayForCheck.Remove(currentPoint);
                 }
-                else
-                {
-                    return currentPoint;
-                }
+                
+                arrayForAdd.Clear();
+                arrayForRemove.Clear();
             }
 
             return startPoint;

@@ -23,9 +23,11 @@ namespace Interferometry.forms
     {
         private static readonly Random random = new Random((new DateTime()).Millisecond);
 
-        const double FIRST_PHASE = 167.0;
-        const double SECOND_PHASE = 241.0;
-        const int NUMBER_OF_IMAGES_IN_SERIES = 4;
+        private const double FIRST_PHASE = 167.0;
+        private const double SECOND_PHASE = 241.0;
+        private const int NUMBER_OF_IMAGES_IN_SERIES = 4;
+        private const int SINE_IMAGE_WIDTH = 300;
+        private const int SINE_IMAGE_HEIGHT = 300;
 
         public DistortedImageCreated distortedImageCreated;
 
@@ -73,7 +75,7 @@ namespace Interferometry.forms
             double phaseShiftInDegrees = (360.0 / totalImages) * imageNumber;
             double phaseShiftInRadians = Utils.degreeToRadian(phaseShiftInDegrees);
 
-            ZArrayDescriptor newSineImage = new ZArrayDescriptor(1024, 1024);
+            ZArrayDescriptor newSineImage = new ZArrayDescriptor(SINE_IMAGE_WIDTH, SINE_IMAGE_HEIGHT);
 
             for (int i = 0; i < newSineImage.width; i++)
             {
