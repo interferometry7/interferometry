@@ -22,6 +22,12 @@ namespace Interferometry.forms.Unwrapping
     /// </summary>
     public partial class TableAnalyzeForm : Window
     {
+        private enum Direction
+        {
+            RightBottom
+        }
+
+        private const int MAX_DISTANCE = 10;
         private ZArrayDescriptor descriptorToAnalyze;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,6 +39,12 @@ namespace Interferometry.forms.Unwrapping
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void analyzeClicked(object sender, RoutedEventArgs e)
         {
+            if (descriptorToAnalyze == null)
+            {
+                MessageBox.Show("Дескриптор не передан");
+                return;
+            }
+
             ZArrayDescriptor firstDiag = getDiagonal(descriptorToAnalyze);
 
             //Bitmap firstBitmap = FilesHelper.bitmapSourceToBitmap(Utils.getImageFromArray(descriptorToAnalyze));
@@ -44,40 +56,44 @@ namespace Interferometry.forms.Unwrapping
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private ZArrayDescriptor getDiagonal(ZArrayDescriptor someDescriptor)
         {
-            ZArrayDescriptor result = new ZArrayDescriptor(someDescriptor.width, someDescriptor.height);
+            ZArrayDescriptor copyDescriptor = new ZArrayDescriptor(someDescriptor);
+
+            ZArrayDescriptor result = new ZArrayDescriptor(copyDescriptor.width, copyDescriptor.height);
             Point startPoint = new Point(-1, -1);
 
-            for (int x = 0; x < someDescriptor.width; x++)
+            for (int x = 0; x < copyDescriptor.width; x++)
             {
-                for (int y = 0; y < someDescriptor.height; y++)
+                for (int y = 0; y < copyDescriptor.height; y++)
                 {
-                    if (someDescriptor.array[x][y] != 0)
+                    if (copyDescriptor.array[x][y] != 0)
                     {
                         startPoint = new Point(x, y);
+                        goto ExitOfLoops;
                     }
                 }
             }
 
-            if (startPoint.X == -1)
+            ExitOfLoops:
+
+            if ((startPoint.X == -1) && (startPoint.Y == -1))
             {
                 return null;
             }
 
-            int maxNumberOfPoints = someDescriptor.width*someDescriptor.height;
+            int maxNumberOfPoints = copyDescriptor.width * copyDescriptor.height;
 
             for (int i = 0; i < maxNumberOfPoints; i++)
             {
-                Point nearestPoint = getNearestPoint(someDescriptor, startPoint.X, startPoint.Y);
-
+                Point nearestPoint = getNearestPoint(copyDescriptor, startPoint.X, startPoint.Y);
                 double currentDistance = Math.Sqrt(Math.Pow((startPoint.X - nearestPoint.X), 2) + Math.Pow((startPoint.Y - nearestPoint.Y), 2));
 
-                if (currentDistance > 10)
+                if (currentDistance > MAX_DISTANCE)
                 {
                     break;
                 }
 
-                someDescriptor.array[(int)nearestPoint.X][(int)nearestPoint.Y] = 0;
-                someDescriptor.array[(int)nearestPoint.X][(int)nearestPoint.Y] = 0;
+                copyDescriptor.array[(int)nearestPoint.X][(int)nearestPoint.Y] = 0;
+                copyDescriptor.array[(int)nearestPoint.X][(int)nearestPoint.Y] = 0;
                 result.array[(int) nearestPoint.X][(int) nearestPoint.Y] = 1;
                 result.array[(int) startPoint.X][(int) startPoint.Y] = 1;
                 startPoint = nearestPoint;
@@ -114,6 +130,46 @@ namespace Interferometry.forms.Unwrapping
             }
 
             return result;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private Point getNearestPointInDirection(Point startPoint, ZArrayDescriptor someArray, Direction direction)
+        {
+            List<Point> arrayForCheck = new List<Point>();
+            arrayForCheck.Add(startPoint);
+
+            foreach (Point currentPoint in arrayForCheck)
+            {
+                int x = (int) currentPoint.X;
+                int y = (int) currentPoint.Y;
+
+                Console.WriteLine("x = " + x + "y = " + y);
+
+                if (x + 1 < someArray.width)
+                {
+                    arrayForCheck.Add(new Point(x + 1, y));
+                }
+
+                if (y + 1 < someArray.height)
+                {
+                    arrayForCheck.Add(new Point(x, y + 1));
+                }
+
+                if ((x + 1 < someArray.width) && (y + 1 < someArray.height))
+                {
+                    arrayForCheck.Add(new Point(x + 1, y + 1));
+                }
+
+                if (someArray.array[x][y] == 0)
+                {
+                    arrayForCheck.Remove(currentPoint);
+                }
+                else
+                {
+                    return currentPoint;
+                }
+            }
+
+            return startPoint;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
