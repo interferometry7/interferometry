@@ -53,6 +53,8 @@ namespace Interferometry.forms.Camera
             imageNumber = 0;
             updateInitialImage();
 
+            Console.WriteLine("shift = " + 0);
+
             ImageGetter.sharedInstance().imageReceived += imageTaken;
             ImageGetter.sharedInstance().getImage();
         }
@@ -79,17 +81,20 @@ namespace Interferometry.forms.Camera
             }
             
             Bitmap result;
+            double shift;
 
             if (imageNumber < shotNumbers/2)
             {
-                double shift = (360.0 / (shotNumbers / 2 - 1)) * (imageNumber);
-                result = SinClass1.drawSine(firstSinNumber / 10.0, shift, imageWidth, imageHeight, 0);
+                shift = (360.0 / (shotNumbers / 2)) * (imageNumber);
+                result = SinClass1.drawSine(firstSinNumber / 10.0, shift, imageWidth, imageHeight, 0);                
             }
             else
             {
-                double shift = (360.0 / (shotNumbers / 2 - 1)) * (imageNumber - shotNumbers / 2);
+                shift = (360.0 / (shotNumbers / 2)) * (imageNumber - shotNumbers / 2);
                 result = SinClass1.drawSine(secondSinNumber / 10.0, shift, imageWidth, imageHeight, 0);
             }
+
+            Console.WriteLine("shift = " + shift);
 
 
             formForStripes.setImage(result);

@@ -49,8 +49,8 @@ namespace Interferometry.math_classes
                         currentImageValues.Add(currentPhase);
                     }
 
-                    //long resultPoint = theoremImplementator.getSolution(currentImageValues);
-                    resultDescriptor.array[currentImageValues[1]][currentImageValues[0]] = 1;//resultPoint;
+                    long resultPoint = theoremImplementator.getSolution(currentImageValues);
+                    resultDescriptor.array[currentImageValues[1]][currentImageValues[0]] = resultPoint;
                 }
             }
 

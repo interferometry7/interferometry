@@ -25,7 +25,7 @@ namespace Interferometry.forms
 
         private const double FIRST_PHASE = 167.0;
         private const double SECOND_PHASE = 241.0;
-        private const int NUMBER_OF_IMAGES_IN_SERIES = 4;
+        private const int NUMBER_OF_IMAGES_IN_SERIES = 8;
         private const int SINE_IMAGE_WIDTH = 300;
         private const int SINE_IMAGE_HEIGHT = 300;
 
