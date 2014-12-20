@@ -168,6 +168,9 @@
     <Compile Include="forms\TableGenerateForm.designer.cs">
       <DependentUpon>TableGenerateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\Unwrapping\NewMethodUnwrapForm.xaml.cs">
+      <DependentUpon>NewMethodUnwrapForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="forms\Unwrapping\TableAnalyzeForm.xaml.cs">
       <DependentUpon>TableAnalyzeForm.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="forms\Camera\ShotSeriesForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\Unwrapping\NewMethodUnwrapForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -295,6 +295,23 @@ namespace Interferometry.forms
             imageContainersList[18].setzArrayDescriptor(result);
         }
 
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            NewMethodUnwrapForm newMethodUnwrapForm = new NewMethodUnwrapForm(imageContainersList[16].getzArrayDescriptor(),
+                imageContainersList[17].getzArrayDescriptor(),
+                imageContainersList[18].getzArrayDescriptor());
+
+            newMethodUnwrapForm.phaseUnwrappedWithNewMethod += NewMethodUnwrapFormOnPhaseUnwrappedWithNewMethod;
+
+            newMethodUnwrapForm.Show();
+        }
+
+        private void NewMethodUnwrapFormOnPhaseUnwrappedWithNewMethod(ZArrayDescriptor result)
+        {
+            addImageContainer();
+            imageContainersList[imageContainersList.Count - 1].setzArrayDescriptor(result);
+        }
+
         private void PiFormOnImage(Faza2Pi.Res1 d)
         {
             //Pi_Class1.ZArrayDescriptor unwrappedPhaseImage = Pi_Class1.getUnwrappedPhaseImage(unwrappedPhase.array, unwrappedPhase.width, unwrappedPhase.height);
