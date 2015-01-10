@@ -54,7 +54,10 @@ namespace Interferometry.forms.Unwrapping
 
                     //Console.WriteLine("lineNumber = " + lineNumber);
 
-                    result.array[x][y] = secondPhaseValue + 241 * (lineNumber - 1);
+                    //if ((lineNumber <= 9) && (lineNumber > 0))
+                    {
+                        result.array[x][y] = secondPhaseValue + 241*(lineNumber - 1);
+                    }
                 }
             }
 

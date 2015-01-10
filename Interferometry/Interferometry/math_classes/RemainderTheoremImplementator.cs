@@ -40,12 +40,12 @@ namespace Interferometry.math_classes
 
         public long getSolution(List<long> input)
         {
-            int resultPoint = 0;
+            long resultPoint = 0;
             int i = 0;
 
-            foreach (int currentInt in input)
+            foreach (long currentInt in input)
             {
-                resultPoint += currentInt * Mi[i] * MiInverted[i];
+                resultPoint += (currentInt) * Mi[i] * MiInverted[i];
                 i++;
             }
 

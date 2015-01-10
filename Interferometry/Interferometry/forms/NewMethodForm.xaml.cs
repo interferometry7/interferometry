@@ -69,11 +69,11 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WrappedPhaseGetter wrappedPhaseGetter = new WrappedPhaseGetter(firstBunch, imagesWidth, imagesHeight, firstSineNumber);
+            WrappedPhaseGetter wrappedPhaseGetter = new WrappedPhaseGetter(firstBunch, imagesWidth, imagesHeight, firstSineNumber );
             wrappedPhaseGetter.RunWorkerCompleted+=WrappedPhaseGetterOnRunWorkerCompleted;
             wrappedPhaseGetter.RunWorkerAsync();
 
-            WrappedPhaseGetter secondWrappedPhaseGetter = new WrappedPhaseGetter(secondBunch, imagesWidth, imagesHeight, secondSineNumber);
+            WrappedPhaseGetter secondWrappedPhaseGetter = new WrappedPhaseGetter(secondBunch, imagesWidth, imagesHeight, secondSineNumber );
             secondWrappedPhaseGetter.RunWorkerCompleted += SecondWrappedPhaseGetterOnRunWorkerCompleted;
             secondWrappedPhaseGetter.RunWorkerAsync();
         }
