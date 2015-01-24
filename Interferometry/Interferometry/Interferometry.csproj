@@ -181,10 +181,11 @@
       <DependentUpon>NewMethodForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrameworkManager.cs" />
-    <Compile Include="imageCacher\ImageCacheManager.cs" />
-    <Compile Include="imageCacher\ImageCacheUnit.cs" />
     <Compile Include="ImageGetter.cs" />
     <Compile Include="ImageHelper.cs" />
+    <Compile Include="math_classes\ZhangSuenAlgorithmImplementator.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="math_classes\Furie.cs" />
     <Compile Include="math_classes\FiltrClass.cs" />
     <Compile Include="math_classes\LissajousImageBuilder.cs">

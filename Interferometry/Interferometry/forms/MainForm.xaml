@@ -88,6 +88,7 @@
                     <Button Content="Сглаживание 8 изображений
 " HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="228" Height="23" Click="smooth8Images"/>
                     <Button Content="Медианное сглаживание 8 изображений" HorizontalAlignment="Left" Margin="153,38,0,0" VerticalAlignment="Top" Width="228" Height="23" Click="medianSmooth8Images"/>
+                    <Button Content="Утоньшение линий" HorizontalAlignment="Left" Margin="672,38,0,0" VerticalAlignment="Top" Width="141" Height="23" Click="Button_Click_4"/>
 
 
                 </Grid>
