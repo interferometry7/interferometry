@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
@@ -1269,7 +1270,14 @@ namespace Interferometry.forms
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-
+            ZhangSuenAlgorithmImplementator zhangSuenAlgorithmImplementator = new ZhangSuenAlgorithmImplementator(zArrayDescriptor);
+            zhangSuenAlgorithmImplementator.RunWorkerCompleted += ZhangSuenAlgorithmImplementatorOnRunWorkerCompleted;
+            zhangSuenAlgorithmImplementator.RunWorkerAsync();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void ZhangSuenAlgorithmImplementatorOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
+        {
+            setZArray((ZArrayDescriptor)runWorkerCompletedEventArgs.Result);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
