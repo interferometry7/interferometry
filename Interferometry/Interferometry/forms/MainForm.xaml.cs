@@ -21,6 +21,7 @@ using MessageBox = System.Windows.MessageBox;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Drawing.Point;
 
+// Новый вариант 11.07.2015
 namespace Interferometry.forms
 {
     /// <summary>
